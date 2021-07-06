@@ -1,0 +1,83 @@
+.profile-page {
+  padding-top: 70px !important;
+
+  h2 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 39px;
+    letter-spacing: 0.015em;
+    color: #11141B;
+  }
+
+  h4 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #11141B;
+    margin: 1rem 0;
+  }
+
+  .custom-drop-zone {
+    border: none;
+
+    &__content {
+      align-items: baseline !important;
+
+      button {
+        margin-right: 1rem;
+      }
+
+      &-title {
+        padding-left: 0 !important;
+        font-size: 14px !important;
+        line-height: 20px !important;
+        padding-top: 18px;
+      }
+    }
+  }
+
+  &__avatar-block {
+    width: 80px;
+    height: 80px;
+    background: #A7ACB9;
+    border-radius: 8px;
+    margin-right: 15px;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .separator {
+    border-bottom: 2px solid #E1E6EB;
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+
+  .Vkontakte-button {
+    background: #5c9ce6;
+  }
+  .Facebook-button {
+    background: #325CC9;
+  }
+  .тelegram-button {
+    background: #15C7FF;
+  }
+  .Instagram-button {
+    background: #CB2364;
+  }
+
+  .cancell-button {
+    background-color: transparent;
+    color: #11141B
+  }
+
+  .subscribe-link__button {
+    width: 100%;
+  }
+}

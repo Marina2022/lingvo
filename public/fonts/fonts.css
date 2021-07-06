@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: local('Montserrat'), url(./montserrat/Montserrat-Light.ttf) format('woff');
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: local('Gilroy'), url(./gilroy/Gilroy-Light.otf) format('woff');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: local('OpenSans'), url(./opensans/OpenSans-Light.ttf) format('woff');
+}

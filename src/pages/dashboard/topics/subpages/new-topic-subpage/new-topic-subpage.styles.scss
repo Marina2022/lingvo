@@ -1,0 +1,45 @@
+.new-topic-subpage {
+  h1 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 39px;
+    letter-spacing: 0.015em;
+    color: #11141B;
+    margin-top: 15px;
+    margin-bottom: 22px;
+  }
+
+  .li-input {
+    input {
+      height: 40px;
+    }
+  }
+
+  &__buttons-block {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #FFFFFF;
+      height: 40px;
+      width: 130px;
+    }
+
+    .save-button {
+
+    }
+
+    .cancel-button {
+      background-color: #ffffff;
+      color: #11141B;
+      border-color: #A7ACB9;
+    }
+  }
+}

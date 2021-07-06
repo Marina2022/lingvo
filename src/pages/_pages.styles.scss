@@ -1,0 +1,22 @@
+//PAGES STYLES
+@import "auth/login/login.styles";
+@import "auth/register/register.styles";
+@import "auth/reset-password/reset-password.styles";
+@import "auth/set-new-password/set-new-password.styles";
+@import "dashboard/topics/topics.styles";
+@import "dashboard/profile/profile.styles";
+
+//LAYOUTS' STYLES
+@import "dashboard/layout/layout.styles";
+
+.dashboard-page {
+  > div {
+    background: #F0F5F5;
+    padding: 15px 80px 80px 80px;
+    //min-height: 85%;
+
+    @media only screen and (max-width: 700px) {
+      padding: 10px !important;
+    }
+  }
+}

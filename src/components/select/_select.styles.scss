@@ -1,0 +1,79 @@
+.li-custom-select {
+  &__label {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #45484D;
+  }
+
+  .li-select {
+    min-width: 15rem;
+
+    &__control {
+      min-height: 40px !important;
+      box-shadow: none !important;
+      border: 1px solid #CFD8DF !important;
+      box-sizing: border-box;
+      border-radius: 8px !important;
+
+      &--menu-is-open {
+        border-color: unset;
+      }
+
+      &--is-disabled {
+        background-color: rgb(244, 246, 249) !important;
+      }
+    }
+
+    &__value-container {
+      //padding: 0.2rem 1.5rem !important;
+    }
+
+    &__indicator {
+      padding: 0.5rem !important;
+      color: #000000 !important;
+
+      &-separator {
+        display: none;
+      }
+
+      &:hover {
+        color: #3a4168 !important;
+      }
+    }
+
+    &__single-value,
+    &__placeholder {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #11141B;
+    }
+
+    &__placeholder {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #11141B;
+    }
+
+    &__option {
+      color: #000000;
+    }
+
+    &__multi-value {
+      background-color: #edeff8 !important;
+      border-radius: 0.5rem;
+    }
+
+    &__menu {
+      z-index: 999999 !important;
+    }
+  }
+}

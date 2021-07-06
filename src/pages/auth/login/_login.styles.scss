@@ -1,0 +1,116 @@
+.login-page {
+  background: #1E62E6;
+
+  &__logo-block {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  &__auth-block {
+    display: flex;
+    justify-content: center;
+
+    .separator {
+      border: 0.5px solid #E1E6EB;
+      transform: rotate(0deg)
+    }
+
+    &-card {
+      display: flex;
+      flex-direction: row;
+      background: #FFFFFF;
+      border: 1px solid #E1E6EB;
+      box-sizing: border-box;
+      box-shadow: 0 32px 40px rgba(79, 93, 102, 0.08);
+
+      .social-network__block {
+        padding: 2rem;
+
+        > div {
+          padding-bottom: 1.3rem;
+        }
+
+        &-text {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 24px;
+          color: #45484D;
+        }
+
+        .social-network__buttons {
+          background: #FFFFFF;
+          border: 2px solid #11141B;
+          box-sizing: border-box;
+          border-radius: 4px;
+          color: #11141B;
+        }
+      }
+
+      .fields__block {
+        padding: 2rem;
+
+        > div, form > div {
+          padding-bottom: 1.6rem;
+        }
+
+        &-text {
+          font-family: Montserrat;
+          font-style: normal;
+          font-weight: 800;
+          font-size: 24px;
+          line-height: 29px;
+          letter-spacing: 0.015em;
+          color: #11141B;
+        }
+      }
+
+      .forgot-creds__block {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        color: #45484D;
+        cursor: pointer;
+
+        &:hover {
+          color: blue;
+        }
+      }
+
+      @media only screen and (max-width: 700px) {
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+
+    .register-link__button {
+      border: 2px solid #FFFFFF;
+      box-sizing: border-box;
+      border-radius: 8px;
+      width: 160px;
+    }
+
+    h3 {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 28px;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+  }
+}

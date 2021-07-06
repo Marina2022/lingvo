@@ -1,0 +1,55 @@
+.custom-tags-input {
+  &__text-field {
+    &_label {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      color: #45484D;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border-color: rgba(0, 0, 0, 0.23) !important;
+      border-width: 1px !important;
+    }
+    fieldset {
+      border-radius: 8px;
+
+      &:hover {
+        border-color: rgba(0, 0, 0, 0.23);
+      }
+
+      &:focus {
+        border-color: rgba(0, 0, 0, 0.23);
+        color: red;
+      }
+    }
+
+    .MuiInputBase-root {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .MuiChip-label, input {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #A7ACB9;
+    }
+
+    input {
+      color: #000000;
+    }
+
+    .MuiChip-root {
+      background-color: #000000;
+    }
+
+    .MuiChip-deleteIcon {
+      color: #45484D !important;
+    }
+  }
+}

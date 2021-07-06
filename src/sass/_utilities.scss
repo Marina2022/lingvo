@@ -1,0 +1,45 @@
+.u-relative {
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: flex;
+}
+
+.error-message {
+  color: red;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  text-align: center;
+  line-height: 20px;
+}
+
+.flex {
+  &-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-horizontal-center {
+    display: flex;
+    justify-content: center;
+  }
+
+  &-vertical-center {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.p-b {
+  &__1 {
+    padding-bottom: 1rem;
+  }
+}

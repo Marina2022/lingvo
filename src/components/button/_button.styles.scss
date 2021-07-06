@@ -1,0 +1,21 @@
+.li-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1E62E6;
+  border-radius: 8px;
+  width: 100%;
+  color: white;
+  height: 48px;
+  cursor: pointer;
+  border: 2px solid #CFD8DF;
+
+  img {
+    padding-right: 1.6rem;
+  }
+
+  &__disabled {
+    background-color: #CFD8DF;
+    cursor: not-allowed;
+  }
+}

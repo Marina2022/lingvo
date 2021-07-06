@@ -1,0 +1,7 @@
+button:focus, textarea:focus, input:focus {
+  outline: none !important;
+}
+.btn:focus, .btn-primary:focus {
+  outline: none !important;
+  outline-offset: none !important;
+}

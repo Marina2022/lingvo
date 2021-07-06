@@ -1,0 +1,23 @@
+.back-arrow {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: center;
+
+  img {
+    height: 16px;
+    width: 16px;
+    margin-right: 2px;
+  }
+
+  span {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #A0A1A4;
+  }
+}

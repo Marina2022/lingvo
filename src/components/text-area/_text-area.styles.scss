@@ -1,0 +1,25 @@
+.custom-textarea {
+  textarea {
+    width: 100%;
+    color: #11141B;
+    border: 1px solid #CFD8DF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 1rem;
+    height: 64px !important;
+  }
+
+  &__label {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #45484D;
+  }
+}
