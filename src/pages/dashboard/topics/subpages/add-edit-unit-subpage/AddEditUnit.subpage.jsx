@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-//IMPORT MODULES 
+//IMPORT MODULES
 //AZURE MICROSOFT SDK
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 //GENERATING UNIQUE IDS
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 //CONFIG WITH AZURE CREDENTIALS
-import keysConfig from 'config/keys.config';
+import keysConfig from "config/keys.config";
 
 //BASE COMPONENTS
 import GridContainer from "components/grid-container/GridContainer.component";
@@ -22,7 +22,7 @@ import Button from "components/button/Button.component";
 import Select from "components/select/Select.component";
 import DropZone from "components/drop-zone/DropZone.component";
 import Modal from "components/modal/Modal.component";
-import Player from 'components/units-list-card/Player.component';
+import Player from "components/units-list-card/Player.component";
 //EFFECTS
 import useInput from "effects/useInput.effect";
 //ACTIONS
@@ -66,93 +66,91 @@ const AddEditUnitSubpage = (props) => {
    // states for Azure Text-to-Speech service
    const setOfVoices = {
       en_britain: {
-         male: 'en-GB-RyanNeural',
-         female: 'en-GB-LibbyNeural'
+         male: "en-GB-RyanNeural",
+         female: "en-GB-LibbyNeural",
       },
       en_usa: {
-         male: 'en-US-GuyNeural',
-         female: 'en-US-AriaNeural'
+         male: "en-US-GuyNeural",
+         female: "en-US-AriaNeural",
       },
       ru: {
-         male: 'ru-RU-DmitryNeural',
-         female: 'ru-RU-DariyaNeural'
+         male: "ru-RU-DmitryNeural",
+         female: "ru-RU-DariyaNeural",
       },
       de: {
-         male: 'de-DE-Stefan',
-         female: 'de-DE-HeddaRUS'
+         male: "de-DE-Stefan",
+         female: "de-DE-HeddaRUS",
       },
       fr: {
-         male: 'fr-FR-HenriNeural',
-         female: 'fr-FR-DeniseNeural'
+         male: "fr-FR-HenriNeural",
+         female: "fr-FR-DeniseNeural",
       },
       es: {
-         male: 'es-ES-AlvaroNeural',
-         female: 'es-ES-ElviraNeural'
+         male: "es-ES-AlvaroNeural",
+         female: "es-ES-ElviraNeural",
       },
       zh: {
-         male: 'zh-CN-YunyangNeural',
-         female: 'zh-CN-XiaoxiaoNeural'
+         male: "zh-CN-YunyangNeural",
+         female: "zh-CN-XiaoxiaoNeural",
       },
       ja: {
-         male: 'ja-JP-KeitaNeural',
-         female: 'ja-JP-NanamiNeural'
+         male: "ja-JP-KeitaNeural",
+         female: "ja-JP-NanamiNeural",
       },
       ko: {
-         male: 'ko-KR-InJoonNeural',
-         female: 'ko-KR-SunHiNeural'
+         male: "ko-KR-InJoonNeural",
+         female: "ko-KR-SunHiNeural",
       },
       tr: {
-         male: 'tr-TR-AhmetNeural',
-         female: 'tr-TR-EmelNeural'
-      }
+         male: "tr-TR-AhmetNeural",
+         female: "tr-TR-EmelNeural",
+      },
    };
    const genders = [
-      { id: 0, label: 'Мужской', value: 'male' },
-      { id: 1, label: 'Женский', value: 'female' }
+      { id: 0, label: "Мужской", value: "male" },
+      { id: 1, label: "Женский", value: "female" },
    ];
    const voiceLanguages = [
-      {id: 0, label: "Британский Английский", value: "en_britain" },
-      {id: 1, label: "Американский Английский", value: "en_usa" },
-      {id: 2, label: "Русский", value: "ru" },
-      {id: 3, label: "Немецкий", value: "de" },
-      {id: 4, label: "Французский", value: "fr" },
-      {id: 5, label: "Испанский", value: "es" },
-      {id: 6, label: "Китайский", value: "zh" },
-      {id: 7, label: "Японский", value: "ja" },
-      {id: 8, label: "Корейский", value: "ko" },
-      {id: 9, label: "Турецкий", value: "tr" }
+      { id: 0, label: "Британский Английский", value: "en_britain" },
+      { id: 1, label: "Американский Английский", value: "en_usa" },
+      { id: 2, label: "Русский", value: "ru" },
+      { id: 3, label: "Немецкий", value: "de" },
+      { id: 4, label: "Французский", value: "fr" },
+      { id: 5, label: "Испанский", value: "es" },
+      { id: 6, label: "Китайский", value: "zh" },
+      { id: 7, label: "Японский", value: "ja" },
+      { id: 8, label: "Корейский", value: "ko" },
+      { id: 9, label: "Турецкий", value: "tr" },
    ];
 
-   // values are equal to voiceUploadMode's fields
+   // values are equal to voiceUploadMode"s fields
    const voiceUploadOptions = [
       { id: 0, label: "Не выбрано", value: "" },
       { id: 2, label: "Загрузить файл", value: "uploadedAudio" },
       { id: 1, label: "Записать аудио", value: "recordedAudio" },
-      { id: 3, label: "Озвучить текст", value: "generatedVoice" }
+      { id: 3, label: "Озвучить текст", value: "generatedVoice" },
    ];
 
    // states
    const [selectedVoice, setSelectedVoice] = useState({
       language: voiceLanguages[0],
-      gender: genders[0]
+      gender: genders[0],
    });
    // true - if the generated voice is created, otherwise - false
    const [generatedVoiceAudio, setGeneratedVoiceAudio] = useState({
       isVoiceLoaded: false,
-      url: null
+      url: null,
    });
 
    // defines which type of voice uploading is being used: Azure generated voice, uploaded file, recorded audio
    const [voiceUploadMode, setVoiceUploadMode] = useState({
-      mode: null
+      mode: null,
    });
-
 
    const levelsOptions = generateLevelsOptions(levelsList || []);
    let { topicID, unitID } = useParams();
    const files = unitID ? singleUnitDataCopy?.voices : [];
    const [uploadedFiles, setUploadedFiles] = useState(files);
-
 
    useEffect(() => {
       getLevelsListAsync();
@@ -263,67 +261,78 @@ const AddEditUnitSubpage = (props) => {
       history.push(`/topics/${topicID}/units`);
    };
 
-
    // making api call to create a voice audio file
    const generateVoice = async () => {
       // setting url of generated voice audio state to null
       await setGeneratedVoiceAudio({
          isVoiceLoaded: false,
-         url: null
+         url: null,
       });
 
       // getting voices params from inputs
-      const voiceLang   = selectedVoice.language.value;
-      const gender      = selectedVoice.gender.value;
-      
+      const voiceLang = selectedVoice.language.value;
+      const gender = selectedVoice.gender.value;
+
       const nameOfVoice = setOfVoices[voiceLang][gender];
-      const text        = inputState.value;
+      const text = inputState.value;
 
       // if text is empty
-      if(text.trim() === '') {
-         alert('Чтобы сгенерировать запись, необходимо ввести текст');
+      if (text.trim() === "") {
+         alert("Чтобы сгенерировать запись, необходимо ввести текст");
          return;
       }
 
       // !!!перенести в config!!!!
       const subscriptionKey = keysConfig.Azure.AzureSubscriptionKey;
-      const region          = keysConfig.Azure.AzureRegion;
+      const region = keysConfig.Azure.AzureRegion;
 
-      const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, region);
+      const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+         subscriptionKey,
+         region
+      );
       // setting selected voice
       speechConfig.speechSynthesisVoiceName = nameOfVoice;
 
-      // setting Azure's player and configs
+      // setting Azure"s player and configs
       const player = new SpeechSDK.SpeakerAudioDestination();
-      const audioConfig  = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
+      const audioConfig = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
 
-      const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
-      
-      // fires when the speech is synthesized 
-      const complete_cb = function (result) {
+      const synthesizer = new SpeechSDK.SpeechSynthesizer(
+         speechConfig,
+         audioConfig
+      );
+
+      // fires when the speech is synthesized
+      const complete_cb = function(result) {
          const filename = `Generated_voice-${uuidv4()}.mpeg`;
-         const file = new File([result.audioData], filename, { type: 'audio/mpeg' });
+         const file = new File([result.audioData], filename, {
+            type: "audio/mpeg",
+         });
 
          // creating audio tag to listen the audio
          const url = URL.createObjectURL(file);
          setGeneratedVoiceAudio({
             isVoiceLoaded: true,
-            url: url
+            url: url,
          });
 
-         if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
+         if (
+            result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted
+         ) {
             player.pause();
          } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
-            alert('Что-то пошло не так... Попробуйте еще раз!');
-            console.error("Error: synthesis failed. Error detail: " + result.errorDetails);
+            alert("Что-то пошло не так... Попробуйте еще раз!");
+            console.error(
+               "Error: synthesis failed. Error detail: " + result.errorDetails
+            );
          }
          synthesizer.close();
 
          // uploading generated audio-file
          handleFiles([file]);
       };
-         
-      const err_cb = function (err) {
+
+      const err_cb = function(err) {
          console.error("Error: ", err);
          synthesizer.close();
       };
@@ -412,101 +421,99 @@ const AddEditUnitSubpage = (props) => {
                      />
                   </GridItem>
 
-
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="voiceUploadMode"
                         label="Выберите способ загрузки аудио:"
                         options={voiceUploadOptions}
                         defaultValue={voiceUploadOptions[0]}
-                        onChange={(e) => setVoiceUploadMode({
-                           mode: e
-                        })}
+                        onChange={(e) =>
+                           setVoiceUploadMode({
+                              mode: e,
+                           })
+                        }
                         placeholder="Выберите способ загрузки аудио"
                      />
                   </GridItem>
-                  
-                  {
-                     (voiceUploadMode.mode && voiceUploadMode.mode.value === "uploadedAudio") &&
-                     <GridItem xs={12} sm={12} md={6} lg={6}>
-                        <span>Добавьте готовый файл:</span>
-                        <DropZone
-                           title="Нажмите на данное окно или перенесите аудиофайл сюда"
-                           handleFiles={handleFiles}
-                           files={uploadedFiles}
-                           buttonAction={() => toggleAudioModal(true)}
-                        />
-                     </GridItem>
-                  }
 
-
-                  {
-                     (voiceUploadMode.mode && voiceUploadMode.mode.value === "recordedAudio") && 
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <span>Записать аудио: </span>
-                        <Button
-                        onClick={() => toggleAudioModal(true)}>
-                           Сделать запись
-                        </Button>
-                     </GridItem>
-                  }
-
-                  {
-                     (voiceUploadMode.mode && voiceUploadMode.mode.value === "generatedVoice") && 
-                     <React.Fragment>
-                        <GridItem xs={12} sm={12} md={3} lg={3}>
-                           <Select
-                              name="voiceLanguage"
-                              label="Настройки голоса автоматического воспроизведения"
-                              options={voiceLanguages}
-                              defaultValue={voiceLanguages[0]}
-                              onChange={(e) => setSelectedVoice(prevState => ({
-                                 ...prevState,
-                                 language: e
-                              }))}
-                              placeholder="Настройки голоса автоматического воспроизведения"
+                  {voiceUploadMode.mode &&
+                     voiceUploadMode.mode.value === "uploadedAudio" && (
+                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                           <span>Добавьте готовый файл:</span>
+                           <DropZone
+                              title="Нажмите на данное окно или перенесите аудиофайл сюда"
+                              handleFiles={handleFiles}
+                              files={uploadedFiles}
+                              buttonAction={() => toggleAudioModal(true)}
                            />
                         </GridItem>
+                     )}
 
-                        <GridItem xs={12} sm={12} md={3} lg={3}>
-                           <Select
-                              name="voiceGender"
-                              label="Выбор пола"
-                              options={genders}
-                              defaultValue={genders[0]}
-                              onChange={(e) => setSelectedVoice(prevState => ({
-                                 ...prevState,
-                                 gender: e
-                              }))}
-                              placeholder="Выбор пола"
-                           />
-                        </GridItem>
-
+                  {voiceUploadMode.mode &&
+                     voiceUploadMode.mode.value === "recordedAudio" && (
                         <GridItem xs={12} sm={12} md={2} lg={2}>
-                           <Button 
-                              onClick={generateVoice} >
-                              Сгенерировать голос
+                           <span>Записать аудио: </span>
+                           <Button onClick={() => toggleAudioModal(true)}>
+                              Сделать запись
                            </Button>
                         </GridItem>
+                     )}
 
-                        <GridItem xs={12} sm={12} md={3} lg={3}>
-                           { 
-                              generatedVoiceAudio.isVoiceLoaded ?
+                  {voiceUploadMode.mode &&
+                     voiceUploadMode.mode.value === "generatedVoice" && (
+                        <React.Fragment>
+                           <GridItem xs={12} sm={12} md={3} lg={3}>
+                              <Select
+                                 name="voiceLanguage"
+                                 label="Настройки голоса автоматического воспроизведения"
+                                 options={voiceLanguages}
+                                 defaultValue={voiceLanguages[0]}
+                                 onChange={(e) =>
+                                    setSelectedVoice((prevState) => ({
+                                       ...prevState,
+                                       language: e,
+                                    }))
+                                 }
+                                 placeholder="Настройки голоса автоматического воспроизведения"
+                              />
+                           </GridItem>
+
+                           <GridItem xs={12} sm={12} md={3} lg={3}>
+                              <Select
+                                 name="voiceGender"
+                                 label="Выбор пола"
+                                 options={genders}
+                                 defaultValue={genders[0]}
+                                 onChange={(e) =>
+                                    setSelectedVoice((prevState) => ({
+                                       ...prevState,
+                                       gender: e,
+                                    }))
+                                 }
+                                 placeholder="Выбор пола"
+                              />
+                           </GridItem>
+
+                           <GridItem xs={12} sm={12} md={2} lg={2}>
+                              <Button onClick={generateVoice}>
+                                 Сгенерировать голос
+                              </Button>
+                           </GridItem>
+
+                           <GridItem xs={12} sm={12} md={3} lg={3}>
+                              {generatedVoiceAudio.isVoiceLoaded ? (
                                  <Player
-                                 url={generatedVoiceAudio.url}
-                                 onClick={() => {}}
-                                 className="volume-icon__block"
-                                 >
+                                    url={generatedVoiceAudio.url}
+                                    onClick={() => {}}
+                                    className="volume-icon__block">
                                     <Button>
                                        Проиграть сгенерированную речь
                                     </Button>
                                  </Player>
-                              : null
-                           }
-                        </GridItem>
-                     </React.Fragment>
-                  }
-
+                              ) : null}
+                           </GridItem>
+                        </React.Fragment>
+                     )}
 
                   <GridItem
                      xs={12}
@@ -538,7 +545,6 @@ const AddEditUnitSubpage = (props) => {
                         </Button>
                      </GridItem>
                   </GridItem>
-
                </Form>
             </GridItem>
          </GridContainer>
