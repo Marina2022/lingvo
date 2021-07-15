@@ -161,7 +161,7 @@ const AddEditUnitSubpage = (props) => {
          getSingleUnitAsync(unitID);
       }
       //eslint-disable-next-line
-   }, [])
+   }, []);
 
    const formInitState = {
       description: "",
