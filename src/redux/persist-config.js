@@ -21,6 +21,14 @@ export const topicsPersistConfig = {
    whiteList: ["responseData"],
 };
 
+//COURSES
+export const coursesPersistConfig = {
+   key: "courses",
+   storage: sessionStorage,
+   blacklist: ["isCoursesCreatedLoading", "errorMessage", "selectedTopic"],
+   whiteList: ["responseData"],
+};
+
 // //UNITS
 // export const unitsPersistConfig = {
 //    key: "units",

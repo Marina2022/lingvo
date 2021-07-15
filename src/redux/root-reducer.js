@@ -5,6 +5,7 @@ import {
    persistConfig,
    authPersistConfig,
    topicsPersistConfig,
+   coursesPersistConfig,
 } from "./persist-config";
 
 // REDUCERS
@@ -13,6 +14,7 @@ import profileReducer from "./profile/profile.reducer";
 import topicsReducer from "./topics/topics.reducer";
 import commonReducer from "./common/common.reducer";
 import unitsReducer from "./units/units.reducer";
+import coursesReducer from "./courses/courses.reducer";
 
 const rootReducer = combineReducers({
    auth: persistReducer(authPersistConfig, authReducer),
@@ -20,6 +22,7 @@ const rootReducer = combineReducers({
    topics: persistReducer(topicsPersistConfig, topicsReducer),
    common: commonReducer,
    units: unitsReducer,
+   courses: persistReducer(coursesPersistConfig, coursesReducer),
 });
 
 export default persistReducer(persistConfig, rootReducer);

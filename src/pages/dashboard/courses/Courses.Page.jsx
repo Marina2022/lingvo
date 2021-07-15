@@ -11,9 +11,16 @@ import "./_courses.styles.scss";
 import plusIcon from "../../../assets/images/topics/plus.png";
 import CourseItem from "./components/CourseItem/CourseItem";
 import Pagination from "./components/Pagination/Pagination";
-const CoursesPage = () => {
-   const history = useHistory();
+import { getCoursesAsync } from "../../../redux/courses/courses.actions";
 
+const CoursesPage = (props) => {
+   const { getCoursesAsync, publishedCoursesCount, draftCoursesCount } = props;
+
+   const history = useHistory();
+   useEffect(() => {
+      getCoursesAsync();
+      //eslint-disable-next-line
+   }, []);
    return (
       <div className="courses-page">
          <div className="courses-page__heading-block">
@@ -134,4 +141,18 @@ const CoursesPage = () => {
       </div>
    );
 };
-export default CoursesPage;
+
+const mapStateToProps = (state) => {
+   const { courses } = state;
+
+   return {
+      publishedCoursesCount: courses.publishedCoursesCount,
+      draftCoursesCount: courses.draftCoursesCount,
+   };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+   getCoursesAsync: () => dispatch(getCoursesAsync()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
