@@ -37,39 +37,45 @@ const Header = (props) => {
    ];
 
    return (
-      <header className="app-header">
-         <div className="app-header__main-link">
-            <Link to="/">Lingvoinsta</Link>
-         </div>
-         <div className="app-header__links-block">
-            <NavLink
-               activeClassName="app-header__links-block_active"
-               to="/ffffff">
-               Мои классы
-            </NavLink>
-            <NavLink activeClassName="app-header__links-block_active" to="/new">
-               Словарь
-            </NavLink>
-            <NavLink
-               activeClassName="app-header__links-block_active"
-               to="/topics">
-               Темы
-            </NavLink>
-         </div>
-         <div className="app-header__profile-block">
-            <div>
-               <img src={notificationIcon} alt="notification" />
-            </div>
-            <div>
-               <img src={mailIcon} alt="mailicon" />
-            </div>
-            <DropDown
-               src={currentUserInfo?.avatar}
-               menuItems={dropdownMenuItems}
-               name={currentUserInfo?.name}
-            />
-         </div>
-      </header>
+       <header className="app-header">
+          <div className="app-header__main-link">
+             <Link to="/">Lingvoinsta</Link>
+          </div>
+          <div className="app-header__links-block">
+             <NavLink
+                 activeClassName="app-header__links-block_active"
+                 to="/ffffff">
+                Мои классы
+             </NavLink>
+             <NavLink activeClassName="app-header__links-block_active" to="/new">
+                Словарь
+             </NavLink>
+             <NavLink
+                 activeClassName="app-header__links-block_active"
+                 to="/topics">
+                Темы
+             </NavLink>
+             <NavLink
+                 activeClassName="app-header__links-block_active"
+                 to="/courses">
+                Курсы
+             </NavLink>
+          </div>
+          <div className="app-header__profile-block">
+             <div>
+                <img src={notificationIcon} alt="notification" />
+             </div>
+             <div>
+                <img src={mailIcon} alt="mailicon" />
+             </div>
+             <DropDown
+                 src={currentUserInfo?.avatar}
+                 menuItems={dropdownMenuItems}
+                 name={currentUserInfo?.name}
+             />
+             ≠≠≠≠
+          </div>
+       </header>
    );
 };
 

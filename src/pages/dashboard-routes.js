@@ -1,12 +1,17 @@
 //PAGES
 import TopicPage from "./dashboard/topics/Topics.page";
 import ProfilePage from "./dashboard/profile/Profile.page";
+import CoursesPage from "./dashboard/courses/Courses.Page";
 //SUBPAGES
 import NewTopicSubpage from "./dashboard/topics/subpages/new-topic-subpage/NewTopic.subpage";
 import UnitSubpage from "./dashboard/topics/subpages/unit-subpage/Unit.subpage";
 import AddEditUnitSubpage from "./dashboard/topics/subpages/add-edit-unit-subpage/AddEditUnit.subpage";
 
 const dashboardRoutes = [
+   {
+      component: CoursesPage,
+      path: "/courses",
+   },
    {
       component: TopicPage,
       path: "/topics",
