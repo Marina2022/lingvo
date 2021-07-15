@@ -23,7 +23,7 @@ const Modal = ({
          document.removeEventListener("keydown", escFunction, false);
       };
       //eslint-disable-next-line
-    }, []);
+   }, []);
 
    const modalStyles = classNames({
       "li-modal__overlay": true,

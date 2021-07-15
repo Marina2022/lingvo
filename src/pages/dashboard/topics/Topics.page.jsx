@@ -30,7 +30,7 @@ const TopicsPage = (props) => {
    useEffect(() => {
       getTopicsAsync();
       //eslint-disable-next-line
-   }, [])
+   }, []);
 
    const handleInputChange = (event) => {
       handleInput(event);

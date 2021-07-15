@@ -24,7 +24,7 @@ const CoursesPage = () => {
          </div>
          <div className="settings-panel">
             <Button
-               onClick={() => history.push("/new-topic")}
+               onClick={() => history.push("/new-course")}
                className="settings-panel__plus-icon"
                src={plusIcon}>
                Новый курс
