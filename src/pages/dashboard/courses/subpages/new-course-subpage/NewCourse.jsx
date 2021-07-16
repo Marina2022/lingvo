@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS
-import Tab from "components/tab/Tab.component";
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
@@ -15,7 +14,7 @@ import Select from "../../../../../components/select/Select.component";
 import { Switch } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
+
 import plusIcon from "../../../../../assets/images/topics/plus.png";
 
 import "./_newcourse.scss";
@@ -120,7 +119,7 @@ const NewCoursePage = () => {
                      <div className="new-course-themes__title">
                         <div className="h2">Темы курса</div>
                         <Button
-                           onClick={() => history.push("/new-course")}
+                           onClick={() => history.push("/course-themes")}
                            className="settings-panel__plus-icon"
                            src={plusIcon}>
                            Добавить темы
@@ -154,7 +153,7 @@ const NewCoursePage = () => {
                      lg={6}
                      className="new-topic-subpage__buttons-block">
                      <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button className="save-button">Сохранить</Button>
+                        <Button className="save-button">Добавить в курс</Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={2} lg={2}>
                         <Button className="cancel-button">Отмена</Button>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
+import axios from "axios";
 //BASE COMPONENTS
 import Tab from "components/tab/Tab.component";
 import Input from "components/input/Input.component";
@@ -19,6 +19,18 @@ const CoursesPage = (props) => {
    const history = useHistory();
    useEffect(() => {
       getCoursesAsync();
+      // axios
+      //     .get("https://dev.insta.lingvonavi.com/api/v1/courses", {
+      //        headers: {
+      //           Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYXN0eXcxMTMwQHJhbWJsZXIucnUiLCJleHAiOjE2MjcwODUwOTB9.TvGPaHBS8ihYPZevgZqg96k1eLpUwa7OwqrvqpGp_bM`, //here remove + in template litereal
+      //        },
+      //     })
+      //     .then(res => {
+      //        console.log(res)
+      //     })
+      //     .catch(error => {
+      //        console.log(error)
+      //     })
       //eslint-disable-next-line
    }, []);
    return (

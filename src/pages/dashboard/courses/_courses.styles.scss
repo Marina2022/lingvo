@@ -101,7 +101,8 @@
 
   &:hover {
     background: linear-gradient(129.6deg, #1E62E5 16.14%, #54BFED 87.14%);
-    text-decoration: none!important;
+    text-decoration: none !important;
+
     * {
       color: #ffffff;
     }
@@ -110,5 +111,73 @@
       background: #FFFFFF;
       color: #1E62E6;
     }
+  }
+}
+
+.course-theme-wrapper {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 12px rgba(79, 93, 102, 0.06);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.course-theme-item {
+  border-bottom: 1px solid #E1E6EB;
+  padding: 16px 88px 16px 48px;
+  position: relative;
+  &__date {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #A0A1A4;
+  }
+  &__title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    color: #11141B;
+    margin: 12px 0 4px;
+  }
+
+  &__langs{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #45484D;
+  }
+}
+
+.custom-checkbox {
+  background: #1E62E5;
+  position: absolute;
+  right: 60px;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.courses-theme-bottom {
+  margin: 24px 0 80px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  div{
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  button {
+    width: auto;
+    margin-left: 30px;
+  }
+  .btn-theme {
+    background: transparent;
+    color: #1E62E5;
+    border-color: #1E62E5;
   }
 }
