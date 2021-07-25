@@ -5,25 +5,32 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import dashboardRoutes from "../dashboard-routes";
 //LAYOUTS
 import Header from "./layout/header/Header.layout";
+import AuthRoutes from "../auth/AuthPages";
+import MainPage from "../main/MainPage";
 
 const DashbaordPages = () => {
    return (
-      <div className="dashboard-page">
-         <Header />
+      <>
          <Switch>
-            {dashboardRoutes.map((component) => {
-               return (
-                  <Route
-                     exact
-                     path={component.path}
-                     component={component.component}
-                     key={component.path}
-                  />
-               );
-            })}
-            <Redirect to="/topics" />
+            <Route exact path="/main" component={MainPage} />
+
+            <div className="dashboard-page">
+               <Header />
+
+               {dashboardRoutes.map((component) => {
+                  return (
+                     <Route
+                        exact
+                        path={component.path}
+                        component={component.component}
+                        key={component.path}
+                     />
+                  );
+               })}
+               <Redirect to="/topics" />
+            </div>
          </Switch>
-      </div>
+      </>
    );
 };
 

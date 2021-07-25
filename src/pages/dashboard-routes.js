@@ -4,6 +4,7 @@ import ProfilePage from "./dashboard/profile/Profile.page";
 import CoursesPage from "./dashboard/courses/Courses.Page";
 import NewCoursePage from "./dashboard/courses/subpages/new-course-subpage/NewCourse";
 import ThemesForCourse from "./dashboard/courses/subpages/new-course-subpage/ThemesForCourse";
+
 //SUBPAGES
 import NewTopicSubpage from "./dashboard/topics/subpages/new-topic-subpage/NewTopic.subpage";
 import UnitSubpage from "./dashboard/topics/subpages/unit-subpage/Unit.subpage";

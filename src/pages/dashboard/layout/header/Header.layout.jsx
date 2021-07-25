@@ -39,7 +39,7 @@ const Header = (props) => {
    return (
       <header className="app-header">
          <div className="app-header__main-link">
-            <Link to="/">Lingvoinsta</Link>
+            <Link to="/main">Lingvoinsta</Link>
          </div>
          <div className="app-header__links-block">
             <NavLink
