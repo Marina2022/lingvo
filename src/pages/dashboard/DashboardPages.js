@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import dashboardRoutes from "../dashboard-routes";
 //LAYOUTS
 import Header from "./layout/header/Header.layout";
-import AuthRoutes from "../auth/AuthPages";
+
 import MainPage from "../main/MainPage";
 
 const DashbaordPages = () => {

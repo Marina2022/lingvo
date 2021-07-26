@@ -139,11 +139,13 @@ const MainPage = () => {
                </div>
 
                <div className="landing-header__auth">
-                  <a href="" className="auth-btn auth-btn_login mobile-hidden">
+                  <a
+                     href="/#"
+                     className="auth-btn auth-btn_login mobile-hidden">
                      Войти
                   </a>
                   <a
-                     href=""
+                     href="/#"
                      className="auth-btn auth-btn_register mobile-hidden">
                      Регистрация
                   </a>

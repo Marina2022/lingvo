@@ -2,8 +2,6 @@ import { coursesActionTypes } from "./courses.types";
 import coursesApi from "./courses.api";
 
 import handleAJAXError from "../../utilities/handleAJAXError.utility";
-import { topicsActionTypes } from "../topics/topics.types";
-import topicsApi from "../topics/topics.api";
 
 //ACTIONS FOR GETTING COURSES
 const getCoursesStart = () => ({
@@ -21,23 +19,23 @@ const getCoursesSuccess = (
    publishedCoursesCount,
    draftCoursesCount,
 });
-const getCoursesFailure = (error) => ({
-   type: coursesActionTypes.GET_COURSES_FAILURE,
-   payload: error,
-});
-
-//ACTIONS FOR CREATING A COURSE
-const createCourseStart = () => ({
-   type: coursesActionTypes.CREATE_COURSE_START,
-});
-const createCourseSuccess = (data) => ({
-   type: coursesActionTypes.CREATE_COURSE_SUCCESS,
-   payload: data,
-});
-const createCourseFailure = (error) => ({
-   type: coursesActionTypes.CREATE_COURSE_SUCCESS,
-   payload: error,
-});
+// const getCoursesFailure = (error) => ({
+//    type: coursesActionTypes.GET_COURSES_FAILURE,
+//    payload: error,
+// });
+//
+// //ACTIONS FOR CREATING A COURSE
+// const createCourseStart = () => ({
+//    type: coursesActionTypes.CREATE_COURSE_START,
+// });
+// const createCourseSuccess = (data) => ({
+//    type: coursesActionTypes.CREATE_COURSE_SUCCESS,
+//    payload: data,
+// });
+// const createCourseFailure = (error) => ({
+//    type: coursesActionTypes.CREATE_COURSE_SUCCESS,
+//    payload: error,
+// });
 
 //GET TOPICS ASYNC
 export const getCoursesAsync = () => async (dispatch) => {
