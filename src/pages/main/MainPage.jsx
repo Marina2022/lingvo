@@ -15,7 +15,7 @@ import Slider1 from "../../assets/images/main/slider1.png.webp";
 import Student1 from "../../assets/images/main/student1.png";
 import Student2 from "../../assets/images/main/student2.png";
 import Student3 from "../../assets/images/main/student3.png";
-import Student4 from "../../assets/images/main/student4.png";
+
 
 const MainPage = () => {
    const settings = {
@@ -108,7 +108,7 @@ const MainPage = () => {
                         />
                      </svg>
                   </div>
-                  <a className="landing-header-hamburger" href="#">
+                  <a className="landing-header-hamburger" href="/#">
                      <span className="flex-column">
                         <svg
                            width="23"
@@ -187,7 +187,7 @@ const MainPage = () => {
                   Превращаем посты в <b>уникальный</b> учебный материал Делаем
                   полезные публикации <b>окупаемыми</b>
                </p>
-               <a href="#" className="btn-blue">
+               <a href="/#" className="btn-blue">
                   Попробовать бесплатно
                </a>
             </div>
@@ -456,7 +456,7 @@ const MainPage = () => {
                   </div>
                </div>
                <div className="landing-tariff__text">Не нашли подходящий? </div>
-               <a href="#" className="landing-link">
+               <a href="/#" className="landing-link">
                   Давайте обсудим индивидуальный
                </a>
             </div>
@@ -566,11 +566,11 @@ const MainPage = () => {
             <div className="landing-container">
                <div className="landing-h2">Отзывы</div>
                <div className="review-tabs">
-                  <a href="#" className="active">
+                  <a href="/#" className="active">
                      Все
                   </a>
-                  <a href="#">Преподаватели</a>
-                  <a href="#">Ученики</a>
+                  <a href="/#">Преподаватели</a>
+                  <a href="/#">Ученики</a>
                </div>
                <div className="review-wrapper">
                   <div className="review-item">
@@ -859,17 +859,17 @@ const MainPage = () => {
                </div>
                <ul className="landing-footer__menu">
                   <li>
-                     <a href="#" className="btn">
+                     <a href="/#" className="btn">
                         Ответы на вопросы
                      </a>
                   </li>
                   <li>
-                     <a href="#" className="btn">
+                     <a href="/#" className="btn">
                         Тарифы
                      </a>
                   </li>
                   <li>
-                     <a href="#" className="btn">
+                     <a href="/#" className="btn">
                         Контакты
                      </a>
                   </li>
@@ -878,7 +878,7 @@ const MainPage = () => {
                   <a href="mailto:hello@lingvoinsta.ru" className="btn">
                      hello@lingvoinsta.ru
                   </a>
-                  <a href="#" className="btn">
+                  <a href="/#" className="btn">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="54"
@@ -894,7 +894,7 @@ const MainPage = () => {
                            fill="black"></path>{" "}
                      </svg>
                   </a>
-                  <a href="#" className="btn">
+                  <a href="/#" className="btn">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="78"
@@ -924,7 +924,7 @@ const MainPage = () => {
                         </defs>{" "}
                      </svg>
                   </a>
-                  <a href="#" className="btn">
+                  <a href="/#" className="btn">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="70"

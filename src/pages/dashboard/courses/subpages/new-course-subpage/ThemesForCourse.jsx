@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS
-import Tab from "components/tab/Tab.component";
+
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../../components/grid-item/GridItem.component";
 import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Form from "../../../../../components/form/Form.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
-import Select from "../../../../../components/select/Select.component";
+
 import { Switch } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
-import plusIcon from "../../../../../assets/images/topics/plus.png";
 import Checkbox from "react-custom-checkbox";
 
 import Pagination from "../../components/Pagination/Pagination";

@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Switch, Route, Redirect } from "react-router-dom";
 //ROUTES
 import AuthRoutes from "./pages/auth/AuthPages";
 import DashbaordRoutes from "./pages/dashboard/DashboardPages";
-import MainPage from "./pages/main/MainPage";
+
 //ACTIONS
 import { getLanguagesListAsync } from "redux/common/common.actions";
 import "./App.scss";
-import dashboardRoutes from "./pages/dashboard-routes";
+
 
 function App(props) {
    const { token, getLanguagesListAsync } = props;

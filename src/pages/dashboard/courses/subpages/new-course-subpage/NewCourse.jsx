@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS

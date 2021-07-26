@@ -2,7 +2,7 @@ import React from "react";
 
 const CourseItem = (props) => {
    return (
-      <a className="course-item" href="#">
+      <a className="course-item" href="/#">
          {props.courseStatus && (
             <div className="course-item__status">Опубликован</div>
          )}

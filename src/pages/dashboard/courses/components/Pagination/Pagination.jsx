@@ -6,25 +6,25 @@ const Pagination = () => {
    return (
       <ul className="pagination">
          <li>
-            <a href="#"> &#60; </a>
+            <a href="/#"> &#60; </a>
          </li>
          <li>
-            <a className="active" href="#">
+            <a className="active" href="/#">
                {" "}
                1{" "}
             </a>
          </li>
          <li>
-            <a href="#"> 2 </a>
+            <a href="/#"> 2 </a>
          </li>
          <li>
-            <a href="#"> 3 </a>
+            <a href="/#"> 3 </a>
          </li>
          <li>
-            <a href="#"> 4 </a>
+            <a href="/#"> 4 </a>
          </li>
          <li>
-            <a href="#"> &#62; </a>
+            <a href="/#"> &#62; </a>
          </li>
       </ul>
    );

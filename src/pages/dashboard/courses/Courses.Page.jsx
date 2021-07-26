@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+
 //BASE COMPONENTS
-import Tab from "components/tab/Tab.component";
+
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
 
@@ -14,7 +14,7 @@ import Pagination from "./components/Pagination/Pagination";
 import { getCoursesAsync } from "../../../redux/courses/courses.actions";
 
 const CoursesPage = (props) => {
-   const { getCoursesAsync, publishedCoursesCount, draftCoursesCount } = props;
+   const { getCoursesAsync } = props;
 
    const history = useHistory();
    useEffect(() => {
