@@ -9,8 +9,6 @@ import GridContainer from "../../../../../components/grid-container/GridContaine
 import GridItem from "../../../../../components/grid-item/GridItem.component";
 import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
 
-import { Switch } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "react-custom-checkbox";
 
 import Pagination from "../../components/Pagination/Pagination";
@@ -20,7 +18,7 @@ import "./_newcourse.scss";
 const ThemesForCourse = () => {
    const history = useHistory();
 
-   const [isCoursePublic, setCoursePublic] = useState(false);
+   // const [isCoursePublic, setCoursePublic] = useState(false);
 
    // const changeCourseStatus = () => {
    //    setCoursePublic(!isCoursePublic);
