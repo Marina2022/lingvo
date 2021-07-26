@@ -16,7 +16,6 @@ import Student1 from "../../assets/images/main/student1.png";
 import Student2 from "../../assets/images/main/student2.png";
 import Student3 from "../../assets/images/main/student3.png";
 
-
 const MainPage = () => {
    const settings = {
       dots: false,

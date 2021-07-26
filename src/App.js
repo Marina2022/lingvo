@@ -8,7 +8,6 @@ import DashbaordRoutes from "./pages/dashboard/DashboardPages";
 import { getLanguagesListAsync } from "redux/common/common.actions";
 import "./App.scss";
 
-
 function App(props) {
    const { token, getLanguagesListAsync } = props;
    const View = token ? <DashbaordRoutes /> : <AuthRoutes />;
