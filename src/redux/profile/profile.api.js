@@ -8,7 +8,7 @@ const profileApi = {
       console.log(params);
       return axios.put("users/link", null, { params: { ...params } });
    },
-   subscribeLink: (params) => axios.put("subscribes/link", { ...params }),
+   subscribeLink: (params) => axios.get("subscribes/link", { ...params }),
 
    // removePrevAvatar: (params) => axios.delete("avatars", { ...params }),
 };
