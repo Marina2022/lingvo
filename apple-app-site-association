@@ -1,0 +1,16 @@
+""
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "5K78ZBR4UQ.com.lingvonavi.lingvoinstaa",
+        "paths": [
+          "NOT /_/*",
+          "/*"
+        ]
+      }
+    ]
+  }
+}
+""
