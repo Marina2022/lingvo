@@ -202,48 +202,76 @@ const ProfilePage = (props) => {
                            </GridItem>
                         </GridContainer>
                         <h4>О себе</h4>
-                        <GridItem xs={12} sm={12} md={12} lg={12}>
-                           <Input
-                              name="name"
-                              value={inputState.name || ""}
-                              error={invalidMessages}
-                              onChange={handleInputChange}
-                              onInvalid={handleInvalidMessage}
-                              type="text"
-                              label="Имя"
-                              placeholder="Имя"
-                              className="p-b__1"
-                              required
-                           />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12} lg={12}>
-                           <Input
-                              name="nickname"
-                              value={inputState.nickname || ""}
-                              error={invalidMessages}
-                              onChange={handleInputChange}
-                              onInvalid={handleInvalidMessage}
-                              type="text"
-                              label="Ник"
-                              placeholder="Ник"
-                              className="p-b__1"
-                              required
-                           />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={12} lg={12}>
-                           <TextArea
-                              name="bio"
-                              value={inputState.bio}
-                              error={invalidMessages}
-                              onChange={handleInputChange}
-                              onInvalid={handleInvalidMessage}
-                              label="Bio"
-                              placeholder="Bio"
-                              minRows={2}
-                              className="p-b__1"
-                              required
-                           />
-                        </GridItem>
+                        <GridContainer className="flex-vertical-center">
+                           <GridItem xs={12} sm={12} md={8} lg={8}>
+                              <Input
+                                 name="name"
+                                 value={inputState.name || ""}
+                                 error={invalidMessages}
+                                 onChange={handleInputChange}
+                                 onInvalid={handleInvalidMessage}
+                                 type="text"
+                                 label="Имя"
+                                 placeholder="Имя"
+                                 className="p-b__1"
+                                 required
+                              />
+                           </GridItem>
+                           <GridItem xs={12} sm={12} md={4} lg={4}>
+                              <Button
+                                 onClick={onSaveClick}
+                                 isLoading={updateUserLoading}>
+                                 Сохранить
+                              </Button>
+                           </GridItem>
+                        </GridContainer>
+                        <GridContainer className="flex-vertical-center">
+                           <GridItem xs={12} sm={12} md={8} lg={8}>
+                              <Input
+                                  name="nickname"
+                                  value={inputState.nickname || ""}
+                                  error={invalidMessages}
+                                  onChange={handleInputChange}
+                                  onInvalid={handleInvalidMessage}
+                                  type="text"
+                                  label="Ник"
+                                  placeholder="Ник"
+                                  className="p-b__1"
+                                  required
+                              />
+                           </GridItem>
+                           <GridItem xs={12} sm={12} md={4} lg={4}>
+                              <Button
+                                  onClick={onSaveClick}
+                                  isLoading={updateUserLoading}>
+                                 Сохранить
+                              </Button>
+                           </GridItem>
+                        </GridContainer>
+
+                        <GridContainer className="flex-vertical-center">
+                           <GridItem xs={12} sm={12} md={8} lg={8}>
+                              <TextArea
+                                  name="bio"
+                                  value={inputState.bio}
+                                  error={invalidMessages}
+                                  onChange={handleInputChange}
+                                  onInvalid={handleInvalidMessage}
+                                  label="Bio"
+                                  placeholder="Bio"
+                                  minRows={2}
+                                  className="p-b__1"
+                                  required
+                              />
+                           </GridItem>
+                           <GridItem xs={12} sm={12} md={4} lg={4}>
+                              <Button
+                                  onClick={onSaveClick}
+                                  isLoading={updateUserLoading}>
+                                 Сохранить
+                              </Button>
+                           </GridItem>
+                        </GridContainer>
                         <div className="separator" />
                         <h4>Социальные сети</h4>
                         {/*{linksList.map((link, idx) => {*/}
@@ -387,13 +415,13 @@ const ProfilePage = (props) => {
                            </GridItem>
                         </GridContainer>
                         <GridContainer>
-                           <GridItem xs={2} sm={2} md={2} lg={2}>
-                              <Button
-                                 onClick={onSaveClick}
-                                 isLoading={updateUserLoading}>
-                                 Сохранить
-                              </Button>
-                           </GridItem>
+                           {/*<GridItem xs={2} sm={2} md={2} lg={2}>*/}
+                           {/*   <Button*/}
+                           {/*      onClick={onSaveClick}*/}
+                           {/*      isLoading={updateUserLoading}>*/}
+                           {/*      Сохранить*/}
+                           {/*   </Button>*/}
+                           {/*</GridItem>*/}
                            <GridItem xs={2} sm={2} md={2} lg={2}>
                               <Button className="cancell-button">Отмена</Button>
                            </GridItem>
