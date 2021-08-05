@@ -228,22 +228,22 @@ const ProfilePage = (props) => {
                         <GridContainer className="flex-vertical-center">
                            <GridItem xs={12} sm={12} md={8} lg={8}>
                               <Input
-                                  name="nickname"
-                                  value={inputState.nickname || ""}
-                                  error={invalidMessages}
-                                  onChange={handleInputChange}
-                                  onInvalid={handleInvalidMessage}
-                                  type="text"
-                                  label="Ник"
-                                  placeholder="Ник"
-                                  className="p-b__1"
-                                  required
+                                 name="nickname"
+                                 value={inputState.nickname || ""}
+                                 error={invalidMessages}
+                                 onChange={handleInputChange}
+                                 onInvalid={handleInvalidMessage}
+                                 type="text"
+                                 label="Ник"
+                                 placeholder="Ник"
+                                 className="p-b__1"
+                                 required
                               />
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                  onClick={onSaveClick}
-                                  isLoading={updateUserLoading}>
+                                 onClick={onSaveClick}
+                                 isLoading={updateUserLoading}>
                                  Сохранить
                               </Button>
                            </GridItem>
@@ -252,22 +252,22 @@ const ProfilePage = (props) => {
                         <GridContainer className="flex-vertical-center">
                            <GridItem xs={12} sm={12} md={8} lg={8}>
                               <TextArea
-                                  name="bio"
-                                  value={inputState.bio}
-                                  error={invalidMessages}
-                                  onChange={handleInputChange}
-                                  onInvalid={handleInvalidMessage}
-                                  label="Bio"
-                                  placeholder="Bio"
-                                  minRows={2}
-                                  className="p-b__1"
-                                  required
+                                 name="bio"
+                                 value={inputState.bio}
+                                 error={invalidMessages}
+                                 onChange={handleInputChange}
+                                 onInvalid={handleInvalidMessage}
+                                 label="Bio"
+                                 placeholder="Bio"
+                                 minRows={2}
+                                 className="p-b__1"
+                                 required
                               />
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                  onClick={onSaveClick}
-                                  isLoading={updateUserLoading}>
+                                 onClick={onSaveClick}
+                                 isLoading={updateUserLoading}>
                                  Сохранить
                               </Button>
                            </GridItem>
