@@ -24,18 +24,18 @@ const getCoursesSuccess = (
 //    payload: error,
 // });
 //
-// //ACTIONS FOR CREATING A COURSE
-// const createCourseStart = () => ({
-//    type: coursesActionTypes.CREATE_COURSE_START,
-// });
-// const createCourseSuccess = (data) => ({
-//    type: coursesActionTypes.CREATE_COURSE_SUCCESS,
-//    payload: data,
-// });
-// const createCourseFailure = (error) => ({
-//    type: coursesActionTypes.CREATE_COURSE_SUCCESS,
-//    payload: error,
-// });
+//ACTIONS FOR CREATING A COURSE
+const createCourseStart = () => ({
+   type: coursesActionTypes.CREATE_COURSE_START,
+});
+const createCourseSuccess = (data) => ({
+   type: coursesActionTypes.CREATE_COURSE_SUCCESS,
+   payload: data,
+});
+const createCourseFailure = (error) => ({
+   type: coursesActionTypes.CREATE_COURSE_SUCCESS,
+   payload: error,
+});
 
 //GET TOPICS ASYNC
 export const getCoursesAsync = () => async (dispatch) => {
@@ -63,5 +63,29 @@ export const getCoursesAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getCoursesSuccess(message));
+   }
+};
+
+//CREATE TOPIC ASYNC
+export const createCoursesAsync = (formParams, history) => async (dispatch) => {
+   dispatch(createCourseStart());
+   // const tags = formParams.tags.map((item) => {
+   //    return { name: item };
+   // });
+   const params = {
+      ...formParams,
+      createdDate: "2021-02-18T05:10:14.065Z",
+      published: "2021-02-18T05:10:14.065Z",
+      tags: [],
+   };
+
+   try {
+      const resp = await coursesApi.createCourse(params);
+      dispatch(createCourseSuccess({ ...resp.data }));
+      dispatch(getCoursesAsync());
+      history.push("/courses");
+   } catch (error) {
+      const message = handleAJAXError(error);
+      dispatch(createCourseFailure(message));
    }
 };

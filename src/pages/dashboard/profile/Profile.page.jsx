@@ -120,7 +120,7 @@ const ProfilePage = (props) => {
       e.preventDefault();
       updateLinkAsync({
          ownerId: currentUserInfo?.id,
-         socialNetName: linkType,
+         socialNetName: linkType[0].toUpperCase() + linkType.slice(1),
          url: inputState[linkType],
       });
    };
