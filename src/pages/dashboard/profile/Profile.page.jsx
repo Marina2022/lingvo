@@ -119,7 +119,7 @@ const ProfilePage = (props) => {
    const onLinkUpdate = (e, linkType) => {
       e.preventDefault();
       updateLinkAsync({
-         ownerId: currentUserInfo?.id,
+         userId: currentUserInfo?.id,
          socialNetName: linkType[0].toUpperCase() + linkType.slice(1),
          url: inputState[linkType],
       });
@@ -331,8 +331,6 @@ const ProfilePage = (props) => {
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                 disabled={!inputState.vkontakte}
-                                 isLoading={updateLinkLoading}
                                  onClick={(e) => onLinkUpdate(e, "vkontakte")}
                                  className="vk-button">
                                  Сохранить
@@ -356,8 +354,6 @@ const ProfilePage = (props) => {
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                 disabled={!inputState.instagram}
-                                 isLoading={updateLinkLoading}
                                  onClick={(e) => onLinkUpdate(e, "instagram")}
                                  className="in-button">
                                  Сохранить
@@ -381,8 +377,6 @@ const ProfilePage = (props) => {
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                 disabled={!inputState.facebook}
-                                 isLoading={updateLinkLoading}
                                  onClick={(e) => onLinkUpdate(e, "facebook")}
                                  className="fb-button">
                                  Сохранить
@@ -406,8 +400,6 @@ const ProfilePage = (props) => {
                            </GridItem>
                            <GridItem xs={12} sm={12} md={4} lg={4}>
                               <Button
-                                 disabled={!inputState.telegram}
-                                 isLoading={updateLinkLoading}
                                  onClick={(e) => onLinkUpdate(e, "telegram")}
                                  className="tg-button">
                                  Сохранить
