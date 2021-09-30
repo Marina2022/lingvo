@@ -152,11 +152,11 @@ const ProfilePage = (props) => {
         (state) => state.socialNet.value === "Instagram"
       ).url;
     } catch (e) {}
-    try {
-      inputState.facebook = inputState.links.find(
-        (state) => state.socialNet.value === "Facebook"
-      ).url;
-    } catch (e) {}
+    // try {
+    //   inputState.facebook = inputState.links.find(
+    //     (state) => state.socialNet.value === "Facebook"
+    //   ).url;
+    // } catch (e) {}
     try {
       inputState.telegram = inputState.links.find(
         (state) => state.socialNet.value === "Telegram"
@@ -351,8 +351,8 @@ const ProfilePage = (props) => {
                       onChange={handleInputChange}
                       onInvalid={handleInvalidMessage}
                       type="text"
-                      label="Vkontakte"
-                      placeholder="Vkontakte"
+                      label="TikTok"
+                      placeholder="Tiktok"
                       className="p-b__1"
                       required
                     />
@@ -390,7 +390,7 @@ const ProfilePage = (props) => {
                     </Button>
                   </GridItem>
                 </GridContainer>
-                <GridContainer className="flex-vertical-center">
+                {/* <GridContainer className="flex-vertical-center">
                   <GridItem xs={12} sm={12} md={8} lg={8}>
                     <Input
                       name="facebook"
@@ -413,7 +413,7 @@ const ProfilePage = (props) => {
                       Сохранить
                     </Button>
                   </GridItem>
-                </GridContainer>
+                </GridContainer> */}
                 <GridContainer className="flex-vertical-center">
                   <GridItem xs={12} sm={12} md={8} lg={8}>
                     <Input
