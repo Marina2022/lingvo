@@ -15,6 +15,7 @@ import topicsReducer from "./topics/topics.reducer";
 import commonReducer from "./common/common.reducer";
 import unitsReducer from "./units/units.reducer";
 import coursesReducer from "./courses/courses.reducer";
+import draftReducer from "./drafts/drafts.reducer";
 
 const rootReducer = combineReducers({
    auth: persistReducer(authPersistConfig, authReducer),
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
    common: commonReducer,
    units: unitsReducer,
    courses: persistReducer(coursesPersistConfig, coursesReducer),
+   drafts: draftReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

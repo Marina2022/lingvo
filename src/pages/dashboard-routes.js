@@ -3,6 +3,7 @@ import TopicPage from "./dashboard/topics/Topics.page";
 import ProfilePage from "./dashboard/profile/Profile.page";
 import CoursesPage from "./dashboard/courses/Courses.Page";
 import NewCoursePage from "./dashboard/courses/subpages/new-course-subpage/NewCourse";
+import EditCoursePage from "./dashboard/courses/subpages/new-course-subpage/Edit.ViewCourse";
 import ThemesForCourse from "./dashboard/courses/subpages/new-course-subpage/ThemesForCourse";
 
 //SUBPAGES
@@ -18,6 +19,10 @@ const dashboardRoutes = [
    {
       component: NewCoursePage,
       path: "/new-course",
+   },
+   {
+      component: EditCoursePage,
+      path: "/course/:id",
    },
    {
       component: ThemesForCourse,

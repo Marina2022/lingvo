@@ -12,16 +12,18 @@ module.exports = {
          jsx: true,
       },
    },
-   plugins: ["prettier", "react-hooks"],
+   plugins: ["react-hooks"],
    extends: [
       "eslint:recommended",
       "plugin:react/recommended",
-      "plugin:prettier/recommended",
+      // "plugin:prettier/recommended",
       "react-app",
    ],
    rules: {
       "react/prop-types": 0,
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      // "prettier/prettier": 0,
+      "no-empty": 0,
    },
 };

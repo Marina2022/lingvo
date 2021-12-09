@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS
@@ -14,49 +14,20 @@ import Checkbox from "react-custom-checkbox";
 import Pagination from "../../components/Pagination/Pagination";
 
 import "./_newcourse.scss";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ThemesForCourse = () => {
    const history = useHistory();
+   const dispatch = useDispatch();
+   const { nativeLanguageId, foreignLanguageId } = useSelector(
+      (state) => state.drafts
+   );
+   const { publishedTopics } = useSelector((state) => state.topics);
 
-   // const [isCoursePublic, setCoursePublic] = useState(false);
-
-   // const changeCourseStatus = () => {
-   //    setCoursePublic(!isCoursePublic);
-   // };
-   // const AntSwitch = withStyles((theme) => ({
-   //    root: {
-   //       width: 28,
-   //       height: 16,
-   //       padding: 0,
-   //       display: "flex",
-   //    },
-   //    switchBase: {
-   //       padding: 2,
-   //       color: "#FFFFFF",
-   //       "&$checked": {
-   //          transform: "translateX(12px)",
-   //          color: theme.palette.common.white,
-   //          "& + $track": {
-   //             opacity: 1,
-   //             backgroundColor: theme.palette.primary.main,
-   //             borderColor: theme.palette.primary.main,
-   //          },
-   //       },
-   //    },
-   //    thumb: {
-   //       width: 12,
-   //       height: 12,
-   //       boxShadow: "none",
-   //    },
-   //    track: {
-   //       border: `1px solid #CFD8DF`,
-   //       borderRadius: 16 / 2,
-   //       opacity: 1,
-   //       backgroundColor: "#CFD8DF",
-   //    },
-   //    checked: {},
-   // }))(Switch);
-
+   const [topics, setTopics] = useState(
+      useSelector((state) => state.drafts.topics)
+   );
    return (
       <div className="new-topic-subpage">
          <GridContainer>
@@ -76,38 +47,62 @@ const ThemesForCourse = () => {
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}></GridItem>
             <div className="course-theme-wrapper">
-               <div className="course-theme-item">
-                  <div className="course-theme-item__date">12 мар 2019</div>
-                  <div className="course-theme-item__title">
-                     Holidays and traditions of different countries
-                  </div>
-                  <div className="course-theme-item__langs">
-                     Русский — Английский
-                  </div>
+               {publishedTopics
+                  .filter(
+                     (t) =>
+                        t.nativeLanguage.id == nativeLanguageId + 1 &&
+                        t.foreignLanguage.id == foreignLanguageId + 1
+                  )
+                  .map((topic) => (
+                     <div className="course-theme-item" key={topic.id}>
+                        <div className="course-theme-item__date">
+                           {topic.published}
+                        </div>
+                        <div className="course-theme-item__title">
+                           {topic.text}
+                        </div>
+                        <div className="course-theme-item__langs">
+                           {`${topic.nativeLanguage.value} — ${topic.foreignLanguage.value}`}
+                        </div>
 
-                  <Checkbox
-                     className="custom-checkbox"
-                     checked={false}
-                     icon={
-                        <svg
-                           width="15"
-                           height="12"
-                           viewBox="0 0 15 12"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                           <path
-                              d="M1 4.79995L5.8 9.59995L14.2 1.19995"
-                              stroke="white"
-                              strokeWidth="2"
-                           />
-                        </svg>
-                     }
-                     backgroundColor="red"
-                     borderColor="transparent"
-                     borderRadius={6}
-                     size={24}
-                  />
-               </div>
+                        <Checkbox
+                           className="custom-checkbox"
+                           checked={
+                              topics.filter((t) => t.id === topic.id).length !=
+                              0
+                                 ? true
+                                 : false
+                           }
+                           onChange={(e) => {
+                              if (!e) {
+                                 setTopics(
+                                    topics.filter((t) => t.id != topic.id)
+                                 );
+                              } else {
+                                 setTopics([...topics, topic]);
+                              }
+                           }}
+                           icon={
+                              <svg
+                                 width="15"
+                                 height="12"
+                                 viewBox="0 0 15 12"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <path
+                                    d="M1 4.79995L5.8 9.59995L14.2 1.19995"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                 />
+                              </svg>
+                           }
+                           backgroundColor="red"
+                           borderColor="transparent"
+                           borderRadius={6}
+                           size={24}
+                        />
+                     </div>
+                  ))}
             </div>
          </GridContainer>
          <div className="courses-theme-bottom">
@@ -118,7 +113,18 @@ const ThemesForCourse = () => {
                   className="settings-panel__plus-icon">
                   Создать тему
                </Button>
-               <Button className="btn-theme">Вставить тему</Button>
+               <Button
+                  className="btn-theme"
+                  onClick={() => {
+                     console.log(topics);
+                     dispatch({
+                        type: "ADD_TOPICS_TO_COURSE",
+                        payload: topics,
+                     });
+                     history.goBack();
+                  }}>
+                  Вставить тему
+               </Button>
             </div>
          </div>
          <GridItem
