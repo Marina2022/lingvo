@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS
@@ -16,22 +16,11 @@ import { getCoursesAsync } from "../../../redux/courses/courses.actions";
 const CoursesPage = (props) => {
    const { getCoursesAsync } = props;
 
+   const { publishedCourses } = useSelector((state) => state.courses);
    const history = useHistory();
+   const dispatch = useDispatch();
    useEffect(() => {
       getCoursesAsync();
-      // axios
-      //     .get("https://dev.insta.lingvonavi.com/api/v1/courses", {
-      //        headers: {
-      //           Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYXN0eXcxMTMwQHJhbWJsZXIucnUiLCJleHAiOjE2MjcwODUwOTB9.TvGPaHBS8ihYPZevgZqg96k1eLpUwa7OwqrvqpGp_bM`, //here remove + in template litereal
-      //        },
-      //     })
-      //     .then(res => {
-      //        console.log(res)
-      //     })
-      //     .catch(error => {
-      //        console.log(error)
-      //     })
-      //eslint-disable-next-line
    }, []);
    return (
       <div className="courses-page">
@@ -43,14 +32,19 @@ const CoursesPage = (props) => {
          </div>
          <div className="settings-panel">
             <Button
-               onClick={() => history.push("/new-course")}
+               onClick={() => {
+                  dispatch({
+                     type: "CLEAR_DRAFTS",
+                  });
+                  history.push("/new-course");
+               }}
                className="settings-panel__plus-icon"
                src={plusIcon}>
                Новый курс
             </Button>
          </div>
          <div className="courses-wrapper">
-            <CourseItem
+            {/* <CourseItem
                courseName="Курс 1"
                courseStatus={true}
                courseInfo="Короткая информация о курсе"
@@ -147,7 +141,38 @@ const CoursesPage = (props) => {
                courseInfo="Короткая информация о курсе"
                courseTheme="10 тем"
                coursePrice="1000"
-            />
+            /> */}
+            {publishedCourses.map((course) => (
+               <CourseItem
+                  courseName={course.name}
+                  courseStatus={course.shared}
+                  courseInfo="Короткая информация о курсе"
+                  courseTheme={
+                     course.posts.length == 1
+                        ? "1 тема"
+                        : `${course.posts.length} тем`
+                  }
+                  coursePrice={course.cost}
+                  onClick={() => {
+                     dispatch({
+                        type: "SAVE_DRAFT_COURSE",
+                        payload: {
+                           author: course.author,
+                           id: course.id,
+                           name: course.name,
+                           cost: course.cost,
+                           nativeLanguageId: course.nativeLanguage.id - 1,
+                           foreignLanguageId: course.foreignLanguage.id - 1,
+                           shared: course.shared,
+                           topics: course.posts,
+                           current: course,
+                        },
+                     });
+                     history.push(`/course/${course.id}`);
+                  }}
+                  key={course.id}
+               />
+            ))}
          </div>
          <Pagination />
       </div>

@@ -73,7 +73,6 @@ const Header = (props) => {
                menuItems={dropdownMenuItems}
                name={currentUserInfo?.name}
             />
-            ≠≠≠≠
          </div>
       </header>
    );

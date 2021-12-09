@@ -10,13 +10,13 @@
 @import "dashboard/layout/layout.styles";
 
 .dashboard-page {
-  > div {
-    background: #F0F5F5;
-    padding: 15px 80px 80px 80px;
-    //min-height: 85%;
+   > div {
+      background: #f0f5f5;
+      padding: 15px 80px 80px 80px;
+      //min-height: 85%;
 
-    @media only screen and (max-width: 700px) {
-      padding: 10px !important;
-    }
-  }
+      @media only screen and (max-width: 700px) {
+         padding: 10px !important;
+      }
+   }
 }

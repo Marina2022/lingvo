@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-
+import axios from "axios";
 //BASE COMPONENTS
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
@@ -18,12 +18,15 @@ import NewCourseServices from "./NewCourse.services";
 import plusIcon from "../../../../../assets/images/topics/plus.png";
 
 import "./_newcourse.scss";
-import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
+import {
+   createCoursesAsync,
+   getCoursesAsync,
+} from "../../../../../redux/courses/courses.actions";
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-const NewCoursePage = (props) => {
+const EditCoursePage = (props) => {
    const { createCoursesAsync, currentUserInfo } = props;
    const languagesList = useSelector((state) => state.common.languagesList);
    const history = useHistory();
@@ -34,13 +37,12 @@ const NewCoursePage = (props) => {
       useSelector((state) => state.drafts)
    );
    const { generateLanguagesOptions } = NewCourseServices;
-
    const languageOptions = generateLanguagesOptions(languagesList);
-
+   const id = window.location.href.split("/")[4];
    const changeCourseStatus = () => {
       setInputState({ ...inputState, shared: !inputState.shared });
    };
-
+   const current = useSelector((state) => state.drafts.current);
    const [formInitState] = useState({
       cost: 1000,
       foreignLanguageId: 1,
@@ -88,26 +90,29 @@ const NewCoursePage = (props) => {
    const onSubmit = (event) => {
       event.preventDefault();
       let ids = [];
-      // console.log(currentUserInfo);
-      // console.log(inputState.name);
-      // console.log(inputState.cost);
-      // console.log(inputState.nativeLanguageId);
-      // console.log(inputState.foreignLanguageId);
-      // console.log(inputState.shared);
+      //   console.log(currentUserInfo);
+      //   console.log(inputState.name);
+      //   console.log(inputState.cost);
+      //   console.log(inputState.nativeLanguageId);
+      //   console.log(inputState.foreignLanguageId);
+      //   console.log(inputState.shared);
       topics.forEach((element) => {
          ids.push(element.id);
       });
-      // console.log(ids);
-      createCoursesAsync(
-         {
-            ...formInitState,
-            ...inputState,
-            nativeLanguageId: inputState.nativeLanguageId + 1,
-            foreignLanguageId: inputState.foreignLanguageId + 1,
-            postIds: ids,
-         },
-         history
-      );
+      //   console.log(ids);
+      //   console.log(id);
+      axios.put(`/courses/${id}`, {
+         ...current,
+         id: id,
+         cost: inputState.cost,
+         author: inputState.author,
+         name: inputState.name,
+         nativeLanguage: languageOptions[inputState.nativeLanguageId],
+         foreignLanguage: languageOptions[inputState.foreignLanguageId],
+         posts: topics,
+      });
+      history.push("/courses");
+      window.location.reload(false);
       // if (id) {
       //    //  editTopicAsync(id, inputState, history, isTagsUpdated);
       // } else {
@@ -120,7 +125,7 @@ const NewCoursePage = (props) => {
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <BackArrow text="Курсы" />
-               <h1>Создание курса</h1>
+               <h1>{inputState.name}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
@@ -291,4 +296,4 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(createCoursesAsync(params, history)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCoursePage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditCoursePage);
