@@ -21,7 +21,7 @@ module.exports = {
    ],
    rules: {
       "react/prop-types": 0,
-      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/rules-of-hooks": "warn",
       "react-hooks/exhaustive-deps": "warn",
       // "prettier/prettier": 0,
       "no-empty": 0,
