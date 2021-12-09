@@ -6,7 +6,7 @@ const handleAJAXError = (error, messageName) => {
    if (data) {
       for (const arrMessage of Object.values(data)) {
          errorMessageArr.push(arrMessage);
-      }
+      }  
    }
    const errorMessage = errorMessageArr.flat().join("\n• ");
    if (errorMessage) {
