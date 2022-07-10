@@ -5,16 +5,16 @@ import "./_mainPage.styles.scss";
 
 //images
 
-import Screen1 from "../../assets/images/main/screen1.png";
-import Screen2 from "../../assets/images/main/screen2.png";
-import Screen3 from "../../assets/images/main/screen3.png";
-import Screen4 from "../../assets/images/main/screen4.png";
-import Screen5 from "../../assets/images/main/screen5.png";
+import Screen1 from "assets/images/main/screen1.png";
+import Screen2 from "assets/images/main/screen2.png";
+import Screen3 from "assets/images/main/screen3.png";
+import Screen4 from "assets/images/main/screen4.png";
+import Screen5 from "assets/images/main/screen5.png";
 
-import Slider1 from "../../assets/images/main/slider1.png.webp";
-import Student1 from "../../assets/images/main/student1.png";
-import Student2 from "../../assets/images/main/student2.png";
-import Student3 from "../../assets/images/main/student3.png";
+import Slider1 from "assets/images/main/slider1.png.webp";
+import Student1 from "assets/images/main/student1.png";
+import Student2 from "assets/images/main/student2.png";
+import Student3 from "assets/images/main/student3.png";
 
 const MainPage = () => {
    const settings = {

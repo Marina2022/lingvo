@@ -13,7 +13,7 @@ import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
 import useInput from "effects/useInput.effect";
 //ACTIONS
 import { resetPasswordAsync } from "redux/auth/auth.actions";
-import GridContainer from "../../../components/grid-container/GridContainer.component";
+import GridContainer from "components/grid-container/GridContainer.component";
 
 const ResetPasswordPage = (props) => {
    const { resetPasswordAsync, resetPasswordLoading } = props;

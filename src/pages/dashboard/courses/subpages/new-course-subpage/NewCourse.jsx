@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //BASE COMPONENTS
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Form from "../../../../../components/form/Form.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
-import Select from "../../../../../components/select/Select.component";
+import GridContainer from "components/grid-container/GridContainer.component";
+import GridItem from "components/grid-item/GridItem.component";
+import BackArrow from "components/back-arrow/BackArrow.component";
+import Form from "components/form/Form.component";
+import TagsInput from "components/tags-input/TagsInput.component";
+import Select from "components/select/Select.component";
 import { Switch } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import NewCourseServices from "./NewCourse.services";
 
-import plusIcon from "../../../../../assets/images/topics/plus.png";
+import plusIcon from "assets/images/topics/plus.png";
 
 import "./_newcourse.scss";
-import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
+import { createCoursesAsync } from "redux/courses/courses.actions";
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const NewCoursePage = (props) => {
-   const { createCoursesAsync, currentUserInfo } = props;
+   const { createCoursesAsync } = props;
    const languagesList = useSelector((state) => state.common.languagesList);
    const history = useHistory();
    const dispatch = useDispatch();
    const topics = useSelector((state) => state.drafts.topics);
-   const [isCoursePublic, setCoursePublic] = useState(false);
+   useState(false);
    const [inputState, setInputState] = useState(
       useSelector((state) => state.drafts)
    );
@@ -218,7 +218,7 @@ const NewCoursePage = (props) => {
                         </Button>
                      </div>
                      <div className="new-course-themes__wrapper">
-                        {topics.length == 0 ? (
+                        {topics.length === 0 ? (
                            <p>Темы еще не добавлены</p>
                         ) : (
                            <div className="course-theme-wrapper">

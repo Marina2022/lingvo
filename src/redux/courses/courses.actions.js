@@ -1,7 +1,7 @@
 import { coursesActionTypes } from "./courses.types";
 import coursesApi from "./courses.api";
 
-import handleAJAXError from "../../utilities/handleAJAXError.utility";
+import handleAJAXError from "utilities/handleAJAXError.utility";
 
 //ACTIONS FOR GETTING COURSES
 const getCoursesStart = () => ({

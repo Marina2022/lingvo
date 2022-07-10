@@ -2,6 +2,7 @@ import React from "react";
 
 const CourseItem = (props) => {
    return (
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid
       <a className="course-item" onClick={props.onClick}>
          {props.courseStatus && (
             <div className="course-item__status">Опубликован</div>

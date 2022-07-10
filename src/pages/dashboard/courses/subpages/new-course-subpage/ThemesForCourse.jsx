@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 
 import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import GridContainer from "components/grid-container/GridContainer.component";
+import GridItem from "components/grid-item/GridItem.component";
+import BackArrow from "components/back-arrow/BackArrow.component";
 
 import Checkbox from "react-custom-checkbox";
 
@@ -50,8 +50,8 @@ const ThemesForCourse = () => {
                {publishedTopics
                   .filter(
                      (t) =>
-                        t.nativeLanguage.id == nativeLanguageId + 1 &&
-                        t.foreignLanguage.id == foreignLanguageId + 1
+                        t.nativeLanguage.id === nativeLanguageId + 1 &&
+                        t.foreignLanguage.id === foreignLanguageId + 1
                   )
                   .map((topic) => (
                      <div className="course-theme-item" key={topic.id}>
@@ -68,7 +68,7 @@ const ThemesForCourse = () => {
                         <Checkbox
                            className="custom-checkbox"
                            checked={
-                              topics.filter((t) => t.id === topic.id).length !=
+                              topics.filter((t) => t.id === topic.id).length !==
                               0
                                  ? true
                                  : false
@@ -76,7 +76,7 @@ const ThemesForCourse = () => {
                            onChange={(e) => {
                               if (!e) {
                                  setTopics(
-                                    topics.filter((t) => t.id != topic.id)
+                                    topics.filter((t) => t.id !== topic.id)
                                  );
                               } else {
                                  setTopics([...topics, topic]);

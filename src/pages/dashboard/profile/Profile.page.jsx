@@ -32,7 +32,6 @@ const ProfilePage = (props) => {
       updateUserAsync,
       updateUserLoading,
       updateLinkAsync,
-      updateLinkLoading,
       subscribeLinkAsync,
       appLink,
    } = props;
@@ -87,7 +86,7 @@ const ProfilePage = (props) => {
       handleInvalidMessage,
       invalidMessages,
    } = useInput({ ...formInitState });
-   const [links, setLinks] = useState(inputState.links);
+   useState(inputState.links);
 
    const avatarImg = currentUserInfo?.avatar
       ? currentUserInfo.avatar
@@ -126,7 +125,7 @@ const ProfilePage = (props) => {
       });
    };
 
-   const copyAppLink = (e) => {
+   const copyAppLink = () => {
       setIsCopied(true);
       setTimeout(() => {
          setIsCopied(false);
@@ -162,7 +161,7 @@ const ProfilePage = (props) => {
             (state) => state.socialNet.value === "Telegram"
          ).url;
       } catch (e) {}
-   }, []);
+   });
    return (
       <div className="profile-page">
          <GridContainer>

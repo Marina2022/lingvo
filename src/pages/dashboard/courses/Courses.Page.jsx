@@ -8,10 +8,10 @@ import Input from "components/input/Input.component";
 import Button from "components/button/Button.component";
 
 import "./_courses.styles.scss";
-import plusIcon from "../../../assets/images/topics/plus.png";
+import plusIcon from "assets/images/topics/plus.png";
 import CourseItem from "./components/CourseItem/CourseItem";
 import Pagination from "./components/Pagination/Pagination";
-import { getCoursesAsync } from "../../../redux/courses/courses.actions";
+import { getCoursesAsync } from "redux/courses/courses.actions";
 
 const CoursesPage = (props) => {
    const { getCoursesAsync } = props;
@@ -21,7 +21,7 @@ const CoursesPage = (props) => {
    const dispatch = useDispatch();
    useEffect(() => {
       getCoursesAsync();
-   }, []);
+   });
    return (
       <div className="courses-page">
          <div className="courses-page__heading-block">
@@ -148,7 +148,7 @@ const CoursesPage = (props) => {
                   courseStatus={course.shared}
                   courseInfo="Короткая информация о курсе"
                   courseTheme={
-                     course.posts.length == 1
+                     course.posts.length === 1
                         ? "1 тема"
                         : `${course.posts.length} тем`
                   }
