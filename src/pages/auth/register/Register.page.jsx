@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import GridItem from "../../../components/grid-item/GridItem.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { authRegisterAsync } from "redux/auth/auth.actions";
+import { authRegisterAsync } from "../../../redux/auth/auth.actions";
 
 const RegisterPage = (props) => {
    const { authRegisterAsync, isLoading } = props;
    const [errorMessage, setErrorMessage] = useState("");
 
-   const history = useHistory();
+   const navigate = useNavigate();
    const {
       inputState,
       handleInput,
@@ -38,7 +38,7 @@ const RegisterPage = (props) => {
          setErrorMessage("Пароли не совпали!");
       } else {
          delete params.rePassword;
-         authRegisterAsync(params, history);
+         authRegisterAsync(params, navigate);
          setErrorMessage("");
       }
    };
@@ -164,7 +164,7 @@ const RegisterPage = (props) => {
          <div className="register-page__footer">
             <h3>У вас уже есть аккаунт?</h3>
             <Button
-               onClick={() => history.push("/login")}
+               onClick={() => navigate("/login")}
                className="login-link__button">
                Войти
             </Button>
@@ -182,8 +182,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   authRegisterAsync: (params, history) =>
-      dispatch(authRegisterAsync(params, history)),
+   authRegisterAsync: (params, navigate) =>
+      dispatch(authRegisterAsync(params, navigate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

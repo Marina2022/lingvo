@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import DropDown from "components/drop-down/DropDown.component";
+import DropDown from "../../../../components/drop-down/DropDown.component";
 //ACTIONS
-import { userLogout, logOutAsync } from "redux/auth/auth.actions";
-import { getUserInfoAsync } from "redux/profile/profile.actions.js";
+import { userLogout, logOutAsync } from "../../../../redux/auth/auth.actions";
+import { getUserInfoAsync } from "../../../../redux/profile/profile.actions.js";
 //IMAGES
-import notificationIcon from "assets/images/header/notification-bell.png";
-import mailIcon from "assets/images/header/mail.png";
+import notificationIcon from "../../../../assets/images/header/notification-bell.png";
+import mailIcon from "../../../../assets/images/header/mail.png";
 
 const Header = (props) => {
    const {
@@ -19,7 +19,7 @@ const Header = (props) => {
       currentUserInfo,
       /*logOutAsync,*/
    } = props;
-   const history = useHistory();
+   const navigate = useNavigate();
 
    useEffect(() => {
       getUserInfoAsync();
@@ -32,7 +32,7 @@ const Header = (props) => {
    };
 
    const dropdownMenuItems = [
-      { name: "Личный кабинет", action: () => history.push("/profile") },
+      { name: "Личный кабинет", action: () => navigate("/profile") },
       { name: "Выйти", action: logout },
    ];
 
@@ -43,20 +43,20 @@ const Header = (props) => {
          </div>
          <div className="app-header__links-block">
             <NavLink
-               activeClassName="app-header__links-block_active"
+               className="app-header__links-block_active"
                to="/ffffff">
                Мои классы
             </NavLink>
-            <NavLink activeClassName="app-header__links-block_active" to="/new">
+            <NavLink className="app-header__links-block_active" to="/new">
                Словарь
             </NavLink>
             <NavLink
-               activeClassName="app-header__links-block_active"
+               className="app-header__links-block_active"
                to="/topics">
                Темы
             </NavLink>
             <NavLink
-               activeClassName="app-header__links-block_active"
+               className="app-header__links-block_active"
                to="/courses">
                Курсы
             </NavLink>

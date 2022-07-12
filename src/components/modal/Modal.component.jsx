@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 
 //IMAGES
-import closeIcon from "assets/images/components/X-close.png";
+import closeIcon from "../../assets/images/components/X-close.png";
 
 const Modal = ({
    children,

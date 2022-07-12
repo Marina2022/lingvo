@@ -3,8 +3,8 @@ import ReactDropZone from "react-dropzone";
 import classNames from "classnames";
 
 //BASE COMPONENTS
-import Button from "components/button/Button.component";
-import IsVisible from "components/is-visible/IsVisible.component";
+import Button from "../../components/button/Button.component";
+import IsVisible from "../../components/is-visible/IsVisible.component";
 
 const DropZone = (props) => {
    const {

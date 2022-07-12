@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import BackArrow from "components/back-arrow/BackArrow.component";
-import Form from "components/form/Form.component";
-import TagsInput from "components/tags-input/TagsInput.component";
-import Select from "components/select/Select.component";
-import { Switch } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import Input from "../../../../../components/input/Input.component";
+import Button from "../../../../../components/button/Button.component";
+import GridContainer from "../../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import Form from "../../../../../components/form/Form.component";
+import TagsInput from "../../../../../components/tags-input/TagsInput.component";
+import Select from "../../../../../components/select/Select.component";
+import { Switch } from "@mui/material";
+import { Grid } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import NewCourseServices from "./NewCourse.services";
 
-import plusIcon from "assets/images/topics/plus.png";
+import plusIcon from "../../../../../assets/images/topics/plus.png";
 
 import "./_newcourse.scss";
-import { createCoursesAsync } from "redux/courses/courses.actions";
+import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 const NewCoursePage = (props) => {
    const { createCoursesAsync } = props;
    const languagesList = useSelector((state) => state.common.languagesList);
-   const history = useHistory();
+   const navigate = useNavigate();
    const dispatch = useDispatch();
    const topics = useSelector((state) => state.drafts.topics);
    useState(false);
@@ -106,12 +106,12 @@ const NewCoursePage = (props) => {
             foreignLanguageId: inputState.foreignLanguageId + 1,
             postIds: ids,
          },
-         history
+         navigate
       );
       // if (id) {
-      //    //  editTopicAsync(id, inputState, history, isTagsUpdated);
+      //    //  editTopicAsync(id, inputState, navigate, isTagsUpdated);
       // } else {
-      //    createCoursesAsync(formInitState, history);
+      //    createCoursesAsync(formInitState, navigate);
       // }
    };
 
@@ -210,7 +210,7 @@ const NewCoursePage = (props) => {
                                  type: "SAVE_DRAFT_COURSE",
                                  payload: inputState,
                               });
-                              history.push("/course-themes");
+                              navigate("/course-themes");
                            }}
                            className="settings-panel__plus-icon"
                            src={plusIcon}>
@@ -287,8 +287,8 @@ const mapStateToProps = (state) => {
    };
 };
 const mapDispatchToProps = (dispatch) => ({
-   createCoursesAsync: (params, history) =>
-      dispatch(createCoursesAsync(params, history)),
+   createCoursesAsync: (params, navigate) =>
+      dispatch(createCoursesAsync(params, navigate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCoursePage);

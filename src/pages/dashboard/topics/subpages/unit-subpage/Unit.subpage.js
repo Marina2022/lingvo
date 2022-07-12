@@ -1,22 +1,22 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import UnitsListCard from "components/units-list-card/UnitsListCard.components";
+import Input from "../../../../../components/input/Input.component";
+import Button from "../../../../../components/button/Button.component";
+import UnitsListCard from "../../../../../components/units-list-card/UnitsListCard.components";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../../../effects/useInput.effect";
 //ACTIONS
 import {
    getSingleTopicAsync,
    publishTopicAsync,
-} from "redux/topics/topics.actions.js";
-import { setSelectedUnit, deleteUnitAsync } from "redux/units/units.actions";
+} from "../../../../../redux/topics/topics.actions.js";
+import { setSelectedUnit, deleteUnitAsync } from "../../../../../redux/units/units.actions";
 //IMAGES
-import plusIcon from "assets/images/topics/plus.png";
+import plusIcon from "../../../../../assets/images/topics/plus.png";
 
 const UnitSubpage = (props) => {
    const {
@@ -35,7 +35,7 @@ const UnitSubpage = (props) => {
       handleInvalidMessage,
       invalidMessages,
    } = useInput();
-   const history = useHistory();
+   const navigate = useNavigate();
 
    let { id } = useParams();
 
@@ -57,14 +57,14 @@ const UnitSubpage = (props) => {
    };
 
    const publishTopic = () => {
-      publishTopicAsync(id, history);
+      publishTopicAsync(id, navigate);
    };
 
    const actionItems = [
       {
          name: "Редактировать",
          action: () =>
-            history.push(
+            navigate(
                `/topics/${singleTopicData?.id}/units/${selectedUnit?.id}/edit`
             ),
       },
@@ -91,7 +91,7 @@ const UnitSubpage = (props) => {
          <div className="unit-subpage__settings-panel">
             <Button
                onClick={() =>
-                  history.push(`/topics/${singleTopicData?.id}/units/new`)
+                  navigate(`/topics/${singleTopicData?.id}/units/new`)
                }
                className="unit-subpage__settings-panel__plus-button"
                src={plusIcon}>
@@ -137,8 +137,8 @@ const mapDispatchToProps = (dispatch) => ({
    setSelectedUnit: (unit) => dispatch(setSelectedUnit(unit)),
    deleteUnitAsync: (unitID, topicID) =>
       dispatch(deleteUnitAsync(unitID, topicID)),
-   publishTopicAsync: (topicID, history) =>
-      dispatch(publishTopicAsync(topicID, history)),
+   publishTopicAsync: (topicID, navigate) =>
+      dispatch(publishTopicAsync(topicID, navigate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UnitSubpage);

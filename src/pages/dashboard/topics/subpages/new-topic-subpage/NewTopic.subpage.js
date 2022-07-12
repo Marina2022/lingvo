@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import BackArrow from "components/back-arrow/BackArrow.component";
-import Form from "components/form/Form.component";
-import Input from "components/input/Input.component";
-import Select from "components/select/Select.component";
-import Button from "components/button/Button.component";
-import TagsInput from "components/tags-input/TagsInput.component";
+import GridContainer from "../../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import Form from "../../../../../components/form/Form.component";
+import Input from "../../../../../components/input/Input.component";
+import Select from "../../../../../components/select/Select.component";
+import Button from "../../../../../components/button/Button.component";
+import TagsInput from "../../../../../components/tags-input/TagsInput.component";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../../../effects/useInput.effect";
 //SERVICES
 import NewTopicServices from "./new-topic.services";
 //ACTIONS
@@ -21,9 +21,9 @@ import {
    createTopicAsync,
    getSingleTopicAsync,
    editTopicAsync,
-} from "redux/topics/topics.actions";
+} from "../../../../../redux/topics/topics.actions";
 //UTILITIES
-import { checkForEmptyProperties } from "utilities/helper-functions";
+import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
 const NewTopicSubpage = (props) => {
    const {
@@ -36,7 +36,7 @@ const NewTopicSubpage = (props) => {
       isTopicEditing,
    } = props;
    const { generateLanguagesOptions } = NewTopicServices;
-   const history = useHistory();
+   const navigate = useNavigate();
    let { id } = useParams();
 
    const languageOptions = generateLanguagesOptions(languagesList);
@@ -111,9 +111,9 @@ const NewTopicSubpage = (props) => {
    const onSubmit = (event) => {
       event.preventDefault();
       if (id) {
-         editTopicAsync(id, inputState, history, isTagsUpdated);
+         editTopicAsync(id, inputState, navigate, isTagsUpdated);
       } else {
-         createTopicAsync(inputState, history);
+         createTopicAsync(inputState, navigate);
       }
    };
 
@@ -128,7 +128,7 @@ const NewTopicSubpage = (props) => {
 
    const onCancell = (e) => {
       e.preventDefault();
-      history.push("/topics");
+      navigate("/topics");
    };
 
    return (
@@ -224,11 +224,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   createTopicAsync: (params, history) =>
-      dispatch(createTopicAsync(params, history)),
+   createTopicAsync: (params, navigate) =>
+      dispatch(createTopicAsync(params, navigate)),
    getSingleTopicAsync: (id) => dispatch(getSingleTopicAsync(id)),
-   editTopicAsync: (id, params, history, isTagsUpdated) =>
-      dispatch(editTopicAsync(id, params, history, isTagsUpdated)),
+   editTopicAsync: (id, params, navigate, isTagsUpdated) =>
+      dispatch(editTopicAsync(id, params, navigate, isTagsUpdated)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTopicSubpage);

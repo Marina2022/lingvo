@@ -5,7 +5,7 @@ import AuthRoutes from "./pages/auth/AuthPages";
 import DashbaordRoutes from "./pages/dashboard/DashboardPages";
 
 //ACTIONS
-import { getLanguagesListAsync } from "redux/common/common.actions";
+import { getLanguagesListAsync } from "./redux/common/common.actions";
 import "./App.scss";
 
 function App(props) {

@@ -1,23 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import Form from "components/form/Form.component";
+import GridItem from "../../../components/grid-item/GridItem.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
+import Form from "../../../components/form/Form.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { setPasswordAsync } from "redux/auth/auth.actions";
-import GridContainer from "components/grid-container/GridContainer.component";
+import { setPasswordAsync } from "../../../redux/auth/auth.actions";
+import GridContainer from "../../../components/grid-container/GridContainer.component";
 
 const SetNewPasswordPage = (props) => {
    const { setPasswordAsync, setPasswordLoading } = props;
-   const history = useHistory();
+   const navigate = useNavigate();
 
    const {
       inputState,
@@ -38,7 +38,7 @@ const SetNewPasswordPage = (props) => {
             code: inputState.code,
             password: inputState.password,
          },
-         history
+         navigate
       );
    };
 
@@ -106,7 +106,7 @@ const SetNewPasswordPage = (props) => {
                            </Button>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6} lg={6}>
-                           <Button onClick={() => history.push("/login")}>
+                           <Button onClick={() => navigate("/login")}>
                               Отмена
                            </Button>
                         </GridItem>
@@ -128,8 +128,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   setPasswordAsync: (params, history) =>
-      dispatch(setPasswordAsync(params, history)),
+   setPasswordAsync: (params, navigate) =>
+      dispatch(setPasswordAsync(params, navigate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetNewPasswordPage);

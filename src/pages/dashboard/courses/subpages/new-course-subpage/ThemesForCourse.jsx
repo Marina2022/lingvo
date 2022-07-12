@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
 
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import BackArrow from "components/back-arrow/BackArrow.component";
+import Input from "../../../../../components/input/Input.component";
+import Button from "../../../../../components/button/Button.component";
+import GridContainer from "../../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
 
 import Checkbox from "react-custom-checkbox";
 
@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const ThemesForCourse = () => {
-   const history = useHistory();
+   const navigate = useNavigate();
    const dispatch = useDispatch();
    const { nativeLanguageId, foreignLanguageId } = useSelector(
       (state) => state.drafts
@@ -109,7 +109,7 @@ const ThemesForCourse = () => {
             <Pagination />
             <div>
                <Button
-                  onClick={() => history.push("/new-topic")}
+                  onClick={() => navigate("/new-topic")}
                   className="settings-panel__plus-icon">
                   Создать тему
                </Button>
@@ -121,7 +121,7 @@ const ThemesForCourse = () => {
                         type: "ADD_TOPICS_TO_COURSE",
                         payload: topics,
                      });
-                     history.goBack();
+                     navigate(-1);
                   }}>
                   Вставить тему
                </Button>

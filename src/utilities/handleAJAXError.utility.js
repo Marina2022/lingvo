@@ -1,4 +1,5 @@
 const handleAJAXError = (error, messageName) => {
+   console.log(error, messageName);
    if (!error.message) return "Something went wrong.";
 
    const data = error?.response?.data;

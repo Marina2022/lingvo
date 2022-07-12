@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //IMPORT MODULES
 //AZURE MICROSOFT SDK
@@ -9,34 +9,34 @@ import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 //GENERATING UNIQUE IDS
 import { v4 as uuidv4 } from "uuid";
 //CONFIG WITH AZURE CREDENTIALS
-import keysConfig from "config/keys.config";
+import keysConfig from "../../../../../config/keys.config";
 
 //BASE COMPONENTS
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import BackArrow from "components/back-arrow/BackArrow.component";
-import Form from "components/form/Form.component";
-import TextArea from "components/text-area/TextArea.component";
-import TagsInput from "components/tags-input/TagsInput.component";
-import Button from "components/button/Button.component";
-import Select from "components/select/Select.component";
-import DropZone from "components/drop-zone/DropZone.component";
-import Modal from "components/modal/Modal.component";
-import Player from "components/units-list-card/Player.component";
+import GridContainer from "../../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import Form from "../../../../../components/form/Form.component";
+import TextArea from "../../../../../components/text-area/TextArea.component";
+import TagsInput from "../../../../../components/tags-input/TagsInput.component";
+import Button from "../../../../../components/button/Button.component";
+import Select from "../../../../../components/select/Select.component";
+import DropZone from "../../../../../components/drop-zone/DropZone.component";
+import Modal from "../../../../../components/modal/Modal.component";
+import Player from "../../../../../components/units-list-card/Player.component";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../../../effects/useInput.effect";
 //ACTIONS
-import { getLevelsListAsync } from "redux/common/common.actions";
-import { getSingleTopicAsync } from "redux/topics/topics.actions";
+import { getLevelsListAsync } from "../../../../../redux/common/common.actions";
+import { getSingleTopicAsync } from "../../../../../redux/topics/topics.actions";
 import {
    getSingleUnitAsync,
    createUnitAsync,
    editUnitAsync,
-} from "redux/units/units.actions";
+} from "../../../../../redux/units/units.actions";
 //SERVICES
 import AddEditUnitServices from "./add-edit-unit.services";
 //UTILITIES
-import { checkForEmptyProperties } from "utilities/helper-functions";
+import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
 import RecordAudioModal from "./components/RecordAudioModal.component";
 
@@ -57,7 +57,7 @@ const AddEditUnitSubpage = (props) => {
    } = props;
    const { generateLevelsOptions } = AddEditUnitServices;
    const singleUnitDataCopy = { ...selectedUnit };
-   const history = useHistory();
+   const navigate = useNavigate();
 
    const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
    const [fileData, setFileData] = useState({});
@@ -245,20 +245,20 @@ const AddEditUnitSubpage = (props) => {
          editUnitAsync(
             unitID,
             inputState,
-            history,
+            navigate,
             topicID,
             isTagsUpdated,
             fileData,
             singleUnitDataCopy?.voices[0]?.id
          );
       } else {
-         createUnitAsync(topicID, inputState, history, fileData);
+         createUnitAsync(topicID, inputState, navigate, fileData);
       }
    };
 
    const onCancell = (e) => {
       e.preventDefault();
-      history.push(`/topics/${topicID}/units`);
+      navigate(`/topics/${topicID}/units`);
    };
 
    // making api call to create a voice audio file
@@ -570,14 +570,14 @@ const mapDispatchToProps = (dispatch) => ({
    getLevelsListAsync: () => dispatch(getLevelsListAsync()),
    getSingleTopicAsync: (topicID) => dispatch(getSingleTopicAsync(topicID)),
    getSingleUnitAsync: (unitID) => dispatch(getSingleUnitAsync(unitID)),
-   createUnitAsync: (topicID, params, history, voiceParams, prevVoiceID) =>
+   createUnitAsync: (topicID, params, navigate, voiceParams, prevVoiceID) =>
       dispatch(
-         createUnitAsync(topicID, params, history, voiceParams, prevVoiceID)
+         createUnitAsync(topicID, params, navigate, voiceParams, prevVoiceID)
       ),
    editUnitAsync: (
       unitID,
       formParams,
-      history,
+      navigate,
       topicID,
       isTagsUpdated,
       voiceParams,
@@ -587,7 +587,7 @@ const mapDispatchToProps = (dispatch) => ({
          editUnitAsync(
             unitID,
             formParams,
-            history,
+            navigate,
             topicID,
             isTagsUpdated,
             voiceParams,

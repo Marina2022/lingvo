@@ -1,6 +1,6 @@
 import { commonActionTypes } from "./common.types";
 import commonApi from "./common.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 // ACTIONS FOR GETTING LANGUAGES LIST
 const getLanguagesListStart = () => ({

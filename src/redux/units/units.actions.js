@@ -1,7 +1,7 @@
 import { unitsActionTypes } from "./units.types";
 import unitsApi from "./units.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
-import { getSingleTopicAsync } from "redux/topics/topics.actions";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
+import { getSingleTopicAsync } from "../../redux/topics/topics.actions";
 
 // ACTION FOR SETTING SELECTED UNIT
 export const setSelectedUnit = (unit) => ({
@@ -104,7 +104,7 @@ export const getSingleUnitAsync = (unitID) => async (dispatch) => {
 export const createUnitAsync = (
    topicID,
    formParams,
-   history,
+   navigate,
    voiceParams,
    prevVoiceId
 ) => async (dispatch) => {
@@ -125,7 +125,7 @@ export const createUnitAsync = (
             response?.data?.id,
             topicID,
             voiceParams,
-            history,
+            navigate,
             prevVoiceId
          )
       );
@@ -139,7 +139,7 @@ export const createUnitAsync = (
 export const editUnitAsync = (
    unitID,
    formParams,
-   history,
+   navigate,
    topicID,
    isTagsUpdated,
    voiceParams,
@@ -162,7 +162,7 @@ export const editUnitAsync = (
       const response = await unitsApi.editUnit(unitID, params);
       dispatch(editUnitSuccess(response.data));
       dispatch(
-         addVoiceAsync(unitID, topicID, voiceParams, history, prevVoiceId)
+         addVoiceAsync(unitID, topicID, voiceParams, navigate, prevVoiceId)
       );
    } catch (error) {
       const message = handleAJAXError(error);
@@ -189,7 +189,7 @@ export const addVoiceAsync = (
    unitID,
    topicID,
    params,
-   history,
+   navigate,
    prevVoiceID
 ) => async (dispatch) => {
    dispatch(addVoiceStart());
@@ -198,7 +198,7 @@ export const addVoiceAsync = (
       const response = await unitsApi.addVoice(unitID, params);
       dispatch(addVoiceSuccess(response.data));
       dispatch(deletePrevVoiceAsync(prevVoiceID, topicID));
-      history.push(`/topics/${topicID}/units`);
+      navigate(`/topics/${topicID}/units`);
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(addVoiceFailure(message));

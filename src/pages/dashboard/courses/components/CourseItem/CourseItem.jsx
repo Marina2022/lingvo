@@ -12,8 +12,11 @@ const CourseItem = (props) => {
          <div className="course-item__info">{props.courseInfo}</div>
          <div className="course-item__bottom">
             <div className="course-item__themes">{props.courseTheme}</div>
-            <div className="course-item__themes">
-               Цена: {props.coursePrice} Р
+            <div className="course-item__themes"> { 
+               props.coursePrice === 0 ? 
+               'Бесплатно' :
+               'Цена: ₽' + props.coursePrice
+            }               
             </div>
          </div>
       </a>

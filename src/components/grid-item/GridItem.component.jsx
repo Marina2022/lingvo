@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
-// @material-ui/core components
-import Grid from "@material-ui/core/Grid";
+// @mui/material components
+import Grid from "@mui/material/Grid";
 
 export default function GridItem(props) {
    const { children, relative, className, ...rest } = props;

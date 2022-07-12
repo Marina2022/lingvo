@@ -1,7 +1,7 @@
 import { coursesActionTypes } from "./courses.types";
 import coursesApi from "./courses.api";
 
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //ACTIONS FOR GETTING COURSES
 const getCoursesStart = () => ({
@@ -44,7 +44,7 @@ export const getCoursesAsync = () => async (dispatch) => {
    try {
       const resp = await coursesApi.getCourses();
       const courses = resp.data;
-      console.log("courses");
+      // console.log("courses", courses);
       const publishedCourses = courses.filter(
          (course) => course?.published !== null
       );
@@ -61,13 +61,14 @@ export const getCoursesAsync = () => async (dispatch) => {
          )
       );
    } catch (error) {
+      console.error('error:', error);
       const message = handleAJAXError(error);
       dispatch(getCoursesSuccess(message));
    }
 };
 
 //CREATE TOPIC ASYNC
-export const createCoursesAsync = (formParams, history) => async (dispatch) => {
+export const createCoursesAsync = (formParams, navigate) => async (dispatch) => {
    dispatch(createCourseStart());
    // const tags = formParams.tags.map((item) => {
    //    return { name: item };
@@ -83,7 +84,7 @@ export const createCoursesAsync = (formParams, history) => async (dispatch) => {
       const resp = await coursesApi.createCourse(params);
       dispatch(createCourseSuccess({ ...resp.data }));
       dispatch(getCoursesAsync());
-      history.push("/courses");
+      navigate("/courses");
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createCourseFailure(message));

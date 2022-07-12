@@ -3,26 +3,26 @@ import { connect } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 //BASE COMPONENTS
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import Form from "components/form/Form.component";
-import DropZone from "components/drop-zone/DropZone.component";
-import Input from "components/input/Input.component";
-import TextArea from "components/text-area/TextArea.component";
-import LoaderWrapper from "components/loader-wrapper/LoaderWrapper.component";
-import Button from "components/button/Button.component";
-import IsVisible from "components/is-visible/IsVisible.component";
+import GridContainer from "../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../components/grid-item/GridItem.component";
+import Form from "../../../components/form/Form.component";
+import DropZone from "../../../components/drop-zone/DropZone.component";
+import Input from "../../../components/input/Input.component";
+import TextArea from "../../../components/text-area/TextArea.component";
+import LoaderWrapper from "../../../components/loader-wrapper/LoaderWrapper.component";
+import Button from "../../../components/button/Button.component";
+import IsVisible from "../../../components/is-visible/IsVisible.component";
 //IMAGES
-import avatarIcon from "assets/images/profile/avatar.png";
+import avatarIcon from "../../../assets/images/profile/avatar.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import {
    editAvatarAsync,
    updateUserAsync,
    updateLinkAsync,
    subscribeLinkAsync,
-} from "redux/profile/profile.actions";
+} from "../../../redux/profile/profile.actions";
 
 const ProfilePage = (props) => {
    const {
