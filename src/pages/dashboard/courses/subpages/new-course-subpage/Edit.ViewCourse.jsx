@@ -1,28 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Grid, Switch } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import axios from "axios";
-//BASE COMPONENTS
-import Input from "../../../../../components/input/Input.component";
+import "./_newcourse.scss";
+import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
 import Button from "../../../../../components/button/Button.component";
+import Form from "../../../../../components/form/Form.component";
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Form from "../../../../../components/form/Form.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
-import Select from "../../../../../components/select/Select.component";
-import { Switch } from "@mui/material";
-import { Grid } from "@mui/material";
-import { withStyles } from "@mui/styles";
+import Input from "../../../../../components/input/Input.component";
 import NewCourseServices from "./NewCourse.services";
-
 import plusIcon from "../../../../../assets/images/topics/plus.png";
-import "./_newcourse.scss";
-import {
-   createCoursesAsync,
-} from "../../../../../redux/courses/courses.actions";
-
-import { connect, useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import Select from "../../../../../components/select/Select.component";
+import TagsInput from "../../../../../components/tags-input/TagsInput.component";
 
 const EditCoursePage = (props) => {
    const languagesList = useSelector((state) => state.common.languagesList);
@@ -120,7 +113,7 @@ const EditCoursePage = (props) => {
       // }
    };
    useEffect(
-      function() {
+      function () {
          console.log(topics);
       },
       [topics]
