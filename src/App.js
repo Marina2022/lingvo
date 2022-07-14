@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 //ROUTES
 import AuthRoutes from "./pages/auth/AuthPages";
-import DashbaordRoutes from "./pages/dashboard/DashboardPages";
+import DashboardRoutes from "./pages/dashboard/DashboardPages";
 
 //ACTIONS
 import { getLanguagesListAsync } from "./redux/common/common.actions";
@@ -10,7 +10,7 @@ import "./App.scss";
 
 function App(props) {
    const { token, getLanguagesListAsync } = props;
-   const View = token ? <DashbaordRoutes /> : <AuthRoutes />;
+   const View = token ? <DashboardRoutes /> : <AuthRoutes />;
 
    useEffect(() => {
       getLanguagesListAsync();
