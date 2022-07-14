@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import LoginPage from "./login/Login.page";
 import RegisterPage from "./register/Register.page";
@@ -8,13 +8,13 @@ import SetNewPasswordPage from "./set-new-password/SetNewPassword.page";
 
 const AuthPages = () => {
    return (
-      <Switch>
-         <Route exact path="/login" component={LoginPage} />
-         <Route exact path="/register" component={RegisterPage} />
-         <Route exact path="/reset-password" component={ResetPasswordPage} />
-         <Route exact path="/set-new-password" component={SetNewPasswordPage} />
-         <Redirect to="/login" />
-      </Switch>
+      <Routes>
+         <Route exact path="/login" element={<LoginPage />}></Route>
+         <Route exact path="/register" element={<RegisterPage />}></Route>
+         <Route exact path="/reset-password" element={<ResetPasswordPage />}></Route>
+         <Route exact path="/set-new-password" element={<SetNewPasswordPage />}></Route>
+         <Route exact path="*" element={<Navigate to="/login" />}></Route>
+      </Routes>
    );
 };
 

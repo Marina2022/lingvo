@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Grid, Switch } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import axios from "axios";
-//BASE COMPONENTS
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import GridContainer from "components/grid-container/GridContainer.component";
-import GridItem from "components/grid-item/GridItem.component";
-import BackArrow from "components/back-arrow/BackArrow.component";
-import Form from "components/form/Form.component";
-import TagsInput from "components/tags-input/TagsInput.component";
-import Select from "components/select/Select.component";
-import { Switch } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import NewCourseServices from "./NewCourse.services";
-
-import plusIcon from "assets/images/topics/plus.png";
 import "./_newcourse.scss";
-import {
-   createCoursesAsync,
-} from "redux/courses/courses.actions";
-
-import { connect, useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
+import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import Button from "../../../../../components/button/Button.component";
+import Form from "../../../../../components/form/Form.component";
+import GridContainer from "../../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../../components/grid-item/GridItem.component";
+import Input from "../../../../../components/input/Input.component";
+import NewCourseServices from "./NewCourse.services";
+import plusIcon from "../../../../../assets/images/topics/plus.png";
+import Select from "../../../../../components/select/Select.component";
+import TagsInput from "../../../../../components/tags-input/TagsInput.component";
 
 const EditCoursePage = (props) => {
    const languagesList = useSelector((state) => state.common.languagesList);
-   const history = useHistory();
+   const navigate = useNavigate();
    const dispatch = useDispatch();
    const [topics, setTopics] = useState(
       useSelector((state) => state.drafts.topics)
@@ -111,16 +104,16 @@ const EditCoursePage = (props) => {
          posts: topics,
       });
       // console.log(topics);
-      history.push("/courses");
+      navigate("/courses");
       window.location.reload(false);
       // if (id) {
-      //    //  editTopicAsync(id, inputState, history, isTagsUpdated);
+      //    //  editTopicAsync(id, inputState, navigate, isTagsUpdated);
       // } else {
-      //    createCoursesAsync(formInitState, history);
+      //    createCoursesAsync(formInitState, navigate);
       // }
    };
    useEffect(
-      function() {
+      function () {
          console.log(topics);
       },
       [topics]
@@ -220,7 +213,7 @@ const EditCoursePage = (props) => {
                                  type: "SAVE_DRAFT_COURSE",
                                  payload: inputState,
                               });
-                              history.push("/course-themes");
+                              navigate("/course-themes");
                            }}
                            className="settings-panel__plus-icon"
                            src={plusIcon}>
@@ -346,7 +339,7 @@ const EditCoursePage = (props) => {
                         className="cancel-button delete-button"
                         onClick={() => {
                            axios.delete(`/courses/${id}`);
-                           history.push("/courses");
+                           navigate("/courses");
                            window.location.reload();
                         }}>
                         Удалить курс
@@ -366,8 +359,8 @@ const mapStateToProps = (state) => {
    };
 };
 const mapDispatchToProps = (dispatch) => ({
-   createCoursesAsync: (params, history) =>
-      dispatch(createCoursesAsync(params, history)),
+   createCoursesAsync: (params, navigate) =>
+      dispatch(createCoursesAsync(params, navigate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCoursePage);

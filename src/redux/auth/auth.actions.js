@@ -1,6 +1,6 @@
 import { authActionTypes } from "./auth.types";
 import authApi from "./auth.api.js";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //LOG OUT
 export const userLogout = (errorMessage = "") => ({
@@ -60,7 +60,7 @@ const setPasswordFailure = (message) => ({
 });
 
 //LOGIN ASYNC
-export const loginAsync = ({ email, password }, history) => async (
+export const loginAsync = ({ email, password }, navigate) => async (
    dispatch
 ) => {
    dispatch(loginStart());
@@ -68,7 +68,7 @@ export const loginAsync = ({ email, password }, history) => async (
    try {
       const resp = await authApi.login(email, password);
       const { token } = resp.data;
-      history.push("/topics");
+      navigate("/topics");
 
       dispatch(loginSuccess({ token }));
    } catch (error) {
@@ -78,13 +78,13 @@ export const loginAsync = ({ email, password }, history) => async (
 };
 
 //REGISTER ASYNC
-export const authRegisterAsync = (params, history) => async (dispatch) => {
+export const authRegisterAsync = (params, navigate) => async (dispatch) => {
    dispatch(registerStart());
 
    try {
       const response = await authApi.register(params);
       dispatch(registerSuccess(response.data));
-      history.push("/topics");
+      navigate("/topics");
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);
@@ -105,13 +105,13 @@ export const logOutAsync = () => async (dispatch) => {
 };
 
 // RESET PASSWORD ASYNC
-export const resetPasswordAsync = (params, history) => async (dispatch) => {
+export const resetPasswordAsync = (params, navigate) => async (dispatch) => {
    dispatch(resetPasswordStart());
 
    try {
       const response = await authApi.resetPassword(params);
       dispatch(resetPasswordSuccess(response?.data));
-      history.push("/set-new-password");
+      navigate("/set-new-password");
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);
@@ -121,13 +121,13 @@ export const resetPasswordAsync = (params, history) => async (dispatch) => {
 };
 
 // SET PASSWORD ASYNC
-export const setPasswordAsync = (params, history) => async (dispatch) => {
+export const setPasswordAsync = (params, navigate) => async (dispatch) => {
    dispatch(setPasswordStart());
 
    try {
       const response = await authApi.setPassword(params);
       dispatch(setPasswordSuccess(response?.data));
-      history.push("/login");
+      navigate("/login");
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);

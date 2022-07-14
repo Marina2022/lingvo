@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 //ROUTES
 import dashboardRoutes from "../dashboard-routes";
@@ -10,27 +10,20 @@ import MainPage from "../main/MainPage";
 
 const DashbaordPages = () => {
    return (
-      <>
-         <Switch>
-            <Route exact path="/main" component={MainPage} />
+      <Routes>
+         <Route exact path="/main" element={<MainPage />} />
 
+         <Route exact path="*" element={
             <div className="dashboard-page">
                <Header />
-
-               {dashboardRoutes.map((component) => {
-                  return (
-                     <Route
-                        exact
-                        path={component.path}
-                        component={component.component}
-                        key={component.path}
-                     />
-                  );
-               })}
-               <Redirect to="/topics" />
+               <Routes> { dashboardRoutes.map((component) => { return (
+                  <Route exact path={component.path} element={<component.component />} key={component.path}/>
+               ); }) }
+                  <Route exact path="/" element={<Navigate to="/topics" />}/>
+               </Routes>
             </div>
-         </Switch>
-      </>
+            } />
+      </Routes>
    );
 };
 

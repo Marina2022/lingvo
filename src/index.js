@@ -1,8 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 //APP COMPONENT
 import App from "./App";
@@ -11,16 +11,20 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 //AXIOS CONFIG
-import "config/axios.config";
+import "./config/axios.config";
 
 //STYLES
 import "./index.scss";
 
-const theme = createMuiTheme({
+const theme = createTheme({
    typography: { fontSize: 20 },
 });
 
-ReactDOM.render(
+const root = createRoot(
+   document.getElementById("root")
+);
+
+root.render(
    <Provider store={store}>
       <BrowserRouter>
          <PersistGate persistor={persistor}>
@@ -29,8 +33,7 @@ ReactDOM.render(
             </ThemeProvider>
          </PersistGate>
       </BrowserRouter>
-   </Provider>,
-   document.getElementById("root")
+   </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

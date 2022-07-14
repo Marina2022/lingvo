@@ -1,6 +1,6 @@
 import { profileActionTypes } from "./profile.types";
 import profileApi from "./profile.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //ACTIONS FOR GETTING USER INFO
 const getUserInfoStart = () => ({

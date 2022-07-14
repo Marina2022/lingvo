@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import MicRecorder from "mic-recorder-to-mp3";
 
 //BASE COMPONENTS
-import IsVisible from "components/is-visible/IsVisible.component";
+import IsVisible from "../../components/is-visible/IsVisible.component";
 //IMAGES
-import micIcon from "assets/images/components/mic-icon.png";
-import stopIcon from "assets/images/components/stop-icon.png";
-import recordingIcon from "assets/images/components/recording-icon.png";
+import micIcon from "../../assets/images/components/mic-icon.png";
+import stopIcon from "../../assets/images/components/stop-icon.png";
+import recordingIcon from "../../assets/images/components/recording-icon.png";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 

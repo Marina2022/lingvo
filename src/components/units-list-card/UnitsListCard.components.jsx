@@ -1,12 +1,12 @@
 import React from "react";
 
 //BASE COMPONENTS
-import LoaderWrapper from "components/loader-wrapper/LoaderWrapper.component";
-import DropDown from "components/drop-down/DropDown.component";
+import LoaderWrapper from "../../components/loader-wrapper/LoaderWrapper.component";
+import DropDown from "../../components/drop-down/DropDown.component";
 import Player from "./Player.component";
 //IMAGES
-import actionsIcon from "assets/images/list-card/actions-icon.png";
-import volumeIcon from "assets/images/list-card/volume-icon.png";
+import actionsIcon from "../../assets/images/list-card/actions-icon.png";
+import volumeIcon from "../../assets/images/list-card/volume-icon.png";
 
 const UnitsListCard = (props) => {
    const {

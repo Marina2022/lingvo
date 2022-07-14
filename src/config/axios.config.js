@@ -1,8 +1,8 @@
 import axios from "axios";
-import { store } from "redux/store";
-import { /*refreshAuthTokenAsync*/ userLogout } from "redux/auth/auth.actions";
+import { store } from "../redux/store";
+import { /*refreshAuthTokenAsync*/ userLogout } from "../redux/auth/auth.actions";
 // import { setGlobalErrorMessage } from "redux/common/common.actions";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../utilities/handleAJAXError.utility";
 
 // AXIOS GLOBAL CONFIG
 axios.defaults.baseURL = process.env.APP_BACKEND_URL || "https://dev.insta.lingvonavi.com/api/v1/";

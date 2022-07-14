@@ -1,25 +1,25 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import GridItem from "../../../components/grid-item/GridItem.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
-import googleIcon from "assets/images/auth/google-icon.png";
-import fbIcon from "assets/images/auth/fb-icon.png";
-import vkIcon from "assets/images/auth/vk-icon.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
+import googleIcon from "../../../assets/images/auth/google-icon.png";
+import fbIcon from "../../../assets/images/auth/fb-icon.png";
+import vkIcon from "../../../assets/images/auth/vk-icon.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { loginAsync } from "redux/auth/auth.actions";
+import { loginAsync } from "../../../redux/auth/auth.actions";
 
 const LoginPage = (props) => {
    const { loginAsync, isLoading } = props;
 
-   const history = useHistory();
+   const navigate = useNavigate();
    const {
       inputState,
       handleInput,
@@ -35,7 +35,7 @@ const LoginPage = (props) => {
       e.preventDefault();
       loginAsync(
          { email: inputState.email, password: inputState.password },
-         history
+         navigate
       );
    };
    // const logout = () => {
@@ -91,7 +91,7 @@ const LoginPage = (props) => {
                         </GridItem>
                      </form>
                      <div
-                        onClick={() => history.push("/reset-password")}
+                        onClick={() => navigate("/reset-password")}
                         className="forgot-creds__block">
                         Забыли логин или пароль?
                      </div>
@@ -137,9 +137,10 @@ const LoginPage = (props) => {
             </GridItem>
          </div>
          <div className="login-page__footer">
+            {/* eslint-disable-next-line no-irregular-whitespace */}
             <h3>У вас ещё нет аккаунта? </h3>
             <Button
-               onClick={() => history.push("/register")}
+               onClick={() => navigate("/register")}
                className="register-link__button">
                Регистрация
             </Button>

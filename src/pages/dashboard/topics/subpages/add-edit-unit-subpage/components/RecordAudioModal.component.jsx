@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import AudioRecorder from "components/audio-recorder/AudioRecorder.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import AudioRecorder from "../../../../../../components/audio-recorder/AudioRecorder.component";
+import Input from "../../../../../../components/input/Input.component";
+import Button from "../../../../../../components/button/Button.component";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../../../../effects/useInput.effect";
 //ACTIONS
-import { addVoiceAsync } from "redux/units/units.actions";
+import { addVoiceAsync } from "../../../../../../redux/units/units.actions";
 
 const RecordAudioModal = (props) => {
    const {
@@ -21,7 +21,7 @@ const RecordAudioModal = (props) => {
       addVoiceAsync,
       voiceAddLoading,
    } = props;
-   const history = useHistory();
+   const navigate = useNavigate();
 
    const {
       inputState,
@@ -42,7 +42,7 @@ const RecordAudioModal = (props) => {
 
    const onVoiceAdd = (e) => {
       e.preventDefault();
-      addVoiceAsync(unitID, topicID, fileData, history, prevVoiceID);
+      addVoiceAsync(unitID, topicID, fileData, navigate, prevVoiceID);
    };
 
    return (
@@ -87,8 +87,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   addVoiceAsync: (unitID, topicID, params, history, prevVoiceID) =>
-      dispatch(addVoiceAsync(unitID, topicID, params, history, prevVoiceID)),
+   addVoiceAsync: (unitID, topicID, params, navigate, prevVoiceID) =>
+      dispatch(addVoiceAsync(unitID, topicID, params, navigate, prevVoiceID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecordAudioModal);

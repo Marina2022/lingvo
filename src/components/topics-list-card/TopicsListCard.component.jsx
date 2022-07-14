@@ -2,11 +2,11 @@ import React from "react";
 import classNames from "classnames";
 
 //BASE COMPONENTS
-import LoaderWrapper from "components/loader-wrapper/LoaderWrapper.component";
-import DropDown from "components/drop-down/DropDown.component";
+import LoaderWrapper from "../../components/loader-wrapper/LoaderWrapper.component";
+import DropDown from "../../components/drop-down/DropDown.component";
 //IMAGES
-import actionsIcon from "assets/images/list-card/actions-icon.png";
-import editIcon from "assets/images/list-card/edit-icon.png";
+import actionsIcon from "../../assets/images/list-card/actions-icon.png";
+import editIcon from "../../assets/images/list-card/edit-icon.png";
 
 const TopicsListCard = (props) => {
    const {

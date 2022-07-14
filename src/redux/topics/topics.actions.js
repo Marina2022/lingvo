@@ -1,6 +1,6 @@
 import { topicsActionTypes } from "./topics.types";
 import topicsApi from "./topics.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //ACTION FOR SELECTING SPECIFIC TOPIC
 export const setSelectedTopic = (topic) => ({
@@ -121,7 +121,7 @@ export const getTopicsAsync = () => async (dispatch) => {
 };
 
 //CREATE TOPIC ASYNC
-export const createTopicAsync = (formParams, history) => async (dispatch) => {
+export const createTopicAsync = (formParams, navigate) => async (dispatch) => {
    dispatch(createTopicStart());
    const tags = formParams.tags.map((item) => {
       return { name: item };
@@ -138,7 +138,7 @@ export const createTopicAsync = (formParams, history) => async (dispatch) => {
       const resp = await topicsApi.createTopic(params);
       dispatch(createTopicSuccess({ ...resp.data }));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      navigate("/topics");
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createTopicFailure(message));
@@ -176,7 +176,7 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
 export const editTopicAsync = (
    id,
    formParams,
-   history,
+   navigate,
    isTagsUpdated
 ) => async (dispatch) => {
    dispatch(editTopicStart());
@@ -198,7 +198,7 @@ export const editTopicAsync = (
 
       dispatch(editTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      navigate("/topics");
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editTopicFailure(message));
@@ -206,14 +206,14 @@ export const editTopicAsync = (
 };
 
 // PUBLISH TOPIC ASYNC
-export const publishTopicAsync = (topicID, history) => async (dispatch) => {
+export const publishTopicAsync = (topicID, navigate) => async (dispatch) => {
    dispatch(publishTopicStart());
 
    try {
       const response = await topicsApi.publishTopic(topicID);
       dispatch(publishTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      navigate("/topics");
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(publishTopicFailure(message));

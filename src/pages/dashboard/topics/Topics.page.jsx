@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import Tab from "components/tab/Tab.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import Tab from "../../../components/tab/Tab.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
 //TABS
 import PublishedTopics from "./components/published-topics-tab/PublishedTopics.tab";
 import DraftTopicsTab from "./components/draft-topics-tab/DraftTopics.tab";
 //ACTIONS
-import { getTopicsAsync } from "redux/topics/topics.actions";
+import { getTopicsAsync } from "../../../redux/topics/topics.actions";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //IMAGES
-import plusIcon from "assets/images/topics/plus.png";
+import plusIcon from "../../../assets/images/topics/plus.png";
 
 const TopicsPage = (props) => {
    const { getTopicsAsync, publishedTopicsCount, draftTopicsCount } = props;
-   const history = useHistory();
+   const navigate = useNavigate();
 
    const {
       inputState,
@@ -68,7 +68,7 @@ const TopicsPage = (props) => {
          </div>
          <div className="settings-panel">
             <Button
-               onClick={() => history.push("/new-topic")}
+               onClick={() => navigate("/new-topic")}
                className="settings-panel__plus-icon"
                src={plusIcon}>
                Новая тема
