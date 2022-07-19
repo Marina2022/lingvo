@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 
 import Screen1 from "../../../assets/images/main/screen1.png";
@@ -30,11 +31,9 @@ export default function Offer () {
              </svg>
           </div>
           <div className="landing-container">
-             <div className="landing-h2">Мы предлагаем</div>
+             <div className="landing-h2">{t("promo.offer.1")}</div>
              <p>
-                Превратить любой ваш пост в социальных сетях в учебный
-                материал, который принесет ощутимую пользу для вашего
-                подписчика или клиента. А вам принесет дополнительный доход
+                {t("promo.offer.2")}
              </p>
              <div className="offers">
                 <div className="offer-item">
@@ -57,11 +56,9 @@ export default function Offer () {
                             fill="#11141B"></path>{" "}
                       </svg>
                    </div>
-                   <div className="offer-item__title">Выгодно</div>
+                   <div className="offer-item__title">{t("promo.offer.3")}</div>
                    <div className="offer-item__txt">
-                      Сколько времени вы тратите на создание одного поста?
-                      Теперь эти усилия будут окупаться сразу после
-                      публикации! Каждый пост может приносить вам доход!
+                      {t("promo.offer.4")}
                    </div>
                 </div>
                 <div className="offer-item">
@@ -84,11 +81,10 @@ export default function Offer () {
                             fill="#11141B"></path>{" "}
                       </svg>{" "}
                    </div>
-                   <div className="offer-item__title">Быстро</div>
+                   <div className="offer-item__title">{t("promo.offer.5")}</div>
                    <div className="offer-item__txt">
                       {" "}
-                      Сколько времени занимает создание одного поста? Теперь
-                      усилия будут приносить доход сразу после публикации!{" "}
+                      {t("promo.offer.6")}{" "}
                    </div>
                 </div>
                 <div className="offer-item">
@@ -108,10 +104,9 @@ export default function Offer () {
                             fill="#11141B"></path>{" "}
                       </svg>
                    </div>
-                   <div className="offer-item__title">Удобно</div>
+                   <div className="offer-item__title">{t("promo.offer.7")}</div>
                    <div className="offer-item__txt">
-                      Языковой образовательный контент легко преобразуется в
-                      упражнение для улучшения языковых навыков.{" "}
+                      {t("promo.offer.8")}{" "}
                    </div>
                 </div>
              </div>

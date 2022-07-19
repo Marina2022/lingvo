@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 
 export default function Top () {
@@ -56,24 +57,24 @@ export default function Top () {
                         />
                     </svg>
                 </div>
-                <div className="landing-h2">Остались вопросы?</div>
+                <div className="landing-h2">{t("footer.any_questions")}</div>
                 <div className="landing-footer__text">
-                    Заполните форму для получения подробной информации
+                    {t("footer.feedback_form")}
                 </div>
                 <form action="">
                     <div className="form-element form-element_wild">
-                        <label htmlFor="">Имя</label>
+                        <label htmlFor="">{t("footer.name")}</label>
                         <input type="text" />
                     </div>
                     <div className="form-element">
-                        <label htmlFor="">Телефон</label>
+                        <label htmlFor="">{t("footer.phone")}</label>
                         <input type="text" />
                     </div>
                     <div className="form-element">
                         <label htmlFor="">E-mail</label>
                         <input type="email" />
                     </div>
-                    <button className="btn">Отправить</button>
+                    <button className="btn">{t("actions.send")}</button>
                 </form>
 
                 <div className="landing-footer-logo">
@@ -132,17 +133,17 @@ export default function Top () {
                 <ul className="landing-footer__menu">
                     <li>
                         <a href="/#" className="btn">
-                            Ответы на вопросы
+                            {t("footer.answers")}
                         </a>
                     </li>
                     <li>
                         <a href="/#" className="btn">
-                            Тарифы
+                            {t("footer.price_list")}
                         </a>
                     </li>
                     <li>
                         <a href="/#" className="btn">
-                            Контакты
+                            {t("footer.contacts")}
                         </a>
                     </li>
                 </ul>

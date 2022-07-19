@@ -24,6 +24,7 @@ import {
 } from "../../../../../redux/topics/topics.actions";
 //UTILITIES
 import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
+import { t } from "i18next";
 
 const NewTopicSubpage = (props) => {
    const {
@@ -135,8 +136,8 @@ const NewTopicSubpage = (props) => {
       <div className="new-topic-subpage">
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text="Темы" />
-               <h1>Новая тема</h1>
+               <BackArrow text={t("themes.title")} />
+               <h1>{t("themes.theme.new_theme")}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
@@ -147,7 +148,7 @@ const NewTopicSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label="Название темы"
+                        label={t("themes.theme.title")}
                         type="text"
                         placeholder="Daily routine and household chores"
                         required
@@ -161,27 +162,27 @@ const NewTopicSubpage = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label="Теги"
+                        label={t("themes.theme.tags")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="foreignLanguage"
-                        label="Изучаемый язык"
+                        label={t("languages.foreign")}
                         options={languageOptions}
                         defaultValue={foreignLanguageDefaultValue}
                         onChange={(e) => onSelectChange(e, "foreignLanguage")}
-                        placeholder="Выберите язык"
+                        placeholder={t("languages.placeholder")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="nativeLanguage"
-                        label="Родной язык"
+                        label={t("languages.native")}
                         options={languageOptions}
                         defaultValue={nativeLanguageDefaultValue}
                         onChange={(e) => onSelectChange(e, "nativeLanguage")}
-                        placeholder="Выберите язык"
+                        placeholder={t("languages.placeholder")}
                         required
                      />
                   </GridItem>
@@ -197,12 +198,12 @@ const NewTopicSubpage = (props) => {
                            className="save-button"
                            disabled={!checkForEmptyProperties(inputState)}
                            onClick={onSubmit}>
-                           Сохранить
+                           {t("actions.save")}
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={2} lg={2}>
                         <Button onClick={onCancell} className="cancel-button">
-                           Отмена
+                           {t("actions.cancel")}
                         </Button>
                      </GridItem>
                   </GridItem>

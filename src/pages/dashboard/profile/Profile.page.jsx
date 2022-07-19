@@ -23,6 +23,8 @@ import {
    updateLinkAsync,
    subscribeLinkAsync,
 } from "../../../redux/profile/profile.actions";
+import { t } from "i18next";
+import { capitalizeFirstOnlyCase } from "../../../utilities/helper-functions";
 
 const ProfilePage = (props) => {
    const {
@@ -120,7 +122,7 @@ const ProfilePage = (props) => {
       e.preventDefault();
       updateLinkAsync({
          userId: currentUserInfo?.id,
-         socialNetName: linkType[0].toUpperCase() + linkType.slice(1),
+         socialNetName: capitalizeFirstOnlyCase(linkType),
          url: inputState[linkType],
       });
    };
@@ -165,7 +167,7 @@ const ProfilePage = (props) => {
    return (
       <div className="profile-page">
          <GridContainer>
-            <h2>Личный кабинет</h2>
+            <h2>{t("profile.title")}</h2>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
                   <GridContainer>
@@ -185,8 +187,8 @@ const ProfilePage = (props) => {
                               </div>
                            </LoaderWrapper>
                            <DropZone
-                              title="Добавьте фото профиля, чтобы повысить узнаваемость"
-                              buttonText="Изменить"
+                              title={t("profile.photo_prompt")}
+                              buttonText={t("actions.change")}
                               buttonActions={handleFiles}
                               handleFiles={handleFiles}
                               files={uploadedFiles}
@@ -204,8 +206,8 @@ const ProfilePage = (props) => {
                                  onChange={handleInputChange}
                                  onInvalid={handleInvalidMessage}
                                  type="text"
-                                 label="Ссылка приложения"
-                                 placeholder="Ссылка приложения"
+                                 label={t("profile.app_link")}
+                                 placeholder={t("profile.app_link")}
                                  className="p-b__1"
                                  disabled={true}
                                  required
@@ -217,7 +219,7 @@ const ProfilePage = (props) => {
                                  onCopy={copyAppLink}>
                                  <div className="copy-area">
                                     <Button className="subscribe-link__button">
-                                       Копировать адрес
+                                       {t("profile.copy_link")}
                                     </Button>
                                     <IsVisible isVisible={isCopied}>
                                        <span>Copied!</span>
@@ -226,7 +228,7 @@ const ProfilePage = (props) => {
                               </CopyToClipboard>
                            </GridItem>
                         </GridContainer>
-                        <h4>О себе</h4>
+                        <h4>{t("profile.about_oneself")}</h4>
                         <GridContainer className="flex-vertical-center">
                            <GridItem xs={12} sm={12} md={8} lg={8}>
                               <Input
@@ -236,8 +238,8 @@ const ProfilePage = (props) => {
                                  onChange={handleInputChange}
                                  onInvalid={handleInvalidMessage}
                                  type="text"
-                                 label="Имя"
-                                 placeholder="Имя"
+                                 label={t("profile.name")}
+                                 placeholder={t("profile.name")}
                                  className="p-b__1"
                                  required
                               />
@@ -247,7 +249,7 @@ const ProfilePage = (props) => {
                                  onClick={onSaveClick}
                                  isLoading={updateUserLoading}
                                  name="name">
-                                 Сохранить
+                                    {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
@@ -260,8 +262,8 @@ const ProfilePage = (props) => {
                                  onChange={handleInputChange}
                                  onInvalid={handleInvalidMessage}
                                  type="text"
-                                 label="Ник"
-                                 placeholder="Ник"
+                                 label={t("profile.nickname")}
+                                 placeholder={t("profile.nickname")}
                                  className="p-b__1"
                                  required
                               />
@@ -271,7 +273,7 @@ const ProfilePage = (props) => {
                                  onClick={onSaveClick}
                                  isLoading={updateUserLoading}
                                  name="nickname">
-                                 Сохранить
+                                    {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
@@ -284,8 +286,8 @@ const ProfilePage = (props) => {
                                  error={invalidMessages}
                                  onChange={handleInputChange}
                                  onInvalid={handleInvalidMessage}
-                                 label="Bio"
-                                 placeholder="Bio"
+                                 label={t("profile.bio")}
+                                 placeholder={t("profile.bio")}
                                  minRows={2}
                                  className="p-b__1"
                                  required
@@ -296,12 +298,12 @@ const ProfilePage = (props) => {
                                  onClick={onSaveClick}
                                  isLoading={updateUserLoading}
                                  name="bio">
-                                 Сохранить
+                                    {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
                         <div className="separator" />
-                        <h4>Социальные сети</h4>
+                        <h4>{t("pages.social_media.title")}</h4>
                         {/*{linksList.map((link, idx) => {*/}
                         {/*   return (*/}
                         {/*      <GridContainer*/}
@@ -336,7 +338,7 @@ const ProfilePage = (props) => {
                         {/*                  )*/}
                         {/*               }*/}
                         {/*               className={`${link?.socialNet?.value}-button`}>*/}
-                        {/*               Сохранить*/}
+                        {/*               {t("actions.save")}*/}
                         {/*            </Button>*/}
                         {/*         </GridItem>*/}
                         {/*      </GridContainer>*/}
@@ -351,8 +353,8 @@ const ProfilePage = (props) => {
                                  onChange={handleInputChange}
                                  onInvalid={handleInvalidMessage}
                                  type="text"
-                                 label="TikTok"
-                                 placeholder="Tiktok"
+                                 label={t("pages.social_media.VK.title")}
+                                 placeholder={t("pages.social_media.VK.title")}
                                  className="p-b__1"
                                  required
                               />
@@ -361,7 +363,7 @@ const ProfilePage = (props) => {
                               <Button
                                  onClick={(e) => onLinkUpdate(e, "vkontakte")}
                                  className="vk-button">
-                                 Сохранить
+                                 {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
@@ -384,7 +386,7 @@ const ProfilePage = (props) => {
                               <Button
                                  onClick={(e) => onLinkUpdate(e, "instagram")}
                                  className="in-button">
-                                 Сохранить
+                                 {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
@@ -408,7 +410,7 @@ const ProfilePage = (props) => {
                       onClick={(e) => onLinkUpdate(e, "facebook")}
                       className="fb-button"
                     >
-                      Сохранить
+                      {t("actions.save")}
                     </Button>
                   </GridItem>
                 </GridContainer> */}
@@ -431,7 +433,7 @@ const ProfilePage = (props) => {
                               <Button
                                  onClick={(e) => onLinkUpdate(e, "telegram")}
                                  className="tg-button">
-                                 Сохранить
+                                 {t("actions.save")}
                               </Button>
                            </GridItem>
                         </GridContainer>
@@ -440,11 +442,11 @@ const ProfilePage = (props) => {
                            {/*   <Button*/}
                            {/*      onClick={onSaveClick}*/}
                            {/*      isLoading={updateUserLoading}>*/}
-                           {/*      Сохранить*/}
+                           {/*      {t("actions.save")}*/}
                            {/*   </Button>*/}
                            {/*</GridItem>*/}
                            <GridItem xs={2} sm={2} md={2} lg={2}>
-                              <Button className="cancell-button">Отмена</Button>
+                              <Button className="cancell-button">{t("actions.cancel")}</Button>
                            </GridItem>
                         </GridContainer>
                      </GridItem>

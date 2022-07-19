@@ -7,10 +7,14 @@ import DashboardRoutes from "./pages/dashboard/DashboardPages";
 //ACTIONS
 import { getLanguagesListAsync } from "./redux/common/common.actions";
 import "./App.scss";
+import { useTranslation } from "react-i18next";
 
 function App(props) {
    const { token, getLanguagesListAsync } = props;
    const View = token ? <DashboardRoutes /> : <AuthRoutes />;
+
+   // const { t, i18n } = useTranslation();
+   useTranslation();
 
    useEffect(() => {
       getLanguagesListAsync();

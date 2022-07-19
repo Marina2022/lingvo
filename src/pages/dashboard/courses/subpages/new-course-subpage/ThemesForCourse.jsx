@@ -16,6 +16,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import "./_newcourse.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { t } from "i18next";
 
 const ThemesForCourse = () => {
    const navigate = useNavigate();
@@ -32,14 +33,14 @@ const ThemesForCourse = () => {
       <div className="new-topic-subpage">
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text="Создание курса" />
+               <BackArrow text={t("courses.course.creation")} />
                <div className="courses-page__heading-block">
-                  <h1>Темы для курса</h1>
+                  <h1>{t("themes.list")}</h1>
                   <div>
                      <Input
                         name="search"
                         type="text"
-                        placeholder="Поиск"
+                        placeholder={t("actions.search")}
                         required
                      />
                   </div>
@@ -111,7 +112,7 @@ const ThemesForCourse = () => {
                <Button
                   onClick={() => navigate("/new-topic")}
                   className="settings-panel__plus-icon">
-                  Создать тему
+                  {t("actions.create")}
                </Button>
                <Button
                   className="btn-theme"
@@ -123,7 +124,7 @@ const ThemesForCourse = () => {
                      });
                      navigate(-1);
                   }}>
-                  Вставить тему
+                  {t("actions.add")}
                </Button>
             </div>
          </div>
@@ -134,10 +135,10 @@ const ThemesForCourse = () => {
             lg={6}
             className="new-topic-subpage__buttons-block">
             <GridItem xs={12} sm={12} md={2} lg={2}>
-               <Button className="save-button">Сохранить</Button>
+               <Button className="save-button">{t("actions.save")}</Button>
             </GridItem>
             <GridItem xs={12} sm={12} md={2} lg={2}>
-               <Button className="cancel-button">Отмена</Button>
+               <Button className="cancel-button">{t("actions.cancel")}</Button>
             </GridItem>
          </GridItem>
       </div>

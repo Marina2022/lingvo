@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,17 +22,17 @@ const PublishedTopicsTab = (props) => {
    const navigate = useNavigate();
 
    const onConfirm = () => {
-      if (window.confirm("Вы уверены?")) {
+      if (window.confirm(t("requests.is_sure"))) {
          deleteTopicAsync(selectedTopic?.id);
       }
    };
 
    const actionItems = [
       {
-         name: "Редактировать",
+         name: t("actions.edit"),
          action: () => navigate(`/topics/${selectedTopic?.id}/edit`),
       },
-      { name: "Удалить", action: () => onConfirm() },
+      { name: t("actions.delete"), action: () => onConfirm() },
    ];
 
    const onEditIconCLick = (topic) => {

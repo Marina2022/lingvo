@@ -15,6 +15,7 @@ import { getTopicsAsync } from "../../../redux/topics/topics.actions";
 import useInput from "../../../effects/useInput.effect";
 //IMAGES
 import plusIcon from "../../../assets/images/topics/plus.png";
+import { t } from 'i18next'
 
 const TopicsPage = (props) => {
    const { getTopicsAsync, publishedTopicsCount, draftTopicsCount } = props;
@@ -39,12 +40,12 @@ const TopicsPage = (props) => {
    const list = [
       {
          eventKey: "topics",
-         title: `Опубликованы ${publishedTopicsCount}`,
+         title: t("themes.topic_list.published", {count:publishedTopicsCount}),
          content: <PublishedTopics />,
       },
       {
-         eventKey: "chernoviki",
-         title: `Черновики ${draftTopicsCount}`,
+         eventKey: "drafts",
+         title: t("themes.topic_list.drafts", {count:draftTopicsCount}),
          content: <DraftTopicsTab />,
       },
    ];
@@ -52,7 +53,7 @@ const TopicsPage = (props) => {
    return (
       <div className="topics-page">
          <div className="topics-page__heading-block">
-            <h1>Темы</h1>
+            <h1>{t("themes.title")}</h1>
             <div>
                <Input
                   name="search"
@@ -61,7 +62,7 @@ const TopicsPage = (props) => {
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
                   type="text"
-                  placeholder="Поиск"
+                  placeholder={t("actions.search")}
                   required
                />
             </div>
@@ -71,7 +72,7 @@ const TopicsPage = (props) => {
                onClick={() => navigate("/new-topic")}
                className="settings-panel__plus-icon"
                src={plusIcon}>
-               Новая тема
+               {t("actions.create")}
             </Button>
          </div>
          <Tab tabsList={list} />

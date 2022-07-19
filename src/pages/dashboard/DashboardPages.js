@@ -7,24 +7,28 @@ import dashboardRoutes from "../dashboard-routes";
 import Header from "./layout/header/Header.layout";
 
 import MainPage from "../main/MainPage";
+import ModalAddToHomeScreen from "../../components/modal-add-to-home-screen"
 
-const DashbaordPages = () => {
+const DashboardPages = () => {
    return (
-      <Routes>
-         <Route exact path="/main" element={<MainPage />} />
+      <>
+         <Routes>
+            <Route exact path="/main" element={<MainPage />} />
 
-         <Route exact path="*" element={
-            <div className="dashboard-page">
-               <Header />
-               <Routes> { dashboardRoutes.map((component) => { return (
-                  <Route exact path={component.path} element={<component.component />} key={component.path}/>
-               ); }) }
-                  <Route exact path="/" element={<Navigate to="/topics" />}/>
-               </Routes>
-            </div>
-            } />
-      </Routes>
+            <Route exact path="*" element={
+               <div className="dashboard-page">
+                  <Header />
+                  <Routes> { dashboardRoutes.map((component) => { return (
+                     <Route exact path={component.path} element={<component.component />} key={component.path}/>
+                  ); }) }
+                     <Route exact path="/" element={<Navigate to="/topics" />}/>
+                  </Routes>
+               </div>
+               } />
+         </Routes>
+         <ModalAddToHomeScreen />
+      </>
    );
 };
 
-export default DashbaordPages;
+export default DashboardPages;

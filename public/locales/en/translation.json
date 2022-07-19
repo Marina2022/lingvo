@@ -1,0 +1,262 @@
+{
+  "profile":{
+    "title":"Profile",
+    "photo_prompt":"Add profile photo to recognize you better",
+    "app_link":"Application link",
+    "copy_link":"Copy link",
+    "about_oneself":"About oneself",
+    "name":"Name",
+    "nickname":"Nickname",
+    "bio":"Bio"
+  },
+  "social_media":{
+    "title":"Social media",
+    "VK":{
+      "title":"VKontakte"
+    }
+  },
+  "actions":{
+    "sign_in":"Sign In",
+    "sign_up":"Sign Up",
+    "signing_up":"Signing Up",
+    "sign_out":"Sign Out",
+
+    "create":"Create",
+    "add":"Add",
+    "change":"Change",
+    "edit":"Edit",
+    "save":"Save",
+    "publish":"Publish",
+    "cancel":"Cancel",  
+    "delete":"Delete",
+
+    "send":"Send",
+
+    "buy":"Buy",
+
+    "search":"Search",
+    "filter":"Filter"
+  },
+  "states":{
+    "published":"Published"
+  },
+  "requests":{
+    "is_sure":"Are you sure?"
+  },
+  "alerts": {
+    "needs_text_to_generate_audio":"To generate audio fill the text",
+    "somethings_wrong_try_again":"Somthing's wrong... Try again!"
+  },
+  "genders":{
+    "male":"male",
+    "female":"female"
+  },
+  "auth":{
+    "login":{
+      "password":"Password",
+      "forgotten_login_password":"Forgotten login and/or password?",
+      "with_social_media":"with social media",
+      "VK":"VKontakte",
+      "no_account":"No account yet?"
+    },
+    "register":{
+      "not_match":"Passwords does not match",
+      "name":"Name",
+      "password":"Password",
+      "password_placeholder":"At least 8 characters",
+      "repeat":"Repeat password",
+      "have_account":"Have account yet?"
+    },
+    "reset":{
+      "resetting":"Password resetting",
+      "reset":"Reset password",
+      "code":"Letter code",
+      "new_password":"New password"
+    }
+  },
+  "courses":{
+    "title":"Courses",
+    "summary":"Training course review",
+    "course":{
+      "name":"Course title",
+      "tags":"Tags",
+      "price":"Price",
+      "price_placeholder":"Input price",
+      "is_public":"Make course public",
+      
+      "creation":"Course creation",
+      
+      "price_zero":"Free",
+      "price_other":"Price: {{price}}"
+    }
+  },
+  "languages":{
+    "foreign":"Studied language",
+    "native":"Native language",
+    "placeholder":"Select language"
+  },
+  "themes":{
+    "title": "Themes",
+    "topic_list":{
+      "published_zero": "Published: Nothing",
+      "published": "Published: {{count}}",
+      "drafts_zero": "Drafts: Nothing",
+      "drafts": "Drafts: {{count}}"
+    },
+    "list":"Course themes",
+    "nothing":"No themes",
+    "number_of_zero":"No themes",
+    "number_of_one":"{{count}} theme",
+    "number_of_other":"{{count}} themes",
+    "theme":{
+      "new_theme":"New theme",
+      "title":"Theme title",
+      "tags":"Tags"
+    }
+  },
+  "units": {
+    "title":"Phrases",
+    "title1":"Phrases of {{theme}}",
+    "new_unit":"New phrase",
+    "translation":"Translate or Explain in original language",
+    "extra":"Extra explanation",
+    "level":"Level",
+    "tags":"Tags",
+    "placeholders":{
+      "foreign":"Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
+      "native":"If you are silent people don't understand what you feel",
+      "extra":"This sentences is very important to me"
+    },
+    "voice_sources":{
+      "select":"Select an audio source",
+      "undefined":{
+        "label":"Undefined"
+      },
+      "upload":{
+        "label":"Upload a file",
+        "title":"Select this window or Drop audio here"
+      },
+      "record":{
+        "label":"Record audio",
+        "button":"Make record",
+        "file_name":"File name"
+      },
+      "generate":{
+        "label":"Generate audio",
+        "language":"Select voice language",
+        "gender":"Select gender",
+        "play":"Play"
+      }
+    }
+  },
+  "menu":{
+    "title":"Menu",
+    "classes":"My classes",
+    "dictionary":"Dictionary"
+  },
+ "effects":{
+    "number_needed":"Please, input number",
+    "mandatory":"Mandatory",
+    "min_length":"At least {{minLength}} characters"
+  },
+  "promo":{
+    "can": {
+      "1":"You are capable of",
+      "2":"Create new theme",
+      "3":"Add, translate and voice phrases",
+      "4":"Publish the theme to student application",
+      "5":"Your students are capable of",
+      "6":"Find and subscribe to You in the app",
+      "7":"Use your content to train lingo skills theme by theme",
+      "8":"Train several themes united in a training course"
+    },
+    "offer":{
+      "1":"We offer",
+      "2":"Convert any your social media post to education material getting tangible benefits to your subscriber and profit to You",
+      "3":"Advantageable",
+      "4":"How long time do You spend to create a post? Every post can get profit!",
+      "5":"Quickly",
+      "6":"How long time needs to create a post? Now the efforts will be payed off immediately after publication! ",
+      "7":"Useful",
+      "8":"Language content is easily converted into an exercise to improve language skills"
+    },
+    "profit":{
+      "1":"The service use can provides",
+      "2":"Learning outcomes",
+      "3":"Improves students' learning outcomes due to training skills during extracurricular time",
+      "4":"Audience loyalty",
+      "5":"Increases subscribers and students lifetime value",
+      "6":"Extra incomes",
+      "7":"Provides new students among your subscribers"
+    },
+    "reviews":{
+      "title":"Reviews",
+      "filter":{
+        "1":"All",
+        "2":"Teachers",
+        "3":"Students"
+      },
+      "1":{
+        "text":"Good app to lean foreign language. Add new excises",
+        "author":"Vlad, iOs App user"
+      }
+    },
+    "tariff":{
+      "title":"Prices",
+      "publications":"Posts per month",
+      "phrases":"Phrases per post",
+      "subscribers":"Number of subscribers",
+      "starter":{
+        "name":"Primary",
+        "detail1":"Free",
+        "detail2":"First 3 month",
+        "comment":"You are not able to get a fee for your content. Your student training is free",
+        "n_of_publications":"up to 4",
+        "n_of_phrases":"up to 10",
+        "n_of_subscribers":"Not limited"
+      },
+      "optimum":{
+        "name":"Optimum",
+        "detail1":"₽1000",
+        "detail2":"per month",
+        "comment":"You get 50% of fees paid by your subscribers for your content",
+        "n_of_publications":"up to 10",
+        "n_of_phrases":"up to 20",
+        "n_of_subscribers":"Not limited"
+      },
+      "profi":{
+        "name":"Professional",
+        "detail1":"₽5000",
+        "detail2":"per month",
+        "comment":"You get 70% of fees paid by your subscribers for your content",
+        "n_of_publications":"Not limited",
+        "n_of_phrases":"up to 10",
+        "n_of_subscribers":"Not limited"
+      },
+      "is_not_suitable":"No suitable price?",
+      "individual":"We can provide individual offer"
+    },
+    "top":{
+      "1":"Lingvoinsta - the online service for bloggers and language schools",
+      "2":"Ready-made it-solutions for language schools and bloggers. We turn posts into unique educational material. We make useful publications payback",
+      "3":"Try free"
+    }
+  },
+  "footer":{
+    "any_questions":"Still have any questions?",
+    "feedback_form":"Please, fill the form below to get extra information",
+    "name":"Name",
+    "phone":"Phone",
+    "answers":"Answers",
+    "price_list":"Price",
+    "contacts":"Contacts"
+  },
+  "misc":{
+    "install_app":{
+      "ios1":"Install this webapp on your {{device}}: tap ",
+      "ios2":" and then Add to home screen",
+      "gadget":"To install this webapp on your desktop add it to home screen",
+      "other_mobile":"To install this webapp on your mobile add it to home screen"
+    }
+  }
+}

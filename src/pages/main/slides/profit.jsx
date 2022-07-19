@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 
 export default function Top () {
@@ -5,7 +6,7 @@ export default function Top () {
         <div className="landing-profit">
             <div className="landing-container">
             <div className="landing-h2">
-                Что даст использоваение сервиса?
+                {t("promo.profit.1")}
             </div>
             <div className="landing-profit__wrapper">
                 <div className="profit-item">
@@ -24,11 +25,10 @@ export default function Top () {
                         fill="black"></path>{" "}
                     </svg>
                     <div className="profit-item__title">
-                        Результаты обучения
+                        {t("promo.profit.2")}
                     </div>
                     <div className="profit-item__text">
-                        Улучшит результаты студентов за счет тренировки навыков
-                        и закрепления материала во внеаудиторное время.
+                        {t("promo.profit.3")}
                     </div>
                 </div>
                 <div className="profit-item">
@@ -71,11 +71,11 @@ export default function Top () {
                         fill="black"></path>{" "}
                     </svg>
                     <div className="profit-item__title">
-                        Лояльность аудитории
+                        {t("promo.profit.4")}
                     </div>
                     <div className="profit-item__text">
-                        Подписчики и студенты будут оставаться с вами дольше
-                        (повышение lifetime value).{" "}
+                        {t("promo.profit.5")}
+                        {" "}
                     </div>
                 </div>
                 <div className="profit-item">
@@ -94,10 +94,10 @@ export default function Top () {
                         fill="black"></path>{" "}
                     </svg>
                     <div className="profit-item__title">
-                        Дополнительный доход
+                        {t("promo.profit.6")}
                     </div>
                     <div className="profit-item__text">
-                        Привлечет новых студентов из числа ваших подписчиков.
+                        {t("promo.profit.7")}
                     </div>
                 </div>
             </div>

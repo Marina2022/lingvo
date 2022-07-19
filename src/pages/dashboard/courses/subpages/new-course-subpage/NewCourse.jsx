@@ -22,6 +22,7 @@ import { createCoursesAsync } from "../../../../../redux/courses/courses.actions
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { t } from "i18next";
 
 const NewCoursePage = (props) => {
    const { createCoursesAsync } = props;
@@ -119,8 +120,8 @@ const NewCoursePage = (props) => {
       <div className="new-topic-subpage">
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text="Курсы" />
-               <h1>Создание курса</h1>
+               <BackArrow text={t("courses.title")} />
+               <h1>{t("courses.course.creation")}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
@@ -134,9 +135,9 @@ const NewCoursePage = (props) => {
                               name: e.target.value,
                            });
                         }}
-                        label="Название курса"
+                        label={t("courses.course.name")}
                         type="text"
-                        placeholder="Курс 10"
+                        placeholder={t("courses.course.name")}
                         required
                      />
                   </GridItem>
@@ -147,14 +148,14 @@ const NewCoursePage = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label="Теги"
+                        label={t("courses.course.tags")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="foreignLanguage"
-                        label="Изучаемый язык"
-                        placeholder="Выберите язык"
+                        label={t("languages.foreign")}
+                        placeholder={t("languages.placeholder")}
                         options={languageOptions}
                         onChange={(e) => {
                            setInputState({
@@ -170,8 +171,8 @@ const NewCoursePage = (props) => {
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="nativeLanguage"
-                        label="Родной язык"
-                        placeholder="Выберите язык"
+                        label={t("languages.native")}
+                        placeholder={t("languages.placeholder")}
                         options={languageOptions}
                         onChange={(e) => {
                            setInputState({
@@ -195,15 +196,15 @@ const NewCoursePage = (props) => {
                               cost: e.target.value,
                            });
                         }}
-                        label="Цена"
+                        label={t("courses.course.price")}
                         type="text"
-                        placeholder="1000 Р"
+                        placeholder={t("courses.course.price_placeholder")}
                         required
                      />
                   </GridItem>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
-                        <div className="h2">Темы курса</div>
+                        <div className="h2">{t("themes.list")}</div>
                         <Button
                            onClick={() => {
                               dispatch({
@@ -214,12 +215,12 @@ const NewCoursePage = (props) => {
                            }}
                            className="settings-panel__plus-icon"
                            src={plusIcon}>
-                           Добавить темы
+                           {t("actions.add")}
                         </Button>
                      </div>
                      <div className="new-course-themes__wrapper">
                         {topics.length === 0 ? (
-                           <p>Темы еще не добавлены</p>
+                           <p>{t("themes.nothing")}</p>
                         ) : (
                            <div className="course-theme-wrapper">
                               {topics.map((topic) => (
@@ -255,7 +256,7 @@ const NewCoursePage = (props) => {
                         />
                      </Grid>
                      <Grid className="new-course-public__label" item>
-                        Сделать курс публичным
+                        {t("courses.course.is_public")}
                      </Grid>
                   </Grid>
                   <GridItem
@@ -266,11 +267,13 @@ const NewCoursePage = (props) => {
                      className="new-topic-subpage__buttons-block">
                      <GridItem xs={12} sm={12} md={2} lg={2}>
                         <Button className="save-button" onClick={onSubmit}>
-                           Добавить в курс
+                           {t("actions.add")}
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button className="cancel-button">Отмена</Button>
+                        <Button className="cancel-button">
+                           {t("actions.cancel")}
+                        </Button>
                      </GridItem>
                   </GridItem>
                </Form>

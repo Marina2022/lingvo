@@ -6,19 +6,19 @@ const DropDown = (props) => {
    const { name, src } = rest;
 
    return (
+      // <BootstrapDropdown variant="basic">
       <BootstrapDropdown className="li-dropdown">
          <BootstrapDropdown.Toggle id="dropdown-basic">
-            {src && (
-               <>
-                  {name && <span className="name">{name}</span>}
-                  <img src={src} alt="avatar" className="avatar" />
-               </>
-            )}
+            {name && (<>{name && <span className="name">{name}</span>}</>)}
+            {src && (<><img src={src} alt="avatar" className="avatar" /></>)}
          </BootstrapDropdown.Toggle>
 
          <BootstrapDropdown.Menu>
             {menuItems &&
-               menuItems.map((item, idx) => (
+               menuItems.map((item, idx) => (item.divider ? 
+                  
+                  <BootstrapDropdown.Divider key={idx} /> :
+
                   <BootstrapDropdown.Item onClick={item?.action} key={idx}>
                      {item.name}
                   </BootstrapDropdown.Item>

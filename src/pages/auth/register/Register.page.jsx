@@ -12,6 +12,7 @@ import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { authRegisterAsync } from "../../../redux/auth/auth.actions";
+import { t } from 'i18next'
 
 const RegisterPage = (props) => {
    const { authRegisterAsync, isLoading } = props;
@@ -35,7 +36,7 @@ const RegisterPage = (props) => {
       e.preventDefault();
       const params = { ...inputState, role: "AUTHOR" };
       if (inputState.password !== inputState.rePassword) {
-         setErrorMessage("Пароли не совпали!");
+         setErrorMessage(t("auth.register.not_match"));
       } else {
          delete params.rePassword;
          authRegisterAsync(params, navigate);
@@ -57,7 +58,7 @@ const RegisterPage = (props) => {
                      md={12}
                      lg={12}
                      className="fields__block">
-                     <div className="fields__block-text">Регистрация</div>
+                     <div className="fields__block-text">{t("actions.signing_up")}</div>
                      {errorMessage && (
                         <div className="error-message">{errorMessage}</div>
                      )}
@@ -82,7 +83,7 @@ const RegisterPage = (props) => {
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Имя"
+                              label={t("auth.register.name")}
                               type="text"
                               required
                            />
@@ -94,8 +95,8 @@ const RegisterPage = (props) => {
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Пароль"
-                              placeholder="Не менее 8 символов"
+                              label={t("auth.register.password")}
+                              placeholder={t("auth.register.password_placeholder")}
                               type="password"
                               required
                               minLength={8}
@@ -108,7 +109,7 @@ const RegisterPage = (props) => {
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Поворите пароль"
+                              label={t("auth.register.repeat")}
                               type="password"
                               required
                               minLength={8}
@@ -116,7 +117,7 @@ const RegisterPage = (props) => {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={9} lg={9}>
                            <Button isLoading={isLoading} type="submit">
-                              Войти
+                              {t("actions.sign_up")}
                            </Button>
                         </GridItem>
                      </form>
@@ -134,7 +135,7 @@ const RegisterPage = (props) => {
                   {/*      md={6}*/}
                   {/*      lg={6}*/}
                   {/*      className="social-network__block-text">*/}
-                  {/*      или через социальные сети*/}
+                  {/*      t("auth.login.with_social_media")*/}
                   {/*   </GridItem>*/}
                   {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
@@ -147,7 +148,7 @@ const RegisterPage = (props) => {
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={vkIcon}>*/}
-                  {/*         Вконтакте*/}
+                  {/*         t("pages.social_media.VK.title")*/}
                   {/*      </Button>*/}
                   {/*   </GridItem>*/}
                   {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
@@ -162,11 +163,11 @@ const RegisterPage = (props) => {
             </GridItem>
          </div>
          <div className="register-page__footer">
-            <h3>У вас уже есть аккаунт?</h3>
+            <h3>{t("auth.register.have_account")}</h3>
             <Button
                onClick={() => navigate("/login")}
                className="login-link__button">
-               Войти
+               {t("actions.sign_in")}
             </Button>
          </div>
       </div>

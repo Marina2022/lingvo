@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 import Slider from "react-slick";
 
@@ -7,6 +8,7 @@ import Student2 from "../../../assets/images/main/student2.png";
 import Student3 from "../../../assets/images/main/student3.png";
 
 function PrevArrow (props) {
+    // eslint-disable-next-line no-unused-vars
     const { className, style, onClick } = props;
  
     return (
@@ -25,6 +27,7 @@ function PrevArrow (props) {
  }
  
  function NextArrow (props) {
+    // eslint-disable-next-line no-unused-vars
     const { className, style, onClick } = props;
  
     return (
@@ -53,14 +56,16 @@ export default function Top () {
    return (
         <div className="landing-can">
         <div className="landing-container">
-           <div className="landing-h2">Что можете вы</div>
+           <div className="landing-h2">
+               {t("promo.can.1")}
+            </div>
 
            <div className="can-slider">
               <Slider { ...settings } >
                  <div>
                     <div className="can-block">
                        <div className="can-block__title">
-                          Опубликовать тему в приложении
+                          {t("promo.can.2")}
                        </div>
                     </div>
                     <div className="can-slider__item">
@@ -70,7 +75,7 @@ export default function Top () {
                  <div>
                     <div className="can-block">
                        <div className="can-block__title">
-                          Добавить в тему фразы с переводом и озвучить их
+                          {t("promo.can.3")}
                        </div>
                     </div>
                     <div className="can-slider__item">
@@ -80,7 +85,7 @@ export default function Top () {
                  <div>
                     <div className="can-block">
                        <div className="can-block__title">
-                          Опубликовать тему в приложении
+                          {t("promo.can.4")}
                        </div>
                     </div>
                     <div className="can-slider__item">
@@ -93,12 +98,12 @@ export default function Top () {
         </div>
         <div className="students-block">
            <div className="landing-h2 landing-h2_left">
-              Что могут делать ваши студенты
+              {t("promo.can.5")}
            </div>
            <div className="students">
               <div className="student-item">
                  <div className="student-item__title">
-                    Найти в приложении и подписаться на ваш аккаунт
+                    {t("promo.can.6")}
                  </div>
                  <div className="student-item__img">
                     <img src={Student1} alt="" />
@@ -106,7 +111,7 @@ export default function Top () {
               </div>
               <div className="student-item">
                  <div className="student-item__title">
-                    Увидеть ваш контент – отдельные темы или целые курсы
+                    {t("promo.can.7")}
                  </div>
                  <div className="student-item__img">
                     <img src={Student2} alt="" />
@@ -114,7 +119,7 @@ export default function Top () {
               </div>
               <div className="student-item">
                  <div className="student-item__title">
-                    Ознакомиться с темой целиком
+                    {t("promo.can.8")}
                  </div>
                  <div className="student-item__img">
                     <img src={Student3} alt="" />

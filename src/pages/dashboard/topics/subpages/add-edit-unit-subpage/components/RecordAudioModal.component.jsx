@@ -10,6 +10,7 @@ import Button from "../../../../../../components/button/Button.component";
 import useInput from "../../../../../../effects/useInput.effect";
 //ACTIONS
 import { addVoiceAsync } from "../../../../../../redux/units/units.actions";
+import { t } from "i18next";
 
 const RecordAudioModal = (props) => {
    const {
@@ -47,7 +48,7 @@ const RecordAudioModal = (props) => {
 
    return (
       <div className="record-audio-modal">
-         <h2>Запись аудио</h2>
+         <h2>{t("units.voice_sources.record.label")}</h2>
          <div className="heading">
             If you are silent people don’t understand what you feel
          </div>
@@ -65,14 +66,14 @@ const RecordAudioModal = (props) => {
             error={invalidMessages}
             onChange={handleInputChange}
             onInvalid={handleInvalidMessage}
-            label="Имя файла"
+            label={t("units.voice_sources.record.file_name")}
             type="text"
          />
          <div className="buttons-block">
             <Button onClick={onVoiceAdd} isLoading={voiceAddLoading}>
-               Сохранить
+               {t("actions.save")}
             </Button>
-            <Button onClick={onCancell}>Отмена</Button>
+            <Button onClick={onCancell}>{t("actions.cancel")}</Button>
          </div>
       </div>
    );

@@ -15,6 +15,7 @@ import vkIcon from "../../../assets/images/auth/vk-icon.png";
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { loginAsync } from "../../../redux/auth/auth.actions";
+import { t } from "i18next";
 
 const LoginPage = (props) => {
    const { loginAsync, isLoading } = props;
@@ -57,7 +58,7 @@ const LoginPage = (props) => {
                      md={6}
                      lg={6}
                      className="fields__block">
-                     <div className="fields__block-text">Войти</div>
+                     <div className="fields__block-text">{t("actions.sign_in")}</div>
                      <form onSubmit={login}>
                         <GridItem xs={12} sm={12} md={9} lg={9}>
                            <Input
@@ -79,21 +80,21 @@ const LoginPage = (props) => {
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Пароль"
+                              label={t("auth.login.password")}
                               type="password"
                               required
                            />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={9} lg={9}>
                            <Button isLoading={isLoading} type="submit">
-                              Войти
+                              {t("actions.sign_in")}
                            </Button>
                         </GridItem>
                      </form>
                      <div
                         onClick={() => navigate("/reset-password")}
                         className="forgot-creds__block">
-                        Забыли логин или пароль?
+                           {t("auth.login.forgotten_login_password")}
                      </div>
                   </GridItem>
                   <span className="separator" />
@@ -109,20 +110,20 @@ const LoginPage = (props) => {
                         md={6}
                         lg={6}
                         className="social-network__block-text">
-                        или через социальные сети
+                        {t("auth.login.with_social_media")}
                      </GridItem>
                      <GridItem xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={googleIcon}>
-                           Google +
+                           Google+
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={vkIcon}>
-                           Вконтакте
+                           {t("pages.social_media.VK.title")}
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={9} lg={9}>
@@ -138,11 +139,11 @@ const LoginPage = (props) => {
          </div>
          <div className="login-page__footer">
             {/* eslint-disable-next-line no-irregular-whitespace */}
-            <h3>У вас ещё нет аккаунта? </h3>
+            <h3>{t("auth.login.no_account")}</h3>
             <Button
                onClick={() => navigate("/register")}
                className="register-link__button">
-               Регистрация
+               {t("actions.signing_up")}
             </Button>
          </div>
       </div>

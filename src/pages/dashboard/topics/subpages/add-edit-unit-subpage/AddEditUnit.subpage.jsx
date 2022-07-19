@@ -36,9 +36,10 @@ import {
 //SERVICES
 import AddEditUnitServices from "./add-edit-unit.services";
 //UTILITIES
-import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
+import { capitalizeFirstOnlyCase, checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
 import RecordAudioModal from "./components/RecordAudioModal.component";
+import { t } from "i18next";
 
 const AddEditUnitSubpage = (props) => {
    const {
@@ -63,12 +64,16 @@ const AddEditUnitSubpage = (props) => {
    const [fileData, setFileData] = useState({});
    const [isAudioModal, toggleAudioModal] = useState(false);
 
-   // states for Azure Text-to-Speech service
+   /**
+    *  states for Azure Text-to-Speech service
+    */ 
    const setOfVoices = {
+      // TODO: needs to change to enGB
       en_britain: {
          male: "en-GB-RyanNeural",
          female: "en-GB-LibbyNeural",
       },
+      // TODO: needs to change to enUS
       en_usa: {
          male: "en-US-GuyNeural",
          female: "en-US-AriaNeural",
@@ -107,28 +112,53 @@ const AddEditUnitSubpage = (props) => {
       },
    };
    const genders = [
-      { id: 0, label: "Мужской", value: "male" },
-      { id: 1, label: "Женский", value: "female" },
-   ];
+      { id: 0, label: t("genders.male"), value: "male" },
+      { id: 1, label: t("genders.female"), value: "female" },
+   ];   
+   /**
+    * List of supported languages
+    */
    const voiceLanguages = [
-      { id: 0, label: "Британский Английский", value: "en_britain" },
-      { id: 1, label: "Американский Английский", value: "en_usa" },
-      { id: 2, label: "Русский", value: "ru" },
-      { id: 3, label: "Немецкий", value: "de" },
-      { id: 4, label: "Французский", value: "fr" },
-      { id: 5, label: "Испанский", value: "es" },
-      { id: 6, label: "Китайский", value: "zh" },
-      { id: 7, label: "Японский", value: "ja" },
-      { id: 8, label: "Корейский", value: "ko" },
-      { id: 9, label: "Турецкий", value: "tr" },
+      // TODO: needs change value to 
+      { id: 0, value: "en_britain", },
+      // TODO: needs to change value "en_usa" to "enUS"
+      { id: 1, value: "en_usa",     },
+      { id: 2, value: "ru",         },
+      { id: 3, value: "de",         },
+      { id: 4, value: "fr",         },
+      { id: 5, value: "es",         },
+      { id: 6, value: "zh",         },
+      { id: 7, value: "ja",         },
+      { id: 8, value: "ko",         },
+      { id: 9, value: "tr",         },
    ];
+
+   const languageNames = new Intl.DisplayNames([navigator.language], { type: 'language' });
+
+   // TODO: needs to change values to language-COUNTRY code and exclude code property
+   voiceLanguages.forEach(lang => {
+      lang.code = 
+         lang.value === "en_britain" ? "en-GB" :
+         lang.value === "en_usa"     ? "en-US" :
+         lang.value === "ru"         ? "ru-RU" :
+         lang.value === "de"         ? "de-DE" :
+         lang.value === "fr"         ? "fr-FR" :
+         lang.value === "es"         ? "es-ES" :
+         lang.value === "zh"         ? "zh-CN" :
+         lang.value === "ja"         ? "ja-JP" :
+         lang.value === "ko"         ? "ko-KR" :
+         lang.value === "tr"         ? "tr-TR" :
+         lang.value
+      lang.label = capitalizeFirstOnlyCase(languageNames.of(lang.code))
+   })
+
 
    // values are equal to voiceUploadMode"s fields
    const voiceUploadOptions = [
-      { id: 0, label: "Не выбрано", value: "" },
-      { id: 2, label: "Загрузить файл", value: "uploadedAudio" },
-      { id: 1, label: "Записать аудио", value: "recordedAudio" },
-      { id: 3, label: "Озвучить текст", value: "generatedVoice" },
+      { id: 0, label: t("units.voice_sources.undefined.label"), value: "" },
+      { id: 2, label: t("units.voice_sources.upload.label"), value: "uploadedAudio" },
+      { id: 1, label: t("units.voice_sources.record.label"), value: "recordedAudio" },
+      { id: 3, label: t("units.voice_sources.generate.label"), value: "generatedVoice" },
    ];
 
    // states
@@ -160,8 +190,7 @@ const AddEditUnitSubpage = (props) => {
       if (unitID) {
          getSingleUnitAsync(unitID);
       }
-      //eslint-disable-next-line
-   }, []);
+   }, [getLevelsListAsync, getSingleTopicAsync, getSingleUnitAsync, topicID, unitID]);
 
    const formInitState = {
       description: "",
@@ -278,11 +307,11 @@ const AddEditUnitSubpage = (props) => {
 
       // if text is empty
       if (text.trim() === "") {
-         alert("Чтобы сгенерировать запись, необходимо ввести текст");
+         alert(t("alerts.needs_text_to_generate_audio"));
          return;
       }
 
-      // !!!перенести в config!!!!
+      // TODO: !!!move to config???? Keys should be in the backend!!!
       const subscriptionKey = keysConfig.Azure.AzureSubscriptionKey;
       const region = keysConfig.Azure.AzureRegion;
 
@@ -321,7 +350,7 @@ const AddEditUnitSubpage = (props) => {
          ) {
             player.pause();
          } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
-            alert("Что-то пошло не так... Попробуйте еще раз!");
+            alert(t("alerts.somethings_wrong_try_again"));
             console.error(
                "Error: synthesis failed. Error detail: " + result.errorDetails
             );
@@ -355,8 +384,8 @@ const AddEditUnitSubpage = (props) => {
          </Modal>
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text="Юниты" />
-               <h1>Новый юнит</h1>
+               <BackArrow text={t("units.title")} />
+               <h1>{t("units.new_unit")}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
@@ -367,8 +396,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label="Изучаемый язык"
-                        placeholder="If you are silent people don’t understand what you feel"
+                        label={t("languages.foreign")}
+                        placeholder={t("units.placeholders.foreign")}
                         minRows={2}
                         required
                      />
@@ -380,8 +409,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label="Перевод на родной или объяснения на изучаемом языке"
-                        placeholder="Если вы молчите, люди не понимают, что вы чувствуете"
+                        label={t("units.translation")}
+                        placeholder={t("units.placeholders.native")}
                         minRows={2}
                         required
                      />
@@ -393,8 +422,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label="Дополнительные пояснения"
-                        placeholder="Это предложение очень важно для меня"
+                        label={t("units.extra")}
+                        placeholder={t("units.placeholders.extra")}
                         minRows={2}
                         required
                      />
@@ -407,24 +436,24 @@ const AddEditUnitSubpage = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label="Теги"
+                        label={t("units.tags")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="level"
-                        label="Сложность"
+                        label={t("units.level")}
                         options={levelsOptions}
                         defaultValue={levelDefaultValue}
                         onChange={(e) => onSelectChange(e, "level")}
-                        placeholder="Сложность"
+                        placeholder={t("units.level")}
                      />
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="voiceUploadMode"
-                        label="Выберите способ загрузки аудио:"
+                        label={t("units.voice_sources.select")}
                         options={voiceUploadOptions}
                         defaultValue={voiceUploadOptions[0]}
                         onChange={(e) =>
@@ -432,16 +461,16 @@ const AddEditUnitSubpage = (props) => {
                               mode: e,
                            })
                         }
-                        placeholder="Выберите способ загрузки аудио"
+                        placeholder={t("units.voice_sources.select")}
                      />
                   </GridItem>
 
                   {voiceUploadMode.mode &&
                      voiceUploadMode.mode.value === "uploadedAudio" && (
                         <GridItem xs={12} sm={12} md={6} lg={6}>
-                           <span>Добавьте готовый файл:</span>
+                           <span>{t("units.voice_sources.upload.label")}</span>
                            <DropZone
-                              title="Нажмите на данное окно или перенесите аудиофайл сюда"
+                              title={t("units.voice_sources.upload.title")}
                               handleFiles={handleFiles}
                               files={uploadedFiles}
                               buttonAction={() => toggleAudioModal(true)}
@@ -452,9 +481,9 @@ const AddEditUnitSubpage = (props) => {
                   {voiceUploadMode.mode &&
                      voiceUploadMode.mode.value === "recordedAudio" && (
                         <GridItem xs={12} sm={12} md={2} lg={2}>
-                           <span>Записать аудио: </span>
+                           <span>{t("units.voice_sources.record.label")}</span>
                            <Button onClick={() => toggleAudioModal(true)}>
-                              Сделать запись
+                              {t("units.voice_sources.record.button")}
                            </Button>
                         </GridItem>
                      )}
@@ -465,7 +494,7 @@ const AddEditUnitSubpage = (props) => {
                            <GridItem xs={12} sm={12} md={3} lg={3}>
                               <Select
                                  name="voiceLanguage"
-                                 label="Настройки голоса автоматического воспроизведения"
+                                 label={t("units.voice_sources.generate.language")}
                                  options={voiceLanguages}
                                  defaultValue={voiceLanguages[0]}
                                  onChange={(e) =>
@@ -474,14 +503,14 @@ const AddEditUnitSubpage = (props) => {
                                        language: e,
                                     }))
                                  }
-                                 placeholder="Настройки голоса автоматического воспроизведения"
+                                 placeholder={t("units.voice_sources.generate.language")}
                               />
                            </GridItem>
 
                            <GridItem xs={12} sm={12} md={3} lg={3}>
                               <Select
                                  name="voiceGender"
-                                 label="Выбор пола"
+                                 label={t("units.voice_sources.generate.gender")}
                                  options={genders}
                                  defaultValue={genders[0]}
                                  onChange={(e) =>
@@ -490,13 +519,13 @@ const AddEditUnitSubpage = (props) => {
                                        gender: e,
                                     }))
                                  }
-                                 placeholder="Выбор пола"
+                                 placeholder={t("units.voice_sources.generate.gender")}
                               />
                            </GridItem>
 
                            <GridItem xs={12} sm={12} md={2} lg={2}>
                               <Button onClick={generateVoice}>
-                                 Сгенерировать голос
+                                 {t("units.voice_sources.generate.label")}
                               </Button>
                            </GridItem>
 
@@ -507,7 +536,7 @@ const AddEditUnitSubpage = (props) => {
                                     onClick={() => {}}
                                     className="volume-icon__block">
                                     <Button>
-                                       Проиграть сгенерированную речь
+                                       {t("units.voice_sources.generate.play")}
                                     </Button>
                                  </Player>
                               ) : null}
@@ -536,12 +565,12 @@ const AddEditUnitSubpage = (props) => {
                               ]) || uploadedFiles.length <= 0
                            }
                            onClick={onSubmit}>
-                           Сохранить
+                           {t("actions.save")}
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={2} lg={2}>
                         <Button onClick={onCancell} className="cancel-button">
-                           Отмена
+                           {t("actions.cancel")}
                         </Button>
                      </GridItem>
                   </GridItem>

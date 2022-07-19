@@ -14,6 +14,7 @@ import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { resetPasswordAsync } from "../../../redux/auth/auth.actions";
 import GridContainer from "../../../components/grid-container/GridContainer.component";
+import { t } from "i18next";
 
 const ResetPasswordPage = (props) => {
    const { resetPasswordAsync, resetPasswordLoading } = props;
@@ -49,7 +50,7 @@ const ResetPasswordPage = (props) => {
                   lg={12}
                   className="fields-block">
                   <Form onSubmit={resetPassword}>
-                     <div className="fields-block__text">Сброс пароля</div>
+                     <div className="fields-block__text">{t("auth.reset.resetting")}</div>
                      <GridItem xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="email"
@@ -68,12 +69,12 @@ const ResetPasswordPage = (props) => {
                            <Button
                               isLoading={resetPasswordLoading}
                               type="submit">
-                              Сбросить пароль
+                              {t("auth.reset.reset")}
                            </Button>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6} lg={6}>
                            <Button onClick={() => navigate("/login")}>
-                              Отмена
+                           {t("actions.cancel")}
                            </Button>
                         </GridItem>
                      </GridContainer>

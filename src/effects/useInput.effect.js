@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useState } from "react";
 
 const useInput = (initialState = {}) => {
@@ -60,12 +61,12 @@ const useInput = (initialState = {}) => {
          //change error texts to russian
          validationMessage =
             validationMessage === "Please enter a number."
-               ? "Пожалуйста, введите номер."
+               ? t("effects.number_needed")
                : validationMessage === "Please fill out this field."
-               ? "Обязательное поле."
+               ? t("effects.mandatory")
                : validationMessage;
          if (minLength && value.length < minLength) {
-            validationMessage = `Минимум ${minLength} символов`;
+            validationMessage = t("effects.min_length", { minLength });
          }
 
          setInvalidMessages({

@@ -17,6 +17,7 @@ import {
 import { setSelectedUnit, deleteUnitAsync } from "../../../../../redux/units/units.actions";
 //IMAGES
 import plusIcon from "../../../../../assets/images/topics/plus.png";
+import { t } from "i18next";
 
 const UnitSubpage = (props) => {
    const {
@@ -51,7 +52,7 @@ const UnitSubpage = (props) => {
    };
 
    const onConfirm = () => {
-      if (window.confirm("Вы уверены?")) {
+      if (window.confirm(t("requests.is_sure"))) {
          deleteUnitAsync(selectedUnit?.id, singleTopicData?.id);
       }
    };
@@ -62,19 +63,19 @@ const UnitSubpage = (props) => {
 
    const actionItems = [
       {
-         name: "Редактировать",
+         name: t("actions.edit"),
          action: () =>
             navigate(
                `/topics/${singleTopicData?.id}/units/${selectedUnit?.id}/edit`
             ),
       },
-      { name: "Удалить", action: () => onConfirm() },
+      { name: t("actions.delete"), action: () => onConfirm() },
    ];
 
    return (
       <div className="unit-subpage">
          <div className="unit-subpage__heading-block">
-            <h1>{singleTopicData?.text}</h1>
+            <h1>{t("units.title1", {theme:singleTopicData?.text})}</h1>
             <div>
                <Input
                   name="search"
@@ -83,7 +84,7 @@ const UnitSubpage = (props) => {
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
                   type="text"
-                  placeholder="Поиск"
+                  placeholder={t("actions.search")}
                   required
                />
             </div>
@@ -95,19 +96,19 @@ const UnitSubpage = (props) => {
                }
                className="unit-subpage__settings-panel__plus-button"
                src={plusIcon}>
-               Новый юнит
+               {t("actions.create")}
             </Button>
             <Button
                onClick={publishTopic}
                isLoading={publishTopicLoading}
                disabled={singleTopicData?.samples?.length <= 0}
                className="unit-subpage__settings-panel__publish-button">
-               Опубликовать
+               {t("actions.publish")}
             </Button>
             <Button
                onClick={() => console.log("filtr")}
                className="unit-subpage__settings-panel__filtr-button">
-               Фильтр
+               {t("actions.filter")}
             </Button>
          </div>
          <div className="unit-subpage__samples-list">

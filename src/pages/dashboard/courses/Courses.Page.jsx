@@ -12,6 +12,7 @@ import plusIcon from "../../../assets/images/topics/plus.png";
 import CourseItem from "./components/CourseItem/CourseItem";
 import Pagination from "./components/Pagination/Pagination";
 import { getCoursesAsync } from "../../../redux/courses/courses.actions";
+import { t } from "i18next";
 
 const CoursesPage = (props) => { 
    const { getCoursesAsync } = props;
@@ -25,9 +26,9 @@ const CoursesPage = (props) => {
    return (
       <div className="courses-page">
          <div className="courses-page__heading-block">
-            <h1>Курсы</h1>
+            <h1>{t("courses.title")}</h1>
             <div>
-               <Input name="search" type="text" placeholder="Поиск" required />
+               <Input name="search" type="text" placeholder={t("actions.search")} required />
             </div>
          </div>
          <div className="settings-panel">
@@ -40,19 +41,15 @@ const CoursesPage = (props) => {
                }}
                className="settings-panel__plus-icon"
                src={plusIcon}>
-               Новый курс
+               {t("actions.create")}
             </Button>
          </div>
          <div className="courses-wrapper"> { publishedCourses.map((course) => (
                <CourseItem
                   courseName={course.name}
                   courseStatus={course.shared}
-                  courseInfo="Короткая информация о курсе"
-                  courseTheme={
-                     course.posts.length === 1
-                        ? "1 тема"
-                        : `${course.posts.length} тем`
-                  }
+                  courseInfo={t("courses.summary")}
+                  courseTheme={t("themes.number_of", {count: course.posts.length})}
                   coursePrice={course.cost}
                   onClick={() => {
                      dispatch({

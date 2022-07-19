@@ -14,6 +14,7 @@ import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { setPasswordAsync } from "../../../redux/auth/auth.actions";
 import GridContainer from "../../../components/grid-container/GridContainer.component";
+import { t } from "i18next";
 
 const SetNewPasswordPage = (props) => {
    const { setPasswordAsync, setPasswordLoading } = props;
@@ -56,7 +57,7 @@ const SetNewPasswordPage = (props) => {
                   lg={12}
                   className="fields-block">
                   <Form onSubmit={setNewPassword}>
-                     <div className="fields-block__text">Сброс пароля</div>
+                     <div className="fields-block__text">{t("auth.reset.resetting")}</div>
                      <GridItem xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="email"
@@ -79,8 +80,8 @@ const SetNewPasswordPage = (props) => {
                            onChange={handleInputChange}
                            onInvalid={handleInvalidMessage}
                            autoComplete="on"
-                           label="Код из письма"
-                           placeholder="Код из письма"
+                           label={t("auth.reset.code")}
+                           placeholder={t("auth.reset.code")}
                            type="text"
                            required
                         />
@@ -92,8 +93,8 @@ const SetNewPasswordPage = (props) => {
                            error={invalidMessages}
                            onChange={handleInputChange}
                            onInvalid={handleInvalidMessage}
-                           label="Новый пароль"
-                           placeholder="Новый пароль"
+                           label={t("auth.reset.new_password")}
+                           placeholder={t("auth.reset.new_password")}
                            type="password"
                            minLength={8}
                            required
@@ -102,12 +103,12 @@ const SetNewPasswordPage = (props) => {
                      <GridContainer>
                         <GridItem xs={12} sm={12} md={6} lg={6}>
                            <Button isLoading={setPasswordLoading} type="submit">
-                              Отправить
+                              {t("actions.send")}
                            </Button>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6} lg={6}>
                            <Button onClick={() => navigate("/login")}>
-                              Отмена
+                              {t("actions.cancel")}
                            </Button>
                         </GridItem>
                      </GridContainer>

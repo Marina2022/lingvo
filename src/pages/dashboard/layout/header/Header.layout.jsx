@@ -11,6 +11,9 @@ import { getUserInfoAsync } from "../../../../redux/profile/profile.actions.js";
 //IMAGES
 import notificationIcon from "../../../../assets/images/header/notification-bell.png";
 import mailIcon from "../../../../assets/images/header/mail.png";
+import GetMediaContent from "../../../../components/get-media-content/";
+import { Logo as AppLogo } from "../../../main/slides/header";
+import { t } from 'i18next'
 
 const Header = (props) => {
    const {
@@ -23,43 +26,53 @@ const Header = (props) => {
 
    useEffect(() => {
       getUserInfoAsync();
-      //eslint-disable-next-line
-   }, []);
+   }, [getUserInfoAsync]);
 
    const logout = () => {
       userLogout();
       // logOutAsync();
-   };
+   };   
 
    const dropdownMenuItems = [
-      { name: "Личный кабинет", action: () => navigate("/profile") },
-      { name: "Выйти", action: logout },
-   ];
+      { name: t("profile.title"), action: () => navigate("/profile") },
+      { divider: true },
+      { name: t("actions.sign_out"), action: logout },
+   ];   
 
+   const mainMenuItems = [
+      { name: t("menu.classes"), target: "/ffffff" },
+      { name: t("menu.dictionary"), target: "/new" },
+      { name: t("themes.title"), target: "/topics" },
+      { name: t("courses.title"), target: "/courses" }
+   ];   
+
+   mainMenuItems.forEach(item => item.action = () => navigate(item.target))
+
+   const mainMenuMediaList = {
+      xSmall: <></>,
+      large: mainMenuItems.map((item, key) => (
+         <NavLink className="app-header__links-block_active" to={item.target} key={key}>
+            {item.name}
+         </NavLink>
+      ))
+   };
+
+   const xSmallMediaMenuList = [dropdownMenuItems[0], { divider: true }]
+      .concat(mainMenuItems)
+      .concat([dropdownMenuItems[1], dropdownMenuItems[2]])
+
+   const dropDownMediaList = {
+      xSmall: (<DropDown src={currentUserInfo?.avatar} menuItems={xSmallMediaMenuList} />),
+      large: (<DropDown src={currentUserInfo?.avatar} menuItems={dropdownMenuItems} name={currentUserInfo?.name} />)
+   };
+   
    return (
       <header className="app-header">
          <div className="app-header__main-link">
-            <Link to="/main">Lingvoinsta</Link>
+            <Link to="/main"><AppLogo /></Link>
          </div>
-         <div className="app-header__links-block">
-            <NavLink
-               className="app-header__links-block_active"
-               to="/ffffff">
-               Мои классы
-            </NavLink>
-            <NavLink className="app-header__links-block_active" to="/new">
-               Словарь
-            </NavLink>
-            <NavLink
-               className="app-header__links-block_active"
-               to="/topics">
-               Темы
-            </NavLink>
-            <NavLink
-               className="app-header__links-block_active"
-               to="/courses">
-               Курсы
-            </NavLink>
+         <div className="app-header__links-block"> 
+            <GetMediaContent contentList={mainMenuMediaList} />
          </div>
          <div className="app-header__profile-block">
             <div>
@@ -68,11 +81,7 @@ const Header = (props) => {
             <div>
                <img src={mailIcon} alt="mailicon" />
             </div>
-            <DropDown
-               src={currentUserInfo?.avatar}
-               menuItems={dropdownMenuItems}
-               name={currentUserInfo?.name}
-            />
+            <GetMediaContent contentList={dropDownMediaList} />
          </div>
       </header>
    );
