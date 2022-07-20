@@ -3,14 +3,6 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-//IMPORT MODULES
-//AZURE MICROSOFT SDK
-import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
-//GENERATING UNIQUE IDS
-import { v4 as uuidv4 } from "uuid";
-//CONFIG WITH AZURE CREDENTIALS
-import keysConfig from "../../../../../config/keys.config";
-
 //BASE COMPONENTS
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../../components/grid-item/GridItem.component";
@@ -28,18 +20,17 @@ import useInput from "../../../../../effects/useInput.effect";
 //ACTIONS
 import { getLevelsListAsync } from "../../../../../redux/common/common.actions";
 import { getSingleTopicAsync } from "../../../../../redux/topics/topics.actions";
-import {
-   getSingleUnitAsync,
-   createUnitAsync,
-   editUnitAsync,
-} from "../../../../../redux/units/units.actions";
+import { getSingleUnitAsync, createUnitAsync, editUnitAsync } from "../../../../../redux/units/units.actions";
 //SERVICES
 import AddEditUnitServices from "./add-edit-unit.services";
 //UTILITIES
-import { capitalizeFirstOnlyCase, checkForEmptyProperties } from "../../../../../utilities/helper-functions";
+import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
 import RecordAudioModal from "./components/RecordAudioModal.component";
 import { t } from "i18next";
+import { genAzureVoice, getAzureLanguageParams } from "./azure-voice-service";
+import { getBase64 } from "../../../../../utilities/handleFile";
+
 
 const AddEditUnitSubpage = (props) => {
    const {
@@ -64,94 +55,9 @@ const AddEditUnitSubpage = (props) => {
    const [fileData, setFileData] = useState({});
    const [isAudioModal, toggleAudioModal] = useState(false);
 
-   /**
-    *  states for Azure Text-to-Speech service
-    */ 
-   const setOfVoices = {
-      // TODO: needs to change to enGB
-      en_britain: {
-         male: "en-GB-RyanNeural",
-         female: "en-GB-LibbyNeural",
-      },
-      // TODO: needs to change to enUS
-      en_usa: {
-         male: "en-US-GuyNeural",
-         female: "en-US-AriaNeural",
-      },
-      ru: {
-         male: "ru-RU-DmitryNeural",
-         female: "ru-RU-DariyaNeural",
-      },
-      de: {
-         male: "de-DE-Stefan",
-         female: "de-DE-HeddaRUS",
-      },
-      fr: {
-         male: "fr-FR-HenriNeural",
-         female: "fr-FR-DeniseNeural",
-      },
-      es: {
-         male: "es-ES-AlvaroNeural",
-         female: "es-ES-ElviraNeural",
-      },
-      zh: {
-         male: "zh-CN-YunyangNeural",
-         female: "zh-CN-XiaoxiaoNeural",
-      },
-      ja: {
-         male: "ja-JP-KeitaNeural",
-         female: "ja-JP-NanamiNeural",
-      },
-      ko: {
-         male: "ko-KR-InJoonNeural",
-         female: "ko-KR-SunHiNeural",
-      },
-      tr: {
-         male: "tr-TR-AhmetNeural",
-         female: "tr-TR-EmelNeural",
-      },
-   };
-   const genders = [
-      { id: 0, label: t("genders.male"), value: "male" },
-      { id: 1, label: t("genders.female"), value: "female" },
-   ];   
-   /**
-    * List of supported languages
-    */
-   const voiceLanguages = [
-      // TODO: needs change value to 
-      { id: 0, value: "en_britain", },
-      // TODO: needs to change value "en_usa" to "enUS"
-      { id: 1, value: "en_usa",     },
-      { id: 2, value: "ru",         },
-      { id: 3, value: "de",         },
-      { id: 4, value: "fr",         },
-      { id: 5, value: "es",         },
-      { id: 6, value: "zh",         },
-      { id: 7, value: "ja",         },
-      { id: 8, value: "ko",         },
-      { id: 9, value: "tr",         },
-   ];
-
-   const languageNames = new Intl.DisplayNames([navigator.language], { type: 'language' });
-
-   // TODO: needs to change values to language-COUNTRY code and exclude code property
-   voiceLanguages.forEach(lang => {
-      lang.code = 
-         lang.value === "en_britain" ? "en-GB" :
-         lang.value === "en_usa"     ? "en-US" :
-         lang.value === "ru"         ? "ru-RU" :
-         lang.value === "de"         ? "de-DE" :
-         lang.value === "fr"         ? "fr-FR" :
-         lang.value === "es"         ? "es-ES" :
-         lang.value === "zh"         ? "zh-CN" :
-         lang.value === "ja"         ? "ja-JP" :
-         lang.value === "ko"         ? "ko-KR" :
-         lang.value === "tr"         ? "tr-TR" :
-         lang.value
-      lang.label = capitalizeFirstOnlyCase(languageNames.of(lang.code))
-   })
-
+   const { genders, languages: supportedLanguages, voices: supportedVoices} = getAzureLanguageParams()
+   
+   const [azureAudioStatus, setAzureAudioStatus] = useState({ isLoaded: false, url: null });
 
    // values are equal to voiceUploadMode"s fields
    const voiceUploadOptions = [
@@ -163,19 +69,14 @@ const AddEditUnitSubpage = (props) => {
 
    // states
    const [selectedVoice, setSelectedVoice] = useState({
-      language: voiceLanguages[0],
+      language: supportedLanguages[0],
       gender: genders[0],
    });
    // true - if the generated voice is created, otherwise - false
-   const [generatedVoiceAudio, setGeneratedVoiceAudio] = useState({
-      isVoiceLoaded: false,
-      url: null,
-   });
+   // const [generatedVoiceAudio, setGeneratedVoiceAudio] = useState({ isVoiceLoaded: false, url: null });
 
    // defines which type of voice uploading is being used: Azure generated voice, uploaded file, recorded audio
-   const [voiceUploadMode, setVoiceUploadMode] = useState({
-      mode: null,
-   });
+   const [voiceUploadMode, setVoiceUploadMode] = useState({ mode: null });
 
    const levelsOptions = generateLevelsOptions(levelsList || []);
    let { topicID, unitID } = useParams();
@@ -228,7 +129,7 @@ const AddEditUnitSubpage = (props) => {
       handleInput(event);
    };
 
-   const handleSelecetedTags = (items) => {
+   const handleSelectedTags = (items) => {
       const tags = {
          target: { name: "tags", value: items },
       };
@@ -249,24 +150,14 @@ const AddEditUnitSubpage = (props) => {
    };
 
    const handleFiles = (files) => {
-      getBase64(files[0]);
+      const file = files[0]
+      getBase64(file, reader => setFileData({
+         data: reader.result,
+         language: singleTopicData?.foreignLanguage,
+         name: file?.name,
+      }));
       setUploadedFiles(files);
    };
-
-   function getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function() {
-         setFileData({
-            data: reader.result,
-            language: singleTopicData?.foreignLanguage,
-            name: file?.name,
-         });
-      };
-      reader.onerror = function(error) {
-         console.log("Error: ", error);
-      };
-   }
 
    const onSubmit = (e) => {
       e.preventDefault();
@@ -285,89 +176,18 @@ const AddEditUnitSubpage = (props) => {
       }
    };
 
-   const onCancell = (e) => {
+   const onCancel = (e) => {
       e.preventDefault();
       navigate(`/topics/${topicID}/units`);
    };
 
    // making api call to create a voice audio file
-   const generateVoice = async () => {
-      // setting url of generated voice audio state to null
-      await setGeneratedVoiceAudio({
-         isVoiceLoaded: false,
-         url: null,
-      });
-
-      // getting voices params from inputs
-      const voiceLang = selectedVoice.language.value;
-      const gender = selectedVoice.gender.value;
-
-      const nameOfVoice = setOfVoices[voiceLang][gender];
-      const text = inputState.value;
-
-      // if text is empty
-      if (text.trim() === "") {
-         alert(t("alerts.needs_text_to_generate_audio"));
-         return;
-      }
-
-      // TODO: !!!move to config???? Keys should be in the backend!!!
-      const subscriptionKey = keysConfig.Azure.AzureSubscriptionKey;
-      const region = keysConfig.Azure.AzureRegion;
-
-      const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
-         subscriptionKey,
-         region
-      );
-      // setting selected voice
-      speechConfig.speechSynthesisVoiceName = nameOfVoice;
-
-      // setting Azure"s player and configs
-      const player = new SpeechSDK.SpeakerAudioDestination();
-      const audioConfig = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
-
-      const synthesizer = new SpeechSDK.SpeechSynthesizer(
-         speechConfig,
-         audioConfig
-      );
-
-      // fires when the speech is synthesized
-      const complete_cb = function(result) {
-         const filename = `Generated_voice-${uuidv4()}.mpeg`;
-         const file = new File([result.audioData], filename, {
-            type: "audio/mpeg",
-         });
-
-         // creating audio tag to listen the audio
-         const url = URL.createObjectURL(file);
-         setGeneratedVoiceAudio({
-            isVoiceLoaded: true,
-            url: url,
-         });
-
-         if (
-            result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted
-         ) {
-            player.pause();
-         } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
-            alert(t("alerts.somethings_wrong_try_again"));
-            console.error(
-               "Error: synthesis failed. Error detail: " + result.errorDetails
-            );
-         }
-         synthesizer.close();
-
-         // uploading generated audio-file
-         handleFiles([file]);
-      };
-
-      const err_cb = function(err) {
-         console.error("Error: ", err);
-         synthesizer.close();
-      };
-
-      synthesizer.speakTextAsync(text, complete_cb, err_cb);
-   };
+   const generateVoice = () => genAzureVoice({
+         text: inputState.value, 
+         setAzureAudioStatus,
+         voice: supportedVoices[selectedVoice.language.value][selectedVoice.gender.value],
+         handleFiles
+   });
 
    return (
       <div className="add-edit-unit">
@@ -375,7 +195,7 @@ const AddEditUnitSubpage = (props) => {
             handleModalClose={() => toggleAudioModal(false)}
             isOpen={isAudioModal}>
             <RecordAudioModal
-               onCancell={() => toggleAudioModal(false)}
+               onCancel={() => toggleAudioModal(false)}
                unitID={unitID}
                topicID={topicID}
                language={singleTopicData?.foreignLanguage}
@@ -430,7 +250,7 @@ const AddEditUnitSubpage = (props) => {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6} lg={6}>
                      <TagsInput
-                        selectedTags={handleSelecetedTags}
+                        selectedTags={handleSelectedTags}
                         fullWidth
                         variant="outlined"
                         id="tags"
@@ -495,8 +315,8 @@ const AddEditUnitSubpage = (props) => {
                               <Select
                                  name="voiceLanguage"
                                  label={t("units.voice_sources.generate.language")}
-                                 options={voiceLanguages}
-                                 defaultValue={voiceLanguages[0]}
+                                 options={supportedLanguages}
+                                 defaultValue={supportedLanguages[0]}
                                  onChange={(e) =>
                                     setSelectedVoice((prevState) => ({
                                        ...prevState,
@@ -530,9 +350,9 @@ const AddEditUnitSubpage = (props) => {
                            </GridItem>
 
                            <GridItem xs={12} sm={12} md={3} lg={3}>
-                              {generatedVoiceAudio.isVoiceLoaded ? (
+                              {azureAudioStatus.isLoaded ? (
                                  <Player
-                                    url={generatedVoiceAudio.url}
+                                    url={azureAudioStatus.url}
                                     onClick={() => {}}
                                     className="volume-icon__block">
                                     <Button>
@@ -569,7 +389,7 @@ const AddEditUnitSubpage = (props) => {
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button onClick={onCancell} className="cancel-button">
+                        <Button onClick={onCancel} className="cancel-button">
                            {t("actions.cancel")}
                         </Button>
                      </GridItem>

@@ -6,9 +6,9 @@ import Header from "./slides/header";
 import Top from "./slides/top";
 import Offer from "./slides/offer";
 import Can from "./slides/can";
-import Tariff from "./slides/tariff";
+// import Tariff from "./slides/tariff";
 import Profit from "./slides/profit";
-import Reviews from "./slides/reviews";
+// import Reviews from "./slides/reviews";
 import Footer from "./slides/footer";
 
 
@@ -20,9 +20,9 @@ export default class MainPage extends Component {
             <Top />
             <Offer />
             <Can />
-            <Tariff />
+            {/* <Tariff /> */}
             <Profit />
-            <Reviews />
+            {/* <Reviews /> */}
             <Footer />
          </div>
       );

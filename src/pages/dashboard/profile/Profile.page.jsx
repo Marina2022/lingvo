@@ -25,6 +25,7 @@ import {
 } from "../../../redux/profile/profile.actions";
 import { t } from "i18next";
 import { capitalizeFirstOnlyCase } from "../../../utilities/helper-functions";
+import { getBase64 } from "../../../utilities/handleFile";
 
 const ProfilePage = (props) => {
    const {
@@ -99,24 +100,16 @@ const ProfilePage = (props) => {
    };
 
    const handleFiles = (files) => {
-      getBase64(files[0]);
-      setUploadedFiles(files);
-   };
-
-   function getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function() {
-         editAvatarAsync({ data: reader.result, name: file?.name });
+      const file = files[0]
+      getBase64(file, reader => {
+         editAvatarAsync({ data: reader.result, name: file?.name })
          setAvatarData({
             data: reader.result,
             name: file?.name,
-         });
-      };
-      reader.onerror = function(error) {
-         console.log("Error: ", error);
-      };
-   }
+         })
+      });
+      setUploadedFiles(files);
+   };
 
    const onLinkUpdate = (e, linkType) => {
       e.preventDefault();
