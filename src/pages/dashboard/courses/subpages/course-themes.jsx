@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
 
-import Input from "../../../../../components/input/Input.component";
-import Button from "../../../../../components/button/Button.component";
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
+import Input from "../../../../components/input/Input.component";
+import Button from "../../../../components/button/Button.component";
+import GridContainer from "../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../components/back-arrow/BackArrow.component";
 
 import Checkbox from "react-custom-checkbox";
 
-import Pagination from "../../components/Pagination/Pagination";
+import Pagination from "../components/pagination";
 
-import "./_newcourse.scss";
+import "./course-new";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { t } from "i18next";
@@ -35,7 +35,7 @@ const ThemesForCourse = () => {
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <BackArrow text={t("courses.course.creation")} />
                <div className="courses-page__heading-block">
-                  <h1>{t("themes.list")}</h1>
+                  <h1>{t("lessons.list")}</h1>
                   <div>
                      <Input
                         name="search"
@@ -110,7 +110,7 @@ const ThemesForCourse = () => {
             <Pagination />
             <div>
                <Button
-                  onClick={() => navigate("/new-topic")}
+                  onClick={() => navigate("/topics/new")}
                   className="settings-panel__plus-icon">
                   {t("actions.create")}
                </Button>

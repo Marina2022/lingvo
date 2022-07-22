@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./_pagination.scss";
+import "./pagination.scss";
 
 const Pagination = () => {
    return (

@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Outlet, useOutlet, useOutletContext, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import Input from "../../../../../components/input/Input.component";
-import Button from "../../../../../components/button/Button.component";
-import UnitsListCard from "../../../../../components/units-list-card/UnitsListCard.components";
+import Input from "../../../../components/input/Input.component";
+import Button from "../../../../components/button/Button.component";
+import UnitsListCard from "../../../../components/units-list-card/UnitsListCard.components";
 //EFFECTS
-import useInput from "../../../../../effects/useInput.effect";
+import useInput from "../../../../effects/useInput.effect";
 //ACTIONS
 import {
    getSingleTopicAsync,
    publishTopicAsync,
-} from "../../../../../redux/topics/topics.actions.js";
-import { setSelectedUnit, deleteUnitAsync } from "../../../../../redux/units/units.actions";
+} from "../../../../redux/topics/topics.actions.js";
+import { setSelectedUnit, deleteUnitAsync } from "../../../../redux/units/units.actions";
 //IMAGES
-import plusIcon from "../../../../../assets/images/topics/plus.png";
+import plusIcon from "../../../../assets/images/topics/plus.png";
 import { t } from "i18next";
 
-const UnitSubpage = (props) => {
+const Units = (props) => {
    const {
       getSingleTopicAsync,
       selectedUnit,
@@ -37,12 +37,12 @@ const UnitSubpage = (props) => {
       invalidMessages,
    } = useInput();
    const navigate = useNavigate();
-
-   let { id } = useParams();
+   
+   let { topicId } = useParams();
 
    useEffect(() => {
-      if (id) {
-         getSingleTopicAsync(id);
+      if (topicId) {
+         getSingleTopicAsync(topicId);
       }
       //eslint-disable-next-line
    }, []);
@@ -58,24 +58,32 @@ const UnitSubpage = (props) => {
    };
 
    const publishTopic = () => {
-      publishTopicAsync(id, navigate);
+      publishTopicAsync(topicId, navigate);
    };
 
    const actionItems = [
-      {
-         name: t("actions.edit"),
-         action: () =>
-            navigate(
-               `/topics/${singleTopicData?.id}/units/${selectedUnit?.id}/edit`
-            ),
-      },
+      { name: t("actions.edit")  , action: () => navigate(`units/${selectedUnit?.id}`), },
       { name: t("actions.delete"), action: () => onConfirm() },
    ];
 
+   const [crumbs, setCrumbs, lastKey] = useOutletContext();
+   // const [initCrumbs, setInitCrumbs] = useState([...crumbs])
+   // setCrumbs(c => [...c, { name:singleTopicData?.text, path:singleTopicData?.id }])
+   
+   const outlet = useOutlet();
+
+   useEffect(() => {
+      // outlet ?
+      setCrumbs(c => [...c, { key: lastKey + 1, name:singleTopicData?.text, path:singleTopicData?.id }]) 
+      // :
+      // setCrumbs(initCrumbs)
+   }, [lastKey, setCrumbs, singleTopicData?.id, singleTopicData?.text])
+
    return (
+      outlet ?
+      <Outlet context={[crumbs, setCrumbs, lastKey + 1]} /> :      
       <div className="unit-subpage">
          <div className="unit-subpage__heading-block">
-            <h1>{t("units.title1", {theme:singleTopicData?.text})}</h1>
             <div>
                <Input
                   name="search"
@@ -92,7 +100,7 @@ const UnitSubpage = (props) => {
          <div className="unit-subpage__settings-panel">
             <Button
                onClick={() =>
-                  navigate(`/topics/${singleTopicData?.id}/units/new`)
+                  navigate(`units/new`)
                }
                className="unit-subpage__settings-panel__plus-button"
                src={plusIcon}>
@@ -142,4 +150,4 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(publishTopicAsync(topicID, navigate)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnitSubpage);
+export default connect(mapStateToProps, mapDispatchToProps)(Units);

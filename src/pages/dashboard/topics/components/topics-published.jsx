@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import TopicsListCard from "../../../../../components/topics-list-card/TopicsListCard.component";
+import TopicsListCard from "../../../../components/topics-list-card/TopicsListCard.component";
 //ACTIONS
 import {
    deleteTopicAsync,
    setSelectedTopic,
-} from "../../../../../redux/topics/topics.actions";
+} from "../../../../redux/topics/topics.actions";
 
 const PublishedTopicsTab = (props) => {
    const {
@@ -30,14 +30,14 @@ const PublishedTopicsTab = (props) => {
    const actionItems = [
       {
          name: t("actions.edit"),
-         action: () => navigate(`/topics/${selectedTopic?.id}/edit`),
+         action: () => navigate(`${selectedTopic?.id}/edit`),
       },
       { name: t("actions.delete"), action: () => onConfirm() },
    ];
 
    const onEditIconCLick = (topic) => {
       setSelectedTopic(topic);
-      navigate(`/topics/${topic?.id}/units`);
+      navigate(`${topic?.id}`);
    };
 
    return (

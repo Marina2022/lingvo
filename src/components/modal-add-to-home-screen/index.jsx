@@ -8,9 +8,9 @@ import { ReactComponent as BoxArrowUp } from '../../assets/images/icons/box-arro
 
 const promptList = {
   IOs: () => <>{t("misc.install_app.ios1", {device:"device"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
-  IPhone: () => <>{t("misc.install_app.ios1", {device:"iPhone"})} <BoxArrowUp /> {t("misc.install_app.iphone2")}</>,
-  IPad: () => <>{t("misc.install_app.ios1", {device:"iPad"})} <BoxArrowUp /> {t("misc.install_app.ipad2")}</>,
-  IPod: () => <>{t("misc.install_app.ios1", {device:"iPod"})} <BoxArrowUp /> {t("misc.install_app.ipod2")}</>,
+  IPhone: () => <>{t("misc.install_app.ios1", {device:"iPhone"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
+  IPad: () => <>{t("misc.install_app.ios1", {device:"iPad"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
+  IPod: () => <>{t("misc.install_app.ios1", {device:"iPod"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
   Desktop: () => <>{t("misc.install_app.desktop")}</>,
   OtherMobile: () => <>{t("misc.install_app.other_mobile")}</>
 }

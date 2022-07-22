@@ -1,9 +1,8 @@
-@import "subpages/new-topic-subpage/new-topic-subpage.styles";
-@import "subpages/unit-subpage/unit-subpage.styles";
-@import "subpages/add-edit-unit-subpage/add-edit-unit.styles";
+@import "subpages/topic-new";
+@import "subpages/units";
+@import "subpages/unit/unit";
 
 .topics-page {
-  padding-top: 70px !important;
 
   &__heading-block {
     display: flex;

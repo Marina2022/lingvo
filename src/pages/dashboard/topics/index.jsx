@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 
 //BASE COMPONENTS
 import Tab from "../../../components/tab/Tab.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //TABS
-import PublishedTopics from "./components/published-topics-tab/PublishedTopics.tab";
-import DraftTopicsTab from "./components/draft-topics-tab/DraftTopics.tab";
+import PublishedTopics from "./components/topics-published";
+import DraftTopicsTab from "./components/topics-draft";
 //ACTIONS
 import { getTopicsAsync } from "../../../redux/topics/topics.actions";
 //EFFECTS
@@ -16,6 +16,7 @@ import useInput from "../../../effects/useInput.effect";
 //IMAGES
 import plusIcon from "../../../assets/images/topics/plus.png";
 import { t } from 'i18next'
+import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 
 const TopicsPage = (props) => {
    const { getTopicsAsync, publishedTopicsCount, draftTopicsCount } = props;
@@ -30,8 +31,7 @@ const TopicsPage = (props) => {
 
    useEffect(() => {
       getTopicsAsync();
-      //eslint-disable-next-line
-   }, []);
+   }, [getTopicsAsync]);
 
    const handleInputChange = (event) => {
       handleInput(event);
@@ -40,20 +40,30 @@ const TopicsPage = (props) => {
    const list = [
       {
          eventKey: "topics",
-         title: t("themes.topic_list.published", {count:publishedTopicsCount}),
+         title: t("lessons.topic_list.published", {count:publishedTopicsCount}),
          content: <PublishedTopics />,
       },
       {
          eventKey: "drafts",
-         title: t("themes.topic_list.drafts", {count:draftTopicsCount}),
+         title: t("lessons.topic_list.drafts", {count:draftTopicsCount}),
          content: <DraftTopicsTab />,
       },
    ];
 
-   return (
-      <div className="topics-page">
+   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("lessons.title"), path: "topics" }]);
+
+   const outlet = useOutlet()
+
+   useEffect(() => {
+      if (!outlet) {
+         setCrumbs([{ key: 0, name: t("lessons.title"), path: "topics" }])
+      }
+   }
+   , [outlet])
+
+   const TopicBody = () => {
+      return <>
          <div className="topics-page__heading-block">
-            <h1>{t("themes.title")}</h1>
             <div>
                <Input
                   name="search"
@@ -66,18 +76,32 @@ const TopicsPage = (props) => {
                   required
                />
             </div>
-         </div>
-         <div className="settings-panel">
-            <Button
-               onClick={() => navigate("/new-topic")}
-               className="settings-panel__plus-icon"
-               src={plusIcon}>
-               {t("actions.create")}
-            </Button>
+            <div className="settings-panel">
+               <Button
+                  onClick={() => navigate("/topics/new")}
+                  className="settings-panel__plus-icon"
+                  src={plusIcon}>
+                  {t("actions.create")}
+               </Button>
+            </div>
          </div>
          <Tab tabsList={list} />
+      </>
+   }
+
+   return (
+      <div className="topics-page">
+         <BuildBreadcrumbs crumbs={crumbs} />
+         {
+            outlet ?
+            // shows child element
+            <Outlet context={[crumbs, setCrumbs, 0]}/> : 
+            // shows topic element
+            <TopicBody />
+         }
       </div>
-   );
+   )
+   
 };
 
 const mapStateToProps = (state) => {

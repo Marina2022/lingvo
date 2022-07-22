@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import TopicsListCard from "../../../../../components/topics-list-card/TopicsListCard.component";
+import TopicsListCard from "../../../../components/topics-list-card/TopicsListCard.component";
 //ACTIONS
 import {
    deleteTopicAsync,
    setSelectedTopic,
-} from "../../../../../redux/topics/topics.actions";
+} from "../../../../redux/topics/topics.actions";
 
 const DraftTopicsTab = (props) => {
    const {

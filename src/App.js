@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 //ROUTES
 import AuthRoutes from "./pages/auth/AuthPages";
-import DashboardRoutes from "./pages/dashboard/DashboardPages";
+import DashboardRoutes from "./pages/dashboard";
 
 //ACTIONS
 import { getLanguagesListAsync } from "./redux/common/common.actions";

@@ -4,26 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Form from "../../../../../components/form/Form.component";
-import Input from "../../../../../components/input/Input.component";
-import Select from "../../../../../components/select/Select.component";
-import Button from "../../../../../components/button/Button.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
+import GridContainer from "../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../components/back-arrow/BackArrow.component";
+import Form from "../../../../components/form/Form.component";
+import Input from "../../../../components/input/Input.component";
+import Select from "../../../../components/select/Select.component";
+import Button from "../../../../components/button/Button.component";
+import TagsInput from "../../../../components/tags-input/TagsInput.component";
 //EFFECTS
-import useInput from "../../../../../effects/useInput.effect";
+import useInput from "../../../../effects/useInput.effect";
 //SERVICES
-import NewTopicServices from "./new-topic.services";
+import NewTopicServices from "./topic-new-services";
 //ACTIONS
 import {
    createTopicAsync,
    getSingleTopicAsync,
    editTopicAsync,
-} from "../../../../../redux/topics/topics.actions";
+} from "../../../../redux/topics/topics.actions";
 //UTILITIES
-import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
+import { checkForEmptyProperties } from "../../../../utilities/helper-functions";
 import { t } from "i18next";
 
 const NewTopicSubpage = (props) => {
@@ -38,19 +38,19 @@ const NewTopicSubpage = (props) => {
    } = props;
    const { generateLanguagesOptions } = NewTopicServices;
    const navigate = useNavigate();
-   let { id } = useParams();
+   let { topicId } = useParams();
 
    const languageOptions = generateLanguagesOptions(languagesList);
 
    const singleTopicDataCopy = { ...selectedTopic };
 
-   const nativeLanguageDefaultValue = id
+   const nativeLanguageDefaultValue = topicId
       ? {
            ...singleTopicDataCopy.nativeLanguage,
            label: singleTopicDataCopy.nativeLanguage.value,
         }
       : languageOptions[4];
-   const foreignLanguageDefaultValue = id
+   const foreignLanguageDefaultValue = topicId
       ? {
            ...singleTopicDataCopy.foreignLanguage,
            label: singleTopicDataCopy.foreignLanguage.value,
@@ -72,7 +72,7 @@ const NewTopicSubpage = (props) => {
 
    const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
 
-   const formState = id
+   const formState = topicId
       ? {
            ...singleTopicDataCopy,
            tags: singleTopicDataCopy?.tags,
@@ -88,8 +88,8 @@ const NewTopicSubpage = (props) => {
    } = useInput({ ...formState });
 
    useEffect(() => {
-      if (id) {
-         getSingleTopicAsync(id);
+      if (topicId) {
+         getSingleTopicAsync(topicId);
       }
       //eslint-disable-next-line
    }, []);
@@ -111,8 +111,8 @@ const NewTopicSubpage = (props) => {
 
    const onSubmit = (event) => {
       event.preventDefault();
-      if (id) {
-         editTopicAsync(id, inputState, navigate, isTagsUpdated);
+      if (topicId) {
+         editTopicAsync(topicId, inputState, navigate, isTagsUpdated);
       } else {
          createTopicAsync(inputState, navigate);
       }
@@ -136,8 +136,8 @@ const NewTopicSubpage = (props) => {
       <div className="new-topic-subpage">
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text={t("themes.title")} />
-               <h1>{t("themes.theme.new_theme")}</h1>
+               <BackArrow text={t("lessons.title")} />
+               <h1>{t("lessons.lesson.new")}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
@@ -148,7 +148,7 @@ const NewTopicSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("themes.theme.title")}
+                        label={t("lessons.lesson.title")}
                         type="text"
                         placeholder="Daily routine and household chores"
                         required
@@ -162,7 +162,7 @@ const NewTopicSubpage = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label={t("themes.theme.tags")}
+                        label={t("lessons.lesson.tags")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>

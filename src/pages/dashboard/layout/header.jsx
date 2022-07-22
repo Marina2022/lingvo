@@ -4,15 +4,15 @@ import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import DropDown from "../../../../components/drop-down/DropDown.component";
+import DropDown from "../../../components/drop-down/DropDown.component";
 //ACTIONS
-import { userLogout, logOutAsync } from "../../../../redux/auth/auth.actions";
-import { getUserInfoAsync } from "../../../../redux/profile/profile.actions.js";
+import { userLogout, logOutAsync } from "../../../redux/auth/auth.actions";
+import { getUserInfoAsync } from "../../../redux/profile/profile.actions.js";
 //IMAGES
-import notificationIcon from "../../../../assets/images/header/notification-bell.png";
-import mailIcon from "../../../../assets/images/header/mail.png";
-import GetMediaContent from "../../../../components/get-media-content/";
-import { Logo as AppLogo } from "../../../main/slides/header";
+import notificationIcon from "../../../assets/images/header/notification-bell.png";
+import mailIcon from "../../../assets/images/header/mail.png";
+import GetMediaContent from "../../../components/get-media-content";
+import { Logo as AppLogo } from "../../main/slides/header";
 import { t } from 'i18next'
 
 const Header = (props) => {
@@ -40,9 +40,9 @@ const Header = (props) => {
    ];   
 
    const mainMenuItems = [
-      { name: t("menu.classes"), target: "/ffffff" },
-      { name: t("menu.dictionary"), target: "/new" },
-      { name: t("themes.title"), target: "/topics" },
+      // { name: t("menu.classes"), target: "/ffffff" },
+      // { name: t("menu.dictionary"), target: "/new" },
+      { name: t("lessons.title"), target: "/topics" },
       { name: t("courses.title"), target: "/courses" }
    ];   
 

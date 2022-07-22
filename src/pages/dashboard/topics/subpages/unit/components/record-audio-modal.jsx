@@ -48,7 +48,7 @@ const RecordAudioModal = (props) => {
 
    return (
       <div className="record-audio-modal">
-         <h2>{t("units.voice_sources.record.label")}</h2>
+         <h2>{t("exercises.exercise.voice_sources.record.label")}</h2>
          <div className="heading">
             If you are silent people don’t understand what you feel
          </div>
@@ -66,7 +66,7 @@ const RecordAudioModal = (props) => {
             error={invalidMessages}
             onChange={handleInputChange}
             onInvalid={handleInvalidMessage}
-            label={t("units.voice_sources.record.file_name")}
+            label={t("exercises.exercise.voice_sources.record.file_name")}
             type="text"
          />
          <div className="buttons-block">

@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 
-import "./_courses.styles.scss";
+import "./index.scss";
 import plusIcon from "../../../assets/images/topics/plus.png";
-import CourseItem from "./components/CourseItem/CourseItem";
-import Pagination from "./components/Pagination/Pagination";
+import CourseItem from "./components/course-item";
+import Pagination from "./components/pagination";
 import { getCoursesAsync } from "../../../redux/courses/courses.actions";
 import { t } from "i18next";
 
@@ -37,7 +37,7 @@ const CoursesPage = (props) => {
                   dispatch({
                      type: "CLEAR_DRAFTS",
                   });
-                  navigate("/new-course");
+                  navigate("/courses/new");
                }}
                className="settings-panel__plus-icon"
                src={plusIcon}>
@@ -49,7 +49,7 @@ const CoursesPage = (props) => {
                   courseName={course.name}
                   courseStatus={course.shared}
                   courseInfo={t("courses.summary")}
-                  courseTheme={t("themes.number_of", {count: course.posts.length})}
+                  courseTheme={t("lessons.number_of", {count: course.posts.length})}
                   coursePrice={course.cost}
                   onClick={() => {
                      dispatch({
@@ -66,7 +66,7 @@ const CoursesPage = (props) => {
                            current: course,
                         },
                      });
-                     navigate(`/course/${course.id}`);
+                     navigate(`${course.id}`);
                   }}
                   key={course.id}
                />

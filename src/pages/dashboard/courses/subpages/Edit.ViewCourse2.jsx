@@ -18,7 +18,7 @@ import Form from "../../../../../components/form/Form.component";
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../../components/grid-item/GridItem.component";
 import Input from "../../../../../components/input/Input.component";
-import NewCourseServices from "./NewCourse.services.js";
+import NewCourseServices from "./course-new-services.js";
 import plusIcon from "../../../../../assets/images/topics/plus.png";
 import Select from "../../../../../components/select/Select.component";
 import TagsInput from "../../../../../components/tags-input/TagsInput.component";

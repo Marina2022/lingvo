@@ -79,6 +79,7 @@
     "summary":"Training course review",
     "course":{
       "name":"Course title",
+      "new":"New course",
       "tags":"Tags",
       "price":"Price",
       "price_placeholder":"Input price",
@@ -95,57 +96,59 @@
     "native":"Native language",
     "placeholder":"Select language"
   },
-  "themes":{
-    "title": "Themes",
+  "lessons":{
+    "title": "Lessons",
     "topic_list":{
       "published_zero": "Published: Nothing",
       "published": "Published: {{count}}",
       "drafts_zero": "Drafts: Nothing",
       "drafts": "Drafts: {{count}}"
     },
-    "list":"Course themes",
-    "nothing":"No themes",
-    "number_of_zero":"No themes",
-    "number_of_one":"{{count}} theme",
-    "number_of_other":"{{count}} themes",
-    "theme":{
-      "new_theme":"New theme",
-      "title":"Theme title",
+    "list":"Course's lessons",
+    "nothing":"No lesson",
+    "number_of_zero":"No lesson",
+    "number_of_one":"{{count}} lesson",
+    "number_of_other":"{{count}} lessons",
+    "lesson":{
+      "new":"New",
+      "title":"Lesson theme",
       "tags":"Tags"
     }
   },
-  "units": {
-    "title":"Phrases",
-    "title1":"Phrases of {{theme}}",
-    "new_unit":"New phrase",
-    "translation":"Translate or Explain in original language",
-    "extra":"Extra explanation",
-    "level":"Level",
-    "tags":"Tags",
-    "placeholders":{
-      "foreign":"Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
-      "native":"If you are silent people don't understand what you feel",
-      "extra":"This sentences is very important to me"
-    },
-    "voice_sources":{
-      "select":"Select an audio source",
-      "undefined":{
-        "label":"Undefined"
+  "exercises": {
+    "title":"Exercises",
+    "exercise":{
+      "new":"New",
+      "original": "Phrase to learn",
+      "translation":"Translate or Explain in original language",
+      "extra":"Extra explanation",
+      "level":"Level",
+      "tags":"Tags",
+      "placeholders":{
+        "foreign":"Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
+        "native":"If you are silent people don't understand what you feel",
+        "extra":"This sentences is very important to me"
       },
-      "upload":{
-        "label":"Upload a file",
-        "title":"Select this window or Drop audio here"
-      },
-      "record":{
-        "label":"Record audio",
-        "button":"Make record",
-        "file_name":"File name"
-      },
-      "generate":{
-        "label":"Generate audio",
-        "language":"Select voice language",
-        "gender":"Select gender",
-        "play":"Play"
+      "voice_sources":{
+        "select":"Audio source",
+        "undefined":{
+          "label":"Undefined"
+        },
+        "upload":{
+          "label":"Upload a file",
+          "title":"Select this window or Drop audio here"
+        },
+        "record":{
+          "label":"Record audio",
+          "button":"Make record",
+          "file_name":"File name"
+        },
+        "generate":{
+          "label":"Generate audio",
+          "language":"Select voice language",
+          "gender":"Select gender",
+          "play":"Play"
+        }
       }
     }
   },
@@ -163,7 +166,7 @@
     "can": {
       "1":"You are capable of",
       "2":"Create new theme",
-      "3":"Add, translate and voice phrases",
+      "3":"Add, translate and voice exercises",
       "4":"Publish the theme to student application",
       "5":"Your students are capable of",
       "6":"Find and subscribe to You in the app",
@@ -204,7 +207,7 @@
     "tariff":{
       "title":"Prices",
       "publications":"Posts per month",
-      "phrases":"Phrases per post",
+      "exercises":"Exercises per post",
       "subscribers":"Number of subscribers",
       "starter":{
         "name":"Primary",
@@ -212,7 +215,7 @@
         "detail2":"First 3 month",
         "comment":"You are not able to get a fee for your content. Your student training is free",
         "n_of_publications":"up to 4",
-        "n_of_phrases":"up to 10",
+        "n_of_exercises":"up to 10",
         "n_of_subscribers":"Not limited"
       },
       "optimum":{
@@ -221,7 +224,7 @@
         "detail2":"per month",
         "comment":"You get 50% of fees paid by your subscribers for your content",
         "n_of_publications":"up to 10",
-        "n_of_phrases":"up to 20",
+        "n_of_exercises":"up to 20",
         "n_of_subscribers":"Not limited"
       },
       "profi":{
@@ -230,7 +233,7 @@
         "detail2":"per month",
         "comment":"You get 70% of fees paid by your subscribers for your content",
         "n_of_publications":"Not limited",
-        "n_of_phrases":"up to 10",
+        "n_of_exercises":"up to 10",
         "n_of_subscribers":"Not limited"
       },
       "is_not_suitable":"No suitable price?",

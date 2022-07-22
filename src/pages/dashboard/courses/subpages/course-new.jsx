@@ -2,23 +2,24 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import Input from "../../../../../components/input/Input.component";
-import Button from "../../../../../components/button/Button.component";
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Form from "../../../../../components/form/Form.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
-import Select from "../../../../../components/select/Select.component";
+import Input from "../../../../components/input/Input.component";
+import Button from "../../../../components/button/Button.component";
+import GridContainer from "../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../components/grid-item/GridItem.component";
+import BackArrow from "../../../../components/back-arrow/BackArrow.component";
+import Form from "../../../../components/form/Form.component";
+import TagsInput from "../../../../components/tags-input/TagsInput.component";
+import Select from "../../../../components/select/Select.component";
 import { Switch } from "@mui/material";
 import { Grid } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import NewCourseServices from "./NewCourse.services";
+// import NewCourseServices from "./course-new-services";
+import NewCourseServices from "./course-new-services";
 
-import plusIcon from "../../../../../assets/images/topics/plus.png";
+import plusIcon from "../../../../assets/images/topics/plus.png";
 
-import "./_newcourse.scss";
-import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
+import "./course-new.scss";
+import { createCoursesAsync } from "../../../../redux/courses/courses.actions";
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -204,14 +205,14 @@ const NewCoursePage = (props) => {
                   </GridItem>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
-                        <div className="h2">{t("themes.list")}</div>
+                        <div className="h2">{t("lessons.list")}</div>
                         <Button
                            onClick={() => {
                               dispatch({
                                  type: "SAVE_DRAFT_COURSE",
                                  payload: inputState,
                               });
-                              navigate("/course-themes");
+                              navigate("/courses");
                            }}
                            className="settings-panel__plus-icon"
                            src={plusIcon}>
@@ -220,7 +221,7 @@ const NewCoursePage = (props) => {
                      </div>
                      <div className="new-course-themes__wrapper">
                         {topics.length === 0 ? (
-                           <p>{t("themes.nothing")}</p>
+                           <p>{t("lessons.nothing")}</p>
                         ) : (
                            <div className="course-theme-wrapper">
                               {topics.map((topic) => (

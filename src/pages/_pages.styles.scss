@@ -3,20 +3,37 @@
 @import "auth/register/register.styles";
 @import "auth/reset-password/reset-password.styles";
 @import "auth/set-new-password/set-new-password.styles";
-@import "dashboard/topics/topics.styles";
-@import "dashboard/profile/profile.styles";
+@import "dashboard/topics/index";
+@import "dashboard/profile/index";
 
 //LAYOUTS' STYLES
-@import "dashboard/layout/layout.styles";
+@import "dashboard/layout/index";
+
+@import "~bootstrap/scss/_mixins.scss";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
 
 .dashboard-page {
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+
    > div {
+      flex: 1;
+      overflow-y: auto;
+
+      > * {
+         flex-shrink: 0;
+      }
+      
       background: #f0f5f5;
-      padding: 15px 80px 80px 80px;
+      padding: 2rem 4rem;
+      // padding: 15px 80px 80px 80px;
       //min-height: 85%;
 
-      @media only screen and (max-width: 700px) {
-         padding: 10px !important;
+      // @media only screen and (max-width: $grid-breakpoints-md) {
+      @include media-breakpoint-down(md) {
+         padding: 1rem !important;
       }
    }
 }

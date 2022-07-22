@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { Grid, Switch } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import axios from "axios";
-import "./_newcourse.scss";
-import { createCoursesAsync } from "../../../../../redux/courses/courses.actions";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
-import Button from "../../../../../components/button/Button.component";
-import Form from "../../../../../components/form/Form.component";
-import GridContainer from "../../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../../components/grid-item/GridItem.component";
-import Input from "../../../../../components/input/Input.component";
-import NewCourseServices from "./NewCourse.services";
-import plusIcon from "../../../../../assets/images/topics/plus.png";
-import Select from "../../../../../components/select/Select.component";
-import TagsInput from "../../../../../components/tags-input/TagsInput.component";
+import "./course-new";
+import { createCoursesAsync } from "../../../../redux/courses/courses.actions";
+import BackArrow from "../../../../components/back-arrow/BackArrow.component";
+import Button from "../../../../components/button/Button.component";
+import Form from "../../../../components/form/Form.component";
+import GridContainer from "../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../components/grid-item/GridItem.component";
+import Input from "../../../../components/input/Input.component";
+import NewCourseServices from "./course-new-services";
+import plusIcon from "../../../../assets/images/topics/plus.png";
+import Select from "../../../../components/select/Select.component";
+import TagsInput from "../../../../components/tags-input/TagsInput.component";
 import { t } from "i18next";
 
 const EditCoursePage = (props) => {
@@ -123,7 +123,7 @@ const EditCoursePage = (props) => {
       <div className="new-topic-subpage">
          <GridContainer>
             <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text={t("courses.corses")} />
+               <BackArrow text={t("courses.title")} />
                <h1>{inputState.name}</h1>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
@@ -207,7 +207,7 @@ const EditCoursePage = (props) => {
                   </GridItem>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
-                        <div className="h2">{t("themes.list")}</div>
+                        <div className="h2">{t("lessons.list")}</div>
                         <Button
                            onClick={() => {
                               dispatch({
@@ -223,7 +223,7 @@ const EditCoursePage = (props) => {
                      </div>
                      <div className="new-course-themes__wrapper">
                         {topics.length === 0 ? (
-                           <p>{t("themes.nothing")}</p>
+                           <p>{t("lessons.nothing")}</p>
                         ) : (
                            <div className="course-theme-wrapper">
                               {topics.map((topic) => (

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
 import GridContainer from "../../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../../components/back-arrow/BackArrow.component";
 import Form from "../../../../../components/form/Form.component";
 import TextArea from "../../../../../components/text-area/TextArea.component";
 import TagsInput from "../../../../../components/tags-input/TagsInput.component";
@@ -22,17 +21,17 @@ import { getLevelsListAsync } from "../../../../../redux/common/common.actions";
 import { getSingleTopicAsync } from "../../../../../redux/topics/topics.actions";
 import { getSingleUnitAsync, createUnitAsync, editUnitAsync } from "../../../../../redux/units/units.actions";
 //SERVICES
-import AddEditUnitServices from "./add-edit-unit.services";
+import AddEditUnitServices from "./unit-services"
 //UTILITIES
 import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
-import RecordAudioModal from "./components/RecordAudioModal.component";
+import RecordAudioModal from "./components/record-audio-modal"
 import { t } from "i18next";
 import { genAzureVoice, getAzureLanguageParams } from "./azure-voice-service";
 import { getBase64 } from "../../../../../utilities/handleFile";
 
 
-const AddEditUnitSubpage = (props) => {
+const Unit = (props) => {
    const {
       getLevelsListAsync,
       levelsList,
@@ -59,14 +58,6 @@ const AddEditUnitSubpage = (props) => {
    
    const [azureAudioStatus, setAzureAudioStatus] = useState({ isLoaded: false, url: null });
 
-   // values are equal to voiceUploadMode"s fields
-   const voiceUploadOptions = [
-      { id: 0, label: t("units.voice_sources.undefined.label"), value: "" },
-      { id: 2, label: t("units.voice_sources.upload.label"), value: "uploadedAudio" },
-      { id: 1, label: t("units.voice_sources.record.label"), value: "recordedAudio" },
-      { id: 3, label: t("units.voice_sources.generate.label"), value: "generatedVoice" },
-   ];
-
    // states
    const [selectedVoice, setSelectedVoice] = useState({
       language: supportedLanguages[0],
@@ -79,20 +70,28 @@ const AddEditUnitSubpage = (props) => {
    const [voiceUploadMode, setVoiceUploadMode] = useState({ mode: null });
 
    const levelsOptions = generateLevelsOptions(levelsList || []);
-   let { topicID, unitID } = useParams();
-   const files = unitID ? singleUnitDataCopy?.voices : [];
+   let { topicId, unitId } = useParams();
+   const files = unitId ? singleUnitDataCopy?.voices : [];
    const [uploadedFiles, setUploadedFiles] = useState(files);
 
    useEffect(() => {
       getLevelsListAsync();
-      if (topicID) {
-         getSingleTopicAsync(topicID);
+      if (topicId) {
+         getSingleTopicAsync(topicId);
       }
-      if (unitID) {
-         getSingleUnitAsync(unitID);
+      if (unitId) {
+         getSingleUnitAsync(unitId);
       }
-   }, [getLevelsListAsync, getSingleTopicAsync, getSingleUnitAsync, topicID, unitID]);
+   }, [getLevelsListAsync, getSingleTopicAsync, getSingleUnitAsync, topicId, unitId]);
 
+   // values are equal to voiceUploadMode"s fields
+   const voiceUploadOptions = [
+      { id: 0, label: t("exercises.exercise.voice_sources.undefined.label"), value: "" },
+      { id: 2, label: t("exercises.exercise.voice_sources.upload.label"), value: "uploadedAudio" },
+      { id: 1, label: t("exercises.exercise.voice_sources.record.label"), value: "recordedAudio" },
+      { id: 3, label: t("exercises.exercise.voice_sources.generate.label"), value: "generatedVoice" },
+   ];
+   
    const formInitState = {
       description: "",
       level: levelsOptions[0],
@@ -103,14 +102,14 @@ const AddEditUnitSubpage = (props) => {
       voices: [],
    };
 
-   const levelDefaultValue = unitID
+   const levelDefaultValue = unitId
       ? {
            ...selectedUnit?.level,
            label: selectedUnit?.level?.value,
         }
       : levelsOptions[0];
 
-   const formState = unitID
+   const formState = unitId
       ? {
            ...singleUnitDataCopy,
            tags: singleUnitDataCopy?.tags,
@@ -161,24 +160,24 @@ const AddEditUnitSubpage = (props) => {
 
    const onSubmit = (e) => {
       e.preventDefault();
-      if (unitID) {
+      if (unitId) {
          editUnitAsync(
-            unitID,
+            unitId,
             inputState,
             navigate,
-            topicID,
+            topicId,
             isTagsUpdated,
             fileData,
             singleUnitDataCopy?.voices[0]?.id
          );
       } else {
-         createUnitAsync(topicID, inputState, navigate, fileData);
+         createUnitAsync(topicId, inputState, navigate, fileData);
       }
    };
 
    const onCancel = (e) => {
       e.preventDefault();
-      navigate(`/topics/${topicID}/units`);
+      navigate(`/topics/${topicId}/units`);
    };
 
    // making api call to create a voice audio file
@@ -188,6 +187,22 @@ const AddEditUnitSubpage = (props) => {
          voice: supportedVoices[selectedVoice.language.value][selectedVoice.gender.value],
          handleFiles
    });
+   // eslint-disable-next-line
+   const [crumbs, setCrumbs, lastKey] = useOutletContext();
+
+   useEffect(() => {
+      unitId ?
+      setCrumbs(c => [
+         ...c, 
+         { key: lastKey + 1, name:t("exercises.title"), path:"" },
+         { key: lastKey + 2, name:`${inputState?.value.slice(0, 10)}...`, path:`units/${unitId}` }
+      ]) :
+      setCrumbs(c => [
+         ...c, 
+         { key: lastKey + 1, name:t("exercises.title"), path: "" },
+         { key: lastKey + 2, name:t("exercises.exercise.new"), path:"units/new" }
+      ]) 
+   }, [inputState?.value, lastKey, setCrumbs, unitId])
 
    return (
       <div className="add-edit-unit">
@@ -196,17 +211,13 @@ const AddEditUnitSubpage = (props) => {
             isOpen={isAudioModal}>
             <RecordAudioModal
                onCancel={() => toggleAudioModal(false)}
-               unitID={unitID}
-               topicID={topicID}
+               unitID={unitId}
+               topicID={topicId}
                language={singleTopicData?.foreignLanguage}
                prevVoiceID={singleUnitDataCopy?.voices[0]?.id}
             />
          </Modal>
          <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text={t("units.title")} />
-               <h1>{t("units.new_unit")}</h1>
-            </GridItem>
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <Form>
                   <GridItem xs={12} sm={12} md={6} lg={6}>
@@ -216,8 +227,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("languages.foreign")}
-                        placeholder={t("units.placeholders.foreign")}
+                        label={t("exercises.exercise.original")}
+                        placeholder={t("exercises.exercise.placeholders.foreign")}
                         minRows={2}
                         required
                      />
@@ -229,8 +240,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("units.translation")}
-                        placeholder={t("units.placeholders.native")}
+                        label={t("exercises.exercise.translation")}
+                        placeholder={t("exercises.exercise.placeholders.native")}
                         minRows={2}
                         required
                      />
@@ -242,8 +253,8 @@ const AddEditUnitSubpage = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("units.extra")}
-                        placeholder={t("units.placeholders.extra")}
+                        label={t("exercises.exercise.extra")}
+                        placeholder={t("exercises.exercise.placeholders.extra")}
                         minRows={2}
                         required
                      />
@@ -256,24 +267,24 @@ const AddEditUnitSubpage = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label={t("units.tags")}
+                        label={t("exercises.exercise.tags")}
                      />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="level"
-                        label={t("units.level")}
+                        label={t("exercises.exercise.level")}
                         options={levelsOptions}
                         defaultValue={levelDefaultValue}
                         onChange={(e) => onSelectChange(e, "level")}
-                        placeholder={t("units.level")}
+                        placeholder={t("exercises.exercise.level")}
                      />
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="voiceUploadMode"
-                        label={t("units.voice_sources.select")}
+                        label={t("exercises.exercise.voice_sources.select")}
                         options={voiceUploadOptions}
                         defaultValue={voiceUploadOptions[0]}
                         onChange={(e) =>
@@ -281,16 +292,16 @@ const AddEditUnitSubpage = (props) => {
                               mode: e,
                            })
                         }
-                        placeholder={t("units.voice_sources.select")}
+                        placeholder={t("exercises.exercise.voice_sources.select")}
                      />
                   </GridItem>
 
                   {voiceUploadMode.mode &&
                      voiceUploadMode.mode.value === "uploadedAudio" && (
                         <GridItem xs={12} sm={12} md={6} lg={6}>
-                           <span>{t("units.voice_sources.upload.label")}</span>
+                           <span>{t("exercises.exercise.voice_sources.upload.label")}</span>
                            <DropZone
-                              title={t("units.voice_sources.upload.title")}
+                              title={t("exercises.exercise.voice_sources.upload.title")}
                               handleFiles={handleFiles}
                               files={uploadedFiles}
                               buttonAction={() => toggleAudioModal(true)}
@@ -301,9 +312,9 @@ const AddEditUnitSubpage = (props) => {
                   {voiceUploadMode.mode &&
                      voiceUploadMode.mode.value === "recordedAudio" && (
                         <GridItem xs={12} sm={12} md={2} lg={2}>
-                           <span>{t("units.voice_sources.record.label")}</span>
+                           <span>{t("exercises.exercise.voice_sources.record.label")}</span>
                            <Button onClick={() => toggleAudioModal(true)}>
-                              {t("units.voice_sources.record.button")}
+                              {t("exercises.exercise.voice_sources.record.button")}
                            </Button>
                         </GridItem>
                      )}
@@ -314,7 +325,7 @@ const AddEditUnitSubpage = (props) => {
                            <GridItem xs={12} sm={12} md={3} lg={3}>
                               <Select
                                  name="voiceLanguage"
-                                 label={t("units.voice_sources.generate.language")}
+                                 label={t("exercises.exercise.voice_sources.generate.language")}
                                  options={supportedLanguages}
                                  defaultValue={supportedLanguages[0]}
                                  onChange={(e) =>
@@ -323,14 +334,14 @@ const AddEditUnitSubpage = (props) => {
                                        language: e,
                                     }))
                                  }
-                                 placeholder={t("units.voice_sources.generate.language")}
+                                 placeholder={t("exercises.exercise.voice_sources.generate.language")}
                               />
                            </GridItem>
 
                            <GridItem xs={12} sm={12} md={3} lg={3}>
                               <Select
                                  name="voiceGender"
-                                 label={t("units.voice_sources.generate.gender")}
+                                 label={t("exercises.exercise.voice_sources.generate.gender")}
                                  options={genders}
                                  defaultValue={genders[0]}
                                  onChange={(e) =>
@@ -339,13 +350,13 @@ const AddEditUnitSubpage = (props) => {
                                        gender: e,
                                     }))
                                  }
-                                 placeholder={t("units.voice_sources.generate.gender")}
+                                 placeholder={t("exercises.exercise.voice_sources.generate.gender")}
                               />
                            </GridItem>
 
                            <GridItem xs={12} sm={12} md={2} lg={2}>
                               <Button onClick={generateVoice}>
-                                 {t("units.voice_sources.generate.label")}
+                                 {t("exercises.exercise.voice_sources.generate.label")}
                               </Button>
                            </GridItem>
 
@@ -356,7 +367,7 @@ const AddEditUnitSubpage = (props) => {
                                     onClick={() => {}}
                                     className="volume-icon__block">
                                     <Button>
-                                       {t("units.voice_sources.generate.play")}
+                                       {t("exercises.exercise.voice_sources.generate.play")}
                                     </Button>
                                  </Player>
                               ) : null}
@@ -445,4 +456,4 @@ const mapDispatchToProps = (dispatch) => ({
       ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddEditUnitSubpage);
+export default connect(mapStateToProps, mapDispatchToProps)(Unit);
