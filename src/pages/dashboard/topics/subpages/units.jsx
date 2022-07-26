@@ -14,19 +14,19 @@ import {
    getSingleTopicAsync,
    publishTopicAsync,
 } from "../../../../redux/topics/topics.actions.js";
-import { setSelectedUnit, deleteUnitAsync } from "../../../../redux/units/units.actions";
+// import { setSelectedUnit, deleteUnitAsync } from "../../../../redux/units/units.actions";
 //IMAGES
 import plusIcon from "../../../../assets/images/topics/plus.png";
 import { t } from "i18next";
+import { addCrumbs } from "../../layout/breadcrumbs";
+import GridContainer from "../../../../components/grid-container/GridContainer.component";
+import GridItem from "../../../../components/grid-item/GridItem.component";
 
 const Units = (props) => {
    const {
       getSingleTopicAsync,
-      selectedUnit,
-      setSelectedUnit,
       singleTopicData,
       isSingleTopicLoading,
-      deleteUnitAsync,
       publishTopicAsync,
       publishTopicLoading,
    } = props;
@@ -40,51 +40,37 @@ const Units = (props) => {
    
    let { topicId } = useParams();
 
-   useEffect(() => {
-      if (topicId) {
-         getSingleTopicAsync(topicId);
-      }
-      //eslint-disable-next-line
-   }, []);
+   useEffect(() => { topicId && getSingleTopicAsync(topicId)}, [getSingleTopicAsync, topicId])
 
    const handleInputChange = (event) => {
       handleInput(event);
-   };
-
-   const onConfirm = () => {
-      if (window.confirm(t("requests.is_sure"))) {
-         deleteUnitAsync(selectedUnit?.id, singleTopicData?.id);
-      }
    };
 
    const publishTopic = () => {
       publishTopicAsync(topicId, navigate);
    };
 
-   const actionItems = [
-      { name: t("actions.edit")  , action: () => navigate(`units/${selectedUnit?.id}`), },
-      { name: t("actions.delete"), action: () => onConfirm() },
-   ];
-
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
-   // const [initCrumbs, setInitCrumbs] = useState([...crumbs])
-   // setCrumbs(c => [...c, { name:singleTopicData?.text, path:singleTopicData?.id }])
    
    const outlet = useOutlet();
+   const __addCrumbs = addCrumbs
 
    useEffect(() => {
-      // outlet ?
-      setCrumbs(c => [...c, { key: lastKey + 1, name:singleTopicData?.text, path:singleTopicData?.id }]) 
-      // :
-      // setCrumbs(initCrumbs)
-   }, [lastKey, setCrumbs, singleTopicData?.id, singleTopicData?.text])
+      // A new crumb to add to breadcrumbs
+      const newCrumb = { key: lastKey + 1, name:singleTopicData?.text, path:singleTopicData?.id }
+      // Verifies if new crumb is not in the breadcrumbs yet
+      if (!crumbs.find(c => !Object.keys(newCrumb).find(key => c[key] !== newCrumb[key]))) {
+         // Adds new crumb
+         setCrumbs(c => __addCrumbs(c, newCrumb))
+      }
+   }, [__addCrumbs, crumbs, lastKey, outlet, setCrumbs, singleTopicData?.id, singleTopicData?.text])
 
    return (
       outlet ?
       <Outlet context={[crumbs, setCrumbs, lastKey + 1]} /> :      
       <div className="unit-subpage">
-         <div className="unit-subpage__heading-block">
-            <div>
+         <GridContainer item xs={12} justifyContent="space-between">
+            <GridItem xs={12} sm={6}>
                <Input
                   name="search"
                   value={inputState.search}
@@ -95,36 +81,30 @@ const Units = (props) => {
                   placeholder={t("actions.search")}
                   required
                />
-            </div>
-         </div>
-         <div className="unit-subpage__settings-panel">
-            <Button
-               onClick={() =>
-                  navigate(`units/new`)
-               }
-               className="unit-subpage__settings-panel__plus-button"
-               src={plusIcon}>
-               {t("actions.create")}
-            </Button>
-            <Button
-               onClick={publishTopic}
-               isLoading={publishTopicLoading}
-               disabled={singleTopicData?.samples?.length <= 0}
-               className="unit-subpage__settings-panel__publish-button">
-               {t("actions.publish")}
-            </Button>
-            <Button
-               onClick={() => console.log("filtr")}
-               className="unit-subpage__settings-panel__filtr-button">
-               {t("actions.filter")}
-            </Button>
-         </div>
+            </GridItem>
+            <GridItem container xs={12} sm={6} justifyContent="flex-end">
+               <Button
+                  onClick={() =>
+                     navigate(`units/new`)
+                  }
+                  className="unit-subpage__settings-panel__plus-button"
+                  src={plusIcon}>
+                  {t("actions.create")}
+               </Button>
+               <Button
+                  onClick={publishTopic}
+                  isLoading={publishTopicLoading}
+                  disabled={singleTopicData?.samples?.length <= 0}
+                  className="unit-subpage__settings-panel__publish-button">
+                  {t("actions.publish")}
+               </Button>
+            </GridItem>
+         </GridContainer>
          <div className="unit-subpage__samples-list">
             <UnitsListCard
                itemsList={singleTopicData?.samples || []}
                isLoading={isSingleTopicLoading}
-               actionItems={actionItems}
-               onMenuClick={setSelectedUnit}
+               filter={inputState.search}
             />
          </div>
       </div>
@@ -143,9 +123,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
    getSingleTopicAsync: (id) => dispatch(getSingleTopicAsync(id)),
-   setSelectedUnit: (unit) => dispatch(setSelectedUnit(unit)),
-   deleteUnitAsync: (unitID, topicID) =>
-      dispatch(deleteUnitAsync(unitID, topicID)),
    publishTopicAsync: (topicID, navigate) =>
       dispatch(publishTopicAsync(topicID, navigate)),
 });

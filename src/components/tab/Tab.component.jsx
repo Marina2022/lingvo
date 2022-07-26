@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Tabs from "react-bootstrap/Tabs";
 
 //BOOTSTRAP COMPONENTS
 
 const Tab = (props) => {
-   const { tabsList } = props;
-
-   const [key, setKey] = useState(tabsList[0]?.eventKey);
+   const { tabsList, keyParam } = props;
+   const [key, setKey] = keyParam;
 
    return (
       <div className="custom-tab">

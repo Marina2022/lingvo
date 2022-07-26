@@ -9,7 +9,6 @@
     justify-content: space-between;
     padding: 20px 60px 20px 40px;
     border: 1px solid #E1E6EB;
-    cursor: pointer;
     align-items: center;
 
     &--info-block {
@@ -45,11 +44,17 @@
       display: flex;
       align-items: center;
 
-      > div {
+      > .unit-action {
         padding: 0 14px;
 
         @media only screen and (max-width: 700px) {
           padding: 0;
+        }
+
+        &:hover {
+          color: rgb(30, 98, 230);
+          cursor: pointer;
+          transform: scale(1.5);
         }
       }
 
@@ -61,7 +66,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all .2s ease-in-out;        
+        
+        &:hover {
+          color: rgb(30, 98, 230);
+          cursor: pointer;
+          transform: scale(1.5);
+        }
       }
+      
     }
 
     &:hover {

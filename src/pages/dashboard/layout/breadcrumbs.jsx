@@ -37,3 +37,29 @@ export const BuildBreadcrumbs = (props) => {
   }
   </Breadcrumb>
 )}
+
+/**
+ * Adds new crumbs to the crumbs array
+ * @param {Array<{key:Number,name:String,path:String}>} crumbs 
+ * @param {{key:Number,name:String,path:String}|Array<{key:Number,name:String,path:String}>} newCrumb 
+ */
+export const addCrumbs = (crumbs, newCrumb) => {
+  // prepares array from newCrumbs
+  const inCrumbs = Array.isArray(newCrumb) ? newCrumb : [newCrumb]
+  // filters mismatched items only from the old crumbs array
+  const outCrumbs = crumbs.filter(({key: oldKey}) => !inCrumbs.find(({key: inKey}) => oldKey === inKey))
+  // adds new crumbs
+  outCrumbs.push(...inCrumbs)
+  // returns result
+  return outCrumbs
+}
+
+/**
+ * Removes item has a key smaller the input one from crumbs array 
+ * @param {Array<{key:Number,name:String,path:String}>} crumbs 
+ * @param {Number} key 
+ * @returns 
+ */
+export const removeCrumb = (crumbs, key) => {
+  return crumbs.filter(crumb => crumb.key < key)
+}

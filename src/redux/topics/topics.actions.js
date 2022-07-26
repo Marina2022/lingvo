@@ -3,10 +3,10 @@ import topicsApi from "./topics.api";
 import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //ACTION FOR SELECTING SPECIFIC TOPIC
-export const setSelectedTopic = (topic) => ({
-   type: topicsActionTypes.SET_SELECTED_TOPIC,
-   payload: topic,
-});
+// export const setSelectedTopic = (topic) => ({
+//    type: topicsActionTypes.SET_SELECTED_TOPIC,
+//    payload: topic,
+// });
 
 //ACTIONS FOR GETTING TOPICS
 const getTopicsStart = () => ({

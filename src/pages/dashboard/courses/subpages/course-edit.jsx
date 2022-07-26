@@ -207,7 +207,7 @@ const EditCoursePage = (props) => {
                   </GridItem>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
-                        <div className="h2">{t("lessons.list")}</div>
+                        <div className="h2">{t("tranings.list")}</div>
                         <Button
                            onClick={() => {
                               dispatch({
@@ -223,7 +223,7 @@ const EditCoursePage = (props) => {
                      </div>
                      <div className="new-course-themes__wrapper">
                         {topics.length === 0 ? (
-                           <p>{t("lessons.nothing")}</p>
+                           <p>{t("tranings.nothing")}</p>
                         ) : (
                            <div className="course-theme-wrapper">
                               {topics.map((topic) => (

@@ -123,7 +123,7 @@ const LoginPage = (props) => {
                         <Button
                            className="social-network__buttons"
                            src={vkIcon}>
-                           {t("pages.social_media.VK.title")}
+                           {t("social_media.VK.title")}
                         </Button>
                      </GridItem>
                      <GridItem xs={12} sm={12} md={9} lg={9}>

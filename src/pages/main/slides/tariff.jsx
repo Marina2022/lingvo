@@ -12,8 +12,8 @@ const TariffItem = (props) => {
       <div className="tariff-item__text">{t(`promo.tariff.${name}.comment`)}</div>
       <div className="tariff-item__info-title">{t(`promo.tariff.publications`)}</div>
       <div className="tariff-item__info-detail">{t(`promo.tariff.${name}.n_of_publications`)}</div>
-      <div className="tariff-item__info-title">{t(`promo.tariff.exercises`)}</div>
-      <div className="tariff-item__info-detail">{t(`promo.tariff.${name}.n_of_exercises`)}</div>
+      <div className="tariff-item__info-title">{t(`promo.tariff.tasks`)}</div>
+      <div className="tariff-item__info-detail">{t(`promo.tariff.${name}.n_of_tasks`)}</div>
       <div className="tariff-item__info-title">{t(`promo.tariff.subscribers`)}</div>
       <div className="tariff-item__info-detail">{t(`promo.tariff.${name}.n_of_subscribers`)}</div>
       <button className="btn">{t("actions.buy")}</button>

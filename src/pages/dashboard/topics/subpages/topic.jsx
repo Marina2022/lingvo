@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 //BASE COMPONENTS
 import GridContainer from "../../../../components/grid-container/GridContainer.component";
 import GridItem from "../../../../components/grid-item/GridItem.component";
-import BackArrow from "../../../../components/back-arrow/BackArrow.component";
 import Form from "../../../../components/form/Form.component";
 import Input from "../../../../components/input/Input.component";
 import Select from "../../../../components/select/Select.component";
@@ -15,7 +14,7 @@ import TagsInput from "../../../../components/tags-input/TagsInput.component";
 //EFFECTS
 import useInput from "../../../../effects/useInput.effect";
 //SERVICES
-import NewTopicServices from "./topic-new-services";
+import NewTopicServices from "./topic-services";
 //ACTIONS
 import {
    createTopicAsync,
@@ -25,35 +24,48 @@ import {
 //UTILITIES
 import { checkForEmptyProperties } from "../../../../utilities/helper-functions";
 import { t } from "i18next";
+import { addCrumbs } from "../../layout/breadcrumbs";
 
-const NewTopicSubpage = (props) => {
+const NewTopic = (props) => {
    const {
       createTopicAsync,
       isTopicCreatedLoading,
       getSingleTopicAsync,
-      selectedTopic,
+      singleTopicData,
       editTopicAsync,
       languagesList,
       isTopicEditing,
    } = props;
+
    const { generateLanguagesOptions } = NewTopicServices;
+
    const navigate = useNavigate();
-   let { topicId } = useParams();
+
+   const { topicId } = useParams();
+
+   const { state } = useLocation();
+   
+   let topicData
+
+   if (parseInt(topicId) === state?.topic?.id) {
+      topicData = {...state?.topic}
+   } else {
+      parseInt(topicId) !== singleTopicData?.id && getSingleTopicAsync(topicId)      
+      topicData = {...singleTopicData}
+   }
 
    const languageOptions = generateLanguagesOptions(languagesList);
 
-   const singleTopicDataCopy = { ...selectedTopic };
-
    const nativeLanguageDefaultValue = topicId
       ? {
-           ...singleTopicDataCopy.nativeLanguage,
-           label: singleTopicDataCopy.nativeLanguage.value,
+           ...topicData?.nativeLanguage,
+           label: topicData?.nativeLanguage?.value,
         }
       : languageOptions[4];
    const foreignLanguageDefaultValue = topicId
       ? {
-           ...singleTopicDataCopy.foreignLanguage,
-           label: singleTopicDataCopy.foreignLanguage.value,
+           ...topicData?.foreignLanguage,
+           label: topicData?.foreignLanguage?.value,
         }
       : languageOptions[0];
 
@@ -74,8 +86,8 @@ const NewTopicSubpage = (props) => {
 
    const formState = topicId
       ? {
-           ...singleTopicDataCopy,
-           tags: singleTopicDataCopy?.tags,
+           ...topicData,
+           tags: topicData?.tags,
         }
       : formInitState;
 
@@ -86,13 +98,6 @@ const NewTopicSubpage = (props) => {
       invalidMessages,
       // updateInputState,
    } = useInput({ ...formState });
-
-   useEffect(() => {
-      if (topicId) {
-         getSingleTopicAsync(topicId);
-      }
-      //eslint-disable-next-line
-   }, []);
 
    const handleInputChange = (event) => {
       handleInput(event);
@@ -118,7 +123,7 @@ const NewTopicSubpage = (props) => {
       }
    };
 
-   const handleSelecetedTags = (items) => {
+   const handleSelectedTags = (items) => {
       const tags = {
          target: { name: "tags", value: items },
       };
@@ -127,45 +132,51 @@ const NewTopicSubpage = (props) => {
       handleInput(tags);
    };
 
-   const onCancell = (e) => {
+   const onCancel = (e) => {
       e.preventDefault();
-      navigate("/topics");
+      navigate(-1);
    };
+
+   // eslint-disable-next-line
+   const [crumbs, setCrumbs, lastKey] = useOutletContext();
+   const __addCrumbs = addCrumbs
+
+   useEffect(() => {
+      topicId ?
+      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("tranings.traning.edit"), path:"edit" })) :
+      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("tranings.traning.new"), path:"new" }))
+   }, [__addCrumbs, lastKey, setCrumbs, topicId])
 
    return (
       <div className="new-topic-subpage">
-         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
-               <BackArrow text={t("lessons.title")} />
-               <h1>{t("lessons.lesson.new")}</h1>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+         <GridContainer justifyContent="center">
+            <GridItem xs={12} sm={12} md={12} lg={10}>
                <Form>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <Input
                         name="text"
                         value={inputState.text}
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("lessons.lesson.title")}
+                        label={t("tranings.traning.title")}
                         type="text"
                         placeholder="Daily routine and household chores"
                         required
                      />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <TagsInput
-                        selectedTags={handleSelecetedTags}
+                        selectedTags={handleSelectedTags}
                         fullWidth
                         variant="outlined"
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label={t("lessons.lesson.tags")}
+                        label={t("tranings.traning.tags")}
                      />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  <GridItem container xs={12} justifyContent="space-between" direction="row">
                      <Select
                         name="foreignLanguage"
                         label={t("languages.foreign")}
@@ -174,8 +185,6 @@ const NewTopicSubpage = (props) => {
                         onChange={(e) => onSelectChange(e, "foreignLanguage")}
                         placeholder={t("languages.placeholder")}
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="nativeLanguage"
                         label={t("languages.native")}
@@ -186,26 +195,17 @@ const NewTopicSubpage = (props) => {
                         required
                      />
                   </GridItem>
-                  <GridItem
-                     xs={12}
-                     sm={12}
-                     md={6}
-                     lg={6}
-                     className="new-topic-subpage__buttons-block">
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button
-                           isLoading={isTopicCreatedLoading || isTopicEditing}
-                           className="save-button"
-                           disabled={!checkForEmptyProperties(inputState)}
-                           onClick={onSubmit}>
-                           {t("actions.save")}
-                        </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button onClick={onCancell} className="cancel-button">
-                           {t("actions.cancel")}
-                        </Button>
-                     </GridItem>
+                  <GridItem container xs={12} justifyContent="space-around" direction="row" className="new-topic-subpage__buttons-block">
+                     <Button
+                        isLoading={isTopicCreatedLoading || isTopicEditing}
+                        className="save-button"
+                        disabled={!checkForEmptyProperties(inputState)}
+                        onClick={onSubmit}>
+                        {t("actions.save")}
+                     </Button>
+                     <Button onClick={onCancel} className="cancel-button">
+                        {t("actions.cancel")}
+                     </Button>
                   </GridItem>
                </Form>
             </GridItem>
@@ -218,7 +218,7 @@ const mapStateToProps = (state) => {
    const { topics, common } = state;
    return {
       isTopicCreatedLoading: topics.isTopicCreatedLoading,
-      selectedTopic: topics.selectedTopic,
+      singleTopicData: topics.singleTopicData,
       isTopicEditing: topics.isTopicEditing,
       languagesList: common.languagesList,
    };
@@ -227,9 +227,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
    createTopicAsync: (params, navigate) =>
       dispatch(createTopicAsync(params, navigate)),
-   getSingleTopicAsync: (id) => dispatch(getSingleTopicAsync(id)),
+   getSingleTopicAsync: (id) => 
+      dispatch(getSingleTopicAsync(id)),
    editTopicAsync: (id, params, navigate, isTagsUpdated) =>
       dispatch(editTopicAsync(id, params, navigate, isTagsUpdated)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewTopicSubpage);
+export default connect(mapStateToProps, mapDispatchToProps)(NewTopic);

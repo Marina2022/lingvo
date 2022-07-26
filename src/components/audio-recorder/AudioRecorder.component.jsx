@@ -7,6 +7,7 @@ import IsVisible from "../../components/is-visible/IsVisible.component";
 import micIcon from "../../assets/images/components/mic-icon.png";
 import stopIcon from "../../assets/images/components/stop-icon.png";
 import recordingIcon from "../../assets/images/components/recording-icon.png";
+import playIcon from "../../assets/images/icons/play-circle.svg"
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -28,6 +29,12 @@ const StopButton = ({ onClick }) => (
    </div>
 );
 
+const PlayButton = ({ onClick }) => (
+   <div onClick={onClick} className="microphone-button flex-center">
+      <img src={playIcon} alt="playIcon" />
+   </div>
+)
+
 const AudioRecorder = ({
    recordName = "audio",
    language,
@@ -36,9 +43,11 @@ const AudioRecorder = ({
 }) => {
    const [isRecording, toggleIsRecording] = useState(false);
    const [isBlocked, toggleIsBlocked] = useState(false);
+   const [isStopped, toggleIsStopped] = useState(false)
+   const [blobData, setBlobData] = useState(undefined)
 
    useEffect(() => {
-      navigator.getUserMedia(
+      navigator.mediaDevices.getUserMedia(
          { audio: true },
          () => {
             toggleIsBlocked(false);
@@ -60,6 +69,8 @@ const AudioRecorder = ({
       if (isBlocked) {
          console.log("Permission Denied");
       } else {
+         setBlobData(undefined)
+         toggleIsStopped(false)
          Mp3Recorder.start()
             .then(() => {
                toggleIsRecording(true);
@@ -81,10 +92,22 @@ const AudioRecorder = ({
                });
             };
             reader.readAsDataURL(blob);
+            setBlobData(blob)
             toggleIsRecording(false);
+            toggleIsStopped(true);
          })
          .catch((e) => console.log(e));
    };
+
+   const play = () => {
+      try {
+         const url = URL.createObjectURL(blobData)
+         const player = new Audio(url)
+         player.play()
+      } catch (e) {
+         console.error(e);
+      }
+   }
 
    return (
       <div className="custom-recorder flex-center">
@@ -94,6 +117,9 @@ const AudioRecorder = ({
          <IsVisible isVisible={isRecording}>
             <RecordingButton />
             <StopButton onClick={stop} />
+         </IsVisible>
+         <IsVisible isVisible={isStopped}>
+            <PlayButton onClick={play} />
          </IsVisible>
       </div>
    );

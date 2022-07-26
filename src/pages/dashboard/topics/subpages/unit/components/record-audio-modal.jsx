@@ -14,7 +14,7 @@ import { t } from "i18next";
 
 const RecordAudioModal = (props) => {
    const {
-      onCancell,
+      onCancel,
       unitID,
       topicID,
       prevVoiceID,
@@ -48,7 +48,7 @@ const RecordAudioModal = (props) => {
 
    return (
       <div className="record-audio-modal">
-         <h2>{t("exercises.exercise.voice_sources.record.label")}</h2>
+         <h2>{t("tasks.task.voice_sources.record.label")}</h2>
          <div className="heading">
             If you are silent people don’t understand what you feel
          </div>
@@ -66,14 +66,14 @@ const RecordAudioModal = (props) => {
             error={invalidMessages}
             onChange={handleInputChange}
             onInvalid={handleInvalidMessage}
-            label={t("exercises.exercise.voice_sources.record.file_name")}
+            label={t("tasks.task.voice_sources.record.file_name")}
             type="text"
          />
          <div className="buttons-block">
-            <Button onClick={onVoiceAdd} isLoading={voiceAddLoading}>
+            <Button onClick={onVoiceAdd} isLoading={voiceAddLoading} disabled={fileData.data ? null : true}>
                {t("actions.save")}
             </Button>
-            <Button onClick={onCancell}>{t("actions.cancel")}</Button>
+            <Button onClick={onCancel}>{t("actions.cancel")}</Button>
          </div>
       </div>
    );

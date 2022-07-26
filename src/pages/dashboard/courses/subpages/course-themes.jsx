@@ -35,7 +35,7 @@ const ThemesForCourse = () => {
             <GridItem xs={12} sm={12} md={12} lg={12}>
                <BackArrow text={t("courses.course.creation")} />
                <div className="courses-page__heading-block">
-                  <h1>{t("lessons.list")}</h1>
+                  <h1>{t("tranings.list")}</h1>
                   <div>
                      <Input
                         name="search"

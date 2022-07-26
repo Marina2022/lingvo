@@ -42,7 +42,7 @@ const Header = (props) => {
    const mainMenuItems = [
       // { name: t("menu.classes"), target: "/ffffff" },
       // { name: t("menu.dictionary"), target: "/new" },
-      { name: t("lessons.title"), target: "/topics" },
+      { name: t("tranings.title"), target: "/topics" },
       { name: t("courses.title"), target: "/courses" }
    ];   
 

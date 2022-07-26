@@ -7,8 +7,8 @@ import Tab from "../../../components/tab/Tab.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //TABS
-import PublishedTopics from "./components/topics-published";
-import DraftTopicsTab from "./components/topics-draft";
+// import PublishedTopics from "./components/topics-published";
+// import DraftTopicsTab from "./components/topics-draft";
 //ACTIONS
 import { getTopicsAsync } from "../../../redux/topics/topics.actions";
 //EFFECTS
@@ -17,8 +17,11 @@ import useInput from "../../../effects/useInput.effect";
 import plusIcon from "../../../assets/images/topics/plus.png";
 import { t } from 'i18next'
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";
+import TopicList from "./components/topic-list";
+import GridItem from "../../../components/grid-item/GridItem.component";
+import GridContainer from "../../../components/grid-container/GridContainer.component";
 
-const TopicsPage = (props) => {
+const Topics = (props) => {
    const { getTopicsAsync, publishedTopicsCount, draftTopicsCount } = props;
    const navigate = useNavigate();
 
@@ -40,52 +43,59 @@ const TopicsPage = (props) => {
    const list = [
       {
          eventKey: "topics",
-         title: t("lessons.topic_list.published", {count:publishedTopicsCount}),
-         content: <PublishedTopics />,
+         title: t("tranings.traning_list.published", {count:publishedTopicsCount}),
+         content: <TopicList published filter={inputState.search} />,
       },
       {
          eventKey: "drafts",
-         title: t("lessons.topic_list.drafts", {count:draftTopicsCount}),
-         content: <DraftTopicsTab />,
+         title: t("tranings.traning_list.drafts", {count:draftTopicsCount}),
+         content: <TopicList filter={inputState.search} />,
       },
    ];
 
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("lessons.title"), path: "topics" }]);
+   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("tranings.title"), path: "topics" }]);
 
    const outlet = useOutlet()
 
    useEffect(() => {
+      // console.log("check Topics => ", t("tranings.title"), outlet);
       if (!outlet) {
-         setCrumbs([{ key: 0, name: t("lessons.title"), path: "topics" }])
+         setCrumbs([{ key: 0, name: t("tranings.title"), path: "topics"}])
       }
    }
    , [outlet])
 
+   const [key, setKey] = useState(list[0]?.eventKey);
+
    const TopicBody = () => {
       return <>
          <div className="topics-page__heading-block">
-            <div>
-               <Input
-                  name="search"
-                  value={inputState.search}
-                  error={invalidMessages}
-                  onChange={handleInputChange}
-                  onInvalid={handleInvalidMessage}
-                  type="text"
-                  placeholder={t("actions.search")}
-                  required
-               />
-            </div>
-            <div className="settings-panel">
-               <Button
-                  onClick={() => navigate("/topics/new")}
-                  className="settings-panel__plus-icon"
-                  src={plusIcon}>
-                  {t("actions.create")}
-               </Button>
-            </div>
+            <GridContainer item xs={12} justifyContent="space-between">
+               <GridItem xs={12} sm={8}>
+                  <Input
+                     name="search"
+                     value={inputState.search}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     type="text"
+                     placeholder={t("actions.search")}
+                     required
+                  />
+               </GridItem>
+               <GridItem xs={12} sm={4}>
+                  <div className="settings-panel">
+                     <Button
+                        onClick={() => navigate("/topics/new")}
+                        className="settings-panel__plus-icon"
+                        src={plusIcon}>
+                        {t("actions.create")}
+                     </Button>
+                  </div>
+               </GridItem>
+            </GridContainer>
          </div>
-         <Tab tabsList={list} />
+         <Tab tabsList={list} keyParam={[key, setKey]}/>
       </>
    }
 
@@ -117,4 +127,4 @@ const mapDispatchToProps = (dispatch) => ({
    getTopicsAsync: () => dispatch(getTopicsAsync()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopicsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Topics);

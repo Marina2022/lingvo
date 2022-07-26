@@ -21,14 +21,19 @@ import { getLevelsListAsync } from "../../../../../redux/common/common.actions";
 import { getSingleTopicAsync } from "../../../../../redux/topics/topics.actions";
 import { getSingleUnitAsync, createUnitAsync, editUnitAsync } from "../../../../../redux/units/units.actions";
 //SERVICES
-import AddEditUnitServices from "./unit-services"
+import AddEditUnitServices from "./unit-services";
+import AzureVoiceService from "./azure-voice-service";
 //UTILITIES
 import { checkForEmptyProperties } from "../../../../../utilities/helper-functions";
 
 import RecordAudioModal from "./components/record-audio-modal"
 import { t } from "i18next";
-import { genAzureVoice, getAzureLanguageParams } from "./azure-voice-service";
 import { getBase64 } from "../../../../../utilities/handleFile";
+import { addCrumbs } from "../../../layout/breadcrumbs";
+
+import { ReactComponent as MicFill } from "../../../../../assets/images/icons/mic-fill.svg"
+import { ReactComponent as RecordCircleFill } from "../../../../../assets/images/icons/record-circle-fill.svg"
+import { ReactComponent as PlayCircleFill } from "../../../../../assets/images/icons/play-circle-fill.svg"
 
 
 const Unit = (props) => {
@@ -50,6 +55,7 @@ const Unit = (props) => {
    const singleUnitDataCopy = { ...selectedUnit };
    const navigate = useNavigate();
 
+   const { genAzureVoice, getAzureLanguageParams } = AzureVoiceService;
    const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
    const [fileData, setFileData] = useState({});
    const [isAudioModal, toggleAudioModal] = useState(false);
@@ -70,26 +76,22 @@ const Unit = (props) => {
    const [voiceUploadMode, setVoiceUploadMode] = useState({ mode: null });
 
    const levelsOptions = generateLevelsOptions(levelsList || []);
-   let { topicId, unitId } = useParams();
+   const { topicId, unitId } = useParams();
    const files = unitId ? singleUnitDataCopy?.voices : [];
    const [uploadedFiles, setUploadedFiles] = useState(files);
 
    useEffect(() => {
       getLevelsListAsync();
-      if (topicId) {
-         getSingleTopicAsync(topicId);
-      }
-      if (unitId) {
-         getSingleUnitAsync(unitId);
-      }
+      topicId && getSingleTopicAsync(topicId);
+      unitId && getSingleUnitAsync(unitId)
    }, [getLevelsListAsync, getSingleTopicAsync, getSingleUnitAsync, topicId, unitId]);
 
    // values are equal to voiceUploadMode"s fields
    const voiceUploadOptions = [
-      { id: 0, label: t("exercises.exercise.voice_sources.undefined.label"), value: "" },
-      { id: 2, label: t("exercises.exercise.voice_sources.upload.label"), value: "uploadedAudio" },
-      { id: 1, label: t("exercises.exercise.voice_sources.record.label"), value: "recordedAudio" },
-      { id: 3, label: t("exercises.exercise.voice_sources.generate.label"), value: "generatedVoice" },
+      { id: 0, label: t("tasks.task.voice_sources.undefined.label"), value: "" },
+      { id: 2, label: t("tasks.task.voice_sources.upload.label"), value: "uploadedAudio" },
+      { id: 1, label: t("tasks.task.voice_sources.record.label"), value: "recordedAudio" },
+      { id: 3, label: t("tasks.task.voice_sources.generate.label"), value: "generatedVoice" },
    ];
    
    const formInitState = {
@@ -177,7 +179,7 @@ const Unit = (props) => {
 
    const onCancel = (e) => {
       e.preventDefault();
-      navigate(`/topics/${topicId}/units`);
+      navigate(-1);
    };
 
    // making api call to create a voice audio file
@@ -189,20 +191,19 @@ const Unit = (props) => {
    });
    // eslint-disable-next-line
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
+   const __addCrumbs = addCrumbs
 
    useEffect(() => {
       unitId ?
-      setCrumbs(c => [
-         ...c, 
-         { key: lastKey + 1, name:t("exercises.title"), path:"" },
-         { key: lastKey + 2, name:`${inputState?.value.slice(0, 10)}...`, path:`units/${unitId}` }
-      ]) :
-      setCrumbs(c => [
-         ...c, 
-         { key: lastKey + 1, name:t("exercises.title"), path: "" },
-         { key: lastKey + 2, name:t("exercises.exercise.new"), path:"units/new" }
-      ]) 
-   }, [inputState?.value, lastKey, setCrumbs, unitId])
+      setCrumbs(c => __addCrumbs(c, [
+         // { key: lastKey + 1, name:t("tasks.title"), path:"" },
+         { key: lastKey + 1, name:`${inputState?.value.slice(0, 15)}${inputState?.value.length>15?'...':''}`, path:`units/${unitId}` }
+      ])) :
+      setCrumbs(c => __addCrumbs(c, [
+         // { key: lastKey + 1, name:t("tasks.title"), path: "" },
+         { key: lastKey + 1, name:t("tasks.task.new"), path:"units/new" }
+      ])) 
+   }, [__addCrumbs, inputState?.value, lastKey, setCrumbs, unitId])
 
    return (
       <div className="add-edit-unit">
@@ -217,49 +218,49 @@ const Unit = (props) => {
                prevVoiceID={singleUnitDataCopy?.voices[0]?.id}
             />
          </Modal>
-         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+         <GridContainer justifyContent="center">
+            <GridItem xs={12} lg={10}>
                <Form>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <TextArea
                         name="value"
                         value={inputState.value}
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("exercises.exercise.original")}
-                        placeholder={t("exercises.exercise.placeholders.foreign")}
+                        label={t("tasks.task.original")}
+                        placeholder={t("tasks.task.placeholders.foreign")}
                         minRows={2}
                         required
                      />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <TextArea
                         name="translation"
                         value={inputState.translation}
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("exercises.exercise.translation")}
-                        placeholder={t("exercises.exercise.placeholders.native")}
+                        label={t("tasks.task.translation")}
+                        placeholder={t("tasks.task.placeholders.native")}
                         minRows={2}
                         required
                      />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <TextArea
                         name="description"
                         value={inputState.description || ""}
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("exercises.exercise.extra")}
-                        placeholder={t("exercises.exercise.placeholders.extra")}
+                        label={t("tasks.task.extra")}
+                        placeholder={t("tasks.task.placeholders.extra")}
                         minRows={2}
                         required
                      />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <GridItem xs={12}>
                      <TagsInput
                         selectedTags={handleSelectedTags}
                         fullWidth
@@ -267,24 +268,21 @@ const Unit = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label={t("exercises.exercise.tags")}
+                        label={t("tasks.task.tags")}
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  </GridItem>                  
+                  <GridItem container xs={12} justifyContent="space-between" direction="row">
                      <Select
                         name="level"
-                        label={t("exercises.exercise.level")}
+                        label={t("tasks.task.level")}
                         options={levelsOptions}
                         defaultValue={levelDefaultValue}
                         onChange={(e) => onSelectChange(e, "level")}
-                        placeholder={t("exercises.exercise.level")}
+                        placeholder={t("tasks.task.level")}
                      />
-                  </GridItem>
-
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="voiceUploadMode"
-                        label={t("exercises.exercise.voice_sources.select")}
+                        label={t("tasks.task.voice_sources.select")}
                         options={voiceUploadOptions}
                         defaultValue={voiceUploadOptions[0]}
                         onChange={(e) =>
@@ -292,40 +290,65 @@ const Unit = (props) => {
                               mode: e,
                            })
                         }
-                        placeholder={t("exercises.exercise.voice_sources.select")}
+                        placeholder={t("tasks.task.voice_sources.select")}
                      />
                   </GridItem>
 
-                  {voiceUploadMode.mode &&
-                     voiceUploadMode.mode.value === "uploadedAudio" && (
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
-                           <span>{t("exercises.exercise.voice_sources.upload.label")}</span>
-                           <DropZone
-                              title={t("exercises.exercise.voice_sources.upload.title")}
-                              handleFiles={handleFiles}
-                              files={uploadedFiles}
-                              buttonAction={() => toggleAudioModal(true)}
-                           />
-                        </GridItem>
-                     )}
-
-                  {voiceUploadMode.mode &&
-                     voiceUploadMode.mode.value === "recordedAudio" && (
-                        <GridItem xs={12} sm={12} md={2} lg={2}>
-                           <span>{t("exercises.exercise.voice_sources.record.label")}</span>
-                           <Button onClick={() => toggleAudioModal(true)}>
-                              {t("exercises.exercise.voice_sources.record.button")}
-                           </Button>
-                        </GridItem>
-                     )}
-
-                  {voiceUploadMode.mode &&
-                     voiceUploadMode.mode.value === "generatedVoice" && (
-                        <React.Fragment>
-                           <GridItem xs={12} sm={12} md={3} lg={3}>
+                  { voiceUploadMode.mode && (
+                    ( 
+                        voiceUploadMode.mode.value === "uploadedAudio" && (
+                        <GridContainer item xs={12} justifyContent="center" alignItems="center">
+                           <GridItem xs={12} sm={8} lg={9}>
+                              <span>{t("tasks.task.voice_sources.upload.label")}</span>
+                              <DropZone
+                                 title={t("tasks.task.voice_sources.upload.title")}
+                                 handleFiles={handleFiles}
+                                 files={uploadedFiles}
+                                 buttonAction={() => toggleAudioModal(true)}
+                              />
+                           </GridItem>
+                           <GridItem xs={12} sm={4} lg={3}>
+                              { uploadedFiles?.length > 0 ? 
+                                 <Player
+                                    onClick={() => {}}
+                                    url={uploadedFiles ? uploadedFiles[0].url : undefined }
+                                    className="volume-icon__block">
+                                    <Button>
+                                       <PlayCircleFill/>
+                                       <span>&nbsp;</span>
+                                       <span>{t("tasks.task.voice_sources.generate.play")}</span>
+                                    </Button>
+                                 </Player> :
+                                 <Button disabled>
+                                    <PlayCircleFill/>
+                                    <span>&nbsp;</span>
+                                    <span>{t("tasks.task.voice_sources.generate.play")}</span>
+                                 </Button>
+                           }
+                           </GridItem>
+                        </GridContainer>
+                     )
+                     ) || (
+                        voiceUploadMode.mode.value === "recordedAudio" && (
+                        <GridContainer item xs={12} justifyContent="center">
+                           <GridItem xs={12} sm={8} md={6}>
+                              {/* <span>{t("tasks.task.voice_sources.record.label")}</span> */}
+                              <Button onClick={() => toggleAudioModal(true)}>
+                                 <MicFill title={t("tasks.task.voice_sources.record.button")} />
+                                 <span>&nbsp;</span>
+                                 <span>{t("tasks.task.voice_sources.record.button")}</span>
+                              </Button>
+                           </GridItem> 
+                        </GridContainer>
+                        )
+                     ) || (
+                        voiceUploadMode.mode.value === "generatedVoice" && (
+                        <GridContainer item xs={12} justifyContent="space-around">
+                           
+                           <GridItem xs={10} md={5} lg={3}>
                               <Select
                                  name="voiceLanguage"
-                                 label={t("exercises.exercise.voice_sources.generate.language")}
+                                 label={t("tasks.task.voice_sources.generate.language")}
                                  options={supportedLanguages}
                                  defaultValue={supportedLanguages[0]}
                                  onChange={(e) =>
@@ -334,14 +357,14 @@ const Unit = (props) => {
                                        language: e,
                                     }))
                                  }
-                                 placeholder={t("exercises.exercise.voice_sources.generate.language")}
+                                 placeholder={t("tasks.task.voice_sources.generate.language")}
                               />
                            </GridItem>
 
-                           <GridItem xs={12} sm={12} md={3} lg={3}>
+                           <GridItem xs={10} md={5} lg={3}>
                               <Select
                                  name="voiceGender"
-                                 label={t("exercises.exercise.voice_sources.generate.gender")}
+                                 label={t("tasks.task.voice_sources.generate.gender")}
                                  options={genders}
                                  defaultValue={genders[0]}
                                  onChange={(e) =>
@@ -350,60 +373,63 @@ const Unit = (props) => {
                                        gender: e,
                                     }))
                                  }
-                                 placeholder={t("exercises.exercise.voice_sources.generate.gender")}
+                                 placeholder={t("tasks.task.voice_sources.generate.gender")}
                               />
                            </GridItem>
 
-                           <GridItem xs={12} sm={12} md={2} lg={2}>
-                              <Button onClick={generateVoice}>
-                                 {t("exercises.exercise.voice_sources.generate.label")}
-                              </Button>
-                           </GridItem>
-
-                           <GridItem xs={12} sm={12} md={3} lg={3}>
-                              {azureAudioStatus.isLoaded ? (
-                                 <Player
-                                    url={azureAudioStatus.url}
-                                    onClick={() => {}}
-                                    className="volume-icon__block">
-                                    <Button>
-                                       {t("exercises.exercise.voice_sources.generate.play")}
+                           <GridItem xs={10} md={5} lg={3}>
+                              <GridContainer item xs={12}>
+                                 <GridItem xs={12}>
+                                    <Button onClick={generateVoice}>
+                                       <RecordCircleFill />
+                                       <span>&nbsp;</span>
+                                       <span>{t("tasks.task.voice_sources.generate.button")}</span>
                                     </Button>
-                                 </Player>
-                              ) : null}
-                           </GridItem>
-                        </React.Fragment>
-                     )}
+                                 </GridItem>
 
-                  <GridItem
-                     xs={12}
-                     sm={12}
-                     md={6}
-                     lg={6}
-                     className="new-topic-subpage__buttons-block">
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button
-                           isLoading={
-                              unitCreateLoading ||
-                              unitEditLoading ||
-                              voiceAddLoading ||
-                              deleteVoiceLoading
-                           }
-                           className="save-button"
-                           disabled={
-                              !checkForEmptyProperties(inputState, [
-                                 "description",
-                              ]) || uploadedFiles.length <= 0
-                           }
-                           onClick={onSubmit}>
-                           {t("actions.save")}
-                        </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
-                        <Button onClick={onCancel} className="cancel-button">
-                           {t("actions.cancel")}
-                        </Button>
-                     </GridItem>
+                                 <GridItem xs={12}>
+                                    {azureAudioStatus.isLoaded ? (
+                                       <Player
+                                          url={azureAudioStatus.url}
+                                          onClick={() => {}}
+                                          className="volume-icon__block">
+                                          <Button>
+                                             <PlayCircleFill/>
+                                             <span>&nbsp;</span>
+                                             <span>{t("tasks.task.voice_sources.generate.play")}</span>
+                                          </Button>
+                                       </Player>
+                                    ) : <span>&nbsp;</span> }
+                                 </GridItem>
+                              </GridContainer>
+
+                           </GridItem>
+
+                        </GridContainer>
+                        )
+                     )
+                  )}
+
+                  <GridItem container xs={12} justifyContent="space-around" direction="row" className="new-topic-subpage__buttons-block">
+                     <Button
+                        isLoading={
+                           unitCreateLoading ||
+                           unitEditLoading ||
+                           voiceAddLoading ||
+                           deleteVoiceLoading
+                        }
+                        className="save-button"
+                        disabled={
+                           !checkForEmptyProperties(inputState, [
+                              "description",
+                           ]) || uploadedFiles.length <= 0
+                        }
+                        onClick={onSubmit}>
+                        {t("actions.save")}
+                     </Button>
+                     <Button onClick={onCancel} className="cancel-button">
+                        {t("actions.cancel")}
+                     </Button>
                   </GridItem>
                </Form>
             </GridItem>

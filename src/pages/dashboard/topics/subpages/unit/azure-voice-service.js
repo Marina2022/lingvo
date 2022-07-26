@@ -8,7 +8,7 @@ import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
  * Gets Azure supported language parameters
  * @returns 
  */
-export const getAzureLanguageParams = () => {
+const getAzureLanguageParams = () => {
   const genders = [
     { id: 0, label: t("genders.male"), value: "male" },
     { id: 1, label: t("genders.female"), value: "female" },
@@ -29,7 +29,10 @@ export const getAzureLanguageParams = () => {
   const languageName = new Intl.DisplayNames([navigator.language], { type: 'language' });
   
   /** Array of supported languages */
-  const languages = Object.keys(voices).sort().map((value, id) => ({ id, value, label: capitalizeFirstOnlyCase(languageName.of(value)) }))
+  const languages = 
+    Object.keys(voices)
+      .map((value, id) => ({ id, value, label: capitalizeFirstOnlyCase(languageName.of(value)) }))
+      .sort((a,b) => a.label < b.label ? -1 : a.label > b.label ? 1 : 0)   
 
   return {genders, languages, voices}
 }
@@ -65,47 +68,54 @@ const getAzureService = (voice) => {
  *    handleFiles:(files:Array<any>)=>void}} param0 
  * @returns 
  */
-export const genAzureVoice = ({text, setAzureAudioStatus, voice, handleFiles}) => {
-    // setting url of generated voice audio state to null
-    setAzureAudioStatus({ isLoaded: false, url: null });
+const genAzureVoice = ({text, setAzureAudioStatus, voice, handleFiles}) => {
+  // setting url of generated voice audio state to null
+  setAzureAudioStatus({ isLoaded: false, url: null });
 
-    // if text is empty
-    if (text.trim() === "") {
-       alert(t("alerts.needs_text_to_generate_audio"));
-       return;
-    }
+  // if text is empty
+  if (text.trim() === "") {
+      alert(t("messages.alerts.needs_text_to_generate_audio"));
+      return;
+  }
 
-    const { player, synthesizer } = getAzureService(voice)
+  const { player, synthesizer } = getAzureService(voice)
 
-    // fires when the speech is synthesized
-    const complete_cb = function(result) {
-       const filename = `Generated_voice-${uuidv4()}.mpeg`;
-       const file = new File([result.audioData], filename, {
-          type: "audio/mpeg",
-       });
+  // fires when the speech is synthesized
+  const complete_cb = function(result) {
+      const filename = `Generated_voice-${uuidv4()}.mpeg`;
+      const file = new File([result.audioData], filename, {
+        type: "audio/mpeg",
+      });
 
-       // creating audio tag to listen the audio
-       const url = URL.createObjectURL(file);
-       setAzureAudioStatus({ isLoaded: true, url: url });
+      // creating audio tag to listen the audio
+      const url = URL.createObjectURL(file);
+      setAzureAudioStatus({ isLoaded: true, url: url });
 
-       if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
-          player.pause();
-       } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
-          alert(t("alerts.somethings_wrong_try_again"));
-          console.error(
-             "Error: synthesis failed. Error detail: " + result.errorDetails
-          );
-       }
-       synthesizer.close();
+      if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
+        player.pause();
+      } else if (result.reason === SpeechSDK.ResultReason.Canceled) {
+        alert(t("messages.alerts.somethings_wrong_try_again"));
+        console.error(
+            "Error: synthesis failed. Error detail: " + result.errorDetails
+        );
+      }
+      synthesizer.close();
 
-       // uploading generated audio-file
-       handleFiles([file]);
-    };
+      // uploading generated audio-file
+      handleFiles([file]);
+  };
 
-    const err_cb = function(err) {
-       console.error("Error: ", err);
-       synthesizer.close();
-    };
+  const err_cb = function(err) {
+      console.error("Error: ", err);
+      synthesizer.close();
+  };
 
-    synthesizer.speakTextAsync(text, complete_cb, err_cb);
- };
+  synthesizer.speakTextAsync(text, complete_cb, err_cb);
+};
+
+const AzureVoiceService = {
+  getAzureLanguageParams: getAzureLanguageParams,
+  genAzureVoice: genAzureVoice
+}
+
+export default AzureVoiceService

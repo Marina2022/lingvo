@@ -8,6 +8,7 @@ import IsVisible from "../../components/is-visible/IsVisible.component";
 
 const DropZone = (props) => {
    const {
+      children,
       title,
       files,
       handleFiles,
@@ -22,27 +23,26 @@ const DropZone = (props) => {
       [className]: className !== undefined,
    });
 
+   const LocalButton = () => children ?
+      <span onClick={ buttonAction ?? undefined }>{children}</span>:
+      <Button onClick={ buttonAction ?? undefined }>{buttonText}</Button>
+
    return (
       <div className={dropZoneClasses}>
          <ReactDropZone onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
             {({ getRootProps, getInputProps }) => (
                <section>
                   <IsVisible isVisible={buttonText && buttonAction}>
-                     <Button
-                        onClick={() => (buttonAction ? buttonAction() : false)}>
-                        {buttonText}
-                     </Button>
+                     <LocalButton />
                   </IsVisible>
-                  <div
-                     {...getRootProps()}
-                     className="custom-drop-zone__content">
+                  <div {...getRootProps()} className="custom-drop-zone__content">
                      <input {...getInputProps()} />
                      <IsVisible
                         isVisible={
                            (files && files?.length <= 0) || showName === false
                         }>
                         <IsVisible isVisible={buttonText && !buttonAction}>
-                           <Button>{buttonText}</Button>
+                           <LocalButton />
                         </IsVisible>
                         <div className="custom-drop-zone__content-title">
                            {title}

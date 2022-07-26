@@ -8,24 +8,24 @@ const useAudio = (url) => {
 
    useEffect(() => {
       playing ? audio.play() : audio.pause();
-      //eslint-disable-next-line
-   }, [playing]);
+   }, [audio, playing]);
 
    useEffect(() => {
       audio.addEventListener("ended", () => setPlaying(false));
       return () => {
          audio.removeEventListener("ended", () => setPlaying(false));
       };
-      //eslint-disable-next-line
-   }, []);
+   }, [audio]);
 
    return [toggle, playing];
 };
 
-const Player = ({ url, children }) => {
-   const [toggle] = useAudio(url);
+const Player = ({ url, files, children, title }) => {
+   const _url = url ? url : files ? files[0].url : undefined;
 
-   return <div onClick={toggle}>{children}</div>;
+   const [toggle] = useAudio(_url);
+
+   return <div className="unit-action" onClick={toggle} title={title}>{children}</div>;
 };
 
 export default Player;

@@ -57,17 +57,17 @@ export default function Top () {
                         />
                     </svg>
                 </div>
-                <div className="landing-h2">{t("footer.any_questions")}</div>
+                <div className="landing-h2">{t("promo.footer.any_questions")}</div>
                 <div className="landing-footer__text">
-                    {t("footer.feedback_form")}
+                    {t("promo.footer.feedback_form")}
                 </div>
                 <form action="">
                     <div className="form-element form-element_wild">
-                        <label htmlFor="">{t("footer.name")}</label>
+                        <label htmlFor="">{t("promo.footer.name")}</label>
                         <input type="text" />
                     </div>
                     <div className="form-element">
-                        <label htmlFor="">{t("footer.phone")}</label>
+                        <label htmlFor="">{t("promo.footer.phone")}</label>
                         <input type="text" />
                     </div>
                     <div className="form-element">
@@ -133,17 +133,17 @@ export default function Top () {
                 <ul className="landing-footer__menu">
                     <li>
                         <a href="/#" className="btn">
-                            {t("footer.answers")}
+                            {t("promo.footer.answers")}
                         </a>
                     </li>
                     <li>
                         <a href="/#" className="btn">
-                            {t("footer.price_list")}
+                            {t("promo.footer.price_list")}
                         </a>
                     </li>
                     <li>
                         <a href="/#" className="btn">
-                            {t("footer.contacts")}
+                            {t("promo.footer.contacts")}
                         </a>
                     </li>
                 </ul>

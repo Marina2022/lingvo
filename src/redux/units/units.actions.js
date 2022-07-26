@@ -198,7 +198,7 @@ export const addVoiceAsync = (
       const response = await unitsApi.addVoice(unitID, params);
       dispatch(addVoiceSuccess(response.data));
       dispatch(deletePrevVoiceAsync(prevVoiceID, topicID));
-      navigate(`/topics/${topicID}/units`);
+      navigate(`/topics/${topicID}/units/${unitID}`);
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(addVoiceFailure(message));

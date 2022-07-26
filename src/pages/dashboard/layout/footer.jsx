@@ -18,7 +18,7 @@ const Footer = (props) => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { name: t("lessons.title")    , action: () => navigate("/topics") , icon: <PlayCircleFill />     },
+    { name: t("tranings.title")    , action: () => navigate("/topics") , icon: <PlayCircleFill />     },
     { name: t("courses.title")   , action: () => navigate("/courses"), icon: <CollectionPlayFill /> },
     { name: t("profile.title")   , action: () => navigate("/profile"), icon: <PersonFill />         },
     // { name: t("actions.sign_out"), action: userLogout                , icon: <></>                  },

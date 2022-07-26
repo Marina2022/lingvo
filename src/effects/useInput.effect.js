@@ -28,11 +28,11 @@ const useInput = (initialState = {}) => {
    // HANDLE VALUES FOR SELECT
    const updateInputState = (value) => {
       if (Object.keys(invalidMessages).length !== 0) {
-         const eptyMessages = {};
+         const emptyMessages = {};
          Object.keys(invalidMessages).forEach(
-            (item) => (eptyMessages[item] = "")
+            (item) => (emptyMessages[item] = "")
          );
-         setInvalidMessages((prevState) => ({ ...prevState, ...eptyMessages }));
+         setInvalidMessages((prevState) => ({ ...prevState, ...emptyMessages }));
       }
 
       setState((prevState) => ({

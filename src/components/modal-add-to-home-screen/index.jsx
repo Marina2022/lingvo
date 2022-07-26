@@ -7,12 +7,12 @@ import { ReactComponent as PlusSquareFill } from "../../assets/images/icons/plus
 import { ReactComponent as BoxArrowUp } from '../../assets/images/icons/box-arrow-up.svg';
 
 const promptList = {
-  IOs: () => <>{t("misc.install_app.ios1", {device:"device"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
-  IPhone: () => <>{t("misc.install_app.ios1", {device:"iPhone"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
-  IPad: () => <>{t("misc.install_app.ios1", {device:"iPad"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
-  IPod: () => <>{t("misc.install_app.ios1", {device:"iPod"})} <BoxArrowUp /> {t("misc.install_app.ios2")}</>,
-  Desktop: () => <>{t("misc.install_app.desktop")}</>,
-  OtherMobile: () => <>{t("misc.install_app.other_mobile")}</>
+  IOs: () => <>{t("messages.info.install_app.ios1", {device:"device"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
+  IPhone: () => <>{t("messages.info.install_app.ios1", {device:"iPhone"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
+  IPad: () => <>{t("messages.info.install_app.ios1", {device:"iPad"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
+  IPod: () => <>{t("messages.info.install_app.ios1", {device:"iPod"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
+  Desktop: () => <>{t("messages.info.install_app.desktop")}</>,
+  OtherMobile: () => <>{t("messages.info.install_app.other_mobile")}</>
 }
 
 const Prompt = 
