@@ -27,6 +27,7 @@ import { t } from "i18next";
 import { titleCase } from "../../../utilities/helper-functions";
 import { getBase64 } from "../../../utilities/handleFile";
 import { Image } from "react-bootstrap";
+import { userLogout } from "../../../redux/auth/auth.actions";
 
 const socialNets = [
    { name: titleCase("VKontakte"),   tKey:"social_media.VK.title"       }, 
@@ -37,6 +38,7 @@ const socialNets = [
 
 const ProfilePage = (props) => {
    const {
+      userLogout,
       currentUserInfo,
       editAvatarAsync,
       editAvatarLoading,
@@ -113,8 +115,8 @@ const ProfilePage = (props) => {
 
       if (Object.keys(out).length > 0) {
          out.id = inputState.id
+         console.log("prepare person => ", out);
       }
-      console.log("prepare person => ", out);
 
       updateUserAsync(out);
 
@@ -127,7 +129,7 @@ const ProfilePage = (props) => {
                socialNetName: name,
                url: newUrl
             }
-            console.log("prepare links => ", out);
+            // console.log("prepare links => ", out);
             updateLinkAsync(out)
          }
 
@@ -312,7 +314,15 @@ const ProfilePage = (props) => {
                            <GridItem xs={5} lg={3}>
                               <Button className="cancel-button">{t("actions.cancel")}</Button>
                            </GridItem>
+
+                           <div className="separator" />
+                           <GridItem xs={10}>
+                              <Button variant="secondary" name="logout" onClick={userLogout}>{t("actions.sign_out")}</Button>
+                           </GridItem>
+
                         </GridContainer>
+
+
 
                      </GridItem>
                   </GridContainer>
@@ -334,6 +344,7 @@ const mapStateToProps = (state) => {
    };
 };
 const mapDispatchToProps = (dispatch) => ({
+   userLogout: () => dispatch(userLogout()),
    editAvatarAsync: (params) => dispatch(editAvatarAsync(params)),
    updateUserAsync: (params) => dispatch(updateUserAsync(params)),
    updateLinkAsync: (params) => dispatch(updateLinkAsync(params)),

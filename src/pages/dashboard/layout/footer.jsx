@@ -9,30 +9,30 @@ import { ReactComponent as PlayCircleFill } from '../../../assets/images/icons/p
 import './footer.scss'
 
 
-const Footer = (props) => {
-  const {
-    userLogout,
-    getUserInfoAsync,
-    currentUserInfo,
-  } = props;
+const Footer = () => {
+
   const navigate = useNavigate();
 
   const menuItems = [
-    { name: t("tranings.title")    , action: () => navigate("/topics") , icon: <PlayCircleFill />     },
-    { name: t("courses.title")   , action: () => navigate("/courses"), icon: <CollectionPlayFill /> },
-    { name: t("profile.title")   , action: () => navigate("/profile"), icon: <PersonFill />         },
-    // { name: t("actions.sign_out"), action: userLogout                , icon: <></>                  },
-  ];   
+    { name: t("trainings.title") , pattern: /\/topics/i , action: () => navigate("/topics") , icon: <PlayCircleFill />     },
+    { name: t("courses.title")   , pattern: /\/courses/i, action: () => navigate("/courses"), icon: <CollectionPlayFill /> },
+    { name: t("profile.title")   , pattern: /\/profile/i, action: () => navigate("/profile"), icon: <PersonFill />         },
+  ]   
 
-  const [activeItem, setActiveItem] = useState(menuItems[0].name)
+  const getActiveMenu = () => {
+    const menuItem = menuItems.find(item => (document.documentURI.match(item.pattern)?.length ?? 0) > 0)
+    return menuItem?.name ?? menuItems[0].name
+  }
+
+  const [activeMenu, setActiveMenu] = useState(getActiveMenu())
 
   return <>
     <footer className="app-footer">
     {
       menuItems.map((item, key) => 
-        <div className={`app-footer__menu-item${activeItem === item.name ? '__active' : ''}`} key={key} onClick={() => { setActiveItem(item.name); item.action(); }}>
+        <div className={`app-footer__menu-item${activeMenu === item.name ? '__active' : ''}`} key={key} onClick={() => { setActiveMenu(item.name); item.action(); }}>
           {item.icon}
-          <div className={`app-footer__menu-item${activeItem === item.name ? '__active' : ''}__label`}>{item.name}</div>
+          <div className={`app-footer__menu-item${activeMenu === item.name ? '__active' : ''}__label`}>{item.name}</div>
         </div>
       ) 
     }

@@ -25,6 +25,11 @@ div.modal-dialog {
 
 
 .plus-square-fill {
+    display: flex;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: right !important;
+    align-items: center !important;
     img, svg {
         width: 32px;
         height: 32px;
@@ -34,10 +39,22 @@ div.modal-dialog {
 }
 
 div.prompt-to-install {
+    // display: flex;
+    // padding-left: 0 !important;
+    // margin-left: 0 !important;
+    // justify-content: left !important;
+    
     margin: 0.5em;
     color: gray;
     svg {
         margin: 0.5em;
         color: dodgerblue;
       }
+}
+
+.does-not-install {
+  font-size: 0.8rem;
+  color: gray;
+  padding: 0 3rem 0 0 !important;
+  margin: 0 !important;
 }

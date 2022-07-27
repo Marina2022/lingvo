@@ -5,6 +5,7 @@ import { isMobile, isStandalone } from '../../utilities/appPromptHelper';
 import "./index.scss"
 import { ReactComponent as PlusSquareFill } from "../../assets/images/icons/plus-square-fill.svg"
 import { ReactComponent as BoxArrowUp } from '../../assets/images/icons/box-arrow-up.svg';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 
 const promptList = {
   IOs: () => <>{t("messages.info.install_app.ios1", {device:"device"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
@@ -21,10 +22,32 @@ const Prompt =
   isMobile.iPod() ? promptList.IPod :
   isMobile.any() ? promptList.OtherMobile : promptList.Desktop
 
+/**
+ * 
+ * @returns {Boolean}
+ */
+const getShowParam = () => {
+  return window.localStorage.getItem('installPromptIsShown')
+}
+/**
+ * 
+ * @param {Boolean} isShown 
+ * @returns 
+ */
+const setShowParam = (isShown) => {
+  window.localStorage.setItem('installPromptIsShown', isShown)
+}
+
 export default function ModalAddToHomeScreen() {
-  const initShow = !isStandalone()
-  const [show, setShow] = useState(initShow);
+  const init1 = !isStandalone()
+  const init2 = JSON.parse(getShowParam())
+  const initState = init1 && (init2 ?? true)
+  const [show, setShow] = useState(initState);
   
+  const onClick = ({target}) => {
+    setShowParam(!target.checked)
+  }
+
   return (
     <>
       <Modal
@@ -39,15 +62,30 @@ export default function ModalAddToHomeScreen() {
           </Modal.Title> */}
         </Modal.Header>
         <Modal.Body>
-          <div className='plus-square-fill'>
-            <PlusSquareFill />
-          </div>
-          <div className='prompt-to-install'>
-            <Prompt />
-          </div>
+          <Container>
+            <Row  className="justify-content-md-center align-items-md-center">
+              <Col xs={2} md={1} className='plus-square-fill'>
+                  <PlusSquareFill />
+              </Col>
+              <Col xs={9} md={8} className='prompt-to-install'>
+                  <Prompt />
+              </Col>
+            </Row>
+          </Container>
         </Modal.Body>
+        <Modal.Footer  className="does-not-install">
+          <Form>
+            <div key='default-checkbox' className="mb-3">
+              <Form.Check 
+                type='checkbox' 
+                id='default-checkbox' 
+                label={t("messages.info.does_not_show")} 
+                onClick={onClick}
+              />
+            </div>
+          </Form>
+        </Modal.Footer>
       </Modal>
     </>
   );
 }
-

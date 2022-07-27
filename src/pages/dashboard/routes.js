@@ -5,16 +5,16 @@ import Courses from "./courses";
 import NewCourse from "./courses/subpages/course-new";
 import Course from "./courses/subpages/course-edit";
 
-import Tranings from "./topics";
-import NewTraning from "./topics/subpages/topic";
-import CourseTranings from "./courses/subpages/course-themes";
+import Trainings from "./topics";
+import Training from "./topics/subpages/topic";
+import CourseTrainings from "./courses/subpages/course-themes";
 
 import Tasks from "./topics/subpages/units";
 import Task from "./topics/subpages/unit/unit";
 
 const topicsRoutes = [
    { 
-      component: NewTraning,
+      component: Training,
       path: "new",
    },
    { 
@@ -22,7 +22,7 @@ const topicsRoutes = [
       path: ":topicId",
       routes: [
          { 
-            component: NewTraning,
+            component: Training,
             path: "edit",
          },
          { 
@@ -51,7 +51,7 @@ const dashboardRoutes = [
             path: ":courseId",
             routes: [
                { 
-                  component: CourseTranings,
+                  component: CourseTrainings,
                   path: "topics",
                   routes: topicsRoutes
                }
@@ -60,7 +60,7 @@ const dashboardRoutes = [
       ]
    },
    {
-      component: Tranings,
+      component: Trainings,
       path: "topics",
       routes: topicsRoutes
    },

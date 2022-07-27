@@ -9,6 +9,7 @@ const Button = (props) => {
    const {
       children,
       className,
+      variant,
       isLoading,
       disabled,
       src,
@@ -23,6 +24,7 @@ const Button = (props) => {
 
    return (
       <BootstrapButton
+         variant={variant}
          className={btn_styles}
          {...otherProps}
          disabled={disabled || isLoading}>

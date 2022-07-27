@@ -60,19 +60,19 @@ const TopicsListCard = (props) => {
                   </div>           
                   <div className="list-card__item--actions-block">
                      <div className={editIconClasses} 
-                          title={t("tranings.traning_list.menu.open")} 
+                          title={t("trainings.training_list.menu.open")} 
                           onClick={() => navigate(`${item?.id}`)}
                      >
                         <ListTask width="24" height="24"/>
                      </div>
                      <div className={editIconClasses} 
-                          title={t("tranings.traning_list.menu.info")} 
+                          title={t("trainings.training_list.menu.info")} 
                           onClick={() => navigate(`${item?.id}/edit`, {state:{topic:item}})}
                      >
                         <TopicInfo width="24" height="24"/>
                      </div>
                      <div className={editIconClasses} 
-                          title={t("tranings.traning_list.menu.trash")} 
+                          title={t("trainings.training_list.menu.trash")} 
                           onClick={() => window.confirm(t("messages.requests.is_sure")) && deleteTopicAsync(item?.id)}
                      >
                         <Trash width="24" height="24"/>

@@ -57,11 +57,12 @@
     },
     "info":{
       "install_app": {
-        "ios1":"Установите это приложение на ваше {{device}}: нажмите ",
+        "ios1":"Установите это приложение на {{device}}: нажмите ",
         "ios2":" и затем Добавить На экран \"Домой\"",
         "desktop":"Установите это приложение на ваш компьютер, добавьте его на домашнюю страницу",
         "other_mobile":"Установите это приложение на ваше мобильное устройство, , добавьте его на домашнюю страницу"
-      }
+      },
+      "does_not_show": "Больше не показывать это сообщение"
     }  
   },
   "genders":{
@@ -113,9 +114,9 @@
     "native":"Родной язык",
     "placeholder":"Выберите язык"
   },
-  "tranings":{
+  "trainings":{
     "title": "Тренинги",
-    "traning_list":{
+    "training_list":{
       "published_zero": "Публикации: нет",
       "published": "Публикации: {{count}}",
       "drafts_zero": "Черновики: нет",
@@ -126,15 +127,15 @@
         "trash":"Удалить тренинг"
       }
     },
-    "list":"Курс тренингов",
+    "list":"Тренировочный курс",
     "nothing":"Тренингов еще нет",
-    "number_of_zero":"Нет тренингов",
-    "number_of_one":"{{count}} тренинг",
-    "number_of_two":"{{count}} тренинга",
-    "number_of_few":"{{count}} тренинга",
-    "number_of_many":"{{count}} тренингов",
-    "number_of_other":"{{count}} тренингов",
-    "traning":{
+    "number_of_zero":"Нет тренировок",
+    "number_of_one":"{{count}} тренировка",
+    "number_of_two":"{{count}} тренировки",
+    "number_of_few":"{{count}} тренировки",
+    "number_of_many":"{{count}} тренировок",
+    "number_of_other":"{{count}} тренировок",
+    "training":{
       "new":"Новый",
       "edit":"Редактирование",
       "title":"Тема тренинга",

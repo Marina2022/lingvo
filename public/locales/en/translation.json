@@ -62,7 +62,8 @@
         "ios2":" and then Add to home screen",
         "gadget":"To install this webapp on your desktop add it to home screen",
         "other_mobile":"To install this webapp on your mobile add it to home screen"
-      }
+      },
+      "does_not_show": "Doesn't show this message"
     }  
   },
   "genders":{
@@ -114,28 +115,28 @@
     "native":"Native language",
     "placeholder":"Select language"
   },
-  "tranings":{
-    "title": "Tranings",
-    "traning_list":{
+  "trainings":{
+    "title": "Trainings",
+    "training_list":{
       "published_zero": "Published: Nothing",
       "published": "Published: {{count}}",
       "drafts_zero": "Drafts: Nothing",
       "drafts": "Drafts: {{count}}",
       "menu":{
-        "open":"Open traning",
-        "info":"Edit traning info",
-        "trash":"Delete traning"
+        "open":"Open training",
+        "info":"Edit training info",
+        "trash":"Delete training"
       }
     },
-    "list":"Course's tranings",
-    "nothing":"No traning",
-    "number_of_zero":"No traning",
-    "number_of_one":"{{count}} traning",
-    "number_of_other":"{{count}} tranings",
-    "traning":{
+    "list":"Course's trainings",
+    "nothing":"No training",
+    "number_of_zero":"No training",
+    "number_of_one":"{{count}} training",
+    "number_of_other":"{{count}} trainings",
+    "training":{
       "new":"New",
       "edit":"Edit",
-      "title":"Traning theme",
+      "title":"Training theme",
       "tags":"Tags"
     }
   },

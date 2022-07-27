@@ -49,7 +49,7 @@ const CoursesPage = (props) => {
                   courseName={course.name}
                   courseStatus={course.shared}
                   courseInfo={t("courses.summary")}
-                  courseTheme={t("tranings.number_of", {count: course.posts.length})}
+                  courseTheme={t("trainings.number_of", {count: course.posts.length})}
                   coursePrice={course.cost}
                   onClick={() => {
                      dispatch({

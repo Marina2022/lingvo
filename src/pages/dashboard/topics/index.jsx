@@ -43,24 +43,24 @@ const Topics = (props) => {
    const list = [
       {
          eventKey: "topics",
-         title: t("tranings.traning_list.published", {count:publishedTopicsCount}),
+         title: t("trainings.training_list.published", {count:publishedTopicsCount}),
          content: <TopicList published filter={inputState.search} />,
       },
       {
          eventKey: "drafts",
-         title: t("tranings.traning_list.drafts", {count:draftTopicsCount}),
+         title: t("trainings.training_list.drafts", {count:draftTopicsCount}),
          content: <TopicList filter={inputState.search} />,
       },
    ];
 
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("tranings.title"), path: "topics" }]);
+   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("trainings.title"), path: "topics" }]);
 
    const outlet = useOutlet()
 
    useEffect(() => {
-      // console.log("check Topics => ", t("tranings.title"), outlet);
+      // console.log("check Topics => ", t("trainings.title"), outlet);
       if (!outlet) {
-         setCrumbs([{ key: 0, name: t("tranings.title"), path: "topics"}])
+         setCrumbs([{ key: 0, name: t("trainings.title"), path: "topics"}])
       }
    }
    , [outlet])

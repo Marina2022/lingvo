@@ -143,8 +143,8 @@ const NewTopic = (props) => {
 
    useEffect(() => {
       topicId ?
-      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("tranings.traning.edit"), path:"edit" })) :
-      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("tranings.traning.new"), path:"new" }))
+      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.edit"), path:"edit" })) :
+      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.new"), path:"new" }))
    }, [__addCrumbs, lastKey, setCrumbs, topicId])
 
    return (
@@ -159,7 +159,7 @@ const NewTopic = (props) => {
                         error={invalidMessages}
                         onChange={handleInputChange}
                         onInvalid={handleInvalidMessage}
-                        label={t("tranings.traning.title")}
+                        label={t("trainings.training.title")}
                         type="text"
                         placeholder="Daily routine and household chores"
                         required
@@ -173,7 +173,7 @@ const NewTopic = (props) => {
                         id="tags"
                         name="tags"
                         placeholder="#hashtags"
-                        label={t("tranings.traning.tags")}
+                        label={t("trainings.training.tags")}
                      />
                   </GridItem>
                   <GridItem container xs={12} justifyContent="space-between" direction="row">
