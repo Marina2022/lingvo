@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "../../../components/grid-item/GridItem.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //IMAGES
@@ -16,6 +15,7 @@ import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { loginAsync } from "../../../redux/auth/auth.actions";
 import { t } from "i18next";
+import { Grid } from "@mui/material";
 
 const LoginPage = (props) => {
    const { loginAsync, isLoading } = props;
@@ -50,9 +50,9 @@ const LoginPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="login-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
                <div className="login-page__auth-block-card">
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
@@ -60,7 +60,7 @@ const LoginPage = (props) => {
                      className="fields__block">
                      <div className="fields__block-text">{t("actions.sign_in")}</div>
                      <form onSubmit={login}>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="email"
                               value={inputState.email}
@@ -72,8 +72,8 @@ const LoginPage = (props) => {
                               type="text"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="password"
                               value={inputState.password}
@@ -84,58 +84,58 @@ const LoginPage = (props) => {
                               type="password"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Button isLoading={isLoading} type="submit">
                               {t("actions.sign_in")}
                            </Button>
-                        </GridItem>
+                        </Grid>
                      </form>
                      <div
                         onClick={() => navigate("/reset-password")}
                         className="forgot-creds__block">
                            {t("auth.login.forgotten_login_password")}
                      </div>
-                  </GridItem>
+                  </Grid>
                   <span className="separator" />
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
                      lg={6}
                      className="social-network__block">
-                     <GridItem
+                     <Grid item
                         xs={12}
                         sm={12}
                         md={6}
                         lg={6}
                         className="social-network__block-text">
                         {t("auth.login.with_social_media")}
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={googleIcon}>
                            Google+
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={vkIcon}>
                            {t("social_media.VK.title")}
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={fbIcon}>
                            Facebook
                         </Button>
-                     </GridItem>
-                  </GridItem>
+                     </Grid>
+                  </Grid>
                </div>
-            </GridItem>
+            </Grid>
          </div>
          <div className="login-page__footer">
             {/* eslint-disable-next-line no-irregular-whitespace */}

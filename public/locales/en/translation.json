@@ -37,6 +37,8 @@
     "cancel":"Cancel",  
     "delete":"Delete",
     "play":"Play",
+    "record":"Record",
+    "stop":"Stop",
 
     "send":"Send",
 
@@ -46,11 +48,13 @@
     "filter":"Filter"
   },
   "states":{
-    "published":"Published"
+    "published":"Published",
+    "draft":"Draft"
   },
   "messages":{
-    "requests":{
-      "is_sure":"Are you sure?"
+    "confirm":{
+      "is_sure":"Are you sure?",
+      "unsaved_data":"Unsaved voiceover will be lost\nPlease, confirm transition"
     },
     "alerts": {
       "needs_text_to_generate_audio":"To generate audio fill the text",
@@ -63,7 +67,7 @@
         "gadget":"To install this webapp on your desktop add it to home screen",
         "other_mobile":"To install this webapp on your mobile add it to home screen"
       },
-      "does_not_show": "Doesn't show this message"
+      "does_not_show": "Doesn't show"
     }  
   },
   "genders":{
@@ -100,20 +104,20 @@
       "name":"Course title",
       "new":"New course",
       "tags":"Tags",
+      "cost_zero":"Free",
+      "cost_other":"Price: {{count}}",
       "price":"Price",
       "price_placeholder":"Input price",
       "is_public":"Make course public",
       
-      "creation":"Course creation",
-      
-      "price_zero":"Free",
-      "price_other":"Price: {{price}}"
+      "creation":"Course creation"
     }
   },
   "languages":{
     "foreign":"Studied language",
     "native":"Native language",
-    "placeholder":"Select language"
+    "placeholder":"Select language",
+    "no_language":"No language available"
   },
   "trainings":{
     "title": "Trainings",

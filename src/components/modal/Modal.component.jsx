@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 
 //IMAGES
-import closeIcon from "../../assets/images/components/X-close.png";
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const Modal = ({
    children,
@@ -45,12 +45,7 @@ const Modal = ({
                <div className={modalChildStyles} id={modalChildId}>
                   {children}
                </div>
-               <img
-                  onClick={handleModalClose}
-                  className="close"
-                  src={closeIcon}
-                  alt="closeIcon"
-               />
+               <CloseOutlinedIcon/>
             </div>
          </div>,
          document.getElementById("root")

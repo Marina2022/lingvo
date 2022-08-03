@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 //IMAGES
-import backArrow from "../../assets/images/components/back-arrow-icon.png";
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const BackArrow = ({ text }) => {
    const navigate = useNavigate();
@@ -12,7 +12,7 @@ const BackArrow = ({ text }) => {
    };
    return (
       <div className="back-arrow" onClick={goBack}>
-         <img src={backArrow} alt="backArrow" />
+         <ArrowBackOutlinedIcon />
          <span>{text}</span>
       </div>
    );

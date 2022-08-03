@@ -9,8 +9,8 @@ import DropDown from "../../../components/drop-down/DropDown.component";
 import { userLogout, logOutAsync } from "../../../redux/auth/auth.actions";
 import { getUserInfoAsync } from "../../../redux/profile/profile.actions.js";
 //IMAGES
-import notificationIcon from "../../../assets/images/header/notification-bell.png";
-import mailIcon from "../../../assets/images/header/mail.png";
+// import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GetMediaContent from "../../../components/get-media-content";
 import { Logo as AppLogo } from "../../main/slides/header";
 import { t } from 'i18next'
@@ -75,11 +75,11 @@ const Header = (props) => {
             <GetMediaContent contentList={mainMenuMediaList} />
          </div>
          <div className="app-header__profile-block">
+            {/* <div>
+               <NotificationsActiveOutlinedIcon />
+            </div> */}
             <div>
-               <img src={notificationIcon} alt="notification" />
-            </div>
-            <div>
-               <img src={mailIcon} alt="mailicon" />
+               <EmailOutlinedIcon sx={{ cursor:'pointer', '&:hover': { color: 'dodgerblue', transform: 'scale(1.5)' }}}/>
             </div>
             <GetMediaContent contentList={dropDownMediaList} />
          </div>

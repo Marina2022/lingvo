@@ -1,17 +1,16 @@
 import { t } from 'i18next';
-import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import React, { useCallback, useEffect, useState } from 'react';
+// import Modal from 'react-bootstrap/Modal';
 import { isMobile, isStandalone } from '../../utilities/appPromptHelper';
-import "./index.scss"
-import { ReactComponent as PlusSquareFill } from "../../assets/images/icons/plus-square-fill.svg"
-import { ReactComponent as BoxArrowUp } from '../../assets/images/icons/box-arrow-up.svg';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
+import { Box, Checkbox, FormControlLabel, Grid, Modal } from '@mui/material';
 
 const promptList = {
-  IOs: () => <>{t("messages.info.install_app.ios1", {device:"device"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
-  IPhone: () => <>{t("messages.info.install_app.ios1", {device:"iPhone"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
-  IPad: () => <>{t("messages.info.install_app.ios1", {device:"iPad"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
-  IPod: () => <>{t("messages.info.install_app.ios1", {device:"iPod"})} <BoxArrowUp /> {t("messages.info.install_app.ios2")}</>,
+  IOs: () => <>{t("messages.info.install_app.ios1", {device:"device"})} <IosShareOutlinedIcon /> {t("messages.info.install_app.ios2")}</>,
+  IPhone: () => <>{t("messages.info.install_app.ios1", {device:"iPhone"})} <IosShareOutlinedIcon /> {t("messages.info.install_app.ios2")}</>,
+  IPad: () => <>{t("messages.info.install_app.ios1", {device:"iPad"})} <IosShareOutlinedIcon /> {t("messages.info.install_app.ios2")}</>,
+  IPod: () => <>{t("messages.info.install_app.ios1", {device:"iPod"})} <IosShareOutlinedIcon /> {t("messages.info.install_app.ios2")}</>,
   Desktop: () => <>{t("messages.info.install_app.desktop")}</>,
   OtherMobile: () => <>{t("messages.info.install_app.other_mobile")}</>
 }
@@ -39,53 +38,124 @@ const setShowParam = (isShown) => {
 }
 
 export default function ModalAddToHomeScreen() {
-  const init1 = !isStandalone()
-  const init2 = JSON.parse(getShowParam())
-  const initState = init1 && (init2 ?? true)
+  const initState = !isStandalone() && (JSON.parse(getShowParam()) ?? true)
   const [show, setShow] = useState(initState);
+  
+  const [windowSize, setWindowSize] = useState({
+		width: window.innerWidth,
+		hight: window.innerHeight
+	})
+
+
+	const resizeHandler = useCallback(() => {
+		setWindowSize({
+			width: window.innerWidth,
+			hight: window.innerHeight
+		})
+	}, [])
+
+	useEffect(() => {		
+		/** Registers event handler */
+		window.addEventListener('resize', resizeHandler)
+		return () => {
+			window.removeEventListener("resize", resizeHandler);
+		};
+	}, 
+	[resizeHandler])
+
+  const initStyle = {
+    position: 'fixed',
+    left: 0,
+    width: '100%',
+    bgcolor: 'white',
+    color: 'gray',
+    borderWidth: 0,
+    padding: '1em 0!important'
+  }
+  windowSize.width > 650 ? initStyle.top = 0 : initStyle.bottom = 0
+
+  const [boxStyle, setBoxStyle] = useState(initStyle)
+  
+  useEffect(() => {
+    if (windowSize.width > 650) {
+      if (boxStyle.bottom === 0) {
+        setBoxStyle({
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          width: '100%',
+          bgcolor: 'white',
+          color: 'gray',
+          borderWidth: 0,
+          padding: '1em 0!important'
+        })
+      }
+    } else {
+      if (boxStyle.top === 0) {
+        setBoxStyle({
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+          bgcolor: 'white',
+          color: 'gray',
+          borderWidth: 0,
+          padding: '1em 0!important'
+        })
+      }
+    }
+  }, [boxStyle.bottom, boxStyle.top, windowSize.width])
+
   
   const onClick = ({target}) => {
     setShowParam(!target.checked)
   }
 
   return (
-    <>
-      <Modal
-        show={show}
-        onHide={() => setShow(false)}
-        dialogClassName="modal-90w"
-        aria-labelledby="example-custom-modal-styling-title"
-      >
-        <Modal.Header closeButton>
-          {/* <Modal.Title id="example-custom-modal-styling-title">
-            Custom Modal Styling
-          </Modal.Title> */}
-        </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <Row  className="justify-content-md-center align-items-md-center">
-              <Col xs={2} md={1} className='plus-square-fill'>
-                  <PlusSquareFill />
-              </Col>
-              <Col xs={9} md={8} className='prompt-to-install'>
-                  <Prompt />
-              </Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-        <Modal.Footer  className="does-not-install">
-          <Form>
-            <div key='default-checkbox' className="mb-3">
-              <Form.Check 
-                type='checkbox' 
-                id='default-checkbox' 
-                label={t("messages.info.does_not_show")} 
-                onClick={onClick}
+    <Modal
+      open={show}
+      onClose={() => setShow(false)}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >    
+      <Box sx={ boxStyle }>
+        <Grid container>
+          <Grid item xs={12} container sx={{ justifyContent: 'center', alignItems:'center' }}>
+              
+            <Grid item xs={2} sm={1} sx={{
+              display: 'flex',
+              justifyContent: 'right !important',
+              'img, svg': {
+                  width: '2.5rem',
+                  height: '2.5rem',
+                  margin: '0.5em',
+              }                
+            }}>
+              <AddBoxOutlinedIcon />
+            </Grid>
+
+            <Grid item xs={9} sm={10} sx={{ svg: { color: 'dodgerblue' } }}>
+              <Prompt />
+            </Grid>
+
+          </Grid>
+
+          <Grid item xs={12} container sx={{ justifyContent: 'center', alignItems:'center' }}>
+              
+            <Grid item xs={2} sm={1}>&nbsp;</Grid>
+
+            <Grid item xs={9} sm={10} >
+              <FormControlLabel
+                label={t("messages.info.does_not_show")}
+                control={<Checkbox checked={false} onChange={onClick} />}
               />
-            </div>
-          </Form>
-        </Modal.Footer>
-      </Modal>
-    </>
+            </Grid>  
+
+          </Grid>
+
+        </Grid>
+      </Box>
+
+    </Modal>  
   );
 }

@@ -18,8 +18,7 @@ function App(props) {
 
    useEffect(() => {
       getLanguagesListAsync();
-      //eslint-disable-next-line
-   }, []);
+   }, [getLanguagesListAsync]);
 
    useEffect(() => {
       //remove btn class from bootstrap

@@ -3,26 +3,35 @@ import { connect } from "react-redux";
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 
 //BASE COMPONENTS
-import Tab from "../../../components/tab/Tab.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
-//TABS
-// import PublishedTopics from "./components/topics-published";
-// import DraftTopicsTab from "./components/topics-draft";
 //ACTIONS
 import { getTopicsAsync } from "../../../redux/topics/topics.actions";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
 //IMAGES
-import plusIcon from "../../../assets/images/topics/plus.png";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { t } from 'i18next'
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";
-import TopicList from "./components/topic-list";
-import GridItem from "../../../components/grid-item/GridItem.component";
-import GridContainer from "../../../components/grid-container/GridContainer.component";
+import TopicList from "./topic-list";
+import { Box, Tabs, Tab, Grid } from "@mui/material";
 
-const Topics = (props) => {
-   const { getTopicsAsync, publishedTopicsCount, draftTopicsCount } = props;
+const TopicsBody = (props) => {
+
+   const {
+      stateTopicsPublishedTopics,
+      stateTopicsPublishedTopicsCount, 
+      
+      stateTopicsDraftTopics,
+      stateTopicsDraftTopicsCount,
+      
+      stateTopicsIsTopicsLoading,
+
+      dispatchGetTopicsAsync, 
+   } = props
+
+   useEffect(() => { dispatchGetTopicsAsync() }, [dispatchGetTopicsAsync]);   
+
    const navigate = useNavigate();
 
    const {
@@ -32,26 +41,99 @@ const Topics = (props) => {
       invalidMessages,
    } = useInput();
 
-   useEffect(() => {
-      getTopicsAsync();
-   }, [getTopicsAsync]);
-
    const handleInputChange = (event) => {
       handleInput(event);
    };
 
-   const list = [
+   const tabList = [
       {
          eventKey: "topics",
-         title: t("trainings.training_list.published", {count:publishedTopicsCount}),
-         content: <TopicList published filter={inputState.search} />,
+         title: t("trainings.training_list.published", {count:stateTopicsPublishedTopicsCount}),
+         itemsList: stateTopicsPublishedTopics,
+
       },
       {
          eventKey: "drafts",
-         title: t("trainings.training_list.drafts", {count:draftTopicsCount}),
-         content: <TopicList filter={inputState.search} />,
+         title: t("trainings.training_list.drafts", {count:stateTopicsDraftTopicsCount}),
+         itemsList: stateTopicsDraftTopics
       },
    ];
+         
+   const [value, setValue] = React.useState(0);
+   
+   const handleChange = (event, newValue) => {
+      setValue(newValue);
+    }
+
+   return <>
+         <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+            <Grid item xs={12} sm={8}>
+               <Input
+                  name="search"
+                  value={inputState.search}
+                  error={invalidMessages}
+                  onChange={handleInputChange}
+                  onInvalid={handleInvalidMessage}
+                  type="text"
+                  placeholder={t("actions.search")}
+                  required
+               />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+               <div className="settings-panel">
+                  <Button
+                     onClick={() => navigate("/topics/new")}
+                     className="settings-panel__plus-icon"
+                     variant='contained'
+                     src={<AddOutlinedIcon/>}>
+                     {t("actions.create")}
+                  </Button>
+               </div>
+            </Grid>
+            <Grid item xs={12} sx={{ paddingTop: '2rem !important'}}>
+               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs
+                     value={value}
+                     onChange={handleChange}
+                     aria-label="basic tabs example"
+                  >
+                  {
+                     tabList.map((item, idx) => 
+                        <Tab label={item?.title} 
+                           key={`simple-tab-${idx}`} 
+                           id={`simple-tab-${idx}`} 
+                           aria-controls={`simple-tabpanel-${idx}`} 
+                        />
+                     )
+                  }
+                  </Tabs>
+               </Box>
+               {
+                  tabList.map((item, idx) =>
+                     <Grid container flexDirection='column'
+                           role='tabpanel'
+                           value={value}
+                           index={idx}
+                           key={`tab-panel-${idx}`} 
+                           hidden={JSON.parse(value) !== JSON.parse(idx)}
+                           id={`simple-tabpanel-${idx}`}
+                           aria-labelledby={`simple-tab-${idx}`}
+                     >
+                        <TopicList 
+                           filter={inputState.search} 
+                           itemsList={item.itemsList} 
+                           isLoading={stateTopicsIsTopicsLoading} 
+                        />
+                     </Grid>
+                  )
+               }
+
+            </Grid>
+         </Grid>
+   </>
+}
+
+const Topics = (props) => {
 
    const [crumbs, setCrumbs] = useState([{ key: 0, name: t("trainings.title"), path: "topics" }]);
 
@@ -65,51 +147,21 @@ const Topics = (props) => {
    }
    , [outlet])
 
-   const [key, setKey] = useState(list[0]?.eventKey);
-
-   const TopicBody = () => {
-      return <>
-         <div className="topics-page__heading-block">
-            <GridContainer item xs={12} justifyContent="space-between">
-               <GridItem xs={12} sm={8}>
-                  <Input
-                     name="search"
-                     value={inputState.search}
-                     error={invalidMessages}
-                     onChange={handleInputChange}
-                     onInvalid={handleInvalidMessage}
-                     type="text"
-                     placeholder={t("actions.search")}
-                     required
-                  />
-               </GridItem>
-               <GridItem xs={12} sm={4}>
-                  <div className="settings-panel">
-                     <Button
-                        onClick={() => navigate("/topics/new")}
-                        className="settings-panel__plus-icon"
-                        src={plusIcon}>
-                        {t("actions.create")}
-                     </Button>
-                  </div>
-               </GridItem>
-            </GridContainer>
-         </div>
-         <Tab tabsList={list} keyParam={[key, setKey]}/>
-      </>
-   }
-
    return (
-      <div className="topics-page">
-         <BuildBreadcrumbs crumbs={crumbs} />
-         {
-            outlet ?
-            // shows child element
-            <Outlet context={[crumbs, setCrumbs, 0]}/> : 
-            // shows topic element
-            <TopicBody />
-         }
-      </div>
+      <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
+         <Grid item xs={12} sm={9}>
+            <BuildBreadcrumbs crumbs={crumbs} />
+         </Grid>
+         <Grid item xs={12} sm={9}>
+            {
+               outlet ?
+               // shows child element
+               <Outlet context={[crumbs, setCrumbs, 0]}/> : 
+               // shows topic element
+               <TopicsBody {...props} />
+            }
+         </Grid>
+      </Grid>
    )
    
 };
@@ -118,13 +170,18 @@ const mapStateToProps = (state) => {
    const { topics } = state;
 
    return {
-      publishedTopicsCount: topics.publishedTopicsCount,
-      draftTopicsCount: topics.draftTopicsCount,
+      stateTopicsPublishedTopics: topics.publishedTopics,
+      stateTopicsPublishedTopicsCount: topics.publishedTopicsCount,
+
+      stateTopicsDraftTopics: topics.draftTopics,
+      stateTopicsDraftTopicsCount: topics.draftTopicsCount,
+
+      stateTopicsIsTopicsLoading: topics.isTopicsLoading,
    };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   getTopicsAsync: () => dispatch(getTopicsAsync()),
+   dispatchGetTopicsAsync: () => dispatch(getTopicsAsync()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topics);

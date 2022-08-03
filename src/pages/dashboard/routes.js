@@ -6,11 +6,11 @@ import NewCourse from "./courses/subpages/course-new";
 import Course from "./courses/subpages/course-edit";
 
 import Trainings from "./topics";
-import Training from "./topics/subpages/topic";
+import Training from "./topic";
 import CourseTrainings from "./courses/subpages/course-themes";
 
-import Tasks from "./topics/subpages/units";
-import Task from "./topics/subpages/unit/unit";
+import Tasks from "./units";
+import Task from "./unit";
 
 const topicsRoutes = [
    { 

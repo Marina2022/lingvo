@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
 
 /**
  * Builds breadcrumb html
@@ -12,7 +12,7 @@ export const BuildBreadcrumbs = (props) => {
   let hrefAssembled = hrefStart
 
   return (
-  <Breadcrumb>
+  <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: '0.9em', pb: '1rem' }}>
   {
     crumbs
     .sort((a, b) => a.key < b.key ? -1 : 1)
@@ -25,17 +25,23 @@ export const BuildBreadcrumbs = (props) => {
           ({isLast , href}) => 
             // push last 3 items to show at breadcrumbs
             key > array.length - 4 ?
-            <Breadcrumb.Item href={href} key={key} active={isLast ?? undefined}>{name}</Breadcrumb.Item>:
+            // <Breadcrumb.Item href={href} key={key} active={isLast ?? undefined}>{name}</Breadcrumb.Item>
+            (
+              isLast ?
+              <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">{name}</Typography> :
+              <Link key={key} underline="hover" color="inherit" sx={{ display: 'flex', alignItems: 'center' }} href={href}>{name}</Link>
+            ) :
             // change 4-th item from the end to '...'
             array.length > 3 && key === array.length - 4 ?
-            <Breadcrumb.Item key={key} href="#" active>...</Breadcrumb.Item>:
+            // <Breadcrumb.Item key={key} href="#" active>...</Breadcrumb.Item>:
+            <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">...</Typography>:
             // avoid others items
             undefined
       ) ({ isLast: key === array.length - 1, href: path ? (hrefAssembled = `${hrefAssembled}/${path}`) : hrefAssembled})
     )
 
   }
-  </Breadcrumb>
+  </Breadcrumbs>
 )}
 
 /**

@@ -1,22 +1,34 @@
-import { t } from "i18next";
 import React from "react";
+import { Card, CardContent, Typography } from "@mui/material";
+import { t } from "i18next";
 
 const CourseItem = (props) => {
-   return (
-      // eslint-disable-next-line jsx-a11y/anchor-is-valid
-      <a className="course-item" onClick={props.onClick}>
-         {props.courseStatus && (
-            <div className="course-item__status">{t("states.published")}</div>
-         )}
+   const {courseStatus, courseName, courseInfo, courseTrainings, coursePrice} = props
 
-         <div className="course-item__title">{props.courseName}</div>
-         <div className="course-item__info">{props.courseInfo}</div>
-         <div className="course-item__bottom">
-            <div className="course-item__themes">{props.courseTheme}</div>
-            <div className="course-item__themes">{t("states.published", {price:props.coursePrice})}</div>
-         </div>
-      </a>
-   );
-};
+   return <Card sx={{ 
+      minWidth: 235, 
+      backgroundColor: courseStatus ? 'lightskyblue' : 'lightgray',
+      '&:hover': {
+         cursor: 'pointer',
+         opacity: 0.75
+      } 
+      }}>
+      <CardContent>
+         
+         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{courseInfo}</Typography>
+         <Typography variant="h6" component="div">{courseName}</Typography>
+         <Typography sx={{ mb: 1.5 }} color="text.secondary">
+         {
+            courseStatus ? t("states.published") : t("states.draft")
+         }
+         </Typography>
+         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {courseTrainings}
+            <br />
+            {coursePrice}
+         </Typography>         
+      </CardContent>
+   </Card>
+} 
 
 export default CourseItem;

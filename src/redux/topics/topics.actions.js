@@ -161,7 +161,7 @@ export const deleteTopicAsync = (id) => async (dispatch) => {
 
 //GET SINGLE TOPIC ASYNC
 export const getSingleTopicAsync = (id) => async (dispatch) => {
-   dispatch(getSingleTopicStart());
+   await dispatch(getSingleTopicStart());
 
    try {
       const response = await topicsApi.getSingleTopics(id);

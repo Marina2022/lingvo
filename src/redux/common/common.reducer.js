@@ -20,13 +20,15 @@ const commonReducer = (state = INITIAL_STATE, action) => {
          return {
             ...state,
             isLanguagesLoading: false,
-            languagesList: action.payload,
+            languagesList: action.payload.foreign,
+            nativeLanguagesList: action.payload.native,
          };
       case commonActionTypes.GET_LANGUAGES_LIST_FAILURE:
          return {
             ...state,
             isLanguagesLoading: false,
-            languagesMessage: action.payload,
+            languagesList: action.payload.foreign,
+            nativeLanguagesList: action.payload.native,
          };
       //! LEVELS LIST
       case commonActionTypes.GET_LEVELS_LIST_START:

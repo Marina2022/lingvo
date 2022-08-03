@@ -2,9 +2,9 @@ import { t } from "i18next";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ReactComponent as CollectionPlayFill } from '../../../assets/images/icons/collection-play-fill.svg';
-import { ReactComponent as PersonFill } from '../../../assets/images/icons/person-fill.svg';
-import { ReactComponent as PlayCircleFill } from '../../../assets/images/icons/play-circle-fill.svg';
+import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
+import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 
 import './footer.scss'
 
@@ -14,9 +14,9 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { name: t("trainings.title") , pattern: /\/topics/i , action: () => navigate("/topics") , icon: <PlayCircleFill />     },
-    { name: t("courses.title")   , pattern: /\/courses/i, action: () => navigate("/courses"), icon: <CollectionPlayFill /> },
-    { name: t("profile.title")   , pattern: /\/profile/i, action: () => navigate("/profile"), icon: <PersonFill />         },
+    { name: t("trainings.title") , pattern: /\/topics/i , action: () => navigate("/topics") , icon: <AudioFileOutlinedIcon />     },
+    { name: t("courses.title")   , pattern: /\/courses/i, action: () => navigate("/courses"), icon: <LibraryMusicOutlinedIcon /> },
+    { name: t("profile.title")   , pattern: /\/profile/i, action: () => navigate("/profile"), icon: <PersonOutlinedIcon />         },
   ]   
 
   const getActiveMenu = () => {

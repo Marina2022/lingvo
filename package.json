@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.92",
     "@mui/material": "^5.8.7",
     "@mui/styles": "^5.8.7",
     "@reduxjs/toolkit": "^1.8.3",
@@ -22,7 +24,6 @@
     "mic-recorder-to-mp3": "^2.2.2",
     "microsoft-cognitiveservices-speech-sdk": "^1.22.0",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.4.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-custom-checkbox": "^2.0.2",
     "react-dom": "^18.2.0",

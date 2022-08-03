@@ -9,11 +9,9 @@ import { createCoursesAsync } from "../../../../redux/courses/courses.actions";
 import BackArrow from "../../../../components/back-arrow/BackArrow.component";
 import Button from "../../../../components/button/Button.component";
 import Form from "../../../../components/form/Form.component";
-import GridContainer from "../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../components/grid-item/GridItem.component";
 import Input from "../../../../components/input/Input.component";
 import NewCourseServices from "./course-new-services";
-import plusIcon from "../../../../assets/images/topics/plus.png";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import Select from "../../../../components/select/Select.component";
 import TagsInput from "../../../../components/tags-input/TagsInput.component";
 import { t } from "i18next";
@@ -121,14 +119,14 @@ const EditCoursePage = (props) => {
    );
    return (
       <div className="new-topic-subpage">
-         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+         <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                <BackArrow text={t("courses.title")} />
                <h1>{inputState.name}</h1>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                <Form>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <Grid item xs={12} sm={12} md={6} lg={6}>
                      <Input
                         name="text"
                         value={inputState.name}
@@ -143,8 +141,8 @@ const EditCoursePage = (props) => {
                         placeholder={t("courses.course.name")}
                         required
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6} lg={6}>
                      <TagsInput
                         fullWidth
                         variant="outlined"
@@ -153,8 +151,8 @@ const EditCoursePage = (props) => {
                         placeholder="#hashtags"
                         label={t("courses.course.tags")}
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="foreignLanguage"
                         label={t("languages.foreign")}
@@ -170,8 +168,8 @@ const EditCoursePage = (props) => {
                            languageOptions[inputState.foreignLanguageId]
                         }
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="nativeLanguage"
                         label={t("languages.native")}
@@ -188,8 +186,8 @@ const EditCoursePage = (props) => {
                         }
                         required
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={2} lg={2}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={2} lg={2}>
                      <Input
                         name="text"
                         value={inputState.cost}
@@ -204,7 +202,7 @@ const EditCoursePage = (props) => {
                         placeholder={t("courses.course.price_placeholder")}
                         required
                      />
-                  </GridItem>
+                  </Grid>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
                         <div className="h2">{t("trainings.list")}</div>
@@ -217,7 +215,7 @@ const EditCoursePage = (props) => {
                               navigate("/course-themes");
                            }}
                            className="settings-panel__plus-icon"
-                           src={plusIcon}>
+                           src={<AddOutlinedIcon/>}>
                            {t("actions.add")}
                         </Button>
                      </div>
@@ -311,24 +309,24 @@ const EditCoursePage = (props) => {
                      {t("courses.course.is_public")}
                      </Grid>
                   </Grid>
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
                      lg={6}
                      className="new-topic-subpage__buttons-block">
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
+                     <Grid item xs={12} sm={12} md={2} lg={2}>
                         <Button
                            className="save-button"
                            onClick={onSubmit}
                            style={{ width: "auto" }}>
                            {t("actions.save")}
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={2} lg={2}>
                         <Button className="cancel-button">{t("actions.cancel")}</Button>
-                     </GridItem>
-                  </GridItem>
+                     </Grid>
+                  </Grid>
 
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
                      <Button
@@ -347,8 +345,8 @@ const EditCoursePage = (props) => {
                      </Button>
                   </div>
                </Form>
-            </GridItem>
-         </GridContainer>
+            </Grid>
+         </Grid>
       </div>
    );
 };

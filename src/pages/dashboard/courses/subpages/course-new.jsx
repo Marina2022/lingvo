@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 //BASE COMPONENTS
 import Input from "../../../../components/input/Input.component";
 import Button from "../../../../components/button/Button.component";
-import GridContainer from "../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../components/grid-item/GridItem.component";
 import BackArrow from "../../../../components/back-arrow/BackArrow.component";
 import Form from "../../../../components/form/Form.component";
 import TagsInput from "../../../../components/tags-input/TagsInput.component";
@@ -16,7 +14,7 @@ import { withStyles } from "@mui/styles";
 // import NewCourseServices from "./course-new-services";
 import NewCourseServices from "./course-new-services";
 
-import plusIcon from "../../../../assets/images/topics/plus.png";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import "./course-new.scss";
 import { createCoursesAsync } from "../../../../redux/courses/courses.actions";
@@ -119,14 +117,14 @@ const NewCoursePage = (props) => {
 
    return (
       <div className="new-topic-subpage">
-         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+         <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                <BackArrow text={t("courses.title")} />
                <h1>{t("courses.course.creation")}</h1>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                <Form>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  <Grid item xs={12} sm={12} md={6} lg={6}>
                      <Input
                         name="text"
                         value={inputState.name}
@@ -141,8 +139,8 @@ const NewCoursePage = (props) => {
                         placeholder={t("courses.course.name")}
                         required
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6} lg={6}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6} lg={6}>
                      <TagsInput
                         fullWidth
                         variant="outlined"
@@ -151,8 +149,8 @@ const NewCoursePage = (props) => {
                         placeholder="#hashtags"
                         label={t("courses.course.tags")}
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="foreignLanguage"
                         label={t("languages.foreign")}
@@ -168,8 +166,8 @@ const NewCoursePage = (props) => {
                            languageOptions[inputState.foreignLanguageId]
                         }
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={3} lg={3}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={3} lg={3}>
                      <Select
                         name="nativeLanguage"
                         label={t("languages.native")}
@@ -186,8 +184,8 @@ const NewCoursePage = (props) => {
                         }
                         required
                      />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={2} lg={2}>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={2} lg={2}>
                      <Input
                         name="text"
                         value={inputState.cost}
@@ -202,7 +200,7 @@ const NewCoursePage = (props) => {
                         placeholder={t("courses.course.price_placeholder")}
                         required
                      />
-                  </GridItem>
+                  </Grid>
                   <div className="new-course-themes">
                      <div className="new-course-themes__title">
                         <div className="h2">{t("trainings.list")}</div>
@@ -215,7 +213,7 @@ const NewCoursePage = (props) => {
                               navigate("/courses");
                            }}
                            className="settings-panel__plus-icon"
-                           src={plusIcon}>
+                           src={<AddOutlinedIcon/>}>
                            {t("actions.add")}
                         </Button>
                      </div>
@@ -260,26 +258,26 @@ const NewCoursePage = (props) => {
                         {t("courses.course.is_public")}
                      </Grid>
                   </Grid>
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
                      lg={6}
                      className="new-topic-subpage__buttons-block">
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
+                     <Grid item xs={12} sm={12} md={2} lg={2}>
                         <Button className="save-button" onClick={onSubmit}>
                            {t("actions.add")}
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={2} lg={2}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={2} lg={2}>
                         <Button className="cancel-button">
                            {t("actions.cancel")}
                         </Button>
-                     </GridItem>
-                  </GridItem>
+                     </Grid>
+                  </Grid>
                </Form>
-            </GridItem>
-         </GridContainer>
+            </Grid>
+         </Grid>
       </div>
    );
 };

@@ -19,7 +19,7 @@ import GridContainer from "../../../../../components/grid-container/GridContaine
 import GridItem from "../../../../../components/grid-item/GridItem.component";
 import Input from "../../../../../components/input/Input.component";
 import NewCourseServices from "./course-new-services.js";
-import plusIcon from "../../../../../assets/images/topics/plus.png";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';;
 import Select from "../../../../../components/select/Select.component";
 import TagsInput from "../../../../../components/tags-input/TagsInput.component";
 // import useInput from "../../../../../effects/useInput.effect";
@@ -183,14 +183,14 @@ const EditCoursePage = (props) => {
   });
   return (
     <div className="new-topic-subpage">
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12} lg={12}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <BackArrow text="Курсы" />
           <h1>{name}</h1>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={12} lg={12}>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <Form>
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
               <Input
                 id="name"
                 value={name}
@@ -203,8 +203,8 @@ const EditCoursePage = (props) => {
                 placeholder="Курс 10"
                 required
               />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
               <TagsInput
                 fullWidth
                 selectedTags={handleSelectedTags}
@@ -214,8 +214,8 @@ const EditCoursePage = (props) => {
                 placeholder="#hashtags"
                 label="Теги"
               />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={3} lg={3}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
               <Select
                 name="foreignLanguage"
                 label="Изучаемый язык"
@@ -226,8 +226,8 @@ const EditCoursePage = (props) => {
                 defaultValue={languageOptions[foreign]}
                 placeholder="Выберите язык"
               />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={3} lg={3}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
               <Select
                 id="native"
                 name="nativeLanguage"
@@ -240,8 +240,8 @@ const EditCoursePage = (props) => {
                 placeholder="Выберите язык"
                 required
               />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={2} lg={2}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={2} lg={2}>
               <Input
                 id="cost"
                 name="text"
@@ -256,7 +256,7 @@ const EditCoursePage = (props) => {
                 }}
                 required
               />
-            </GridItem>
+            </Grid>
             <div className="new-course-themes">
               <div className="new-course-themes__title">
                 <div className="h2">Темы курса</div>
@@ -386,14 +386,14 @@ const EditCoursePage = (props) => {
                 Сделать курс публичным
               </Grid>
             </Grid>
-            <GridItem
+            <Grid item
               xs={12}
               sm={12}
               md={6}
               lg={6}
               className="new-topic-subpage__buttons-block"
             >
-              <GridItem xs={12} sm={12} md={2} lg={2}>
+              <Grid item xs={12} sm={12} md={2} lg={2}>
                 <Button
                   className="save-button"
                   onClick={() => {
@@ -416,8 +416,8 @@ const EditCoursePage = (props) => {
                 >
                   Сохранить изменения
                 </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={2} lg={2}>
+              </Grid>
+              <Grid item xs={12} sm={12} md={2} lg={2}>
                 <Button
                   className="cancel-button"
                   onClick={(e) => {
@@ -426,8 +426,8 @@ const EditCoursePage = (props) => {
                 >
                   Отмена
                 </Button>
-              </GridItem>
-            </GridItem>
+              </Grid>
+            </Grid>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <Button
                 style={{
@@ -446,8 +446,8 @@ const EditCoursePage = (props) => {
               </Button>
             </div>
           </Form>
-        </GridItem>
-      </GridContainer>
+        </Grid>
+      </Grid>
     </div>
   );
 };

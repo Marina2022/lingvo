@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 //BASE COMPONENTS
-import GridContainer from "../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../components/grid-item/GridItem.component";
 import Form from "../../../components/form/Form.component";
 import DropZone from "../../../components/drop-zone/DropZone.component";
 import Input from "../../../components/input/Input.component";
@@ -13,7 +11,6 @@ import LoaderWrapper from "../../../components/loader-wrapper/LoaderWrapper.comp
 import Button from "../../../components/button/Button.component";
 import IsVisible from "../../../components/is-visible/IsVisible.component";
 //IMAGES
-import avatarIcon from "../../../assets/images/profile/avatar.png";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
@@ -26,8 +23,8 @@ import {
 import { t } from "i18next";
 import { titleCase } from "../../../utilities/helper-functions";
 import { getBase64 } from "../../../utilities/handleFile";
-import { Image } from "react-bootstrap";
 import { userLogout } from "../../../redux/auth/auth.actions";
+import { Avatar, Grid } from "@mui/material";
 
 const socialNets = [
    { name: titleCase("VKontakte"),   tKey:"social_media.VK.title"       }, 
@@ -76,9 +73,7 @@ const ProfilePage = (props) => {
    } = useInput({ ...formInitState });
    // useState(inputState.links);
 
-   const avatarImg = currentUserInfo?.avatar
-      ? currentUserInfo.avatar
-      : avatarIcon;
+   const avatarImg = currentUserInfo?.avatar;
 
    const handleInputChange = (event) => {
       handleInput(event);
@@ -146,16 +141,16 @@ const ProfilePage = (props) => {
 
    return (
       <div className="profile-page">
-         <GridContainer justifyContent="center">
-            <GridItem xs={11} md={8}>
+         <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={11} md={8}>
                <h2>{t("profile.title")}</h2>
-            </GridItem>
-            <GridItem xs={12}>
+            </Grid>
+            <Grid item xs={12}>
 
                <Form>
-                  <GridContainer justifyContent="center">
-                     <GridItem  sm={11} md={8} justifyContent="center">
-                        <GridItem xs={12}
+                  <Grid container spacing={2} justifyContent="center">
+                     <Grid item  sm={11} md={8} justifyContent="center">
+                        <Grid item xs={12}
                            className="flex-vertical-center">
                            <DropZone
                               title={(avatarData.data || avatarImg) ? t("profile.photo_change_prompt") : t("profile.photo_put_prompt")}
@@ -166,15 +161,16 @@ const ProfilePage = (props) => {
                            >
                               <LoaderWrapper isLoading={editAvatarLoading}>
                                  <div className="profile-page__avatar-block flex-center">
-                                    <Image roundedCircle src={avatarData.data || avatarImg} alt="avatar" />
+                                    {/* <Image roundedCircle src={avatarData.data || avatarImg} alt="avatar" /> */}
+                                    <Avatar sx={{ width: 96, height: 96 }} alt="avatar" src={avatarData.data || avatarImg} />
                                  </div>
                               </LoaderWrapper>
                            </DropZone>
-                        </GridItem>
+                        </Grid>
                         
                         <div className="separator" />
                         
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <CopyToClipboard
                               text={appLink}
                               onCopy={copyAppLink}>
@@ -200,11 +196,11 @@ const ProfilePage = (props) => {
                                  </IsVisible>
                               </div>
                            </CopyToClipboard>
-                        </GridItem>
+                        </Grid>
                         
                         <h4>{t("profile.person")}</h4>
 
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <Input
                               name="email"
                               value={inputState.email || ""}
@@ -218,9 +214,9 @@ const ProfilePage = (props) => {
                               required
                               disabled={true}
                            />
-                        </GridItem>
+                        </Grid>
 
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <Input
                               name="phone"
                               value={inputState.phone || ""}
@@ -233,9 +229,9 @@ const ProfilePage = (props) => {
                               className="p-b__1"
                               required
                            />
-                        </GridItem>
+                        </Grid>
 
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <Input
                               name="name"
                               value={inputState.name || ""}
@@ -248,9 +244,9 @@ const ProfilePage = (props) => {
                               className="p-b__1"
                               required
                            />
-                        </GridItem>
+                        </Grid>
 
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <Input
                               name="nickname"
                               value={inputState.nickname || ""}
@@ -263,9 +259,9 @@ const ProfilePage = (props) => {
                               className="p-b__1"
                               required
                            />
-                        </GridItem>
+                        </Grid>
 
-                        <GridItem xs={12}>
+                        <Grid item xs={12}>
                            <TextArea
                               name="about_oneself"
                               value={inputState.bio}
@@ -278,7 +274,7 @@ const ProfilePage = (props) => {
                               className="p-b__1"
                               required
                            />
-                        </GridItem>
+                        </Grid>
 
                         <div className="separator" />
 
@@ -286,7 +282,7 @@ const ProfilePage = (props) => {
 
                         {
                            socialNets.map(({name, tKey}, idx) =>
-                              <GridItem xs={12} key={idx}>
+                              <Grid item xs={12} key={idx}>
                                  <Input
                                     name={name}
                                     value={inputState[name]}
@@ -299,36 +295,36 @@ const ProfilePage = (props) => {
                                     className="p-b__1"
                                     required
                                  />
-                              </GridItem>
+                              </Grid>
                            )
                         }
 
-                        <GridContainer justifyContent="center">
-                           <GridItem xs={5} lg={3}>
+                        <Grid container spacing={2} justifyContent="center">
+                           <Grid item xs={5} lg={3}>
                               <Button
                                  onClick={onSaveClick}
                                  isLoading={updateUserLoading}>
                                  {t("actions.save")}
                               </Button>
-                           </GridItem>
-                           <GridItem xs={5} lg={3}>
+                           </Grid>
+                           <Grid item xs={5} lg={3}>
                               <Button className="cancel-button">{t("actions.cancel")}</Button>
-                           </GridItem>
+                           </Grid>
 
                            <div className="separator" />
-                           <GridItem xs={10}>
+                           <Grid item xs={10}>
                               <Button variant="secondary" name="logout" onClick={userLogout}>{t("actions.sign_out")}</Button>
-                           </GridItem>
+                           </Grid>
 
-                        </GridContainer>
+                        </Grid>
 
 
 
-                     </GridItem>
-                  </GridContainer>
+                     </Grid>
+                  </Grid>
                </Form>
-            </GridItem>
-         </GridContainer>
+            </Grid>
+         </Grid>
       </div>
    );
 };

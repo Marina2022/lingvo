@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Input from "../../../../components/input/Input.component";
 import Button from "../../../../components/button/Button.component";
-import GridContainer from "../../../../components/grid-container/GridContainer.component";
-import GridItem from "../../../../components/grid-item/GridItem.component";
 import BackArrow from "../../../../components/back-arrow/BackArrow.component";
-
-import Checkbox from "react-custom-checkbox";
 
 import Pagination from "../components/pagination";
 
@@ -17,6 +13,8 @@ import "./course-new";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { t } from "i18next";
+import { Grid } from "@mui/material";
+import Checkbox from "react-custom-checkbox";
 
 const ThemesForCourse = () => {
    const navigate = useNavigate();
@@ -31,8 +29,8 @@ const ThemesForCourse = () => {
    );
    return (
       <div className="new-topic-subpage">
-         <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={12}>
+         <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                <BackArrow text={t("courses.course.creation")} />
                <div className="courses-page__heading-block">
                   <h1>{t("trainings.list")}</h1>
@@ -45,8 +43,8 @@ const ThemesForCourse = () => {
                      />
                   </div>
                </div>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={12}></GridItem>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}></Grid>
             <div className="course-theme-wrapper">
                {publishedTopics
                   .filter(
@@ -65,22 +63,19 @@ const ThemesForCourse = () => {
                         <div className="course-theme-item__langs">
                            {`${topic.nativeLanguage.value} — ${topic.foreignLanguage.value}`}
                         </div>
-
+                        {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+                        <FormControlLabel
+                           label={t("messages.info.does_not_show")}
+                           control={<Checkbox checked={false} onChange={onClick} />}
+                           /> */}
                         <Checkbox
                            className="custom-checkbox"
-                           checked={
-                              topics.filter((t) => t.id === topic.id).length !==
-                              0
-                                 ? true
-                                 : false
-                           }
+                           checked={ topics.filter((t) => t.id === topic.id).length !== 0 }
                            onChange={(e) => {
                               if (!e) {
-                                 setTopics(
-                                    topics.filter((t) => t.id !== topic.id)
-                                 );
+                                 setTopics(topics.filter((t) => t.id !== topic.id))
                               } else {
-                                 setTopics([...topics, topic]);
+                                 setTopics([...topics, topic])
                               }
                            }}
                            icon={
@@ -105,7 +100,7 @@ const ThemesForCourse = () => {
                      </div>
                   ))}
             </div>
-         </GridContainer>
+         </Grid>
          <div className="courses-theme-bottom">
             <Pagination />
             <div>
@@ -128,19 +123,19 @@ const ThemesForCourse = () => {
                </Button>
             </div>
          </div>
-         <GridItem
+         <Grid item
             xs={12}
             sm={12}
             md={6}
             lg={6}
             className="new-topic-subpage__buttons-block">
-            <GridItem xs={12} sm={12} md={2} lg={2}>
+            <Grid item xs={12} sm={12} md={2} lg={2}>
                <Button className="save-button">{t("actions.save")}</Button>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={2} lg={2}>
+            </Grid>
+            <Grid item xs={12} sm={12} md={2} lg={2}>
                <Button className="cancel-button">{t("actions.cancel")}</Button>
-            </GridItem>
-         </GridItem>
+            </Grid>
+         </Grid>
       </div>
    );
 };

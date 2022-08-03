@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridItem from "../../../components/grid-item/GridItem.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 import Form from "../../../components/form/Form.component";
@@ -13,8 +12,8 @@ import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { setPasswordAsync } from "../../../redux/auth/auth.actions";
-import GridContainer from "../../../components/grid-container/GridContainer.component";
 import { t } from "i18next";
+import { Grid } from "@mui/material";
 
 const SetNewPasswordPage = (props) => {
    const { setPasswordAsync, setPasswordLoading } = props;
@@ -49,8 +48,8 @@ const SetNewPasswordPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="set-new-password-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
-               <GridItem
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+               <Grid item
                   xs={12}
                   sm={12}
                   md={12}
@@ -58,7 +57,7 @@ const SetNewPasswordPage = (props) => {
                   className="fields-block">
                   <Form onSubmit={setNewPassword}>
                      <div className="fields-block__text">{t("auth.reset.resetting")}</div>
-                     <GridItem xs={12} sm={12} md={12} lg={12}>
+                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="email"
                            value={inputState.email}
@@ -71,8 +70,8 @@ const SetNewPasswordPage = (props) => {
                            type="text"
                            required
                         />
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={12} lg={12}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="code"
                            value={inputState.code}
@@ -85,8 +84,8 @@ const SetNewPasswordPage = (props) => {
                            type="text"
                            required
                         />
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={12} lg={12}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="password"
                            value={inputState.password}
@@ -99,22 +98,22 @@ const SetNewPasswordPage = (props) => {
                            minLength={8}
                            required
                         />
-                     </GridItem>
-                     <GridContainer>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                     </Grid>
+                     <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button isLoading={setPasswordLoading} type="submit">
                               {t("actions.send")}
                            </Button>
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button onClick={() => navigate("/login")}>
                               {t("actions.cancel")}
                            </Button>
-                        </GridItem>
-                     </GridContainer>
+                        </Grid>
+                     </Grid>
                   </Form>
-               </GridItem>
-            </GridItem>
+               </Grid>
+            </Grid>
          </div>
       </div>
    );

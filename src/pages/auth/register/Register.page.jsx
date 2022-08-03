@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "../../../components/grid-item/GridItem.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //IMAGES
@@ -13,6 +12,7 @@ import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { authRegisterAsync } from "../../../redux/auth/auth.actions";
 import { t } from 'i18next'
+import { Grid } from "@mui/material";
 
 const RegisterPage = (props) => {
    const { authRegisterAsync, isLoading } = props;
@@ -50,9 +50,9 @@ const RegisterPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="register-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
                <div className="register-page__auth-block-card">
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={12}
@@ -63,7 +63,7 @@ const RegisterPage = (props) => {
                         <div className="error-message">{errorMessage}</div>
                      )}
                      <form onSubmit={register}>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="email"
                               value={inputState.email}
@@ -75,8 +75,8 @@ const RegisterPage = (props) => {
                               type="text"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="name"
                               value={inputState.name}
@@ -87,8 +87,8 @@ const RegisterPage = (props) => {
                               type="text"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="password"
                               value={inputState.password}
@@ -101,8 +101,8 @@ const RegisterPage = (props) => {
                               required
                               minLength={8}
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="rePassword"
                               value={inputState.rePassword}
@@ -114,53 +114,53 @@ const RegisterPage = (props) => {
                               required
                               minLength={8}
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Button isLoading={isLoading} type="submit">
                               {t("actions.sign_up")}
                            </Button>
-                        </GridItem>
+                        </Grid>
                      </form>
-                  </GridItem>
+                  </Grid>
                   {/*<span className="separator" />*/}
-                  {/*<GridItem*/}
+                  {/*<Grid item*/}
                   {/*   xs={12}*/}
                   {/*   sm={12}*/}
                   {/*   md={6}*/}
                   {/*   lg={6}*/}
                   {/*   className="social-network__block">*/}
-                  {/*   <GridItem*/}
+                  {/*   <Grid item*/}
                   {/*      xs={12}*/}
                   {/*      sm={12}*/}
                   {/*      md={6}*/}
                   {/*      lg={6}*/}
                   {/*      className="social-network__block-text">*/}
                   {/*      t("auth.login.with_social_media")*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={googleIcon}>*/}
                   {/*         Google +*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={vkIcon}>*/}
                   {/*         t("pages.social_media.VK.title")*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={fbIcon}>*/}
                   {/*         Facebook*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*</GridItem>*/}
+                  {/*   </Grid>*/}
+                  {/*</Grid>*/}
                </div>
-            </GridItem>
+            </Grid>
          </div>
          <div className="register-page__footer">
             <h3>{t("auth.register.have_account")}</h3>

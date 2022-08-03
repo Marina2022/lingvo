@@ -25,15 +25,5 @@
       > * {
          flex-shrink: 0;
       }
-      
-      background: #f0f5f5;
-      padding: 2rem 4rem;
-      // padding: 15px 80px 80px 80px;
-      //min-height: 85%;
-
-      // @media only screen and (max-width: $grid-breakpoints-md) {
-      @include media-breakpoint-down(md) {
-         padding: 1rem !important;
-      }
    }
 }

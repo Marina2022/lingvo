@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridItem from "../../../components/grid-item/GridItem.component";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 import Form from "../../../components/form/Form.component";
@@ -13,8 +12,8 @@ import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { resetPasswordAsync } from "../../../redux/auth/auth.actions";
-import GridContainer from "../../../components/grid-container/GridContainer.component";
 import { t } from "i18next";
+import { Grid } from "@mui/material";
 
 const ResetPasswordPage = (props) => {
    const { resetPasswordAsync, resetPasswordLoading } = props;
@@ -42,8 +41,8 @@ const ResetPasswordPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="reset-password-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
-               <GridItem
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+               <Grid item
                   xs={12}
                   sm={12}
                   md={12}
@@ -51,7 +50,7 @@ const ResetPasswordPage = (props) => {
                   className="fields-block">
                   <Form onSubmit={resetPassword}>
                      <div className="fields-block__text">{t("auth.reset.resetting")}</div>
-                     <GridItem xs={12} sm={12} md={12} lg={12}>
+                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="email"
                            value={inputState.email}
@@ -63,24 +62,24 @@ const ResetPasswordPage = (props) => {
                            type="text"
                            required
                         />
-                     </GridItem>
-                     <GridContainer>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                     </Grid>
+                     <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button
                               isLoading={resetPasswordLoading}
                               type="submit">
                               {t("auth.reset.reset")}
                            </Button>
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button onClick={() => navigate("/login")}>
                            {t("actions.cancel")}
                            </Button>
-                        </GridItem>
-                     </GridContainer>
+                        </Grid>
+                     </Grid>
                   </Form>
-               </GridItem>
-            </GridItem>
+               </Grid>
+            </Grid>
          </div>
       </div>
    );

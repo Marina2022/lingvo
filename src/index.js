@@ -20,7 +20,7 @@ import 'react-i18next';
 import "./index.scss";
 
 const theme = createTheme({
-   typography: { fontSize: 20 },
+   // typography: { fontSize: 14 },
 });
 
 const root = createRoot(
