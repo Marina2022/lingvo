@@ -43,7 +43,7 @@ const Select = ({name, form, select: { label, options, defaultValue, onChange, .
          <InputLabel id={`select-label-${name}`}>{label}</InputLabel>
          {
             ((defVal)=> {
-               console.log(defaultValue, defVal);
+               // console.log(defaultValue, defVal);
                return (
                   defVal !== undefined
                   ?  <MuiSelect

@@ -3,6 +3,7 @@ import { t } from "i18next";
 import { v4 as uuidv4 } from "uuid";
 import keysConfig from "../../../config/keys.config";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import { SpeechSynthesisOutputFormat } from "microsoft-cognitiveservices-speech-sdk";
 
 /**
  * Gets Azure supported language parameters
@@ -72,6 +73,7 @@ const getAzureService = (voice) => {
   const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, region);
   // setting selected voice
   speechConfig.speechSynthesisVoiceName = voice
+  speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz128KBitRateMonoMp3
 
   const synthesizer = new SpeechSDK.SpeechSynthesizer(
       speechConfig,
@@ -102,7 +104,7 @@ const genAzureVoice = ({text, voice, setStatus, handleFiles}) => {
 
   // fires when the speech is synthesized
   const complete_cb = function(result) {
-      const filename = `Generated_voice-${uuidv4()}.mp3`;
+      const filename = `Generated_voiceover-${uuidv4()}.mp3`;
       const file = new File([result.audioData], filename, {
         type: "audio/mpeg",
       });

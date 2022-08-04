@@ -48,6 +48,7 @@ const UploadAudio = ({ handleFiles, files }) =>
             title={t("tasks.task.voice_sources.upload.title")}
             handleFiles={handleFiles}
             files={files}
+            accept={{'audio/mpeg':['.mp3']}}
          />
       </Grid>
       <Grid item xs={12} container justifyContent="center">
@@ -261,11 +262,12 @@ const Unit = (props) => {
       const file = files[0]
       getBase64(file, reader => {
          setFileData({
-            data: reader.result,
+            data: reader.currentTarget.result,
             language: topicData?.foreignLanguage,
             name: file?.name
          })
          file.url = URL.createObjectURL(file)
+         console.log('handleFiles - file:', file);
          setUploadedFiles(files);
       });
    };
@@ -282,15 +284,22 @@ const Unit = (props) => {
    //    // }
    // }, [topicData?.foreignLanguage, uploadedFiles])
 
-   const handleRecordFiles = (data, files) => {
-      const file = files[0]      
-      setFileData({
-         data,
-         language: topicData?.foreignLanguage,
-         name: file?.name
+   const handleRecordFiles = (files, data) => {
+      const file = files[0]
+      getBase64(file, reader => {
+         setFileData({
+            data: reader.currentTarget.result,
+            language: topicData?.foreignLanguage,
+            name: file?.name
+         })
+         console.log('handleRecordFiles - file:', file);
+         setUploadedFiles(files)
       })
-      setUploadedFiles(files)
    }
+
+   useEffect(() => {
+      console.log('useEffect - fileData:', fileData);
+   }, [fileData])
    
    const navigate = useNavigate();
 
@@ -437,7 +446,7 @@ const Unit = (props) => {
                      (  uploadMode === "uploadedAudio" && 
                         <UploadAudio handleFiles={handleFiles} files={uploadedFiles} /> ) || 
                      (  uploadMode === "recordedAudio" && 
-                        <RecordAudio text={unitInput.value} handleFiles={handleRecordFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />) ||
+                        <RecordAudio text={unitInput.value} handleFiles={handleFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />) ||
                      (  uploadMode === "generatedVoice" && 
                         <GenerateAudio text={unitInput.value} handleFiles={handleFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />)
                   }

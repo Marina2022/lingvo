@@ -12,6 +12,7 @@ import { PlayerEmbedControls } from "../units/player";
 import Button from "../../../components/button/Button.component";
 import { t } from "i18next";
 
+import { v4 as uuidv4 } from "uuid";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -60,7 +61,7 @@ const RecordAudio = ({ text,  handleFiles }) => {
       Mp3Recorder.stop()
          .getMp3()
          .then(([buffer, blob]) => {
-            const fileName = `${text.substring(0, 20)}-${new Date(Date.now()).toISOString()}.mp3`
+            const fileName = `Recorded_voiceover-${uuidv4()}.mp3`
             const file = new File(buffer, fileName, {
                type: blob.type,
                lastModified: Date.now()
@@ -69,7 +70,7 @@ const RecordAudio = ({ text,  handleFiles }) => {
 
             setFiles([file])
 
-            handleFiles(blob, [file])
+            handleFiles([file], buffer) // blob
 
             toggleIsRecording(false);
          })

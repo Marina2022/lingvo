@@ -15,6 +15,8 @@ const DropZone = (props) => {
     className,
     buttonText,
     showName = true,
+    maxFiles = 1,
+    accept = {},
     buttonAction,
   } = props;
 
@@ -29,7 +31,7 @@ const DropZone = (props) => {
 
   return (
     <div className={dropZoneClasses}>
-      <ReactDropZone onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
+      <ReactDropZone accept={accept} maxFiles={maxFiles} onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
         {({ getRootProps, getInputProps }) => (
           <section>
             <IsVisible isVisible={buttonText && buttonAction}>
