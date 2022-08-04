@@ -86,7 +86,7 @@ const RecordAudio = ({ text,  handleFiles }) => {
          <Grid item xs={12} sm={10} md={8} container spacing={4} justifyContent="center">
 
             <Grid item xs={12} container spacing={4} justifyContent="center">
-               <Grid item xs={6} md={4} lg={3} container justifyContent="center">
+               <Grid item xs={6} md={5} lg={4} container justifyContent="center">
                {
                   <Button variant="contained" color="secondary" onClick={start} 
                           disabled={isBlocked || isRecording} 
@@ -97,7 +97,7 @@ const RecordAudio = ({ text,  handleFiles }) => {
                   </Button>
                }
                </Grid>
-               <Grid item  xs={6} md={4} lg={3} container justifyContent="center">
+               <Grid item  xs={6} md={5} lg={4} container justifyContent="center">
                   <Button variant="contained" color="secondary" onClick={stop} 
                           disabled={!isRecording} 
                           sx={{ width:'100%', '&:hover': { cursor:'pointer' } }}

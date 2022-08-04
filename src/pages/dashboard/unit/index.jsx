@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect } from "react-redux"; 
 import { useOutletContext, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +17,6 @@ import useInput from "../../../effects/useInput.effect";
 import { getLevelsListAsync } from "../../../redux/common/common.actions";
 import { getSingleTopicAsync } from "../../../redux/topics/topics.actions";
 import { getSingleUnitAsync, createUnitAsync, editUnitAsync } from "../../../redux/units/units.actions";
-//SERVICES
-import AddEditUnitServices from "./unit-services";
 //UTILITIES
 import { checkForEmptyProperties } from "../../../utilities/helper-functions";
 import { t } from "i18next";
@@ -33,6 +31,7 @@ import RecordAudio from "./unit-record-audio"
  * 
  * @param {Array<{url:String}>} files1 
  * @param {Array<{url:String}>} files2 
+ * @returns {Boolean} true if files have different urls, otherwise - false
  */
 const changedVoiceOver = (files1, files2) => (
    files1.length !== 0 && 
@@ -78,82 +77,164 @@ const Unit = (props) => {
       dispatchGetSingleUnitAsync,
    } = props;
    
-   const { generateLevelsOptions } = AddEditUnitServices;
-   
-   const navigate = useNavigate();
-   
+   /** 
+    * Gets URL path segment params 
+    */
    const { topicId, unitId } = useParams();
    
+   /** 
+    * Gets a topic data from backend 
+    */
    topicId && parseInt(topicId) !== stateTopicsSingleTopicData?.id && dispatchGetSingleTopicAsync(topicId)      
    
-   const topicData = topicId ? {...stateTopicsSingleTopicData} : {}
+   const [topicData, setTopicData] = useState(topicId && parseInt(topicId) === stateTopicsSingleTopicData?.id ? stateTopicsSingleTopicData : {})
 
+   useEffect(() => {
+      // console.log('useEffect - setTopicData')
+      setTopicData(stateTopicsSingleTopicData)
+   }, [stateTopicsSingleTopicData])
 
-   unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id 
-      && dispatchGetSingleUnitAsync(unitId)      
+   /**
+    * Gets a unit data from backend
+    */
+   unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id && dispatchGetSingleUnitAsync(unitId)      
    
-   const unitData = unitId ? {...stateUnitsSingleUnit} : {}
+   const [unitData, setUnitData] = useState(unitId && parseInt(unitId) === stateUnitsSingleUnit?.id ? stateUnitsSingleUnit : {})
+   const [unitDataFiles, setUnitDataFiles] = useState(unitId && parseInt(unitId) === stateUnitsSingleUnit?.id && stateUnitsSingleUnit?.voices ? stateUnitsSingleUnit.voices : []);
+   const [uploadedFiles, setUploadedFiles] = useState(unitDataFiles);
 
-   const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
+   useEffect(() => {
+      // console.log('useEffect - setUnitData', 'setUnitDataFiles', 'setUploadedFiles')
+      setUnitData(stateUnitsSingleUnit)
+      setUnitDataFiles(stateUnitsSingleUnit?.voices ?? [])
+      setUploadedFiles(stateUnitsSingleUnit?.voices ?? [])
+   }, [stateUnitsSingleUnit])
+
+   /**
+    * Sets isTagsUpdated flag
+    */ 
+   const [updatedTags, setUpdatedTags] = useState(false);
+
+   /**
+    * Sets empty fileData
+    */
    const [fileData, setFileData] = useState({});
 
    // true - if the generated voice is created, otherwise - false
    // const [generatedVoiceAudio, setGeneratedVoiceAudio] = useState({ isVoiceLoaded: false, url: null });
 
-   const levelsOptions = generateLevelsOptions(stateCommonLevelsList || []);
-   const unitDataFiles = unitId && unitData?.voices ? unitData.voices : [];
-   const [uploadedFiles, setUploadedFiles] = useState(unitDataFiles);
+   /** 
+    * Gets language level options from backend
+    */ 
+   !stateCommonLevelsList && dispatchGetLevelsListAsync()
 
-   useEffect(() => {
-      dispatchGetLevelsListAsync();
-      topicId && dispatchGetSingleTopicAsync(topicId);
-      unitId && dispatchGetSingleUnitAsync(unitId)
-   }, [dispatchGetLevelsListAsync, dispatchGetSingleTopicAsync, dispatchGetSingleUnitAsync, topicId, unitId]);
-
-   // values are equal to voiceUploadMode"s fields
-   const uploadOptions = [
-      { value: "uploadedAudio" , label: t("tasks.task.voice_sources.upload.label")   },
-      { value: "recordedAudio" , label: t("tasks.task.voice_sources.record.label")   },
-      { value: "generatedVoice", label: t("tasks.task.voice_sources.generate.label") },
-   ];
-   // defines which type of voice uploading is being used: Azure generated voice, uploaded file, recorded audio
-   const [uploadMode, setUploadMode] = useState(uploadOptions[0].value);
-
+   const [levelList, setLevelList] = useState((stateCommonLevelsList || []).map((item) => ({ ...item, label: item.value })));
    
-   const formInitState = {
-      description: "",
-      level: levelsOptions[0],
-      subject: topicId,
-      tags: [],
-      translation: "",
-      value: "",
-      voices: [],
-   };
-
-   const levelDefaultValue = unitId
+   useEffect(() => {
+      // console.log('useEffect - setLevelList')
+      stateCommonLevelsList && setLevelList(stateCommonLevelsList.map((item) => ({ ...item, label: item.value })))
+   }, [stateCommonLevelsList])
+   
+   /**
+    * Set default language level
+    */
+   const [defLevel, setDefLevel] = useState(unitId && unitData?.level 
       ? {
            ...unitData?.level,
            label: unitData?.level?.value,
         }
-      : levelsOptions[0];
+      : levelList && levelList.length > 0 ? levelList[0] : '')
 
-   const formState = unitId
+   useEffect(() => {
+      // console.log('useEffect - setDefLevel')
+      setDefLevel(unitData?.level 
+         ? {
+              ...unitData?.level,
+              label: unitData?.level?.value,
+           }
+         : levelList && levelList.length > 0 ? levelList[0] : '')
+   }, [levelList, unitData?.level])
+
+   /**
+    * ### Voice-over upload options
+    * 
+    * `value` voice-over upload type
+    * * `uploadedAudio` - to upload audio file
+    * * `recordedAudio` - to record alive voice-over
+    * * `generatedVoice` - to generate voice-over using voice generator provider
+    * 
+    * `label` used for UI rendering
+    */
+   const uploadOptions = [
+      { value: "uploadedAudio" , label: t("tasks.task.voice_sources.upload.label")   },
+      { value: "recordedAudio" , label: t("tasks.task.voice_sources.record.label")   },
+      { value: "generatedVoice", label: t("tasks.task.voice_sources.generate.label") },
+   ]
+   
+   /**
+    * Sets voice-over upload mode
+    */
+   const [uploadMode, setUploadMode] = useState(uploadOptions[0].value);
+
+   /**
+    * Sets initial ```unitState = unitData & voices[]```
+    */
+   const [changedInitUnit, setChangedInitUnit] = useState(true)
+   const [initUnit, setInitUnit] = useState(unitId
       ? {
            ...unitData,
-           tags: unitData?.tags,
+         //   tags: unitData?.tags, //???
            voices: [],
         }
-      : formInitState;
+      : {
+         subject: topicId,
+         value: "",
+         translation: "",
+         description: "",
+         tags: [],
+         level: levelList && levelList.length > 0 ? levelList[0] : '',
+         voices: [],
+      })
+   
+   useEffect(() => {
+      // console.log('useEffect - setUnitState')
+      setInitUnit(unitId
+         ? {
+              ...unitData,
+            //   tags: unitData?.tags,
+              voices: [],
+           }
+         : {
+            subject: topicId,
+            value: "",
+            translation: "",
+            description: "",
+            tags: [],
+            level: levelList && levelList.length > 0 ? levelList[0] : '',
+            voices: [],
+         })
+      setChangedInitUnit(true)
+   }, [levelList, topicId, unitData, unitId])
+
 
    const {
-      inputState,
-      handleInput,
+      inputState: unitInput,
+      handleInput: handleUnitInput,
       handleInvalidMessage,
       invalidMessages,
-   } = useInput({ ...formState });
+      setInputState: setUnitInput
+   } = useInput({ ...initUnit });
+
+   useEffect(() => {
+      // console.log('useEffect - setInputState');
+      if (changedInitUnit) {
+         setUnitInput({...initUnit})
+         setChangedInitUnit(false)
+      }
+   },[changedInitUnit, setUnitInput, initUnit])
 
    const handleInputChange = (event) => {
-      handleInput(event);
+      handleUnitInput(event);
    };
 
    const handleSelectedTags = (items) => {
@@ -161,8 +242,8 @@ const Unit = (props) => {
          target: { name: "tags", value: items },
       };
 
-      changeIsTagsUpdated(true);
-      handleInput(tags);
+      setUpdatedTags(true);
+      handleUnitInput(tags);
    };
 
    const setLevel = (event, levelType) => {
@@ -173,18 +254,33 @@ const Unit = (props) => {
       const selectState = {
          target: { name: levelType, value: e },
       };
-      handleInput(selectState);
+      handleUnitInput(selectState);
    };
 
    const handleFiles = (files) => {
       const file = files[0]
-      getBase64(file, reader => setFileData({
-         data: reader.result,
-         language: topicData?.foreignLanguage,
-         name: file?.name
-      }));
-      setUploadedFiles(files);
+      getBase64(file, reader => {
+         setFileData({
+            data: reader.result,
+            language: topicData?.foreignLanguage,
+            name: file?.name
+         })
+         file.url = URL.createObjectURL(file)
+         setUploadedFiles(files);
+      });
    };
+
+   // useEffect(() => {
+   //    // if (changedVoiceOver(unitDataFiles, uploadedFiles)) {
+   //       // console.log(unitDataFiles, uploadedFiles);
+   //       const file = uploadedFiles[0]
+   //       getBase64(file, reader => setFileData({
+   //          data: reader.result,
+   //          language: topicData?.foreignLanguage,
+   //          name: file?.name
+   //       }))
+   //    // }
+   // }, [topicData?.foreignLanguage, uploadedFiles])
 
    const handleRecordFiles = (data, files) => {
       const file = files[0]      
@@ -195,21 +291,23 @@ const Unit = (props) => {
       })
       setUploadedFiles(files)
    }
+   
+   const navigate = useNavigate();
 
    const onSubmit = (e) => {
       e.preventDefault();
       if (unitId) {
          dispatchEditUnitAsync(
             unitId,
-            inputState,
+            unitInput,
             navigate,
             topicId,
-            isTagsUpdated,
+            updatedTags,
             fileData,
             unitData?.voices ? unitData?.voices[0]?.id : undefined
          );
       } else {
-         dispatchCreateUnitAsync(topicId, inputState, navigate, fileData);
+         dispatchCreateUnitAsync(topicId, unitInput, navigate, fileData);
       }
    };
 
@@ -223,14 +321,15 @@ const Unit = (props) => {
    const __addCrumbs = addCrumbs
 
    useEffect(() => {
+      // console.log('useEffect - setCrumbs');
       unitId ?
       setCrumbs(c => __addCrumbs(c, [
-         { key: lastKey + 1, name:`${inputState?.value.slice(0, 15)}${inputState?.value.length>15?'...':''}`, path:`units/${unitId}` }
+         { key: lastKey + 1, name:`${unitInput?.value?.slice(0, 15)}${unitInput?.value?.length>15?'...':''}`, path:`units/${unitId}` }
       ])) :
       setCrumbs(c => __addCrumbs(c, [
          { key: lastKey + 1, name:t("tasks.task.new"), path:"units/new" }
       ])) 
-   }, [__addCrumbs, inputState?.value, lastKey, setCrumbs, unitId])
+   }, [__addCrumbs, unitInput?.value, lastKey, setCrumbs, unitId])
 
    return (
       <Form>
@@ -238,7 +337,7 @@ const Unit = (props) => {
             <Grid item xs={12}>
                <TextArea
                   name="value"
-                  value={inputState.value}
+                  value={unitInput.value}
                   error={invalidMessages}
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
@@ -251,7 +350,7 @@ const Unit = (props) => {
             <Grid item xs={12}>
                <TextArea
                   name="translation"
-                  value={inputState.translation}
+                  value={unitInput.translation}
                   error={invalidMessages}
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
@@ -264,7 +363,7 @@ const Unit = (props) => {
             <Grid item xs={12}>
                <TextArea
                   name="description"
-                  value={inputState.description || ""}
+                  value={unitInput.description || ""}
                   error={invalidMessages}
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
@@ -287,16 +386,21 @@ const Unit = (props) => {
             </Grid>                  
             <Grid item xs={12} container spacing={2} justifyContent="space-between" alignItems="center">
                <Grid item xs={12} md={4} lg={3}>
-                  <Select
-                     name="level"
-                     select={{
-                        label: t("tasks.task.level"),
-                        options: levelsOptions,
-                        defaultValue: levelDefaultValue,
-                        onChange: ({target: { value }}) => setLevel(value, "level"),
-                        placeholder: t("tasks.task.level")
-                     }}
-                  />
+                  {
+                     (() => {
+                        // console.log(levelList, defLevel);
+                        return <Select
+                              name="level"
+                              select={{
+                                 label: t("tasks.task.level"),
+                                 options: levelList,
+                                 defaultValue: defLevel,
+                                 onChange: ({target: { value }}) => setLevel(value, "level"),
+                                 placeholder: t("tasks.task.level")
+                              }}
+                           />
+                     })()
+                  }
                </Grid>
                <Grid item xs={12} md={8} lg={6}>
                   <ButtonGroup aria-label="outlined primary button group">
@@ -333,9 +437,9 @@ const Unit = (props) => {
                      (  uploadMode === "uploadedAudio" && 
                         <UploadAudio handleFiles={handleFiles} files={uploadedFiles} /> ) || 
                      (  uploadMode === "recordedAudio" && 
-                        <RecordAudio text={inputState.value} handleFiles={handleRecordFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />) ||
+                        <RecordAudio text={unitInput.value} handleFiles={handleRecordFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />) ||
                      (  uploadMode === "generatedVoice" && 
-                        <GenerateAudio text={inputState.value} handleFiles={handleFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />)
+                        <GenerateAudio text={unitInput.value} handleFiles={handleFiles} language={{name: stateTopicsSingleTopicData.foreignLanguage.value}} />)
                   }
                   </Grid>
                )
@@ -351,7 +455,7 @@ const Unit = (props) => {
                      }
                      variant="contained"                           
                      disabled={
-                        !checkForEmptyProperties(inputState, [
+                        !checkForEmptyProperties(unitInput, [
                            "description",
                         ]) || uploadedFiles.length <= 0
                      }

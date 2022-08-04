@@ -64,18 +64,18 @@ const Topic = (props) => {
     * const ruRuName = languageName.of('ru_RU') // expected 'русский (Россия)' 
     * const enUsName = languageName.of('en_US') // expected 'американский английский' 
     */
-   const nativeLanguageDefaultValue = topicId
+   const [nativeLanguageDefaultValue] = useState(topicId
       ? {
            ...topicData?.nativeLanguage,
            label: topicData?.nativeLanguage?.value,
         }
-      : languageOptions[4];
-   const foreignLanguageDefaultValue = topicId
+      : languageOptions[4]);
+   const [foreignLanguageDefaultValue] = useState(topicId
       ? {
            ...topicData?.foreignLanguage,
            label: topicData?.foreignLanguage?.value,
         }
-      : languageOptions[0];
+      : languageOptions[0]);
 
    const [formInitState] = useState({
       text: "",

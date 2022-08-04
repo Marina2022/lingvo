@@ -36,6 +36,9 @@ const GenerateAudio = ({
      })
   };
 
+  const [defLang] = useState(supportedLanguages[0])
+  const [defGender] = useState(genders[0])
+
   return (
      <>
         <Grid container spacing={2} item xs={12} justifyContent="space-around">
@@ -46,7 +49,7 @@ const GenerateAudio = ({
                  select= {{
                     label: t("tasks.task.voice_sources.generate.language"),
                     options: supportedLanguages,
-                    defaultValue: supportedLanguages[0],
+                    defaultValue: defLang,
                     onChange: ({target}) => setSelectedVoice(prevState => ({
                        ...prevState,
                        language: target,
@@ -62,7 +65,7 @@ const GenerateAudio = ({
                  select= {{
                     label: t("tasks.task.voice_sources.generate.gender"),
                     options: genders,
-                    defaultValue: genders[0],
+                    defaultValue: defGender,
                     onChange: ({target}) => setSelectedVoice(prevState => ({
                        ...prevState,
                        gender: target,
@@ -75,11 +78,11 @@ const GenerateAudio = ({
 
         </Grid>
         <Grid item xs={12} container spacing={2} direction="row" justifyContent="center">
-           <Grid item xs={12} sm={10} md={8} lg={6}  container justifyContent="center">
-              <Button variant="outlined" color="secondary" onClick={generateVoice}>
-                 <GraphicEqOutlinedIcon />
-                 <span>&nbsp;</span>
-                 <span>{t("tasks.task.voice_sources.generate.button")}</span>
+           <Grid item xs={12} sm={10} md={6} lg={4}  container justifyContent="center">
+              <Button variant="contained" color="secondary" onClick={generateVoice}
+               src={<GraphicEqOutlinedIcon />}
+              >
+                 {t("tasks.task.voice_sources.generate.button")}
               </Button>
            </Grid>
 

@@ -6,9 +6,9 @@
  */
 export function getBase64(file, onload, onerror) {
   const reader = new FileReader();
-  reader.readAsDataURL(file);
   reader.onload = onload;
   reader.onerror = onerror || function(error) {
-     console.log("Error: ", error);
+    console.log("Error: ", error);
   };
+  reader.readAsDataURL(file);
 }

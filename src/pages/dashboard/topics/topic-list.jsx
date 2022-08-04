@@ -5,7 +5,6 @@ import LoaderWrapper from "../../../components/loader-wrapper/LoaderWrapper.comp
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import TocOutlinedIcon from '@mui/icons-material/TocOutlined';
 import { t } from "i18next";
 import { useNavigate } from "react-router-dom";
 import { deleteTopicAsync } from "../../../redux/topics/topics.actions";
@@ -38,7 +37,10 @@ const TopicList = (props) => {
             }}>
                <CardContent sx={{ color: 'dimgray', '> *' : { padding: '0.3rem' } }}>
 
-                  <Typography sx={{ fontWeight: 500, fontSize: '1.2em'}}>
+                  <Typography 
+                     sx={{ fontSize: '1.2rem', fontWeight: 'medium', color:"Chocolate", '&:hover': { cursor: 'pointer', color: 'sandybrown' } }}
+                     onClick={() => navigate(`${item?.id}`)}
+                  >
                      {item?.text}
                   </Typography>
                   <Typography sx={{ fontSize: '0.75em'}}>
@@ -58,11 +60,6 @@ const TopicList = (props) => {
                      }
                   }
                }}>
-                  <Button title={t("trainings.training_list.menu.open")} 
-                        onClick={() => navigate(`${item?.id}`)}
-                  >
-                     <TocOutlinedIcon />
-                  </Button>
                   <Button  title={t("trainings.training_list.menu.info")} 
                         onClick={() => navigate(`${item?.id}/edit`, {state:{topic:item}})}
                   >
