@@ -1,18 +1,30 @@
 @import "~bootstrap/scss/bootstrap";
 
+:root {
+  // https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
+  --app-height: 100%;
+}
+
 html, body {
   margin: 0;
   padding: 0;
+  width: 100vw;
+  height: 100vh;
+  height: var(--app-height);
+  // overflow: hidden;
 }
 
 body {
-  height: 100vh;
-  width: 100vw;
+  > #root {
+    height: inherit;
+    width: inherit;
+  }
 }
 
+
 .app {
-  height: 100vh;
-  max-width: 100vw;
+  height: inherit;
+  width: inherit;
   display: flex;
   flex-direction: column;
   overflow: auto;

@@ -15,6 +15,7 @@ import { t } from 'i18next'
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 import TopicList from "./topic-list";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
+import AudioFileIcon from '@mui/icons-material/AudioFile';
 
 const TopicsBody = (props) => {
 
@@ -132,14 +133,14 @@ const TopicsBody = (props) => {
 
 const Topics = (props) => {
 
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("trainings.title"), path: "topics" }]);
+   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("trainings.title"), path: "topics", icon: <AudioFileIcon fontSize="small" />}]);
 
    const outlet = useOutlet()
 
    useEffect(() => {
       // console.log("check Topics => ", t("trainings.title"), outlet);
       if (!outlet) {
-         setCrumbs([{ key: 0, name: t("trainings.title"), path: "topics"}])
+         setCrumbs([{ key: 0, name: t("trainings.title"), path: "topics", icon: <AudioFileIcon fontSize="small" /> }])
       }
    }
    , [outlet])

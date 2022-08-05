@@ -1,5 +1,26 @@
 import React from "react";
-import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { Breadcrumbs, Chip, emphasize, styled } from "@mui/material";
+
+const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+  const backgroundColor =
+    theme.palette.mode === 'light'
+      ? theme.palette.grey[100]
+      : theme.palette.grey[800];
+  return {
+    backgroundColor,
+    height: theme.spacing(3),
+    color: theme.palette.text.primary,
+    fontWeight: theme.typography.fontWeightRegular,
+    '&:hover, &:focus': {
+      backgroundColor: emphasize(backgroundColor, 0.06),
+      cursor: 'pointer'
+    },
+    '&:active': {
+      boxShadow: theme.shadows[1],
+      backgroundColor: emphasize(backgroundColor, 0.12),
+    },
+  };
+});
 
 /**
  * Builds breadcrumb html
@@ -16,7 +37,7 @@ export const BuildBreadcrumbs = (props) => {
   {
     crumbs
     .sort((a, b) => a.key < b.key ? -1 : 1)
-    .map(({name, path}, key, array) => 
+    .map(({name, icon, path}, key, array) => 
       (
           /**
           * @param {{isLast:Boolean, href:String}} param0 
@@ -25,16 +46,16 @@ export const BuildBreadcrumbs = (props) => {
           ({isLast , href}) => 
             // push last 3 items to show at breadcrumbs
             key > array.length - 4 ?
-            // <Breadcrumb.Item href={href} key={key} active={isLast ?? undefined}>{name}</Breadcrumb.Item>
             (
-              isLast ?
-              <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">{name}</Typography> :
-              <Link key={key} underline="hover" color="inherit" sx={{ display: 'flex', alignItems: 'center' }} href={href}>{name}</Link>
+              <StyledBreadcrumb key={key} component="a" href={isLast ? undefined : href} label={name} icon={icon} />
+              // isLast ?
+              // <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">{name}</Typography> :
+              // <Link key={key} underline="hover" color="inherit" sx={{ display: 'flex', alignItems: 'center' }} href={href}>{name}</Link>
             ) :
             // change 4-th item from the end to '...'
             array.length > 3 && key === array.length - 4 ?
-            // <Breadcrumb.Item key={key} href="#" active>...</Breadcrumb.Item>:
-            <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">...</Typography>:
+            <StyledBreadcrumb key={key} component="a" label="..." /> :
+            // <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">...</Typography>:
             // avoid others items
             undefined
       ) ({ isLast: key === array.length - 1, href: path ? (hrefAssembled = `${hrefAssembled}/${path}`) : hrefAssembled})

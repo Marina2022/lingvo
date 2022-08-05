@@ -16,7 +16,7 @@ const SelectOptions = ({options, defKey}) => options.map((item, idx) => {
  * @param {{name:String, form:{}, select:{}, helper:{}, otherProps:any}} param0 
  * @returns 
  */
-const Select = ({name, form, select: { label, options, defaultValue, onChange, ...otherSelect }, helper, ...otherProps}) => {
+const Select = ({name, form, select: { label, options, defaultValue, onChange, emptyValue = '', ...otherSelect }, helper, ...otherProps}) => {
    // console.log({name, form, select: { label, options, defaultValue, ...otherSelect }, helper, ...otherProps});
    const [defKey, setDefKey] = useState(undefined)
    const [defVal, setDefVal] = useState('')
@@ -53,16 +53,16 @@ const Select = ({name, form, select: { label, options, defaultValue, onChange, .
                         {...otherSelect}
                         value={defVal}
                         onChange={(e)=>{
-                           console.log(defKey, defVal);
+                           // console.log(defKey, defVal);
                            setDefVal(e.target[defKey])
-                           console.log(defKey, defVal);
+                           // console.log(defKey, defVal);
                            onChange && onChange(e)
                         }}
                      >
                      {
                         options.map((item, idx) => 
                            <MenuItem key={idx} value={item[defKey] ?? ""}>
-                              {item[defKey] ? item.label : <em>{item.label}</em>}
+                              {item[defKey] !== emptyValue ? item.label : <em>{item.label}</em>}
                            </MenuItem>
                         )
                      }
@@ -77,7 +77,7 @@ const Select = ({name, form, select: { label, options, defaultValue, onChange, .
                      {
                         options.map((item, idx) => 
                            <MenuItem key={idx} value={item[defKey] ?? ""}>
-                              {item[defKey] ? item.label : <em>{item.label}</em>}
+                              {item[defKey] !== emptyValue ? item.label : <em>{item.label}</em>}
                            </MenuItem>
                         )
                      }

@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
@@ -7,9 +7,19 @@ import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 
 import './footer.scss'
+import { getUserInfoAsync } from "../../../redux/profile/profile.actions";
+import { connect } from "react-redux";
 
 
-const Footer = () => {
+const Footer = (props) => {
+  const {
+    getUserInfoAsync,
+    currentUserInfo,
+  } = props;
+
+  useEffect(() => {
+    !currentUserInfo && getUserInfoAsync();
+  }, [currentUserInfo, getUserInfoAsync]);
 
   const navigate = useNavigate();
 
@@ -40,4 +50,8 @@ const Footer = () => {
   </>
 }
 
-export default Footer
+const mapStateToProps = ({profile}) => ({ currentUserInfo: profile.currentUserInfo })
+
+const mapDispatchToProps = (dispatch) => ({ getUserInfoAsync: () => dispatch(getUserInfoAsync()) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

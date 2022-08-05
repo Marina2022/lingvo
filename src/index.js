@@ -19,6 +19,16 @@ import 'react-i18next';
 //STYLES
 import "./index.scss";
 
+// https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
+const appHeight = () => {
+   const doc = document.documentElement
+   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+   console.log(`appHeight = ${window.innerHeight}px`);
+}
+window.addEventListener('resize', appHeight)
+
+appHeight()
+
 const theme = createTheme({
    // typography: { fontSize: 14 },
 });

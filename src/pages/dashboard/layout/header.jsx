@@ -25,8 +25,8 @@ const Header = (props) => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      getUserInfoAsync();
-   }, [getUserInfoAsync]);
+      !currentUserInfo && getUserInfoAsync();
+   }, [currentUserInfo, getUserInfoAsync]);
 
    const logout = () => {
       userLogout();
