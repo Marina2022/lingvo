@@ -31,6 +31,12 @@ const UnitsListCard = (props) => {
     }
   };
 
+  const getVoiceMaxId = (voices) => {
+    if (!voices || !Array.isArray(voices) || voices.length === 0) return {}
+
+    return voices.sort((a,b) => a.id < b.id ? 1 : -1)[0]
+  }
+
   return (
     <LoaderWrapper isLoading={isLoading}>
     {
@@ -50,7 +56,7 @@ const UnitsListCard = (props) => {
                 {item?.value}
               </Typography>
 
-              <PlayerEmbedControls source={item?.voices && item.voices[0] ? item.voices[0] : {}}>
+              <PlayerEmbedControls source={getVoiceMaxId(item?.voices)}>
                 <Typography sx={{fontSize: '1rem'}} color="text.secondary">
                   {item?.translation}
                 </Typography>

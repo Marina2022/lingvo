@@ -80,16 +80,23 @@ const Unit = (props) => {
    /**
     * Gets saved unit data from backend
     */
-   unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id && dispatchGetSingleUnitAsync(unitId)      
+   unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id && dispatchGetSingleUnitAsync(unitId)
+
+   const voices = unitId && parseInt(unitId) === stateUnitsSingleUnit?.id && stateUnitsSingleUnit?.voices 
+      ? stateUnitsSingleUnit.voices.sort((a, b) => a.id < b.id ? 1 : -1) 
+      : []
    
-   const [unitSaved    , setUnitSaved     ] = useState(unitId && parseInt(unitId) === stateUnitsSingleUnit?.id ? {...stateUnitsSingleUnit} : {})
-   const [uploadedFiles, setUploadedFiles] = useState([...(unitSaved.voices ?? [])]);
+   const [unitSaved    , setUnitSaved     ] = useState(unitId && parseInt(unitId) === stateUnitsSingleUnit?.id ? {...stateUnitsSingleUnit, voices: [...voices]} : {})
+   const [uploadedFiles, setUploadedFiles] = useState([...voices]);
 
    useEffect(() => {
       // console.log('useEffect - setUnitSaved', 'setUploadedFiles')
-      setUnitSaved({...stateUnitsSingleUnit})
-      setUploadedFiles([...(stateUnitsSingleUnit?.voices ?? [])])
-   }, [stateUnitsSingleUnit])
+      const voices = unitId && parseInt(unitId) === stateUnitsSingleUnit?.id && stateUnitsSingleUnit?.voices 
+         ? stateUnitsSingleUnit.voices.sort((a, b) => a.id < b.id ? 1 : -1) 
+         : []
+      setUnitSaved({...stateUnitsSingleUnit, voices: [...voices]})
+      setUploadedFiles([...voices])
+   }, [stateUnitsSingleUnit, unitId])
 
    // useEffect(() => {
    //    console.log('useEffect - uploadedFiles:', uploadedFiles);
