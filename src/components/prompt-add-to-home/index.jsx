@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 // import Modal from 'react-bootstrap/Modal';
-import { isMobile, isStandalone } from '../../utilities/appPromptHelper';
+import { isMobile, isStandalone } from './appPromptHelper';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import { Box, Checkbox, FormControlLabel, Grid, Modal } from '@mui/material';

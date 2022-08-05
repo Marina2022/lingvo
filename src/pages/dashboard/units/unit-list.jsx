@@ -11,7 +11,7 @@ import { t } from "i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Card, Grid, Typography } from "@mui/material";
-import { PlayerEmbedControls } from "./player";
+import { PlayerEmbedControls } from "../../../components/audio/player";
 
 
 const UnitsListCard = (props) => {

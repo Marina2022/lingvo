@@ -6,13 +6,11 @@ import { useParams } from "react-router-dom";
 //BASE COMPONENTS
 import Form from "../../../components/form/Form.component";
 import Input from "../../../components/input/Input.component";
-import Select from "../../../components/select/Select.component";
+import Select from "../../../components/select";
 import Button from "../../../components/button/Button.component";
 import TagsInput from "../../../components/tags-input/TagsInput.component";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
-//SERVICES
-import NewTopicServices from "./topic-services";
 //ACTIONS
 import {
    createTopicAsync,
@@ -38,8 +36,6 @@ const Topic = (props) => {
       dispatchGetSingleTopicAsync,
    } = props;
 
-   const { generateLanguagesOptions } = NewTopicServices;
-
    const navigate = useNavigate();
 
    const { topicId } = useParams();
@@ -55,7 +51,7 @@ const Topic = (props) => {
 
    const topicData = topicId ? {...stateTopicsSingleTopicData} : {}
 
-   const languageOptions = generateLanguagesOptions(stateCommonLanguagesList);
+   const languageOptions = stateCommonLanguagesList.map((item) => ({ ...item, label: item.value }));
 
    /** 
     * TODO: Gets default native language from 'navigator.language'

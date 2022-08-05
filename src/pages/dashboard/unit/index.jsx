@@ -8,9 +8,9 @@ import Form from "../../../components/form/Form.component";
 import TextArea from "../../../components/text-area/TextArea.component";
 import TagsInput from "../../../components/tags-input/TagsInput.component";
 import Button from "../../../components/button/Button.component";
-import Select from "../../../components/select/Select.component";
+import Select from "../../../components/select";
 import DropZone from "../../../components/drop-zone/DropZone.component";
-import { PlayerEmbedControls } from "../units/player";
+import { PlayerEmbedControls } from "../../../components/audio/player";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
@@ -24,8 +24,8 @@ import { getBase64 } from "../../../utilities/handleFile";
 import { addCrumbs } from "../layout/breadcrumbs";
 import { ButtonGroup, Grid } from "@mui/material";
 
-import GenerateAudio from "./unit-generate-audio";
-import RecordAudio from "./unit-record-audio"
+import GenerateAudio from "../../../components/audio/generator";
+import RecordAudio from "../../../components/audio/recorder"
 
 /**
  * 
@@ -271,31 +271,6 @@ const Unit = (props) => {
          setUploadedFiles(files);
       });
    };
-
-   // useEffect(() => {
-   //    // if (changedVoiceOver(unitDataFiles, uploadedFiles)) {
-   //       // console.log(unitDataFiles, uploadedFiles);
-   //       const file = uploadedFiles[0]
-   //       getBase64(file, reader => setFileData({
-   //          data: reader.result,
-   //          language: topicData?.foreignLanguage,
-   //          name: file?.name
-   //       }))
-   //    // }
-   // }, [topicData?.foreignLanguage, uploadedFiles])
-
-   const handleRecordFiles = (files, data) => {
-      const file = files[0]
-      getBase64(file, reader => {
-         setFileData({
-            data: reader.currentTarget.result,
-            language: topicData?.foreignLanguage,
-            name: file?.name
-         })
-         console.log('handleRecordFiles - file:', file);
-         setUploadedFiles(files)
-      })
-   }
 
    useEffect(() => {
       console.log('useEffect - fileData:', fileData);

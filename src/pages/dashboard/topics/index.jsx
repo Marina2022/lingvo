@@ -80,15 +80,12 @@ const TopicsBody = (props) => {
                />
             </Grid>
             <Grid item xs={12} sm={4}>
-               <div className="settings-panel">
-                  <Button
-                     onClick={() => navigate("/topics/new")}
-                     className="settings-panel__plus-icon"
-                     variant='contained'
-                     src={<AddOutlinedIcon/>}>
-                     {t("actions.create")}
-                  </Button>
-               </div>
+               <Button
+                  onClick={() => navigate("/topics/new")}
+                  variant='contained'
+                  src={<AddOutlinedIcon/>}>
+                  {t("actions.create")}
+               </Button>
             </Grid>
             <Grid item xs={12} sx={{ paddingTop: '2rem !important'}}>
                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

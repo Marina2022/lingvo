@@ -2,12 +2,12 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 //COMPONENTS STYLES
-@import "components/components.styles";
+@import "./components";
 
 //PAGES STYLES
-@import "pages/pages.styles";
+@import "./pages";
 
 //UTILITIES STYLES
-@import "sass/utilities";
+@import "./sass/utilities";
 //BASE STYLES
-@import "sass/base";
+@import "./sass/base";

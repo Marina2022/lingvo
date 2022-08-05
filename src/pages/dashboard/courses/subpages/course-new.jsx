@@ -7,7 +7,7 @@ import Button from "../../../../components/button/Button.component";
 import BackArrow from "../../../../components/back-arrow/BackArrow.component";
 import Form from "../../../../components/form/Form.component";
 import TagsInput from "../../../../components/tags-input/TagsInput.component";
-import Select from "../../../../components/select/Select.component";
+import Select from "../../../../components/select";
 import { Switch } from "@mui/material";
 import { Grid } from "@mui/material";
 import { withStyles } from "@mui/styles";

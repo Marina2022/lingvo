@@ -8,8 +8,8 @@ import { Grid, Typography } from "@mui/material";
 
 import GraphicEqOutlinedIcon from '@mui/icons-material/GraphicEqOutlined';
 import StopCircleOutlinedIcon from '@mui/icons-material/StopCircleOutlined';
-import { PlayerEmbedControls } from "../units/player";
-import Button from "../../../components/button/Button.component";
+import { PlayerEmbedControls } from "./player";
+import Button from "../button/Button.component";
 import { t } from "i18next";
 
 import { v4 as uuidv4 } from "uuid";

@@ -12,7 +12,7 @@ import Form from "../../../../components/form/Form.component";
 import Input from "../../../../components/input/Input.component";
 import NewCourseServices from "./course-new-services";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import Select from "../../../../components/select/Select.component";
+import Select from "../../../../components/select";
 import TagsInput from "../../../../components/tags-input/TagsInput.component";
 import { t } from "i18next";
 

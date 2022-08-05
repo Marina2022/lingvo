@@ -8,7 +8,7 @@ import Header from "./layout/header";
 import Footer from './layout/footer'
 
 import MainPage from "../main/MainPage";
-import ModalAddToHomeScreen from "../../components/modal-add-to-home-screen"
+import PromptAddToHomeScreen from "../../components/prompt-add-to-home"
 import GetMediaContent from "../../components/get-media-content";
 
 const mapRoutes = (routes, parentKey = '/') => {
@@ -46,7 +46,7 @@ const DashboardPages = () => {
 
         } />
       </Routes>
-      <ModalAddToHomeScreen />
+      <PromptAddToHomeScreen />
     </>
   );
 };

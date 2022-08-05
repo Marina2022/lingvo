@@ -1,7 +1,7 @@
-import { capitalizeFirstOnlyCase } from "../../../utilities/helper-functions";
+import { capitalizeFirstOnlyCase } from "../../utilities/helper-functions";
 import { t } from "i18next";
 import { v4 as uuidv4 } from "uuid";
-import keysConfig from "../../../config/keys.config";
+import keysConfig from "../../config/keys.config";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import { SpeechSynthesisOutputFormat } from "microsoft-cognitiveservices-speech-sdk";
 
@@ -13,7 +13,7 @@ import { SpeechSynthesisOutputFormat } from "microsoft-cognitiveservices-speech-
  * @param filter.intlName international language name
  * @returns 
  */
-const getAzureLanguageParams = (filter) => {
+const getLanguageParams = (filter) => {
   const genders = [
     { id: 0, label: t("genders.male"), value: "male" },
     { id: 1, label: t("genders.female"), value: "female" },
@@ -63,7 +63,7 @@ const getAzureLanguageParams = (filter) => {
  * @param {String} voice 
  * @returns 
  */
-const getAzureService = (voice) => {
+const getVoiceOverService = (speechSynthesisVoiceName, speechSynthesisOutputFormat) => {
   // setting Azure"s player and configs
   const player = new SpeechSDK.SpeakerAudioDestination();
   const audioConfig = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
@@ -72,8 +72,8 @@ const getAzureService = (voice) => {
   const { AzureSubscriptionKey: subscriptionKey, AzureRegion: region } = keysConfig.Azure;
   const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, region);
   // setting selected voice
-  speechConfig.speechSynthesisVoiceName = voice
-  speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz128KBitRateMonoMp3
+  speechConfig.speechSynthesisVoiceName = speechSynthesisVoiceName
+  speechConfig.speechSynthesisOutputFormat = speechSynthesisOutputFormat
 
   const synthesizer = new SpeechSDK.SpeechSynthesizer(
       speechConfig,
@@ -85,12 +85,13 @@ const getAzureService = (voice) => {
 /**
  * 
  * @param {{text:String,
- *    setStatus:React.Dispatch<React.SetStateAction<{isLoaded: boolean;url: null;}>>,  
  *    voice:String, 
+ *    speechSynthesisOutputFormat: enum,
+ *    setStatus:React.Dispatch<React.SetStateAction<{isLoaded: boolean;url: null;}>>,  
  *    handleFiles:(files:Array<any>)=>void}} param0 
  * @returns 
  */
-const genAzureVoice = ({text, voice, setStatus, handleFiles}) => {
+const genVoiceOver = ({text, voice, speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Audio16Khz128KBitRateMonoMp3, setStatus, handleFiles}) => {
   // setting url of generated voice audio state to null
   setStatus({ isLoaded: false, url: null });
 
@@ -100,7 +101,7 @@ const genAzureVoice = ({text, voice, setStatus, handleFiles}) => {
       return;
   }
 
-  const { player, synthesizer } = getAzureService(voice)
+  const { player, synthesizer } = getVoiceOverService(voice, speechSynthesisOutputFormat)
 
   // fires when the speech is synthesized
   const complete_cb = function(result) {
@@ -135,9 +136,9 @@ const genAzureVoice = ({text, voice, setStatus, handleFiles}) => {
   synthesizer.speakTextAsync(text, complete_cb, err_cb);
 };
 
-const AzureVoiceService = {
-  getAzureLanguageParams: getAzureLanguageParams,
-  genAzureVoice: genAzureVoice
+const VoiceOverService = {
+  getLanguageParams: getLanguageParams,
+  genVoiceOver: genVoiceOver
 }
 
-export default AzureVoiceService
+export default VoiceOverService

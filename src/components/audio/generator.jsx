@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import AzureVoiceService from "./unit-azure-voice-service";
+import VoiceOverService from "./speech-sdk";
 import GraphicEqOutlinedIcon from '@mui/icons-material/GraphicEqOutlined';
 import { Grid } from "@mui/material";
-import Select from "../../../components/select/Select.component";
-import Button from "../../../components/button/Button.component";
+import Select from "../select";
+import Button from "../button/Button.component";
 import { t } from "i18next";
-import { PlayerEmbedControls } from "../units/player";
+import { PlayerEmbedControls } from "./player";
 
 
 
@@ -19,16 +19,16 @@ const GenerateAudio = ({
   } 
 }) => {
 
-  const { genAzureVoice, getAzureLanguageParams } = AzureVoiceService;
+  const { genVoiceOver, getLanguageParams } = VoiceOverService;
 
-  const { genders, languages: supportedLanguages, voices: supportedVoices} = getAzureLanguageParams({value:langCode, label:nativeName, intlName:intlName})
+  const { genders, languages: supportedLanguages, voices: supportedVoices} = getLanguageParams({value:langCode, label:nativeName, intlName:intlName})
   
   const [azureAudioStatus, setAzureAudioStatus] = useState({ isLoaded: false, url: null });
   const [selectedVoice, setSelectedVoice] = useState({ language: supportedLanguages[0], gender: genders[0] });
 
   // making api call to create a voice audio file
   const generateVoice = () => {
-     genAzureVoice({
+     genVoiceOver({
         text, 
         setStatus: setAzureAudioStatus,
         voice: supportedVoices[selectedVoice.language.value][selectedVoice.gender.value],

@@ -4,7 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import DropDown from "../../../components/drop-down/DropDown.component";
+import DropDown from "../../../components/drop-down";
 //ACTIONS
 import { userLogout, logOutAsync } from "../../../redux/auth/auth.actions";
 import { getUserInfoAsync } from "../../../redux/profile/profile.actions.js";
