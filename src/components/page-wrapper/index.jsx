@@ -1,6 +1,6 @@
 import React from "react"
 import { Grid } from "@mui/material"
-import { BuildBreadcrumbs } from "./layout/breadcrumbs"
+import { BuildBreadcrumbs } from "../../pages/dashboard/layout/breadcrumbs"
 
 
 const PageWrapper = ({crumbs, children}) => {

@@ -9,7 +9,7 @@ import Button from "../../../components/button/Button.component";
 
 import "./index.scss";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import CourseItem from "./components/course-item";
+import CourseItem from "./course-item";
 import { deleteCourseAsync, getCoursesAsync } from "../../../redux/courses/courses.actions";
 import { t } from "i18next";
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";

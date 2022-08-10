@@ -2,7 +2,7 @@ import { Box, Button, Card, CardContent, Checkbox, Grid, TextField, Typography }
 import { t } from "i18next";
 import React, { useEffect, useState } from "react"
 import { compareObjects } from "../../../utilities/helper-functions";
-import TagList from "./tag-list";
+import TagList from "../../../components/tag-list";
 
 
 const AddTopics = ({

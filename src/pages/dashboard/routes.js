@@ -2,7 +2,6 @@
 import Profile from "./profile";
 
 import Courses from "./courses";
-import NewCourse from "./courses/subpages/course-new";
 import Course from "./course";
 
 import Trainings from "./topics";
@@ -17,7 +16,7 @@ const dashboardRoutes = [
       path: "courses",
       routes: [
          { 
-            component: NewCourse,
+            component: Course,
             path: "new",
          },
          { 
