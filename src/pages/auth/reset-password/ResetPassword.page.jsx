@@ -32,7 +32,7 @@ const ResetPasswordPage = (props) => {
 
    const resetPassword = (e) => {
       e.preventDefault();
-      resetPasswordAsync({ email: inputState.email }, navigate);
+      resetPasswordAsync({ email: inputState.email }, () => navigate("/set-new-password"));
    };
 
    return (
@@ -94,8 +94,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   resetPasswordAsync: (params, navigate) =>
-      dispatch(resetPasswordAsync(params, navigate)),
+   resetPasswordAsync: (params, callback) =>
+      dispatch(resetPasswordAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage);

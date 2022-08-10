@@ -67,7 +67,7 @@ const Header = (props) => {
    };
    
    return (
-      <header className="app-header">
+      <header id="app-header" className="app-header">
          <div className="app-header__main-link">
             <Link to="/main"><AppLogo /></Link>
          </div>

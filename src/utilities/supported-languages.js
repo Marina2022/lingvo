@@ -39,3 +39,16 @@ const nativeLanguageList = locales
 * @returns {Promise<{data:{code:String,name:String,value:String}}>}
 */
 export const getSupportedLanguages = () => new Promise(resolve => resolve(nativeLanguageList))
+
+/**
+ * 
+ * @param {Array<{id:Number,value:String}>} languages 
+ * @param {String} locale 
+ * @returns 
+ */
+export const findDefaultLanguageName = (languages, locale = 'en') => {
+   const defLocale = navigator.language
+   const defLocaleLanguageName = new Intl.DisplayNames(locale, { type: 'language' }).of(defLocale)
+   
+   return languages.find(({value}) => (defLocaleLanguageName && value.includes(defLocaleLanguageName)) || (value && defLocaleLanguageName.includes(value)))
+}

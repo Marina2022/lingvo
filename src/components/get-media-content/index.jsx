@@ -18,6 +18,8 @@ const mediaList = [
 	{ type: mediaTypes.xxLarge,  minWidth: 1400,  maxWidth: Number.MAX_VALUE }
 ]
 
+const event = new Event('content-changed')
+
 /**
  * Gets relevant media content
  * 
@@ -96,7 +98,9 @@ const GetMediaContent = (props) => {
 	[resizeHandler])
 
 	const result = getContent(contentList, windowSize)
-	
+
+	setTimeout(() => window.dispatchEvent(event), 100); 
+
 	return result
 }
 

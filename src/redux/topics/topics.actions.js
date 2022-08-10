@@ -121,7 +121,13 @@ export const getTopicsAsync = () => async (dispatch) => {
 };
 
 //CREATE TOPIC ASYNC
-export const createTopicAsync = (formParams, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const createTopicAsync = (formParams, callback) => async (dispatch) => {
    dispatch(createTopicStart());
    const tags = formParams.tags.map((item) => {
       return { name: item };
@@ -138,7 +144,7 @@ export const createTopicAsync = (formParams, navigate) => async (dispatch) => {
       const resp = await topicsApi.createTopic(params);
       dispatch(createTopicSuccess({ ...resp.data }));
       dispatch(getTopicsAsync());
-      navigate("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createTopicFailure(message));
@@ -173,12 +179,15 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
 };
 
 //EDIT TOPIC ASYNC
-export const editTopicAsync = (
-   id,
-   formParams,
-   navigate,
-   isTagsUpdated
-) => async (dispatch) => {
+/**
+ * 
+ * @param {Number} id 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Boolean} isTagsUpdated 
+ * @returns 
+ */
+export const editTopicAsync = (id, formParams, callback, isTagsUpdated) => async (dispatch) => {
    dispatch(editTopicStart());
 
    delete formParams.author;
@@ -198,7 +207,7 @@ export const editTopicAsync = (
 
       dispatch(editTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      navigate("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editTopicFailure(message));
@@ -206,14 +215,20 @@ export const editTopicAsync = (
 };
 
 // PUBLISH TOPIC ASYNC
-export const publishTopicAsync = (topicID, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Number} topicID 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const publishTopicAsync = (topicID, callback) => async (dispatch) => {
    dispatch(publishTopicStart());
 
    try {
       const response = await topicsApi.publishTopic(topicID);
       dispatch(publishTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      navigate("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(publishTopicFailure(message));

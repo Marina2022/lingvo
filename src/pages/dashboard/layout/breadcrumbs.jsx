@@ -1,5 +1,6 @@
 import React from "react";
 import { Breadcrumbs, Chip, emphasize, styled } from "@mui/material";
+import { compareObjects } from "../../../utilities/helper-functions";
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -33,32 +34,29 @@ export const BuildBreadcrumbs = (props) => {
   let hrefAssembled = hrefStart
 
   return (
-  <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: '0.9em', pb: '1rem' }}>
+  <Breadcrumbs maxItems={3} aria-label="breadcrumb" sx={{ fontSize: '0.9em', pb: '1rem' }}>
   {
     crumbs
     .sort((a, b) => a.key < b.key ? -1 : 1)
-    .map(({name, icon, path}, key, array) => 
+    .map(({name, icon, path, disabled}, key, array) => 
       (
           /**
           * @param {{isLast:Boolean, href:String}} param0 
           * @returns 
           */
-          ({isLast , href}) => 
-            // push last 3 items to show at breadcrumbs
-            key > array.length - 4 ?
-            (
-              <StyledBreadcrumb key={key} component="a" href={isLast ? undefined : href} label={name} icon={icon} />
-              // isLast ?
-              // <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">{name}</Typography> :
-              // <Link key={key} underline="hover" color="inherit" sx={{ display: 'flex', alignItems: 'center' }} href={href}>{name}</Link>
-            ) :
-            // change 4-th item from the end to '...'
-            array.length > 3 && key === array.length - 4 ?
-            <StyledBreadcrumb key={key} component="a" label="..." /> :
-            // <Typography key={key} sx={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center' }} color="text.secondary">...</Typography>:
-            // avoid others items
-            undefined
-      ) ({ isLast: key === array.length - 1, href: path ? (hrefAssembled = `${hrefAssembled}/${path}`) : hrefAssembled})
+          ({isLast , href, disabled}) => 
+            <StyledBreadcrumb key={key} component="a" href={disabled || isLast ? undefined : href} label={name} icon={icon} />
+            // // push last 3 items to show at breadcrumbs
+            // key > array.length - 4 ?
+            // (
+            //   <StyledBreadcrumb key={key} component="a" href={isLast ? undefined : href} label={name} icon={icon} />
+            // ) :
+            // // change 4-th item from the end to '...'
+            // array.length > 3 && key === array.length - 4 ?
+            // <StyledBreadcrumb key={key} component="a" label="..." /> :
+            // // avoid others items
+            // undefined
+      ) ({ isLast: key === array.length - 1, href: path ? (hrefAssembled = `${hrefAssembled}/${path}`) : hrefAssembled, disabled })
     )
 
   }
@@ -72,12 +70,20 @@ export const BuildBreadcrumbs = (props) => {
  */
 export const addCrumbs = (crumbs, newCrumb) => {
   // prepares array from newCrumbs
-  const inCrumbs = Array.isArray(newCrumb) ? newCrumb : [newCrumb]
+  const inCrumbs = (Array.isArray(newCrumb) ? newCrumb : [newCrumb]).filter(newItem => {
+    for (let index = 0; index < crumbs.length; index++) {
+      const oldItem = crumbs[index];
+      if (compareObjects(oldItem, newItem)) return false
+    }
+    return true
+  })
+  if (inCrumbs.length === 0) return crumbs
   // filters mismatched items only from the old crumbs array
   const outCrumbs = crumbs.filter(({key: oldKey}) => !inCrumbs.find(({key: inKey}) => oldKey === inKey))
   // adds new crumbs
   outCrumbs.push(...inCrumbs)
   // returns result
+  // console.log(outCrumbs);
   return outCrumbs
 }
 

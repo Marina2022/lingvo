@@ -47,14 +47,11 @@
     "search":"Search",
     "filter":"Filter"
   },
-  "states":{
-    "published":"Published",
-    "draft":"Draft"
-  },
   "messages":{
     "confirm":{
       "is_sure":"Are you sure?",
-      "unsaved_data":"Unsaved voiceover will be lost\nPlease, confirm transition"
+      "unsaved_data":"Unsaved voiceover will be lost\nPlease, confirm transition",
+      "deleteItem": "Please confirm item deleting"
     },
     "alerts": {
       "needs_text_to_generate_audio":"To generate audio fill the text",
@@ -108,9 +105,18 @@
       "cost_other":"Price: {{count}}",
       "price":"Price",
       "price_placeholder":"Input price",
-      "is_public":"Make course public",
+      "is_published":"Publish course?",
       
-      "creation":"Course creation"
+      "creation":"Course creation",
+      "trainings":{
+        "title":"Course contents",
+        "add_prompt":"Select and add trainings to the course",
+        "add_topics_filter_placeholder":"Begin type to filter the list below"
+      },
+      "states":{
+        "published":"Published",
+        "unpublished":"Unpublished"
+      }    
     }
   },
   "languages":{

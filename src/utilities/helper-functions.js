@@ -45,13 +45,21 @@ export function compareObjects (o, c, ...excludes) {
          if (!Array.isArray(c) || o.length !== c.length) {
             return false
          } else {
-            return o.findIndex((item, idx) => !compareObjects(o[idx], c[idx])) === -1
+            const o_sorted = o.sort((a,b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
+            const c_sorted = c.sort((a,b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
+            return o_sorted.findIndex((item, idx) => !compareObjects(o_sorted[idx], c_sorted[idx])) === -1
          }
       } else if (typeof o === 'object') {
-         // const result =
-         return Object.keys(o).filter(key => !excludes || !excludes.includes(key)).findIndex(key => !compareObjects(o[key], c[key])) === -1
-         // console.log(result);
-         // return result
+         if (typeof c !== 'object') {
+            return false
+         } else {
+            // const result =
+            return Object.getOwnPropertyNames(o)
+               .filter(key => !excludes || !excludes.includes(key))
+               .findIndex(key => !Object.prototype.hasOwnProperty.call(c, key) || !compareObjects(o[key], c[key])) === -1
+            // console.log(result);
+            // return result
+         }
       } else {
          return o === c
       }

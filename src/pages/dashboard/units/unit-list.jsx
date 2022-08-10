@@ -25,11 +25,8 @@ const UnitsListCard = (props) => {
   const navigate = useNavigate()
   const { topicId } = useParams()
 
-  const onConfirm = (topicId, unitId) => {
-    if (window.confirm(t("messages.confirm.is_sure"))) {
-      dispatchDeleteUnitAsync(unitId, topicId);
-    }
-  };
+  const onConfirm = (topicId, unitId) => 
+    window.confirm(t("messages.confirm.deleteItem")) && dispatchDeleteUnitAsync(unitId, topicId)
 
   const getVoiceMaxId = (voices) => {
     if (!voices || !Array.isArray(voices) || voices.length === 0) return {}
@@ -51,7 +48,7 @@ const UnitsListCard = (props) => {
             <Grid item xs={11}>
               <Typography component='div'
                 sx={{ fontSize: '1.2rem', fontWeight: 'medium', color:"Chocolate", '&:hover': { cursor: 'pointer', color: 'sandybrown' } }}
-                onClick={() => {navigate(`units/${item?.id}`)}}
+                onClick={() => navigate(`units/${item?.id}`)}
               >
                 {item?.value}
               </Typography>

@@ -68,25 +68,182 @@ export const getCoursesAsync = () => async (dispatch) => {
 };
 
 //CREATE TOPIC ASYNC
-export const createCoursesAsync = (formParams, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const createCourseAsync = (formParams, callback) => async (dispatch) => {
    dispatch(createCourseStart());
    // const tags = formParams.tags.map((item) => {
    //    return { name: item };
    // });
    const params = {
       ...formParams,
-      createdDate: "2021-02-18T05:10:14.065Z",
-      published: "2021-02-18T05:10:14.065Z",
-      tags: [],
+      // createdDate: "2021-02-18T05:10:14.065Z",
+      // published: "2021-02-18T05:10:14.065Z",
+      // tags: [],
    };
 
    try {
       const resp = await coursesApi.createCourse(params);
       dispatch(createCourseSuccess({ ...resp.data }));
       dispatch(getCoursesAsync());
-      navigate("/courses");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createCourseFailure(message));
    }
 };
+
+// GET COURSE BY ID
+
+const getCourseStart = () => ({
+   type: coursesActionTypes.GET_COURSE_START,
+})
+
+const getCourseSuccess = (data) => ({
+   type: coursesActionTypes.GET_COURSE_SUCCESS,
+   payload: data
+})
+
+const getCourseFailure = (message) => ({
+   type: coursesActionTypes.GET_COURSE_FAILURE,
+   payload: message
+})
+
+/**
+ * 
+ * @param {Number} id 
+ * @returns 
+ */
+export const getCourseAsync = (id) => async (dispatch) => {
+   await dispatch(getCourseStart())
+
+   try {
+      const response = await coursesApi.getCourse(id)
+      dispatch(getCourseSuccess(response.data))
+   } catch (error) {
+      const message = handleAJAXError(error)
+      dispatch(getCourseFailure(message))
+   }
+}
+
+// UPDATE COURSE BY ID
+
+const editCourseStart = () => ({
+   type: coursesActionTypes.EDIT_COURSE_START,
+})
+
+const editCourseSuccess = (data) => ({
+   type: coursesActionTypes.EDIT_COURSE_SUCCESS,
+   payload: data
+})
+
+const editCourseFailure = (message) => ({
+   type: coursesActionTypes.EDIT_COURSE_FAILURE,
+   payload: message
+})
+
+/**
+ * 
+ * @param {Number} id 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Boolean} isTagsUpdated 
+ * @returns 
+ */
+export const editCourseAsync = (id, formParams, callback, isTagsUpdated) => async (dispatch) => {
+   await dispatch(editCourseStart())
+
+   delete formParams.author;
+   const tags = isTagsUpdated
+      ? formParams.tags.map((item) => {
+           return { name: item };
+        })
+      : formParams.tags;
+
+   const params = {
+      ...formParams,
+      tags,
+   };
+
+   try {
+      const response = await coursesApi.editCourse(id, params)
+      dispatch(editCourseSuccess(response.data))
+      callback && callback()
+   } catch (error) {
+      const message = handleAJAXError(error)
+      dispatch(editCourseFailure(message))
+   }
+}
+
+// DELETE COURSE BY ID
+
+const deleteCourseStart = () => ({
+   type: coursesActionTypes.DELETE_COURSE_START,
+})
+
+const deleteCourseSuccess = (data) => ({
+   type: coursesActionTypes.DELETE_COURSE_SUCCESS,
+   payload: data
+})
+
+const deleteCourseFailure = (message) => ({
+   type: coursesActionTypes.DELETE_COURSE_FAILURE,
+   payload: message
+})
+
+/**
+ * 
+ * @param {Number} id 
+ * @returns 
+ */
+export const deleteCourseAsync = (id, callback) => async (dispatch) => {
+   await dispatch(deleteCourseStart())
+
+   try {
+      const response = await coursesApi.deleteCourse(id)
+      dispatch(deleteCourseSuccess(response.data))
+      callback && callback()
+   } catch (error) {
+      const message = handleAJAXError(error)
+      dispatch(deleteCourseFailure(message))
+   }
+}
+
+// PUBLISH COURSE BY ID
+
+const publishCourseStart = () => ({
+   type: coursesActionTypes.PUBLISH_COURSE_START,
+})
+
+const publishCourseSuccess = (data) => ({
+   type: coursesActionTypes.PUBLISH_COURSE_SUCCESS,
+   payload: data
+})
+
+const publishCourseFailure = (message) => ({
+   type: coursesActionTypes.PUBLISH_COURSE_FAILURE,
+   payload: message
+})
+
+/**
+ * 
+ * @param {Number} id 
+ * @param {Function} callback
+ * @returns 
+ */
+export const publishCourseAsync = (id, callback) => async (dispatch) => {
+   await dispatch(publishCourseStart())
+
+   try {
+      const response = await coursesApi.publishCourse(id)
+      dispatch(publishCourseSuccess(response.data))
+      callback && callback()
+   } catch (error) {
+      const message = handleAJAXError(error)
+      dispatch(publishCourseFailure(message))
+   }
+}

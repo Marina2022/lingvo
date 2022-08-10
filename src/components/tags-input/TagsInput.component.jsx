@@ -16,7 +16,9 @@ export default function TagsInput({ ...props }) {
    const { selectedTags, placeholder, tags, label, ...other } = props;
    const [inputValue, setInputValue] = React.useState("");
    const [selectedItem, setSelectedItem] = React.useState([]);
+   // console.log("TagsInput: ", props);
    useEffect(() => {
+      // console.log("useEffect: setSelectedItem", tags);
       setSelectedItem(tags);
    }, [tags]);
 

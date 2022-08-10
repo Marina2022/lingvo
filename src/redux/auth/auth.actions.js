@@ -60,7 +60,13 @@ const setPasswordFailure = (message) => ({
 });
 
 //LOGIN ASYNC
-export const loginAsync = ({ email, password }, navigate) => async (
+/**
+ * 
+ * @param {{email:String, password:String}} param0 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const loginAsync = ({ email, password }, callback) => async (
    dispatch
 ) => {
    dispatch(loginStart());
@@ -68,7 +74,7 @@ export const loginAsync = ({ email, password }, navigate) => async (
    try {
       const resp = await authApi.login(email, password);
       const { token } = resp.data;
-      navigate("/topics");
+      callback && callback()
 
       dispatch(loginSuccess({ token }));
    } catch (error) {
@@ -78,13 +84,19 @@ export const loginAsync = ({ email, password }, navigate) => async (
 };
 
 //REGISTER ASYNC
-export const authRegisterAsync = (params, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} params 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const authRegisterAsync = (params, callback) => async (dispatch) => {
    dispatch(registerStart());
 
    try {
       const response = await authApi.register(params);
       dispatch(registerSuccess(response.data));
-      navigate("/topics");
+      callback && callback()
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);
@@ -105,13 +117,19 @@ export const logOutAsync = () => async (dispatch) => {
 };
 
 // RESET PASSWORD ASYNC
-export const resetPasswordAsync = (params, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} params 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const resetPasswordAsync = (params, callback) => async (dispatch) => {
    dispatch(resetPasswordStart());
 
    try {
       const response = await authApi.resetPassword(params);
       dispatch(resetPasswordSuccess(response?.data));
-      navigate("/set-new-password");
+      callback && callback()
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);
@@ -121,13 +139,19 @@ export const resetPasswordAsync = (params, navigate) => async (dispatch) => {
 };
 
 // SET PASSWORD ASYNC
-export const setPasswordAsync = (params, navigate) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} params 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const setPasswordAsync = (params, callback) => async (dispatch) => {
    dispatch(setPasswordStart());
 
    try {
       const response = await authApi.setPassword(params);
       dispatch(setPasswordSuccess(response?.data));
-      navigate("/login");
+      callback && callback()
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);

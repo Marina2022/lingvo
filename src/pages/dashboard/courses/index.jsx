@@ -10,17 +10,22 @@ import Button from "../../../components/button/Button.component";
 import "./index.scss";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CourseItem from "./components/course-item";
-import { getCoursesAsync } from "../../../redux/courses/courses.actions";
+import { deleteCourseAsync, getCoursesAsync } from "../../../redux/courses/courses.actions";
 import { t } from "i18next";
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 import useInput from "../../../effects/useInput.effect";
 import { Grid } from "@mui/material";
+import { Home } from "@mui/icons-material";
 
-const CoursesBody = (props) => {
+/**
+ * 
+ * @param {{dispatchGetCoursesAsync:Function, dispatchDeleteCourseAsync:Function}} param0 
+ * @returns 
+ */
+const CoursesBody = ({ dispatchGetCoursesAsync, dispatchDeleteCourseAsync }) => {
 
-   const { getCoursesAsync } = props;
 
-   useEffect( () => { getCoursesAsync(); },  [getCoursesAsync] );   
+   useEffect( () => { dispatchGetCoursesAsync(); },  [dispatchGetCoursesAsync] );   
    
    const { publishedCourses } = useSelector((state) => state.courses);
 
@@ -39,92 +44,74 @@ const CoursesBody = (props) => {
    };   
 
    return <>
-      <div className="courses-page__heading-block">
-         <Grid container spacing={2} justifyContent="space-between">
-            <Grid item xs={12} sm={8}>
-               <Input name="search" 
-                  type="text" 
-                  placeholder={t("actions.search")} 
-                  required 
-                  value={inputState.search}
-                  error={invalidMessages}
-                  onChange={handleInputChange}
-                  onInvalid={handleInvalidMessage}
-               />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-               <div className="settings-panel">
-                  <Button className="settings-panel__plus-icon"
-                     src={<AddOutlinedIcon/>}
-                     onClick={() => { 
-                        dispatch({ type: "CLEAR_DRAFTS", });
-                        navigate("/courses/new");
-                     }}                        
-                  >
-                     {t("actions.create")}
-                  </Button>
-               </div>
-            </Grid>
+      <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+         <Grid item xs={12} sm={8}>
+            <Input name="search" 
+               type="text" 
+               placeholder={t("actions.search")} 
+               required 
+               value={inputState.search}
+               error={invalidMessages}
+               onChange={handleInputChange}
+               onInvalid={handleInvalidMessage}
+            />
          </Grid>
-      </div>
-      <div className="courses-wrapper"> 
-         <Grid container spacing={2} justifyContent="center">
+         <Grid item xs={12} sm={4}>
+            <Button 
+               variant='contained'
+               src={<AddOutlinedIcon/>}
+               onClick={() => { 
+                  dispatch({ type: "CLEAR_DRAFTS", });
+                  navigate("new");
+               }}                        
+            >
+               {t("actions.create")}
+            </Button>
+         </Grid>
+         <Grid item xs={12} sx={{ paddingTop: '2rem !important'}} container spacing={2} justifyContent="center">
          { 
             publishedCourses
                .filter(course => !inputState.search || Object.values(course).join("|").toLowerCase().includes(inputState.search.toLowerCase()))
                .map(course => (
-                  <Grid item xs={10} sm={5} md={4} lg={3} xl={2} key={course.id} onClick={() => navigate(`${course.id}`)}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} xxl={2} key={course.id}>
                      <CourseItem
                         courseName={course.name}
                         courseStatus={course.shared}
                         courseInfo={t("courses.summary")}
                         courseTrainings={t("trainings.number_of", {count: course.posts.length})}
                         coursePrice={t("courses.course.cost", {count: JSON.parse(course.cost)})}
-                        
-                        // onClick={() => {
-                        //    dispatch({
-                        //       type: "SAVE_DRAFT_COURSE",
-                        //       payload: {
-                        //          author: course.author,
-                        //          id: course.id,
-                        //          name: course.name,
-                        //          cost: course.cost,
-                        //          nativeLanguageId: course.nativeLanguage.id - 1,
-                        //          foreignLanguageId: course.foreignLanguage.id - 1,
-                        //          shared: course.shared,
-                        //          topics: course.posts,
-                        //          current: course,
-                        //       },
-                        //    });
-                        //    navigate(`${course.id}`);
-                        // }}
+                        onOpen={() => navigate(`${course.id}`)}
+                        onDelete={() => { window.confirm(t("messages.confirm.deleteItem")) && dispatchDeleteCourseAsync(course.id) }}
                      />
                   </Grid>
                )) 
          }
          </Grid>
-      </div>
+      </Grid>
    </>
 }
 
 
 const CoursesPage = (props) => { 
       
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("courses.title"), path: "courses" }]);
+   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }]);
    
    const outlet = useOutlet()
 
    useEffect(() => {
       // console.log("check Topics => ", t("trainings.title"), outlet);
       if (!outlet) {
-         setCrumbs([{ key: 0, name: t("courses.title"), path: "courses"}])
+         setCrumbs([{ key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }])
       }
    }
    , [outlet])
    
    return (      
-      <div className="courses-page">
-         <BuildBreadcrumbs crumbs={crumbs} />
+      <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
+         <Grid item xs={12} sm={9}>
+            <BuildBreadcrumbs crumbs={crumbs} />
+         </Grid>
+         <Grid item xs={12} sm={9}>
          {
             outlet ?
             <Outlet context={[crumbs, setCrumbs, 0]} /> :
@@ -132,7 +119,8 @@ const CoursesPage = (props) => {
                <CoursesBody {...props}/>
             </>
          }
-      </div>
+         </Grid>
+      </Grid>
    );
 };
 
@@ -146,7 +134,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   getCoursesAsync: () => dispatch(getCoursesAsync()),
+   dispatchGetCoursesAsync: () => dispatch(getCoursesAsync()),
+   dispatchDeleteCourseAsync: (courseId) => dispatch(deleteCourseAsync(courseId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

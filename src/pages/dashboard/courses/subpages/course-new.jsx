@@ -17,14 +17,14 @@ import NewCourseServices from "./course-new-services";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 import "./course-new.scss";
-import { createCoursesAsync } from "../../../../redux/courses/courses.actions";
+import { createCourseAsync } from "../../../../redux/courses/courses.actions";
 
 import { connect, useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { t } from "i18next";
 
 const NewCoursePage = (props) => {
-   const { createCoursesAsync } = props;
+   const { createCourseAsync } = props;
    const languagesList = useSelector((state) => state.common.languagesList);
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -98,7 +98,7 @@ const NewCoursePage = (props) => {
          ids.push(element.id);
       });
       // console.log(ids);
-      createCoursesAsync(
+      createCourseAsync(
          {
             ...formInitState,
             ...inputState,
@@ -106,12 +106,12 @@ const NewCoursePage = (props) => {
             foreignLanguageId: inputState.foreignLanguageId + 1,
             postIds: ids,
          },
-         navigate
+         () => navigate("/courses")
       );
       // if (id) {
       //    //  editTopicAsync(id, inputState, navigate, isTagsUpdated);
       // } else {
-      //    createCoursesAsync(formInitState, navigate);
+      //    createCourseAsync(formInitState, navigate);
       // }
    };
 
@@ -289,8 +289,8 @@ const mapStateToProps = (state) => {
    };
 };
 const mapDispatchToProps = (dispatch) => ({
-   createCoursesAsync: (params, navigate) =>
-      dispatch(createCoursesAsync(params, navigate)),
+   createCourseAsync: (params, callback) =>
+      dispatch(createCourseAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCoursePage);

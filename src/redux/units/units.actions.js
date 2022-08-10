@@ -101,12 +101,21 @@ export const getSingleUnitAsync = (unitID) => async (dispatch) => {
 };
 
 // CREATE UNIT ASYNC
+/**
+ * 
+ * @param {Number} topicID 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Object} voiceParams 
+ * @param {Array<{id:Number}} prevVoices 
+ * @returns 
+ */
 export const createUnitAsync = (
    topicID,
    formParams,
-   navigate,
+   callback,
    voiceParams,
-   prevVoiceId
+   prevVoices
 ) => async (dispatch) => {
    dispatch(createUnitStart());
    const tags = formParams.tags.map((item) => {
@@ -125,8 +134,8 @@ export const createUnitAsync = (
             response?.data?.id,
             topicID,
             voiceParams,
-            navigate,
-            prevVoiceId
+            callback,
+            prevVoices
          )
       );
    } catch (error) {
@@ -136,14 +145,25 @@ export const createUnitAsync = (
 };
 
 // EDIT UNIT ASYNC
+/**
+ * 
+ * @param {Number} unitID 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Number} topicID 
+ * @param {Boolean} isTagsUpdated 
+ * @param {Object} voiceParams 
+ * @param {Array<{id:Number}>} prevVoices 
+ * @returns 
+ */
 export const editUnitAsync = (
    unitID,
    formParams,
-   navigate,
+   callback,
    topicID,
    isTagsUpdated,
    voiceParams,
-   prevVoiceId
+   prevVoices
 ) => async (dispatch) => {
    dispatch(editUnitStart());
 
@@ -162,7 +182,7 @@ export const editUnitAsync = (
       const response = await unitsApi.editUnit(unitID, params);
       dispatch(editUnitSuccess(response.data));
       dispatch(
-         addVoiceAsync(unitID, topicID, voiceParams, navigate, prevVoiceId)
+         addVoiceAsync(unitID, topicID, voiceParams, callback, prevVoices)
       );
    } catch (error) {
       const message = handleAJAXError(error);
@@ -185,24 +205,29 @@ export const deleteUnitAsync = (unitID, topicID) => async (dispatch) => {
 };
 
 // ADD UNIT VOICE ASYINC
+/**
+ * 
+ * @param {Number} unitID 
+ * @param {Number} topicID 
+ * @param {Object} params 
+ * @param {Function} callback 
+ * @param {Array<{id:Number}>} prevVoices 
+ * @returns 
+ */
 export const addVoiceAsync = (
    unitID,
    topicID,
    params,
-   navigate,
-   prevVoiceID
+   callback,
+   prevVoices
 ) => async (dispatch) => {
    dispatch(addVoiceStart());
 
    try {
       const response = await unitsApi.addVoice(unitID, params);
       dispatch(addVoiceSuccess(response.data));
-      dispatch(deletePrevVoiceAsync(prevVoiceID, topicID));
-      if (typeof navigate === 'function') {
-         navigate()
-      } else {
-         navigate(`/topics/${topicID}/units/${unitID}`);
-      }
+      dispatch(deletePrevVoiceAsync(prevVoices, topicID));
+      callback && callback(unitID)
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(addVoiceFailure(message));
@@ -210,15 +235,27 @@ export const addVoiceAsync = (
 };
 
 // DELETE UNIT VOICE ASYINC
-export const deletePrevVoiceAsync = (voiceID, topicID) => async (dispatch) => {
+/**
+ * 
+ * @param {Array<{id:Number}>} voices 
+ * @param {*} topicID 
+ * @returns 
+ */
+export const deletePrevVoiceAsync = (voices = [], topicID) => async (dispatch) => {
    dispatch(deleteVoiceStart());
 
-   try {
-      const response = await unitsApi.deleteVoice(voiceID);
-      dispatch(deleteVoiceSuccess(response.data));
-      dispatch(getSingleTopicAsync(topicID));
-   } catch (error) {
-      const message = handleAJAXError(error);
-      dispatch(deleteVoiceFailure(message));
+   const response = { data: [] }
+
+   for (let idx = 0; idx < voices.length; idx++) {
+      try {
+         const voiceId = voices[idx].id;
+         const result = await unitsApi.deleteVoice(voiceId)
+         response.data.push(result.data)
+      } catch (error) {
+         const message = handleAJAXError(error);
+         dispatch(deleteVoiceFailure(message));
+      }
    }
+   dispatch(deleteVoiceSuccess(response.data));
+   dispatch(getSingleTopicAsync(topicID));
 };

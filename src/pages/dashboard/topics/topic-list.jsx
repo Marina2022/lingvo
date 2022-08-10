@@ -11,15 +11,29 @@ import { deleteTopicAsync } from "../../../redux/topics/topics.actions";
 import { connect } from "react-redux";
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
 
-const TopicList = (props) => {
-   const {
-      itemsList,
-      isLoading,
-      filter,
-      dispatchDeleteTopicAsync,
-   } = props;
-
+/**
+ * 
+ * @param {{
+ *       itemsList: Array<Object>,
+ *       isLoading: Boolean,
+ *       filter: String,
+ *       navPrefix: String,
+ *       onDelete: Function
+ *    }} param0 
+ * @returns 
+ */
+const TopicList = ({
+   itemsList,
+   isLoading,
+   filter,
+   navPrefix = '',
+   onDelete
+}) => {
    const navigate = useNavigate();
+
+   if (navPrefix && !navPrefix.endsWith('/')) {
+      navPrefix = `${navPrefix}/`
+   }
 
    return (
       <LoaderWrapper isLoading={isLoading}>
@@ -39,7 +53,7 @@ const TopicList = (props) => {
 
                   <Typography 
                      sx={{ fontSize: '1.2rem', fontWeight: 'medium', color:"Chocolate", '&:hover': { cursor: 'pointer', color: 'sandybrown' } }}
-                     onClick={() => navigate(`${item?.id}`)}
+                     onClick={() => navigate(`${navPrefix}${item?.id}`)}
                   >
                      {item?.text}
                   </Typography>
@@ -61,12 +75,12 @@ const TopicList = (props) => {
                   }
                }}>
                   <Button  title={t("trainings.training_list.menu.info")} 
-                        onClick={() => navigate(`${item?.id}/edit`, {state:{topic:item}})}
+                        onClick={() => navigate(`${navPrefix}${item?.id}/edit`, {state:{topic:item}})}
                   >
                      <SettingsOutlinedIcon />
                   </Button>
-                  <Button title={t("trainings.training_list.menu.trash")} 
-                        onClick={() => window.confirm(t("messages.confirm.is_sure")) && dispatchDeleteTopicAsync(item?.id)}
+                  <Button title={t("trainings.training_list.menu.trash")} disabled={!onDelete}
+                        onClick={() => onDelete && window.confirm(t("messages.confirm.deleteItem")) && onDelete(item)}
                   >
                      <DeleteOutlinedIcon />
                   </Button>

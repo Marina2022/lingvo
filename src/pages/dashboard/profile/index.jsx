@@ -26,7 +26,8 @@ import { getBase64 } from "../../../utilities/handleFile";
 import { userLogout } from "../../../redux/auth/auth.actions";
 import { Avatar, Divider, Grid, Link } from "@mui/material";
 import { BuildBreadcrumbs } from "../layout/breadcrumbs";
-import PersonIcon from '@mui/icons-material/Person';
+import { Home } from "@mui/icons-material";
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
 const socialNets = [
    { name: titleCase("VKontakte"),   tKey:"social_media.VK.title"       }, 
@@ -146,7 +147,7 @@ const ProfilePage = (props) => {
 
       <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
          <Grid item xs={12} sm={9}>
-            <BuildBreadcrumbs crumbs={[{key: 0, name: t("profile.title"), icon: <PersonIcon fontSize="small" />}]} />
+            <BuildBreadcrumbs crumbs={[{key: 0, name: t("profile.title"), icon: <Home fontSize="small" />}]} />
          </Grid>
 
          <Grid item xs={12} sm={9}>
@@ -306,7 +307,9 @@ const ProfilePage = (props) => {
                               </Grid>
                               <Grid item xs={2} container justifyContent="center">
                               {/* <Button fullWidth href={inputState[name]}>{'>>'}</Button> */}
-                              <Link target="_blank" href={inputState[name]}>{'>>'}</Link>
+                              <Link target="_blank" href={inputState[name]}>
+                                 <LaunchOutlinedIcon />
+                              </Link>
                               </Grid>
                            </Grid>
                         )

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 //BASE COMPONENTS
 import Form from "../../../components/form/Form.component";
@@ -16,12 +15,14 @@ import {
    createTopicAsync,
    getSingleTopicAsync,
    editTopicAsync,
+   getTopicsAsync,
 } from "../../../redux/topics/topics.actions";
 //UTILITIES
-import { checkForEmptyProperties } from "../../../utilities/helper-functions";
+import { checkForEmptyProperties, compareObjects } from "../../../utilities/helper-functions";
 import { t } from "i18next";
 import { addCrumbs } from "../layout/breadcrumbs";
 import { Grid } from "@mui/material";
+import { findDefaultLanguageName } from "../../../utilities/supported-languages";
 
 const Topic = (props) => {
    const {
@@ -34,25 +35,32 @@ const Topic = (props) => {
       dispatchCreateTopicAsync,
       dispatchEditTopicAsync,
       dispatchGetSingleTopicAsync,
+      dispatchGetTopicsAsync,
    } = props;
-
-   const navigate = useNavigate();
 
    const { topicId } = useParams();
 
    useEffect(() => {
-      if (
-         !stateTopicsIsSingleTopicLoading && 
-         topicId && parseInt(topicId) !== stateTopicsSingleTopicData?.id
-      ) {         
-         dispatchGetSingleTopicAsync(topicId) 
-      } 
+      !stateTopicsIsSingleTopicLoading 
+      && topicId 
+      && parseInt(topicId) !== stateTopicsSingleTopicData?.id 
+      && dispatchGetSingleTopicAsync(topicId) 
    }, [dispatchGetSingleTopicAsync, stateTopicsIsSingleTopicLoading, stateTopicsSingleTopicData?.id, topicId])
 
-   const topicData = topicId ? {...stateTopicsSingleTopicData} : {}
+   const [isSameTopic, setSameTopic] = useState(topicId && parseInt(topicId) === stateTopicsSingleTopicData?.id)
+
+   useEffect(() => {
+      setSameTopic(topicId && parseInt(topicId) === stateTopicsSingleTopicData?.id)
+   }, [stateTopicsSingleTopicData?.id, topicId])
+
+   const [topicData, setTopicData] = useState(isSameTopic ? {...stateTopicsSingleTopicData} : {})
+
+   useEffect(() => isSameTopic
+         ? setTopicData({...stateTopicsSingleTopicData})
+         : setTopicData({})
+   , [isSameTopic, stateTopicsSingleTopicData])
 
    const languageOptions = stateCommonLanguagesList.map((item) => ({ ...item, label: item.value }));
-
    /** 
     * TODO: Gets default native language from 'navigator.language'
     * @example 
@@ -60,70 +68,77 @@ const Topic = (props) => {
     * const ruRuName = languageName.of('ru_RU') // expected 'русский (Россия)' 
     * const enUsName = languageName.of('en_US') // expected 'американский английский' 
     */
-   const [nativeLanguageDefaultValue] = useState(topicId
-      ? {
-           ...topicData?.nativeLanguage,
-           label: topicData?.nativeLanguage?.value,
-        }
-      : languageOptions[4]);
-   const [foreignLanguageDefaultValue] = useState(topicId
-      ? {
-           ...topicData?.foreignLanguage,
-           label: topicData?.foreignLanguage?.value,
-        }
-      : languageOptions[0]);
+   const [nativeLanguage, setNativeLanguage] = useState(topicData?.nativeLanguage
+      ? { ...topicData?.nativeLanguage, label: topicData?.nativeLanguage?.value, }
+      : findDefaultLanguageName(languageOptions)
+   );
+   const [foreignLanguage, setForeignLanguage] = useState(topicData?.foreignLanguage
+      ? { ...topicData?.foreignLanguage, label: topicData?.foreignLanguage?.value, }
+      : languageOptions[0]
+   );
+   
+   // console.log(nativeLanguage, foreignLanguage);
 
-   const [formInitState] = useState({
-      text: "",
-      tags: [],
-      nativeLanguage: {
-         id: languageOptions ? languageOptions[4]?.id : undefined,
-         value: languageOptions ? languageOptions[4]?.value : undefined,
-      },
-      foreignLanguage: {
-         id: languageOptions ? languageOptions[0]?.id : undefined,
-         value: languageOptions ? languageOptions[0]?.value : undefined,
-      },
-   });
+   useEffect(() => {
+      const native = topicData?.nativeLanguage
+         ? { ...topicData?.nativeLanguage, label: topicData?.nativeLanguage?.value, }
+         : findDefaultLanguageName(languageOptions)
+      !compareObjects(native, nativeLanguage) && setNativeLanguage(native)
+   }, [languageOptions, nativeLanguage, topicData?.nativeLanguage])
+   
+   useEffect(() => {
+      const foreign = topicData?.foreignLanguage 
+         ? { ...topicData?.foreignLanguage, label: topicData?.foreignLanguage?.value, } 
+         : languageOptions[0]
+      !compareObjects(foreign, foreignLanguage) && setForeignLanguage(foreign)
+   }, [foreignLanguage, languageOptions, topicData?.foreignLanguage])
+      
+   const [initTopic, setInitTopic] = useState(Object.keys(topicData).length > 0
+      ? { ...topicData }
+      : { text: "", tags: [], nativeLanguage, foreignLanguage, }
+   );
+
+   useEffect(() => Object.keys(topicData).length > 0 
+      ? setInitTopic({ ...topicData })
+      : setInitTopic({ text: "", tags: [], nativeLanguage, foreignLanguage, })
+   , [foreignLanguage, nativeLanguage, topicData])
 
    const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
 
-   const formState = topicId
-      ? {
-           ...topicData,
-           tags: topicData?.tags,
-        }
-      : formInitState;
-
    const {
-      inputState,
+      inputState: topicInput,
       handleInput,
       handleInvalidMessage,
       invalidMessages,
-      // updateInputState,
-   } = useInput({ ...formState });
+      // setInputState,
+   } = useInput({ ...initTopic });
 
    const handleInputChange = (event) => {
       handleInput(event);
    };
 
-   const onSelectChange = (event, languageType) => {
-      const e = { ...event };
-      delete e.label;
-
+   const onSelectChange = ({target: { value }}, languageType) => {
+      
+      const language = stateCommonLanguagesList?.find(({value: itemValue}) => itemValue === value)
       //for input state for select component
       const selectState = {
-         target: { name: languageType, value: e },
+         target: { name: languageType, value: language },
       };
       handleInput(selectState);
    };
 
+   const [saveDisabled, setSaveDisabled] = useState(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
+
+   useEffect(() => {
+      setSaveDisabled(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
+   }, [initTopic, topicInput])
+
    const onSubmit = (event) => {
       event.preventDefault();
       if (topicId) {
-         dispatchEditTopicAsync(topicId, inputState, navigate, isTagsUpdated);
+         dispatchEditTopicAsync(topicId, topicInput, () => { dispatchGetTopicsAsync();  dispatchGetSingleTopicAsync(topicId); }, isTagsUpdated);
       } else {
-         dispatchCreateTopicAsync(inputState, navigate);
+         dispatchCreateTopicAsync(topicInput, () => { dispatchGetTopicsAsync(); });
       }
    };
 
@@ -138,7 +153,7 @@ const Topic = (props) => {
 
    const onCancel = (e) => {
       e.preventDefault();
-      navigate(-1);
+      dispatchGetSingleTopicAsync(topicId);
    };
 
    // eslint-disable-next-line
@@ -157,7 +172,7 @@ const Topic = (props) => {
             <Grid item xs={12}>
                <Input
                   name="text"
-                  value={inputState.text}
+                  value={topicInput.text}
                   error={invalidMessages}
                   onChange={handleInputChange}
                   onInvalid={handleInvalidMessage}
@@ -186,7 +201,7 @@ const Topic = (props) => {
                   select={{
                      label: t("languages.foreign"),
                      options: languageOptions,
-                     defaultValue: foreignLanguageDefaultValue,
+                     defaultValue: foreignLanguage,
                      onChange: e => onSelectChange(e, "foreignLanguage"),
                      placeholder: t("languages.placeholder")
                   }}
@@ -198,7 +213,7 @@ const Topic = (props) => {
                   select={{
                      label: t("languages.native"),
                      options: languageOptions,
-                     defaultValue: nativeLanguageDefaultValue,
+                     defaultValue: nativeLanguage,
                      onChange: (e) => onSelectChange(e, "nativeLanguage"),
                      placeholder: t("languages.placeholder"),
                      required: true
@@ -211,7 +226,7 @@ const Topic = (props) => {
                <Button
                   isLoading={stateTopicsIsTopicCreatedLoading || stateTopicsIsTopicEditing}
                   variant="contained"
-                  disabled={!checkForEmptyProperties(inputState)}
+                  disabled={saveDisabled}
                   onClick={onSubmit}>
                   {t("actions.save")}
                </Button>
@@ -229,21 +244,23 @@ const Topic = (props) => {
 const mapStateToProps = (state) => {
    const { topics, common } = state;
    return {
-      stateTopicsIsSingleTopicLoading: topics.isSingleTopicLoading,
+      stateTopicsIsSingleTopicLoading : topics.isSingleTopicLoading,
       stateTopicsIsTopicCreatedLoading: topics.isTopicCreatedLoading,
-      stateTopicsIsTopicEditing: topics.isTopicEditing,
-      stateTopicsSingleTopicData: topics.singleTopicData,
-      stateCommonLanguagesList: common.languagesList,
+      stateTopicsIsTopicEditing       : topics.isTopicEditing,
+      stateTopicsSingleTopicData      : topics.singleTopicData,
+      stateCommonLanguagesList        : common.languagesList,
    };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   dispatchCreateTopicAsync: (params, navigate) =>
-      dispatch(createTopicAsync(params, navigate)),
+   dispatchCreateTopicAsync: (params, callback) => 
+      dispatch(createTopicAsync(params, callback)),
    dispatchGetSingleTopicAsync: (id) => 
       dispatch(getSingleTopicAsync(id)),
-   dispatchEditTopicAsync: (id, params, navigate, isTagsUpdated) =>
-      dispatch(editTopicAsync(id, params, navigate, isTagsUpdated)),
+   dispatchGetTopicsAsync: () => 
+      dispatch(getTopicsAsync()),
+   dispatchEditTopicAsync: (id, params, callback, isTagsUpdated) => 
+      dispatch(editTopicAsync(id, params, callback, isTagsUpdated)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topic);

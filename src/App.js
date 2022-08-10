@@ -10,15 +10,15 @@ import "./App.scss";
 import { useTranslation } from "react-i18next";
 
 function App(props) {
-   const { token, getLanguagesListAsync } = props;
+   const { token, languagesList, getLanguagesListAsync } = props;
    const View = token ? <DashboardRoutes /> : <AuthRoutes />;
 
    // const { t, i18n } = useTranslation();
    useTranslation();
 
    useEffect(() => {
-      getLanguagesListAsync();
-   }, [getLanguagesListAsync]);
+      token && !languagesList && getLanguagesListAsync();
+   }, [getLanguagesListAsync, languagesList, token]);
 
    useEffect(() => {
       //remove btn class from bootstrap
@@ -32,9 +32,10 @@ function App(props) {
    return <div className="app">{View}</div>;
 }
 const mapStateToProps = (state) => {
-   const { auth } = state;
+   const { auth, common } = state;
    return {
       token: auth.token,
+      languagesList: common.languagesList,
    };
 };
 

@@ -22,10 +22,27 @@ import "./index.scss";
 // https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
 const appHeight = () => {
    const doc = document.documentElement
-   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
-   console.log(`appHeight = ${window.innerHeight}px`);
+   const appHeight = window.innerHeight
+   doc.style.setProperty('--app-height', `${appHeight}px`)
+   const footerElement = document.getElementById("app-footer")
+   let footerHeight = 0
+   if (footerElement) {
+      doc.style.setProperty('--app-footer-height', `${(footerHeight = footerElement.clientHeight)}px`)
+   } else {
+      doc.style.setProperty('--app-footer-height', `${footerHeight}px`)      
+   }
+   const headerElement = document.getElementById("app-header")
+   let headerHeight = 0
+   if (headerElement) {
+      doc.style.setProperty('--app-header-height', `${(headerHeight = headerElement.clientHeight)}px`)
+   } else {
+      doc.style.setProperty('--app-header-height', `${headerHeight}px`)   
+   }
+   doc.style.setProperty('--app-body-height', `${appHeight - footerHeight - headerHeight}px`)
+   // console.log('height:', {appHeight, headerHeight, bodyHeight: (appHeight - footerHeight - headerHeight), footerHeight });
 }
 window.addEventListener('resize', appHeight)
+window.addEventListener('content-changed', appHeight)
 
 appHeight()
 

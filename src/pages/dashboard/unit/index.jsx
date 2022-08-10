@@ -268,7 +268,13 @@ const Unit = (props) => {
       e.preventDefault();
       if (unitId) {
          if(voiceChanged && !unitChanged) {
-            dispatchAddVoiceAsync(unitId, topicId, fileData, () => dispatchGetSingleUnitAsync(unitId), unitSaved?.voices?.length > 0 ? unitSaved?.voices[0]?.id : undefined);
+            dispatchAddVoiceAsync(
+               unitId, 
+               topicId, 
+               fileData, 
+               () => dispatchGetSingleUnitAsync(unitId), 
+               unitSaved?.voices ?? []
+            );
          } else {
             dispatchEditUnitAsync(
                unitId,
@@ -277,17 +283,17 @@ const Unit = (props) => {
                topicId,
                updatedTags,
                fileData,
-               unitSaved?.voices?.length > 0 ? unitSaved?.voices[0]?.id : undefined
+               unitSaved?.voices ?? []
             );            
          }
       } else {
-         dispatchCreateUnitAsync(topicId, unitInput, navigate, fileData);
+         dispatchCreateUnitAsync(topicId, unitInput, id => navigate(`../${id}`), fileData);
       }
    };
 
    const onCancel = (e) => {
       e.preventDefault();
-      navigate(-1);
+      dispatchGetSingleUnitAsync(unitId);
    };
 
    // eslint-disable-next-line
@@ -368,7 +374,7 @@ const Unit = (props) => {
                         label: t("tasks.task.level"),
                         options: levelList,
                         defaultValue: defLevel,
-                        onChange: ({target: { value }}) => setLevel(value, "level"),
+                        onChange: function onSelectChanged({target: { value }}) { setLevel(value, "level") },
                         placeholder: t("tasks.task.level"),
                         emptyValue: 'None'
                      }}
@@ -455,32 +461,32 @@ const mapDispatchToProps = (dispatch) => ({
    dispatchGetLevelsListAsync: () => dispatch(getLevelsListAsync()),
    dispatchGetSingleTopicAsync: (topicID) => dispatch(getSingleTopicAsync(topicID)),
    dispatchGetSingleUnitAsync: (unitID) => dispatch(getSingleUnitAsync(unitID)),
-   dispatchCreateUnitAsync: (topicID, params, navigate, voiceParams, prevVoiceID) =>
+   dispatchCreateUnitAsync: (topicID, params, callback, voiceParams, prevVoiceID) =>
       dispatch(
-         createUnitAsync(topicID, params, navigate, voiceParams, prevVoiceID)
+         createUnitAsync(topicID, params, callback, voiceParams, prevVoiceID)
       ),
    dispatchEditUnitAsync: (
       unitID,
       formParams,
-      navigate,
+      callback,
       topicID,
       isTagsUpdated,
       voiceParams,
-      prevVoiceID
+      prevVoices
    ) =>
       dispatch(
          editUnitAsync(
             unitID,
             formParams,
-            navigate,
+            callback,
             topicID,
             isTagsUpdated,
             voiceParams,
-            prevVoiceID
+            prevVoices
          )
       ),
-   dispatchAddVoiceAsync: (unitId, topicId, params, navigate, prevVoiceId) =>
-      dispatch(addVoiceAsync(unitId, topicId, params, navigate, prevVoiceId)),
+   dispatchAddVoiceAsync: (unitId, topicId, params, callback, prevVoices) =>
+      dispatch(addVoiceAsync(unitId, topicId, params, callback, prevVoices)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Unit);

@@ -17,8 +17,12 @@ import { loginAsync } from "../../../redux/auth/auth.actions";
 import { t } from "i18next";
 import { Grid } from "@mui/material";
 
-const LoginPage = (props) => {
-   const { loginAsync, isLoading } = props;
+/**
+ * 
+ * @param {{loginAsync:Function, isLoading:Boolean}} param0 
+ * @returns 
+ */
+const LoginPage = ({ loginAsync, isLoading }) => {
 
    const navigate = useNavigate();
    const {
@@ -36,7 +40,7 @@ const LoginPage = (props) => {
       e.preventDefault();
       loginAsync(
          { email: inputState.email, password: inputState.password },
-         navigate
+         () => navigate("/topics")
       );
    };
    // const logout = () => {
@@ -159,7 +163,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   loginAsync: (email, password) => dispatch(loginAsync(email, password)),
+   loginAsync: ({email, password}, callback) => dispatch(loginAsync({email, password}, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

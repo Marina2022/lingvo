@@ -38,7 +38,7 @@ const SetNewPasswordPage = (props) => {
             code: inputState.code,
             password: inputState.password,
          },
-         navigate
+         () => navigate("/login")
       );
    };
 
@@ -128,8 +128,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   setPasswordAsync: (params, navigate) =>
-      dispatch(setPasswordAsync(params, navigate)),
+   setPasswordAsync: (params, callback) =>
+      dispatch(setPasswordAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetNewPasswordPage);

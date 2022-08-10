@@ -37,7 +37,7 @@ const Footer = (props) => {
   const [activeMenu, setActiveMenu] = useState(getActiveMenu())
 
   return <>
-    <footer className="app-footer">
+    <footer id="app-footer" className="app-footer">
     {
       menuItems.map((item, key) => 
         <div className={`app-footer__menu-item${activeMenu === item.name ? '__active' : ''}`} key={key} onClick={() => { setActiveMenu(item.name); item.action(); }}>

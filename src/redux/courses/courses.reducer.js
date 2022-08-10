@@ -6,13 +6,21 @@ const INITIAL_STATE = {
    draftCourses: [],
    publishedCoursesCount: null,
    draftCoursesCount: null,
-   errorMessage: null,
-   isCoursesLoading: false,
-   //CREATE COURSES PARAMS
+   
    responseData: null,
-   isCoursesCreatedLoading: false,
-   CoursesCreatedMessage: "",
-};
+   errorMessage: null,
+   
+   isCoursesLoading: false,
+   isCourseCreatedLoading: false,
+   
+   courseData: null,
+   isCourseLoading: false,
+
+   isCoursesUpdatedLoading: false,
+   isCoursesPublishedLoading: false,
+   isCoursesDeletedLoading: false,
+
+ };
 
 const coursesReducer = (state = INITIAL_STATE, action) => {
    switch (action.type) {
@@ -33,22 +41,83 @@ const coursesReducer = (state = INITIAL_STATE, action) => {
             isCoursesLoading: false,
             errorMessage: action.payload,
          };
+
+      //! GET COURSE
+      case coursesActionTypes.GET_COURSE_START: return { 
+         ...state, 
+         isCourseLoading: true 
+      };
+      case coursesActionTypes.GET_COURSE_SUCCESS: return {
+         ...state,
+         isCourseLoading: false,
+         courseData: action.payload,
+      };
+      case coursesActionTypes.GET_COURSE_FAILURE: return {
+         ...state,
+         isCourseLoading: false,
+         errorMessage: action.payload,
+      };
       //! CREATE COURSE
-      case coursesActionTypes.CREATE_COURSE_START:
-         return { ...state, isCoursesCreatedLoading: true };
-      case coursesActionTypes.CREATE_COURSE_SUCCESS:
-         return {
-            ...state,
-            isCoursesCreatedLoading: false,
-            responseData: action.payload,
-         };
-      case coursesActionTypes.CREATE_COURSE_FAILURE:
-         return {
-            ...state,
-            isCoursesCreatedLoading: false,
-            CoursesCreatedMessage: action.payload,
-         };
-      default:
+      case coursesActionTypes.CREATE_COURSE_START: return { 
+         ...state, 
+         isCourseCreatedLoading: true 
+      };
+      case coursesActionTypes.CREATE_COURSE_SUCCESS: return {
+         ...state,
+         isCourseCreatedLoading: false,
+         responseData: action.payload,
+      };
+      case coursesActionTypes.CREATE_COURSE_FAILURE: return {
+         ...state,
+         isCourseCreatedLoading: false,
+         errorMessage: action.payload,
+      };
+      //! UPDATE COURSE
+      case coursesActionTypes.EDIT_COURSE_START: return { 
+         ...state, 
+         isCoursesUpdatedLoading: true 
+      };
+      case coursesActionTypes.EDIT_COURSE_SUCCESS: return {
+         ...state,
+         isCoursesUpdatedLoading: false,
+         responseData: action.payload,
+      };
+      case coursesActionTypes.EDIT_COURSE_FAILURE: return {
+         ...state,
+         isCoursesUpdatedLoading: false,
+         errorMessage: action.payload,
+      };
+      //! PUBLISH COURSE
+      case coursesActionTypes.PUBLISH_COURSE_START: return { 
+         ...state, 
+         isCoursesPublishedLoading: true 
+      };
+      case coursesActionTypes.PUBLISH_COURSE_SUCCESS: return {
+         ...state,
+         isCoursesPublishedLoading: false,
+         responseData: action.payload,
+      };
+      case coursesActionTypes.PUBLISH_COURSE_FAILURE: return {
+         ...state,
+         isCoursesPublishedLoading: false,
+         errorMessage: action.payload,
+      };
+      //! DELETE COURSE
+      case coursesActionTypes.DELETE_COURSE_START: return { 
+         ...state, 
+         isCoursesDeletedLoading: true 
+      };
+      case coursesActionTypes.DELETE_COURSE_SUCCESS: return {
+         ...state,
+         isCoursesDeletedLoading: false,
+         responseData: action.payload,
+      };
+      case coursesActionTypes.DELETE_COURSE_FAILURE: return {
+         ...state,
+         isCoursesDeletedLoading: false,
+         errorMessage: action.payload,
+      };
+       default:
          return state;
    }
 };

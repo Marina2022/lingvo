@@ -54,7 +54,7 @@ const Units = (props) => {
    };
 
    const publishTopic = () => {
-      dispatchPublishTopicAsync(topicId, navigate);
+      dispatchPublishTopicAsync(topicId, () => dispatchGetSingleTopicAsync(topicId));
    };
 
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
@@ -70,12 +70,15 @@ const Units = (props) => {
          // Adds new crumb
          setCrumbs(c => __addCrumbs(c, newCrumb))
       }
+      if (outlet) {
+         setCrumbs(c => __addCrumbs(c, { key: lastKey + 2, name: t("tasks.title"), disable: true}))
+      }
    }, [__addCrumbs, crumbs, lastKey, outlet, setCrumbs, stateTopicsSingleTopicData?.id, stateTopicsSingleTopicData?.text])
 
    return (
-      outlet ?
-      <Outlet context={[crumbs, setCrumbs, lastKey + 1]} /> :      
-      <>
+      outlet 
+      ? <Outlet context={[crumbs, setCrumbs, lastKey + 2]} /> 
+      : <>
          <Grid container spacing={2} justifyContent="space-between">
             <Grid item xs={12} md={6}>
                <Input
@@ -90,11 +93,9 @@ const Units = (props) => {
                />
             </Grid>
             <Grid item xs={6} md={3}>
-               <Button
-                  onClick={() =>
-                     navigate(`units/new`)
-                  }
+               <Button 
                   variant="contained"
+                  onClick={ () => navigate(`new`) }
                   src={<AddOutlinedIcon/>}
                >
                   {t("actions.create")}
@@ -131,8 +132,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
    dispatchGetSingleTopicAsync: (id) => dispatch(getSingleTopicAsync(id)),
-   dispatchPublishTopicAsync: (topicID, navigate) =>
-      dispatch(publishTopicAsync(topicID, navigate)),
+   dispatchPublishTopicAsync: (topicID, callback) =>
+      dispatch(publishTopicAsync(topicID, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Units);

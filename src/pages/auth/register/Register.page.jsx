@@ -39,7 +39,7 @@ const RegisterPage = (props) => {
          setErrorMessage(t("auth.register.not_match"));
       } else {
          delete params.rePassword;
-         authRegisterAsync(params, navigate);
+         authRegisterAsync(params, () => navigate("/topics"));
          setErrorMessage("");
       }
    };
@@ -183,8 +183,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   authRegisterAsync: (params, navigate) =>
-      dispatch(authRegisterAsync(params, navigate)),
+   authRegisterAsync: (params, callback) =>
+      dispatch(authRegisterAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

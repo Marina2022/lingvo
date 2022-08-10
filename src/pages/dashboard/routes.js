@@ -3,39 +3,13 @@ import Profile from "./profile";
 
 import Courses from "./courses";
 import NewCourse from "./courses/subpages/course-new";
-import Course from "./courses/subpages/course-edit";
+import Course from "./course";
 
 import Trainings from "./topics";
 import Training from "./topic";
-import CourseTrainings from "./courses/subpages/course-themes";
 
 import Tasks from "./units";
 import Task from "./unit";
-
-const topicsRoutes = [
-   { 
-      component: Training,
-      path: "new",
-   },
-   { 
-      component: Tasks,
-      path: ":topicId",
-      routes: [
-         { 
-            component: Training,
-            path: "edit",
-         },
-         { 
-            component: Task,
-            path: "units/new",
-         },
-         { 
-            component: Task,
-            path: "units/:unitId",
-         },
-      ]
-   },
-]
 
 const dashboardRoutes = [
    {
@@ -51,18 +25,54 @@ const dashboardRoutes = [
             path: ":courseId",
             routes: [
                { 
-                  component: CourseTrainings,
-                  path: "topics",
-                  routes: topicsRoutes
-               }
-            ]
+                  component: Tasks,
+                  path: "topics/:topicId",
+                  routes: [
+                     { 
+                        component: Training,
+                        path: "edit",
+                     },
+                     { 
+                        component: Task,
+                        path: "units/new",
+                     },
+                     { 
+                        component: Task,
+                        path: "units/:unitId",
+                     },
+                  ]
+               },      
+                  ]
          },
       ]
    },
    {
       component: Trainings,
       path: "topics",
-      routes: topicsRoutes
+      routes: [
+         { 
+            component: Training,
+            path: "new",
+         },
+         { 
+            component: Tasks,
+            path: ":topicId",
+            routes: [
+               { 
+                  component: Training,
+                  path: "edit",
+               },
+               { 
+                  component: Task,
+                  path: "units/new",
+               },
+               { 
+                  component: Task,
+                  path: "units/:unitId",
+               },
+            ]
+         },      
+      ]
    },
    {
       component: Profile,
