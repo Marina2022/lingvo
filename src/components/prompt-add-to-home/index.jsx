@@ -106,9 +106,9 @@ export default function ModalAddToHomeScreen() {
     }
   }, [boxStyle.bottom, boxStyle.top, windowSize.width])
 
-  
-  const onClick = ({target}) => {
-    setShowParam(!target.checked)
+  const onClick = ({target: {checked}}) => {
+    setShowParam(!checked)
+    setShow(!checked)
   }
 
   return (
@@ -147,7 +147,7 @@ export default function ModalAddToHomeScreen() {
             <Grid item xs={9} sm={10} >
               <FormControlLabel
                 label={t("messages.info.does_not_show")}
-                control={<Checkbox checked={false} onChange={onClick} />}
+                control={<Checkbox checked={!show} onChange={onClick} />}
               />
             </Grid>  
 
