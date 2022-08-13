@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteTopicAsync } from "../../../redux/topics/topics.actions";
 import { connect } from "react-redux";
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { toDigestString } from "../../../utilities/helper-functions";
 
 /**
  * 
@@ -35,11 +36,13 @@ const TopicList = ({
       navPrefix = `${navPrefix}/`
    }
 
+   const filterLC = filter ? filter.toLowerCase() : filter
+
    return (
       <LoaderWrapper isLoading={isLoading}>
       {
          itemsList
-            .filter(item => !filter || Object.values(item).join("|").toLowerCase().includes(filter.toLowerCase()))
+            .filter(item => !filterLC || toDigestString(item).includes(filterLC))
             .map((item, idx) => (
 
             <Card key={idx} sx={{ 

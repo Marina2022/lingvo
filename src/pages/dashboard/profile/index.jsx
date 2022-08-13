@@ -21,11 +21,10 @@ import {
    subscribeLinkAsync,
 } from "../../../redux/profile/profile.actions";
 import { t } from "i18next";
-import { titleCase } from "../../../utilities/helper-functions";
+import { checkForEmptyProperties, compareObjects, titleCase } from "../../../utilities/helper-functions";
 import { getBase64 } from "../../../utilities/handleFile";
 import { userLogout } from "../../../redux/auth/auth.actions";
 import { Avatar, Divider, Grid, Link } from "@mui/material";
-import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 import { Home } from "@mui/icons-material";
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
@@ -38,6 +37,8 @@ const socialNets = [
 
 const ProfilePage = (props) => {
    const {
+      crumbsProps:[crumbs, setCrumbs],
+
       stateProfileAppLink,
       stateProfileCurrentUserInfo,
       stateProfileEditAvatarLoading,
@@ -54,14 +55,18 @@ const ProfilePage = (props) => {
    const [uploadedFiles, setUploadedFiles] = useState([]);
    const [isCopied, setIsCopied] = useState(false);
 
-   const formInitState = {...stateProfileCurrentUserInfo,};
+   const [initInput] = useState({
+      ...stateProfileCurrentUserInfo, 
+      links: undefined, 
+      ...stateProfileCurrentUserInfo.links.map(({socialNet, url}) => (
+         { [socialNet.value]: socialNets.find(({name}) => name === socialNet.value) ? url : undefined }
+      ))   
+   });
 
-   delete formInitState.links
-
-   stateProfileCurrentUserInfo.links.forEach(({socialNet, url}) => { 
-      socialNets.find(({name}) => name === socialNet.value) 
-         && (formInitState[socialNet.value] = url) 
-   })
+   // stateProfileCurrentUserInfo.links.forEach(({socialNet, url}) => { 
+   //    socialNets.find(({name}) => name === socialNet.value) 
+   //       && (formInitState[socialNet.value] = url) 
+   // })
 
    useEffect(() => {
       if (stateProfileCurrentUserInfo?.id) {
@@ -74,7 +79,7 @@ const ProfilePage = (props) => {
       handleInput,
       handleInvalidMessage,
       invalidMessages,
-   } = useInput({ ...formInitState });
+   } = useInput({ ...initInput });
    // useState(inputState.links);
 
    const avatarImg = stateProfileCurrentUserInfo?.avatar;
@@ -134,219 +139,210 @@ const ProfilePage = (props) => {
 
       })
    };
-   // useEffect(() => {
-   //    socialNets.forEach(({name}) => {
-   //       try {
-   //          inputState.links.find(({socialNet}) => socialNet.value === name).url = 
-   //             stateProfileCurrentUserInfo.links.find(({socialNet}) => socialNet.value === name).url
-   //       } catch (e) {}
-   //    })
-   // }, [stateProfileCurrentUserInfo.links, inputState.links]);
+
+   const [noChange, setNoChange] = useState(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState))
+
+   useEffect(() => {
+      setNoChange(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState))
+   }, [initInput, inputState])
+
+   useEffect(() => {
+      const initCrumb = {key: 0, name: t("profile.title"), icon: <Home fontSize="small" />}
+
+      if (crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {      
+         setCrumbs([initCrumb])
+      }
+   }, [crumbs, setCrumbs]);
 
    return (
-
-      <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
-         <Grid item xs={12} sm={9}>
-            <BuildBreadcrumbs crumbs={[{key: 0, name: t("profile.title"), icon: <Home fontSize="small" />}]} />
-         </Grid>
-
-         <Grid item xs={12} sm={9}>
-            <Form>
-               <Grid container spacing={2} justifyContent="center">
-                  <Grid item  sm={11} md={8} justifyContent="center">
-                     <Grid item xs={12}
-                        // className="flex-vertical-center"
-                        >
-                        <DropZone
-                           title={(avatarData.data || avatarImg) ? t("profile.photo_change_prompt") : t("profile.photo_put_prompt")}
-                           buttonText={t("actions.change")}
-                           handleFiles={handleFiles}
-                           files={uploadedFiles}
-                           showName={false}
-                        >
-                           <LoaderWrapper isLoading={stateProfileEditAvatarLoading}>
-                              <div 
-                              // className="profile-page__avatar-block flex-center"
-                              >
-                                 {/* <Image roundedCircle src={avatarData.data || avatarImg} alt="avatar" /> */}
-                                 <Avatar sx={{ width: 96, height: 96 }} alt="avatar" src={avatarData.data || avatarImg} />
-                              </div>
-                           </LoaderWrapper>
-                        </DropZone>
-                     </Grid>
-                     
-                     <Divider sx={{ my:'1rem'}}/>
-                     
-                     <Grid item xs={12}>
-                        <CopyToClipboard
-                           text={stateProfileAppLink}
-                           onCopy={copyAppLink}>
-                           <div className="copy-area">
-                              <Input name="copyUrl" id="copyUrl"
-                                 value={stateProfileAppLink || ""}
-                                 error={invalidMessages}
-                                 onChange={handleInputChange}
-                                 onInvalid={handleInvalidMessage}
-                                 type="text"
-                                 title={t("profile.click_to_copy")}
-                                 label={t("profile.app_link")}
-                                 placeholder={t("profile.app_link")}
-                                 className={!isCopied ? "p-b__2" : "p-b__3"}
-                                 disabled={true}
-                                 required
-                              />
-                              <IsVisible isVisible={isCopied}>
-                                 <span className="copy-done">{t("profile.copy_done")}</span>
-                              </IsVisible>
-                              <IsVisible isVisible={!isCopied}>
-                                 <span className="copy-done">&nbsp;</span>
-                              </IsVisible>
-                           </div>
-                        </CopyToClipboard>
-                     </Grid>
-                     
-                     <h4>{t("profile.person")}</h4>
-
-                     <Grid item xs={12}>
-                        <Input
-                           name="email"
-                           value={inputState.email || ""}
-                           error={invalidMessages}
-                           onChange={handleInputChange}
-                           onInvalid={handleInvalidMessage}
-                           type="text"
-                           label="Email"
-                           placeholder="Email"
-                           className="p-b__1__disabled"
-                           required
-                           disabled={true}
-                        />
-                     </Grid>
-
-                     <Grid item xs={12}>
-                        <Input
-                           name="phone"
-                           value={inputState.phone || ""}
-                           error={invalidMessages}
-                           onChange={handleInputChange}
-                           onInvalid={handleInvalidMessage}
-                           type="text"
-                           label={t("profile.phone")}
-                           placeholder={t("profile.phone")}
-                           className="p-b__1"
-                           required
-                        />
-                     </Grid>
-
-                     <Grid item xs={12}>
-                        <Input
-                           name="name"
-                           value={inputState.name || ""}
-                           error={invalidMessages}
-                           onChange={handleInputChange}
-                           onInvalid={handleInvalidMessage}
-                           type="text"
-                           label={t("profile.name")}
-                           placeholder={t("profile.name")}
-                           className="p-b__1"
-                           required
-                        />
-                     </Grid>
-
-                     <Grid item xs={12}>
-                        <Input
-                           name="nickname"
-                           value={inputState.nickname || ""}
-                           error={invalidMessages}
-                           onChange={handleInputChange}
-                           onInvalid={handleInvalidMessage}
-                           type="text"
-                           label={t("profile.nickname")}
-                           placeholder={t("profile.nickname")}
-                           className="p-b__1"
-                           required
-                        />
-                     </Grid>
-
-                     <Grid item xs={12}>
-                        <TextArea
-                           name="about_oneself"
-                           value={inputState.bio}
-                           error={invalidMessages}
-                           onChange={handleInputChange}
-                           onInvalid={handleInvalidMessage}
-                           label={t("profile.about_oneself")}
-                           placeholder={t("profile.bio")}
-                           minRows={2}
-                           className="p-b__1"
-                           required
-                        />
-                     </Grid>
-
-                     <Divider sx={{ my:'1rem'}}/>
-
-
-                     <h4>{t("social_media.title")}</h4>
-
-                     {
-                        socialNets.map(({name, tKey}, idx) =>
-                           <Grid container item xs={12} key={idx} alignItems={"center"}>
-                              <Grid item xs={10} key={idx}>
-                                 <Input
-                                    name={name}
-                                    value={inputState[name]}
-                                    error={invalidMessages}
-                                    onChange={handleInputChange}
-                                    onInvalid={handleInvalidMessage}
-                                    type="text"
-                                    label={t(tKey)}
-                                    placeholder={t(tKey)}
-                                    className="p-b__1"
-                                    required
-                                 />
-                              </Grid>
-                              <Grid item xs={2} container justifyContent="center">
-                              {/* <Button fullWidth href={inputState[name]}>{'>>'}</Button> */}
-                              <Link target="_blank" href={inputState[name]}>
-                                 <LaunchOutlinedIcon />
-                              </Link>
-                              </Grid>
-                           </Grid>
-                        )
-                     }
-
-                     <Grid container spacing={2} justifyContent="center">
-                        <Grid item xs={5} lg={3}>
-                           <Button
-                              onClick={onSaveClick}
-                              isLoading={stateProfileUpdateUserLoading}
-                              variant="contained"
-                              color="primary"
-                           >
-                              {t("actions.save")}
-                           </Button>
-                        </Grid>
-                        <Grid item xs={5} lg={3}>
-                           <Button variant="outlined" color="primary">{t("actions.cancel")}</Button>
-                        </Grid>
-
-                        <Divider sx={{ my:'3rem'}}/>
-
-                        <Grid item xs={10}>
-                           <Button variant="contained" color="secondary" name="logout" onClick={dispatchUserLogout}>{t("actions.sign_out")}</Button>
-                        </Grid>
-
-                     </Grid>
-
-
-
-                  </Grid>
+      <Form>
+         <Grid container spacing={2} justifyContent="center">
+            <Grid item  sm={11} md={8} justifyContent="center">
+               <Grid item xs={12}>
+                  <DropZone
+                     title={(avatarData.data || avatarImg) ? t("profile.photo_change_prompt") : t("profile.photo_put_prompt")}
+                     buttonText={t("actions.change")}
+                     handleFiles={handleFiles}
+                     files={uploadedFiles}
+                     showName={false}
+                  >
+                     <LoaderWrapper isLoading={stateProfileEditAvatarLoading}>
+                        <div>
+                           {/* <Image roundedCircle src={avatarData.data || avatarImg} alt="avatar" /> */}
+                           <Avatar sx={{ width: 96, height: 96 }} alt="avatar" src={avatarData.data || avatarImg} />
+                        </div>
+                     </LoaderWrapper>
+                  </DropZone>
                </Grid>
-            </Form>
+               
+               <Divider sx={{ my:'1rem'}}/>
+               
+               <Grid item xs={12}>
+                  <CopyToClipboard
+                     text={stateProfileAppLink}
+                     onCopy={copyAppLink}>
+                     <div className="copy-area">
+                        <Input name="copyUrl" id="copyUrl"
+                           value={stateProfileAppLink || ""}
+                           error={invalidMessages}
+                           onChange={handleInputChange}
+                           onInvalid={handleInvalidMessage}
+                           type="url"
+                           title={t("profile.click_to_copy")}
+                           label={t("profile.app_link")}
+                           placeholder={t("profile.app_link")}
+                           className={!isCopied ? "p-b__2" : "p-b__3"}
+                           disabled={true}
+                           required
+                        />
+                        <IsVisible isVisible={isCopied}>
+                           <span className="copy-done">{t("profile.copy_done")}</span>
+                        </IsVisible>
+                        <IsVisible isVisible={!isCopied}>
+                           <span className="copy-done">&nbsp;</span>
+                        </IsVisible>
+                     </div>
+                  </CopyToClipboard>
+               </Grid>
+               
+               <h4>{t("profile.person")}</h4>
+
+               <Grid item xs={12}>
+                  <Input
+                     name="email"
+                     value={inputState.email || ""}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     type="email"
+                     label="Email"
+                     placeholder="Email"
+                     className="p-b__1__disabled"
+                     required
+                     disabled={true}
+                  />
+               </Grid>
+
+               <Grid item xs={12}>
+                  <Input
+                     name="phone"
+                     value={inputState.phone || ""}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     type="tel"
+                     label={t("profile.phone")}
+                     placeholder={t("profile.phone")}
+                     className="p-b__1"
+                     required
+                  />
+               </Grid>
+
+               <Grid item xs={12}>
+                  <Input
+                     name="name"
+                     value={inputState.name || ""}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     type="text"
+                     label={t("profile.name")}
+                     placeholder={t("profile.name")}
+                     className="p-b__1"
+                     required
+                  />
+               </Grid>
+
+               <Grid item xs={12}>
+                  <Input
+                     name="nickname"
+                     value={inputState.nickname || ""}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     type="text"
+                     label={t("profile.nickname")}
+                     placeholder={t("profile.nickname")}
+                     className="p-b__1"
+                     required
+                  />
+               </Grid>
+
+               <Grid item xs={12}>
+                  <TextArea
+                     name="about_oneself"
+                     value={inputState.bio}
+                     error={invalidMessages}
+                     onChange={handleInputChange}
+                     onInvalid={handleInvalidMessage}
+                     label={t("profile.about_oneself")}
+                     placeholder={t("profile.bio")}
+                     minRows={2}
+                     className="p-b__1"
+                     required
+                  />
+               </Grid>
+
+               <Divider sx={{ my:'1rem'}}/>
+
+
+               <h4>{t("social_media.title")}</h4>
+
+               {
+                  socialNets.map(({name, tKey}, idx) =>
+                     <Grid container item xs={12} key={idx} alignItems={"center"}>
+                        <Grid item xs={10} key={idx}>
+                           <Input
+                              name={name}
+                              value={inputState[name]}
+                              error={invalidMessages}
+                              onChange={handleInputChange}
+                              onInvalid={handleInvalidMessage}
+                              type="url"
+                              label={t(tKey)}
+                              placeholder={t(tKey)}
+                              className="p-b__1"
+                              required
+                           />
+                        </Grid>
+                        <Grid item xs={2} container justifyContent="center">
+                        {/* <Button fullWidth href={inputState[name]}>{'>>'}</Button> */}
+                        <Link target="_blank" href={inputState[name]}>
+                           <LaunchOutlinedIcon />
+                        </Link>
+                        </Grid>
+                     </Grid>
+                  )
+               }
+
+               <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={5} lg={3}>
+                     <Button disabled={noChange}
+                        onClick={onSaveClick}
+                        isLoading={stateProfileUpdateUserLoading}
+                        variant="contained"
+                        color="primary"
+                     >
+                        {t("actions.save")}
+                     </Button>
+                  </Grid>
+                  <Grid item xs={5} lg={3}>
+                     <Button disabled={noChange} variant="outlined" color="primary">{t("actions.cancel")}</Button>
+                  </Grid>
+
+                  <Divider sx={{ my:'3rem'}}/>
+
+                  <Grid item xs={10}>
+                     <Button variant="contained" color="secondary" name="logout" onClick={dispatchUserLogout}>{t("actions.sign_out")}</Button>
+                  </Grid>
+
+               </Grid>
+
+
+
+            </Grid>
          </Grid>
-      </Grid>
-      // <div className="profile-page">
-      // </div>
+      </Form>
    );
 };
 

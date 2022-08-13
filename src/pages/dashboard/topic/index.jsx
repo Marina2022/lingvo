@@ -127,10 +127,10 @@ const Topic = (props) => {
       handleInput(selectState);
    };
 
-   const [saveDisabled, setSaveDisabled] = useState(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
+   const [noChange, setNoChange] = useState(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
 
    useEffect(() => {
-      setSaveDisabled(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
+      setNoChange(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
    }, [initTopic, topicInput])
 
    const onSubmit = (event) => {
@@ -223,16 +223,14 @@ const Topic = (props) => {
          </Grid>
          <Grid container spacing={2} justifyContent="space-around">
             <Grid item xs={5} sm={5} md={4} lg={3}>
-               <Button
+               <Button onClick={onSubmit} variant="contained" disabled={noChange}
                   isLoading={stateTopicsIsTopicCreatedLoading || stateTopicsIsTopicEditing}
-                  variant="contained"
-                  disabled={saveDisabled}
-                  onClick={onSubmit}>
+               >
                   {t("actions.save")}
                </Button>
             </Grid>
             <Grid item xs={6} sm={5} md={4} lg={3}>
-               <Button onClick={onCancel} variant="outlined">
+               <Button onClick={onCancel} variant="outlined" disabled={noChange}>
                   {t("actions.cancel")}
                </Button>
             </Grid>

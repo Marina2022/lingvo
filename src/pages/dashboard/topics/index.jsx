@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 
@@ -12,10 +12,10 @@ import useInput from "../../../effects/useInput.effect";
 //IMAGES
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { t } from 'i18next'
-import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 import TopicList from "./topic-list";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
 import { Home } from "@mui/icons-material";
+import { compareObjects } from "../../../utilities/helper-functions";
 
 const TopicsBody = (props) => {
 
@@ -131,35 +131,28 @@ const TopicsBody = (props) => {
    </>
 }
 
-const Topics = (props) => {
-
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("trainings.title"), path: "topics", icon: <Home fontSize="small" />}]);
+const Topics = ({
+   crumbsProps:[crumbs, setCrumbs],
+   ...otherProps
+}) => {
 
    const outlet = useOutlet()
 
    useEffect(() => {
+      const initCrumb = { key: 0, name: t("trainings.title"), path: "topics", icon: <Home fontSize="small" /> }
       // console.log("check Topics => ", t("trainings.title"), outlet);
-      if (!outlet) {
-         setCrumbs([{ key: 0, name: t("trainings.title"), path: "topics", icon: <Home fontSize="small" /> }])
+      if (crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
+         setCrumbs([initCrumb])
       }
    }
-   , [outlet])
+   , [crumbs, setCrumbs])
 
    return (
-      <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
-         <Grid item xs={12} sm={9}>
-            <BuildBreadcrumbs crumbs={crumbs} />
-         </Grid>
-         <Grid item xs={12} sm={9}>
-         {
-            outlet ?
-            // shows child element
-            <Outlet context={[crumbs, setCrumbs, 0]}/> : 
-            // shows topic element
-            <TopicsBody {...props} />
-         }
-         </Grid>
-      </Grid>
+      outlet ?
+      // shows child element
+      <Outlet context={[crumbs, setCrumbs, 0]}/> : 
+      // shows topic element
+      <TopicsBody {...otherProps} />
    )
    
 };

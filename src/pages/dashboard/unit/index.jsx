@@ -77,10 +77,14 @@ const Unit = (props) => {
       setTopicSaved(stateTopicsSingleTopicData)
    }, [stateTopicsSingleTopicData])
 
-   /**
-    * Gets saved unit data from backend
-    */
-   unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id && dispatchGetSingleUnitAsync(unitId)
+   useEffect(() => {
+      if (!stateUnitsUnitEditLoading && unitId && parseInt(unitId) !== stateUnitsSingleUnit?.id) {
+         /**
+          * Gets saved unit data from backend
+          */
+         dispatchGetSingleUnitAsync(unitId)
+      }
+   }, [dispatchGetSingleUnitAsync, stateUnitsSingleUnit?.id, stateUnitsUnitEditLoading, unitId])
 
    const voices = unitId && parseInt(unitId) === stateUnitsSingleUnit?.id && stateUnitsSingleUnit?.voices 
       ? stateUnitsSingleUnit.voices.sort((a, b) => a.id < b.id ? 1 : -1) 
@@ -257,9 +261,9 @@ const Unit = (props) => {
 
    useEffect(() => { setVoiceChanged(!compareObjects(unitSaved.voices, uploadedFiles)) }, [unitSaved.voices, uploadedFiles])
 
-   const [saveDisabled, setSaveDisabled] = useState( (!unitChanged && !voiceChanged) || !checkForEmptyProperties(unitInput, ["description",]) ||  uploadedFiles.length <= 0 )
+   const [noChange, setNoChange] = useState( (!unitChanged && !voiceChanged) || !checkForEmptyProperties(unitInput, ["description",]) ||  uploadedFiles.length <= 0 )
 
-   useEffect(() => { setSaveDisabled( (!unitChanged && !voiceChanged) || !checkForEmptyProperties(unitInput, ["description",]) || uploadedFiles.length <= 0)
+   useEffect(() => { setNoChange( (!unitChanged && !voiceChanged) || !checkForEmptyProperties(unitInput, ["description",]) || uploadedFiles.length <= 0)
    }, [unitChanged, unitInput, uploadedFiles.length, voiceChanged])
 
    const navigate = useNavigate();
@@ -425,14 +429,15 @@ const Unit = (props) => {
                         stateUnitsVoiceAddLoading ||
                         stateUnitsDeleteVoiceLoading
                      }
-                     variant="contained"                           
-                     disabled={saveDisabled}
-                     onClick={onSubmit}>
+                     onClick={onSubmit}
+                     variant="contained"
+                     disabled={noChange}
+                  >
                      {t("actions.save")}
                   </Button>
                </Grid>
                <Grid item xs={5} sm={5} md={4} lg={3}>
-                  <Button onClick={onCancel} variant="outlined">
+                  <Button onClick={onCancel} variant="outlined" disabled={noChange}>
                      {t("actions.cancel")}
                   </Button>
                </Grid>

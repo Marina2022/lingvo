@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Card, Grid, Typography } from "@mui/material";
 import { PlayerEmbedControls } from "../../../components/audio/player";
+import { toDigestString } from "../../../utilities/helper-functions";
 
 
 const UnitsListCard = (props) => {
@@ -34,11 +35,13 @@ const UnitsListCard = (props) => {
     return voices.sort((a,b) => a.id < b.id ? 1 : -1)[0]
   }
 
+  const filterLC = filter ? filter.toLowerCase() : filter
+
   return (
     <LoaderWrapper isLoading={isLoading}>
     {
       itemsList
-        .filter(item => !filter || Object.values(item).join("|").toLowerCase().includes(filter.toLowerCase()))
+        .filter(item => !filterLC || toDigestString(item).includes(filterLC))
         .map((item, idx) => (
         <Card key={idx} sx={{
           my: '2em',

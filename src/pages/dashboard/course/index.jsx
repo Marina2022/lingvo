@@ -133,6 +133,11 @@ const CoursePage = ({
    } = useInput({ ...initInput, posts: [...initInput.posts] });
 
    useEffect(() => {
+      const initObj = { ...initInput, posts: [...initInput.posts] }
+      !compareObjects(inputState, initObj) && setInputState(initObj)
+   }, [initInput, inputState, setInputState])
+
+   useEffect(() => {
       if (changedInput) {
          // console.log('useEffect: setInputState');
          setInputState({...initInput, posts: [...initInput.posts]})
@@ -175,24 +180,23 @@ const CoursePage = ({
    // eslint-disable-next-line
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
    const outlet = useOutlet()
-   const __addCrumbs = addCrumbs
 
    useEffect(() => {
-      // console.log('useEffect: setCrumbs');
+      // console.log('useEffect: setCrumbs', crumbs, courseId, outlet, inputState);      
       courseId 
-         ? setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:inputState.name, path: courseId })) 
-         : setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("courses.course.new"), path:"new" }))
+         ? setCrumbs(c => addCrumbs(c, { key: lastKey + 1, name:inputState.name, path: courseId })) 
+         : setCrumbs(c => addCrumbs(c, { key: lastKey + 1, name:t("courses.course.new"), path:"new" }))
       if (courseId && outlet) {
-         setCrumbs(c => __addCrumbs(c, { key: lastKey + 2, name:t("trainings.title"), path: 'topics', disabled: true }))
+         setCrumbs(c => addCrumbs(c, { key: lastKey + 2, name:t("trainings.title"), path: 'topics', disabled: true }))
       }
-   }, [__addCrumbs, courseId, inputState.name, lastKey, outlet, setCrumbs])
+   }, [courseId, crumbs, inputState, lastKey, outlet, setCrumbs])
 
-   const [saveDisabled, setSaveDisabled] = useState(compareObjects(initInput, inputState) || !checkForEmptyProperties(inputState))
+   const [noChange, setNoChange] = useState(compareObjects(initInput, inputState) || !checkForEmptyProperties(inputState))
 
    useEffect(() => {
       compareObjects(initInput, inputState) || !checkForEmptyProperties(inputState)
-         ? setSaveDisabled(true)
-         : setSaveDisabled(false)
+         ? setNoChange(true)
+         : setNoChange(false)
    }, [initInput, inputState])
 
    const deletePost = ({id: topicId}) => {
@@ -305,14 +309,12 @@ const CoursePage = ({
             </Grid>
             <Grid container spacing={2} justifyContent="space-around">
                <Grid item xs={6} md={5} lg={4}>
-                  <Button variant="contained" onClick={onSubmit}                     
-                     disabled={saveDisabled}
-                  >
+                  <Button variant="contained" disabled={noChange} onClick={onSubmit} >
                      {t("actions.save")}
                   </Button>
                </Grid>
                <Grid item xs={6} md={5} lg={4}>
-               <Button onClick={onCancel} variant="outlined">
+                  <Button variant="outlined" disabled={noChange} onClick={onCancel}>
                      {t("actions.cancel")}
                   </Button>
                </Grid>

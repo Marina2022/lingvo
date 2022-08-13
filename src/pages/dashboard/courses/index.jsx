@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 
@@ -7,15 +7,14 @@ import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 
-import "./index.scss";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import CourseItem from "./course-item";
 import { deleteCourseAsync, getCoursesAsync } from "../../../redux/courses/courses.actions";
 import { t } from "i18next";
-import { BuildBreadcrumbs } from "../layout/breadcrumbs";
 import useInput from "../../../effects/useInput.effect";
 import { Grid } from "@mui/material";
 import { Home } from "@mui/icons-material";
+import { compareObjects, toDigestString } from "../../../utilities/helper-functions";
 
 /**
  * 
@@ -40,8 +39,9 @@ const CoursesBody = ({ dispatchGetCoursesAsync, dispatchDeleteCourseAsync }) => 
    } = useInput();
 
    const handleInputChange = (event) => {
+      event.target.value = event.target.value.toLowerCase()
       handleInput(event);
-   };   
+   };
 
    return <>
       <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
@@ -71,7 +71,7 @@ const CoursesBody = ({ dispatchGetCoursesAsync, dispatchDeleteCourseAsync }) => 
          <Grid item xs={12} sx={{ paddingTop: '2rem !important'}} container spacing={2} justifyContent="center">
          { 
             publishedCourses
-               .filter(course => !inputState.search || Object.values(course).join("|").toLowerCase().includes(inputState.search.toLowerCase()))
+               .filter(course => !inputState.search || toDigestString(course).includes(inputState.search))
                .map(course => (
                   <Grid item xs={12} sm={6} md={4} lg={3} xxl={2} key={course.id}>
                      <CourseItem
@@ -92,35 +92,28 @@ const CoursesBody = ({ dispatchGetCoursesAsync, dispatchDeleteCourseAsync }) => 
 }
 
 
-const CoursesPage = (props) => { 
+const CoursesPage = ({
+   crumbsProps:[crumbs, setCrumbs],
+   ...otherProps
+}) => { 
       
-   const [crumbs, setCrumbs] = useState([{ key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }]);
-   
    const outlet = useOutlet()
-
+   
    useEffect(() => {
+      const initCrumb = { key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }
       // console.log("check Topics => ", t("trainings.title"), outlet);
-      if (!outlet) {
-         setCrumbs([{ key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }])
+      if (crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
+         setCrumbs([initCrumb])
       }
    }
-   , [outlet])
+   , [crumbs, setCrumbs])
    
    return (      
-      <Grid container spacing={2} sx={{ justifyContent: 'center', alignContent: 'flex-start', padding: '2rem 1rem', flexGrow:undefined, flexBasis:undefined }}>
-         <Grid item xs={12} sm={9}>
-            <BuildBreadcrumbs crumbs={crumbs} />
-         </Grid>
-         <Grid item xs={12} sm={9}>
-         {
-            outlet ?
-            <Outlet context={[crumbs, setCrumbs, 0]} /> :
-            <>               
-               <CoursesBody {...props}/>
-            </>
-         }
-         </Grid>
-      </Grid>
+      outlet ?
+      <Outlet context={[crumbs, setCrumbs, 0]} /> :
+      <>               
+         <CoursesBody {...otherProps}/>
+      </>
    );
 };
 

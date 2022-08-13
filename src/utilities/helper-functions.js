@@ -68,3 +68,28 @@ export function compareObjects (o, c, ...excludes) {
       return false
    }
 }
+
+/**
+ * Joins all object values including it's sub-objects
+ * @param {Object} o 
+ * @param {Number} level 
+ * @returns 
+ */
+export const toDigestString = (o = {}, level = 1) => {
+   const keys = Object.getOwnPropertyNames(o)
+   const digest = []
+   keys
+      .sort((a,b) => a < b ? -1 : a > b ? 1 : 0)
+      .filter(key => o[key] !== null && o[key] !== undefined)
+      .filter(key => level > 0 || (!Array.isArray(o[key]) && typeof o[key] !== 'object'))
+      .forEach(key => {
+         if (Array.isArray(o[key])) {
+            o[key].forEach(element => digest.push(toDigestString(element), level - 1))
+         } else if (typeof o[key] === 'object') {
+            digest.push(toDigestString(o[key], level - 1))
+         } else {
+            digest.push(o[key].toString().toLowerCase())
+         }
+      })
+   return digest.join('|')
+}

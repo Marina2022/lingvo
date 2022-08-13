@@ -97,7 +97,7 @@ const AddTopics = ({
           <Button fullWidth variant="contained" onClick={onAdd} disabled={addDisabled}>{t("actions.add")}</Button>
         </Grid>
         <Grid item xs={5} sm={5} md={4} lg={3}>
-          <Button fullWidth variant="outlined" onClick={onCancel}>{t("actions.cancel")}</Button>
+          <Button fullWidth variant="outlined" onClick={onCancel} disabled={addDisabled}>{t("actions.cancel")}</Button>
         </Grid>
       </Grid>
     </Box>
