@@ -1,14 +1,14 @@
-.u-relative {
-  position: relative;
-}
+// .u-relative {
+//   position: relative;
+// }
 
-.hidden {
-  display: none;
-}
+// .hidden {
+//   display: none;
+// }
 
-.visible {
-  display: flex;
-}
+// .visible {
+//   display: flex;
+// }
 
 .error-message {
   color: red;
@@ -20,23 +20,23 @@
   line-height: 20px;
 }
 
-.flex {
-  &-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+// .flex {
+//   &-center {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
 
-  &-horizontal-center {
-    display: flex;
-    justify-content: center;
-  }
+//   &-horizontal-center {
+//     display: flex;
+//     justify-content: center;
+//   }
 
-  &-vertical-center {
-    display: flex;
-    align-items: center;
-  }
-}
+//   &-vertical-center {
+//     display: flex;
+//     align-items: center;
+//   }
+// }
 
 .p-b {
   &__1 {

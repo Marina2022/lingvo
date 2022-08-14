@@ -97,6 +97,7 @@ export const getSingleUnitAsync = (unitID) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getSingleUnitFailure(message));
+      window.alert(message)
    }
 };
 
@@ -118,29 +119,18 @@ export const createUnitAsync = (
    prevVoices
 ) => async (dispatch) => {
    dispatch(createUnitStart());
-   const tags = formParams.tags.map((item) => {
-      return { name: item };
-   });
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await unitsApi.createUnit(topicID, params);
+      const response = await unitsApi.createUnit(topicID, {...formParams, voices: undefined});
       dispatch(createUnitSuccess(response.data));
-      dispatch(
-         addVoiceAsync(
-            response?.data?.id,
-            topicID,
-            voiceParams,
-            callback,
-            prevVoices
-         )
-      );
+      if (voiceParams) {
+         dispatch(addVoiceAsync(response?.data?.id, topicID, voiceParams, callback, prevVoices));
+      } else {
+         callback && callback(response?.data?.id)
+      }
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createUnitFailure(message));
+      window.alert(message)
    }
 };
 
@@ -151,7 +141,6 @@ export const createUnitAsync = (
  * @param {Object} formParams 
  * @param {Function} callback 
  * @param {Number} topicID 
- * @param {Boolean} isTagsUpdated 
  * @param {Object} voiceParams 
  * @param {Array<{id:Number}>} prevVoices 
  * @returns 
@@ -161,32 +150,24 @@ export const editUnitAsync = (
    formParams,
    callback,
    topicID,
-   isTagsUpdated,
    voiceParams,
    prevVoices
 ) => async (dispatch) => {
    dispatch(editUnitStart());
 
-   const tags = isTagsUpdated
-      ? formParams.tags.map((item) => {
-           return { name: item };
-        })
-      : formParams.tags;
-
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await unitsApi.editUnit(unitID, params);
+      // FIXME: A random backend's error 500 can be occurred while formParams.tags were changed
+      const response = await unitsApi.editUnit(unitID, {...formParams, voices: undefined});
       dispatch(editUnitSuccess(response.data));
-      dispatch(
-         addVoiceAsync(unitID, topicID, voiceParams, callback, prevVoices)
-      );
+      if (voiceParams) {
+         dispatch(addVoiceAsync(unitID, topicID, voiceParams, callback, prevVoices));
+      } else {
+         callback && callback(unitID)
+      }
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editUnitFailure(message));
+      window.alert(message)
    }
 };
 
@@ -201,6 +182,7 @@ export const deleteUnitAsync = (unitID, topicID) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(deleteUnitFailure(message));
+      window.alert(message)
    }
 };
 
@@ -231,6 +213,7 @@ export const addVoiceAsync = (
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(addVoiceFailure(message));
+      window.alert(message)
    }
 };
 
@@ -254,6 +237,7 @@ export const deletePrevVoiceAsync = (voices = [], topicID) => async (dispatch) =
       } catch (error) {
          const message = handleAJAXError(error);
          dispatch(deleteVoiceFailure(message));
+         window.alert(message)
       }
    }
    dispatch(deleteVoiceSuccess(response.data));

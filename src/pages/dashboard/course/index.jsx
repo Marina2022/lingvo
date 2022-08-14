@@ -106,7 +106,7 @@ const CoursePage = ({
    //    console.log(nativeLanguageDefaultValue, foreignLanguageDefaultValue);
    // }, [foreignLanguageDefaultValue, nativeLanguageDefaultValue])
    
-   const [updatedTags, setUpdatedTags] = useState(false);
+   const [isTagsUpdated, setIsTagsUpdated] = useState(false);
       
    const [changedInput, setChangedInput] = useState(false)
 
@@ -116,13 +116,12 @@ const CoursePage = ({
    );
 
    useEffect(() => {
-      // console.log('useEffect: setInitInput');
-      setInitInput(isSameCourse
-         ? { ...courseData, posts: [...courseData.posts], /*   tags: courseData?.tags,*/ }
-         : { name: "", tags: [], shared: false, nativeLanguage, foreignLanguage, posts: [], }
-      )
-      setChangedInput(true)
-   }, [courseData, foreignLanguage, nativeLanguage, isSameCourse])
+      if (isSameCourse) {
+         // console.log('useEffect: setInitInput');
+         setInitInput({ ...courseData, posts: [...courseData.posts], /*   tags: courseData?.tags,*/ })
+         setChangedInput(true)
+      }
+   }, [courseData, isSameCourse])
 
    const {
       inputState,
@@ -134,8 +133,10 @@ const CoursePage = ({
 
    useEffect(() => {
       const initObj = { ...initInput, posts: [...initInput.posts] }
-      !compareObjects(inputState, initObj) && setInputState(initObj)
-   }, [initInput, inputState, setInputState])
+      // console.log('useEffect - setInputState', initObj);
+      setInputState(initObj)
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [initInput])
 
    useEffect(() => {
       if (changedInput) {
@@ -144,6 +145,10 @@ const CoursePage = ({
          setChangedInput(false)
       }
    }, [changedInput, initInput, setInputState])
+
+   // useEffect(() => {
+   //    console.log('useEffect - inputState.tags:', inputState.tags);
+   // }, [inputState.tags])
 
    const onSelectChange = ({target: {value}}, languageType) => {
       
@@ -157,19 +162,16 @@ const CoursePage = ({
    const onSubmit = (event) => {
       event.preventDefault();
       if (courseId) {
-         dispatchEditCourseAsync(courseId, inputState, () => { dispatchGetCoursesAsync(); dispatchGetCourseAsync(courseId); }, updatedTags);
+         dispatchEditCourseAsync(courseId, inputState, () => { dispatchGetCoursesAsync(); dispatchGetCourseAsync(courseId); }, isTagsUpdated);
       } else {
          dispatchCreateCourseAsync(inputState, () => { dispatchGetCourseAsync(courseId); });
       }
    };
 
-   const handleSelectedTags = (items) => {
-      const tags = {
-         target: { name: "tags", value: items },
-      };
-
-      setUpdatedTags(true);
-      handleInput(tags);
+   const handleSelectedTags = (event) => {
+      // console.log(event);
+      setIsTagsUpdated(true);
+      handleInput({target: { name: "tags", value: event }});
    };
 
    const onCancel = (e) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 //BASE COMPONENTS
 import Form from "../../../components/form/Form.component";
@@ -98,20 +98,23 @@ const Topic = (props) => {
       : { text: "", tags: [], nativeLanguage, foreignLanguage, }
    );
 
-   useEffect(() => Object.keys(topicData).length > 0 
-      ? setInitTopic({ ...topicData })
-      : setInitTopic({ text: "", tags: [], nativeLanguage, foreignLanguage, })
-   , [foreignLanguage, nativeLanguage, topicData])
-
-   const [isTagsUpdated, changeIsTagsUpdated] = useState(false);
+   useEffect(() => {
+      if (Object.keys(topicData).length > 0 ) {
+         setInitTopic({ ...topicData })
+      }
+   }
+   , [topicData])
 
    const {
       inputState: topicInput,
       handleInput,
       handleInvalidMessage,
       invalidMessages,
-      // setInputState,
+      setInputState,
    } = useInput({ ...initTopic });
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   useEffect(() => setInputState({ ...initTopic }), [initTopic])
 
    const handleInputChange = (event) => {
       handleInput(event);
@@ -133,23 +136,25 @@ const Topic = (props) => {
       setNoChange(compareObjects(topicInput, initTopic) || !checkForEmptyProperties(topicInput))
    }, [initTopic, topicInput])
 
+   const navigate = useNavigate()
+   
    const onSubmit = (event) => {
       event.preventDefault();
       if (topicId) {
-         dispatchEditTopicAsync(topicId, topicInput, () => { dispatchGetTopicsAsync();  dispatchGetSingleTopicAsync(topicId); }, isTagsUpdated);
-      } else {
-         dispatchCreateTopicAsync(topicInput, () => { dispatchGetTopicsAsync(); });
+         dispatchEditTopicAsync(topicId, topicInput, () => { dispatchGetTopicsAsync();  dispatchGetSingleTopicAsync(topicId); });
+      } else {         
+         dispatchCreateTopicAsync(topicInput, (id) => { dispatchGetTopicsAsync(); navigate(`../${id}`); });
       }
    };
 
-   const handleSelectedTags = (items) => {
-      const tags = {
-         target: { name: "tags", value: items },
-      };
-
-      changeIsTagsUpdated(true);
-      handleInput(tags);
+   const handleSelectedTags = (event) => {
+      // console.log(event);
+      handleInput({target: { name: "tags", value: event.map(item => ({name:item})) }});
    };
+
+   // useEffect(() => {
+   //    console.log(topicInput.tags);
+   // }, [topicInput.tags])
 
    const onCancel = (e) => {
       e.preventDefault();
@@ -185,6 +190,7 @@ const Topic = (props) => {
             <Grid item xs={12}>
                <TagsInput
                   selectedTags={handleSelectedTags}
+                  tags={topicInput.tags.map(({name}) => name)}
                   fullWidth
                   variant="outlined"
                   id="tags"
@@ -251,14 +257,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   dispatchCreateTopicAsync: (params, callback) => 
-      dispatch(createTopicAsync(params, callback)),
-   dispatchGetSingleTopicAsync: (id) => 
-      dispatch(getSingleTopicAsync(id)),
-   dispatchGetTopicsAsync: () => 
-      dispatch(getTopicsAsync()),
-   dispatchEditTopicAsync: (id, params, callback, isTagsUpdated) => 
-      dispatch(editTopicAsync(id, params, callback, isTagsUpdated)),
+   dispatchCreateTopicAsync: (params, callback) => dispatch(createTopicAsync(params, callback)),
+
+   dispatchGetSingleTopicAsync: (id) => dispatch(getSingleTopicAsync(id)),
+
+   dispatchGetTopicsAsync: () => dispatch(getTopicsAsync()),
+   
+   dispatchEditTopicAsync: (id, params, callback, isTagsUpdated) => dispatch(editTopicAsync(id, params, callback, isTagsUpdated)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topic);

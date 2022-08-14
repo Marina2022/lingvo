@@ -117,6 +117,7 @@ export const getTopicsAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getTopicsFailure(message));
+      window.alert(message)
    }
 };
 
@@ -129,15 +130,11 @@ export const getTopicsAsync = () => async (dispatch) => {
  */
 export const createTopicAsync = (formParams, callback) => async (dispatch) => {
    dispatch(createTopicStart());
-   const tags = formParams.tags.map((item) => {
-      return { name: item };
-   });
    const params = {
       ...formParams,
       createdDate: null,
       published: null,
-      samples: [],
-      tags,
+      samples: []
    };
 
    try {
@@ -148,6 +145,7 @@ export const createTopicAsync = (formParams, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createTopicFailure(message));
+      window.alert(message)
    }
 };
 
@@ -162,6 +160,7 @@ export const deleteTopicAsync = (id) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(deleteTopicFailure(message));
+      window.alert(message)
    }
 };
 
@@ -175,6 +174,7 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getSingleTopicFailure(message));
+      window.alert(message)
    }
 };
 
@@ -184,26 +184,12 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
  * @param {Number} id 
  * @param {Object} formParams 
  * @param {Function} callback 
- * @param {Boolean} isTagsUpdated 
  * @returns 
  */
-export const editTopicAsync = (id, formParams, callback, isTagsUpdated) => async (dispatch) => {
+export const editTopicAsync = (id, formParams, callback) => async (dispatch) => {
    dispatch(editTopicStart());
-
-   delete formParams.author;
-   const tags = isTagsUpdated
-      ? formParams.tags.map((item) => {
-           return { name: item };
-        })
-      : formParams.tags;
-
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await topicsApi.editTopic(id, params);
+      const response = await topicsApi.editTopic(id, {...formParams, author: undefined});
 
       dispatch(editTopicSuccess(response.data));
       dispatch(getTopicsAsync());
@@ -211,6 +197,7 @@ export const editTopicAsync = (id, formParams, callback, isTagsUpdated) => async
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editTopicFailure(message));
+      window.alert(message)
    }
 };
 
@@ -232,5 +219,6 @@ export const publishTopicAsync = (topicID, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(publishTopicFailure(message));
+      window.alert(message)
    }
 };
