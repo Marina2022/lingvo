@@ -21,17 +21,15 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   };
 });
 
-const TagList = ({tags}) => {
+const TagList = ({tags, onClick}) => {
   return tags?.length > 0 
     ? <Breadcrumbs aria-label="breadcrumb" separator="" >
     {
-      tags.map((tag, idx) => 
-          <StyledBreadcrumb key="idx"
-                component="a"
-                href="#"
-                label="Home"                                          
-            />
-      )
+      tags
+        .sort(({name:a},{name:b}) => a < b ? -1 : a > b ? 1 : 0)
+        .map((tag, idx) => 
+          <StyledBreadcrumb key={idx} component="a" label={tag.name} onClick={() => onClick(tag)} sx={{'&:hover':{cursor:'pointer'}}}/>
+        )
     }
     </Breadcrumbs>
     : <></>

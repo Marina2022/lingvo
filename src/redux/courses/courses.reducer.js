@@ -87,6 +87,21 @@ const coursesReducer = (state = INITIAL_STATE, action) => {
          isCoursesUpdatedLoading: false,
          errorMessage: action.payload,
       };
+      //! UPDATE COURSE POSTS
+      case coursesActionTypes.UPDATE_COURSE_POSTS_START: return { 
+         ...state, 
+         isCoursesUpdatedLoading: true 
+      };
+      case coursesActionTypes.UPDATE_COURSE_POSTS_SUCCESS: return {
+         ...state,
+         isCoursesUpdatedLoading: false,
+         responseData: action.payload,
+      };
+      case coursesActionTypes.UPDATE_COURSE_POSTS_FAILURE: return {
+         ...state,
+         isCoursesUpdatedLoading: false,
+         errorMessage: action.payload,
+      };
       //! PUBLISH COURSE
       case coursesActionTypes.PUBLISH_COURSE_START: return { 
          ...state, 

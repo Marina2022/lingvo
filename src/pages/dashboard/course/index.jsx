@@ -106,8 +106,6 @@ const CoursePage = ({
    //    console.log(nativeLanguageDefaultValue, foreignLanguageDefaultValue);
    // }, [foreignLanguageDefaultValue, nativeLanguageDefaultValue])
    
-   const [isTagsUpdated, setIsTagsUpdated] = useState(false);
-      
    const [changedInput, setChangedInput] = useState(false)
 
    const [initInput, setInitInput] = useState(isSameCourse
@@ -162,7 +160,7 @@ const CoursePage = ({
    const onSubmit = (event) => {
       event.preventDefault();
       if (courseId) {
-         dispatchEditCourseAsync(courseId, inputState, () => { dispatchGetCoursesAsync(); dispatchGetCourseAsync(courseId); }, isTagsUpdated);
+         dispatchEditCourseAsync(courseId, inputState, () => { dispatchGetCoursesAsync(); dispatchGetCourseAsync(courseId); });
       } else {
          dispatchCreateCourseAsync(inputState, () => { dispatchGetCourseAsync(courseId); });
       }
@@ -170,8 +168,7 @@ const CoursePage = ({
 
    const handleSelectedTags = (event) => {
       // console.log(event);
-      setIsTagsUpdated(true);
-      handleInput({target: { name: "tags", value: event }});
+      handleInput({target: { name: "tags", value: event.map(tag => ({name: tag})) }});
    };
 
    const onCancel = (e) => {
@@ -220,7 +217,16 @@ const CoursePage = ({
          >
             <Grid container alignItems="center" justifyContent="center">
                <Grid item xs={12} sm={10} md={8} lg={6} container alignItems="center" >
-                  <AddTopics course={inputState} topicList={stateTopicsPublishedTopics} onAdd={() => {window.alert('add button')}} onCancel={() => setAddPost(false)}/>
+                  <AddTopics course={inputState} 
+                     topicList={stateTopicsPublishedTopics} 
+                     onAdd={(newPosts) => {
+                        setAddPost(false)
+                        console.log(inputState.posts);
+                        console.log(newPosts);
+                        handleInput({target: {name: 'posts', value: inputState.posts.concat(newPosts)}})
+                     }} 
+                     onCancel={() => setAddPost(false)}
+                  />
                </Grid>
             </Grid>
          </Modal>
@@ -243,7 +249,7 @@ const CoursePage = ({
                <Grid item xs={12}>
                   <TagsInput
                      selectedTags={handleSelectedTags}
-                     tags={inputState.tags}
+                     tags={inputState.tags.map(({name}) => name)}
                      fullWidth
                      variant="outlined"
                      id="tags"
@@ -337,7 +343,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => ({
    dispatchGetCourseAsync: (courseId) => dispatch(getCourseAsync(courseId)),
-   dispatchEditCourseAsync: (courseId, params) => dispatch(editCourseAsync(courseId, params)),
+   dispatchEditCourseAsync: (courseId, params, callback) => dispatch(editCourseAsync(courseId, params, callback)),
    dispatchCreateCourseAsync: (params, callback) => dispatch(createCourseAsync(params, callback)),
    dispatchGetCoursesAsync: () => dispatch(getCoursesAsync()),
 });

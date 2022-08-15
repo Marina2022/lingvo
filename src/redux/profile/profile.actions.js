@@ -78,6 +78,7 @@ export const getUserInfoAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getUserInfoFailure(message));
+      window.alert(message)
    }
 };
 
@@ -93,6 +94,7 @@ export const editAvatarAsync = (params) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editAvatarFailure(message));
+      window.alert(message)
    }
 };
 
@@ -108,6 +110,7 @@ export const updateUserAsync = (params) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(updateUserFailure(message));
+      window.alert(message)
    }
 };
 
@@ -123,6 +126,7 @@ export const updateLinkAsync = (params) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(updateLinkFailure(message));
+      window.alert(message)
    }
 };
 
@@ -137,5 +141,6 @@ export const subscribeLinkAsync = (params) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(subscribeLinkFailure(message));
+      window.alert(message)
    }
 };

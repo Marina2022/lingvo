@@ -55,18 +55,17 @@ const ProfilePage = (props) => {
    const [uploadedFiles, setUploadedFiles] = useState([]);
    const [isCopied, setIsCopied] = useState(false);
 
-   const [initInput] = useState({
-      ...stateProfileCurrentUserInfo, 
-      links: undefined, 
-      ...stateProfileCurrentUserInfo.links.map(({socialNet, url}) => (
-         { [socialNet.value]: socialNets.find(({name}) => name === socialNet.value) ? url : undefined }
-      ))   
-   });
+   const [initInput] = useState((() => {
+      // console.log(stateProfileCurrentUserInfo);
 
-   // stateProfileCurrentUserInfo.links.forEach(({socialNet, url}) => { 
-   //    socialNets.find(({name}) => name === socialNet.value) 
-   //       && (formInitState[socialNet.value] = url) 
-   // })
+      const {links: _, ...profile} = stateProfileCurrentUserInfo
+
+      stateProfileCurrentUserInfo.links.forEach(({socialNet, url}) => { 
+         socialNets.find(({name}) => name === socialNet.value) 
+            && (profile[socialNet.value] = url) 
+      })
+      return profile
+   })());
 
    useEffect(() => {
       if (stateProfileCurrentUserInfo?.id) {
@@ -79,6 +78,7 @@ const ProfilePage = (props) => {
       handleInput,
       handleInvalidMessage,
       invalidMessages,
+      setInputState
    } = useInput({ ...initInput });
    // useState(inputState.links);
 
@@ -102,27 +102,35 @@ const ProfilePage = (props) => {
 
    const copyAppLink = () => {
       setIsCopied(true);
-      setTimeout(() => {
-         setIsCopied(false);
-      }, 1000);
+      setTimeout(() => setIsCopied(false), 1000);
    };
 
    const onSaveClick = (e) => {
       e.preventDefault();
 
-      const out = {}
-      Object
-         .entries(inputState)
-         .forEach(([key,value]) => { 
-            !socialNets.find(({name}) => name === key) && value !== stateProfileCurrentUserInfo[key] && (out[key] = value) 
-         })
+      // console.log('inputState', inputState);
 
-      if (Object.keys(out).length > 0) {
-         out.id = inputState.id
-         console.log("prepare person => ", out);
-      }
+      const {avatar: _, ...profile} = inputState
 
-      dispatchUpdateUserAsync(out);
+      socialNets.forEach(({name}) => delete profile[name])
+
+      // console.log('profile', profile);
+
+      dispatchUpdateUserAsync(profile)
+
+      // const out = {}
+      // Object
+      //    .entries(inputState)
+      //    .forEach(([key,value]) => { 
+      //       !socialNets.find(({name}) => name === key) && value !== stateProfileCurrentUserInfo[key] && (out[key] = value) 
+      //    })
+
+      // if (Object.keys(out).length > 0) {
+      //    out.id = inputState.id
+      //    console.log("prepare person => ", out);
+      // }
+
+      // dispatchUpdateUserAsync(out);
 
       socialNets.forEach(({name}) => {
          const prevUrl = stateProfileCurrentUserInfo.links.find(({socialNet}) => socialNet.value === name)?.url
@@ -327,7 +335,7 @@ const ProfilePage = (props) => {
                      </Button>
                   </Grid>
                   <Grid item xs={5} lg={3}>
-                     <Button disabled={noChange} variant="outlined" color="primary">{t("actions.cancel")}</Button>
+                     <Button disabled={noChange} onClick={() => setInputState(initInput)} variant="outlined" color="primary">{t("actions.cancel")}</Button>
                   </Grid>
 
                   <Divider sx={{ my:'3rem'}}/>

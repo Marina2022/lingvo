@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { t } from "i18next";
 import { DeleteOutline } from "@mui/icons-material";
+import TagList from "../../../components/tag-list";
 
 /**
  * 
@@ -10,13 +11,25 @@ import { DeleteOutline } from "@mui/icons-material";
  *    courseName: String, 
  *    courseInfo: String, 
  *    courseTrainings: String, 
+ *    courseTags: Array<{name:String}>
  *    coursePrice: String, 
+ *    setFilter: Function,
  *    onOpen: Function, 
  *    onDelete: Function 
  * }} param0 
  * @returns 
  */
-const CourseItem = ({courseStatus, courseName, courseInfo, courseTrainings, coursePrice, onOpen, onDelete}) => {
+const CourseItem = ({
+   courseStatus, 
+   courseName, 
+   courseInfo, 
+   courseTrainings, 
+   courseTags, 
+   coursePrice, 
+   setFilter, 
+   onOpen, 
+   onDelete
+}) => {
 
    return <Card sx={{ 
       minWidth: 215, 
@@ -39,6 +52,9 @@ const CourseItem = ({courseStatus, courseName, courseInfo, courseTrainings, cour
             courseStatus ? t("courses.course.states.published") : t("courses.course.states.unpublished")
          }
          </Typography>
+         <Grid container>
+            <TagList tags={courseTags} onClick={({name}) => setFilter && setFilter(name)} />
+         </Grid>
          <Grid container alignItems="flex-end" justifyContent="space-between">
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                {courseTrainings}

@@ -19,6 +19,13 @@ const coursesApi = {
    /**
     * 
     * @param {Number} courseId 
+    * @param {Array<Number>} postIds 
+    * @returns 
+    */
+   updatePosts: (courseId, postIds) => axios.put(`courses/${courseId}/post?${postIds.map(postId => `postIds=${postId}`).join('&')}`),
+    /**
+    * 
+    * @param {Number} courseId 
     * @returns 
     */
    deleteCourse: (courseId) => axios.delete(`courses/${courseId}`),

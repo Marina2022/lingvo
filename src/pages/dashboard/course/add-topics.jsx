@@ -35,9 +35,10 @@ const AddTopics = ({
     )
     .map(topic => ({...topic, checked:false})))
 
-  const onChange = (id) => {
+  const onChange = (ID) => {
     const newTopics = [...topics]
-    newTopics[id].checked = !newTopics[id].checked
+    const topic = newTopics.find(({id}) => id === ID)
+    topic.checked = !topic.checked
     setTopics(newTopics)
   }
 
@@ -62,11 +63,12 @@ const AddTopics = ({
         sx={{ my: '1rem' }}
       />
 
-      <Grid container item xs={12} md={10} lg={8}>
+      <Grid container item xs={12}>
       {
         topics
-          .filter(({text, tags}) => !filter || `${text}|${tags.join('|')}`.toLowerCase().includes(filter))
-          .map(({text, checked, tags, createdDate}, idx) => {          
+          .filter(({text, tags}) => !filter || `${text}|${tags.map(({name}) => name).join('|')}`.toLowerCase().includes(filter))
+          .sort(({text:a},{text:b}) => a<b?-1:a>b?1:0)
+          .map(({id, text, checked, tags, createdDate}, idx) => {          
           return <Card key={`${idx}`} sx={{width:'100%', my:'0.5rem' }}>
             <CardContent>
               <Grid container alignItems="center">
@@ -81,10 +83,10 @@ const AddTopics = ({
                       </Typography>
                     </Grid>
                   </Grid>
-                  <TagList tags={tags} />
+                  <TagList tags={tags} onClick={({name}) => setFilter && setFilter(name)}/>
                 </Grid>
                 <Grid item xs={1}>
-                  <Checkbox checked={checked} onChange={()=>{onChange(idx)}}/>
+                  <Checkbox checked={checked} onChange={()=>{onChange(id)}}/>
                 </Grid>
               </Grid>
             </CardContent>
@@ -94,10 +96,14 @@ const AddTopics = ({
       </Grid>
       <Grid container spacing={2} marginTop="1rem" justifyContent="space-around">
         <Grid item xs={5} sm={5} md={4} lg={3}>
-          <Button fullWidth variant="contained" onClick={onAdd} disabled={addDisabled}>{t("actions.add")}</Button>
+          <Button fullWidth variant="contained" disabled={addDisabled} onClick={() => { 
+            onAdd && onAdd(topics?.filter(({checked}) => checked).map(({checked, ...otherProps}) => otherProps))
+          }} >
+            {t("actions.add")}
+          </Button>
         </Grid>
         <Grid item xs={5} sm={5} md={4} lg={3}>
-          <Button fullWidth variant="outlined" onClick={onCancel} disabled={addDisabled}>{t("actions.cancel")}</Button>
+          <Button fullWidth variant="outlined" onClick={onCancel}>{t("actions.cancel")}</Button>
         </Grid>
       </Grid>
     </Box>

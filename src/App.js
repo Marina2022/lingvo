@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 //ROUTES
-import AuthRoutes from "./pages/auth/AuthPages";
+import AuthRoutes from "./pages/auth";
 import DashboardRoutes from "./pages/dashboard";
 
 //ACTIONS

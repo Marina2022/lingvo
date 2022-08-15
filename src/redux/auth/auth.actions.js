@@ -4,7 +4,7 @@ import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //LOG OUT
 export const userLogout = (errorMessage = "") => ({
-   type: authActionTypes.USER_LOG_OUT,
+   type: authActionTypes.USER_LOGOUT,
    payload: errorMessage,
 });
 

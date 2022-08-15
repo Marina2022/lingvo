@@ -119,6 +119,7 @@ const TopicsBody = (props) => {
                      >
                         <TopicList 
                            filter={inputState.search} 
+                           setFilter={(newFilter) => handleInput({target:{name:'search',value: newFilter.toLowerCase()}})}
                            itemsList={item.itemsList} 
                            isLoading={stateTopicsIsTopicsLoading} 
                         />

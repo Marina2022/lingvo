@@ -64,6 +64,7 @@ export const getCoursesAsync = () => async (dispatch) => {
       console.error('error:', error);
       const message = handleAJAXError(error);
       dispatch(getCoursesSuccess(message));
+      window.alert(message)
    }
 };
 
@@ -90,10 +91,11 @@ export const createCourseAsync = (formParams, callback) => async (dispatch) => {
       const resp = await coursesApi.createCourse(params);
       dispatch(createCourseSuccess({ ...resp.data }));
       dispatch(getCoursesAsync());
-      callback && callback()
+      callback && callback(resp?.data?.id)
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createCourseFailure(message));
+      window.alert(message)
    }
 };
 
@@ -127,6 +129,7 @@ export const getCourseAsync = (id) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error)
       dispatch(getCourseFailure(message))
+      window.alert(message)
    }
 }
 
@@ -151,31 +154,62 @@ const editCourseFailure = (message) => ({
  * @param {Number} id 
  * @param {Object} formParams 
  * @param {Function} callback 
- * @param {Boolean} isTagsUpdated 
  * @returns 
  */
-export const editCourseAsync = (id, formParams, callback, isTagsUpdated) => async (dispatch) => {
+export const editCourseAsync = (id, formParams, callback) => async (dispatch) => {
    await dispatch(editCourseStart())
 
-   delete formParams.author;
-   const tags = isTagsUpdated
-      ? formParams.tags.map((item) => {
-           return { name: item };
-        })
-      : formParams.tags;
-
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await coursesApi.editCourse(id, params)
-      dispatch(editCourseSuccess(response.data))
-      callback && callback()
+      const {posts: _, ...otherProps} = formParams
+      const response = await coursesApi.editCourse(id, otherProps)
+      if (formParams.posts?.length > 0) {
+         await dispatch(updatePostsAsync(id, formParams.posts, callback))
+         dispatch(editCourseSuccess(response.data))
+      } else {
+         dispatch(editCourseSuccess(response.data))
+         callback && callback()
+      }
    } catch (error) {
       const message = handleAJAXError(error)
       dispatch(editCourseFailure(message))
+      window.alert(message)
+   }
+}
+
+// UPDATE COURSE POSTS
+
+const updatePostStart = () => ({
+   type: coursesActionTypes.UPDATE_COURSE_POSTS_START,
+})
+
+const updatePostSuccess = (data) => ({
+   type: coursesActionTypes.UPDATE_COURSE_POSTS_SUCCESS,
+   payload: data
+})
+
+const updatePostsFailure = (message) => ({
+   type: coursesActionTypes.UPDATE_COURSE_POSTS_FAILURE,
+   payload: message
+})
+
+/**
+ * 
+ * @param {Number} id 
+ * @param {Array<Object>} posts 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const updatePostsAsync = (id, posts, callback) => async (dispatch) => {
+   await dispatch(updatePostStart())
+
+   try {
+      const response = await coursesApi.updatePosts(id, posts.map(post => post.id))
+      dispatch(updatePostSuccess(response.data))
+      callback && callback()
+   } catch (error) {
+      const message = handleAJAXError(error)
+      dispatch(updatePostsFailure(message))
+      window.alert(message)
    }
 }
 
@@ -210,6 +244,7 @@ export const deleteCourseAsync = (id, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error)
       dispatch(deleteCourseFailure(message))
+      window.alert(message)
    }
 }
 
@@ -245,5 +280,6 @@ export const publishCourseAsync = (id, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error)
       dispatch(publishCourseFailure(message))
+      window.alert(message)
    }
 }

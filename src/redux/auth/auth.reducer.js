@@ -16,9 +16,9 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
    switch (action.type) {
-      case authActionTypes.USER_LOG_OUT: {
-         window.localStorage.clear();
-         window.sessionStorage.clear();
+      case authActionTypes.USER_LOGOUT: {
+         // window.localStorage.clear();
+         // window.sessionStorage.clear();
          return { ...INITIAL_STATE, errorMessage: action.payload };
       }
       //! USER LOGIN

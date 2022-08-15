@@ -9,8 +9,9 @@ import { t } from "i18next";
 import { useNavigate } from "react-router-dom";
 import { deleteTopicAsync } from "../../../redux/topics/topics.actions";
 import { connect } from "react-redux";
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material";
 import { toDigestString } from "../../../utilities/helper-functions";
+import TagList from "../../../components/tag-list";
 
 /**
  * 
@@ -27,6 +28,7 @@ const TopicList = ({
    itemsList,
    isLoading,
    filter,
+   setFilter,
    navPrefix = '',
    onDelete
 }) => {
@@ -43,6 +45,7 @@ const TopicList = ({
       {
          itemsList
             .filter(item => !filterLC || toDigestString(item).includes(filterLC))
+            .sort(({text:a},{text:b}) => a < b ? -1 : a > b ? 1 : 0)
             .map((item, idx) => (
 
             <Card key={idx} sx={{ 
@@ -52,21 +55,30 @@ const TopicList = ({
                justifyContent:"space-between", 
                alignItems:"center"               
             }}>
-               <CardContent sx={{ color: 'dimgray', '> *' : { padding: '0.3rem' } }}>
-
-                  <Typography 
-                     sx={{ fontSize: '1.2rem', fontWeight: 'medium', color:"Chocolate", '&:hover': { cursor: 'pointer', color: 'sandybrown' } }}
-                     onClick={() => navigate(`${navPrefix}${item?.id}`)}
-                  >
-                     {item?.text}
-                  </Typography>
-                  <Typography sx={{ fontSize: '0.75em'}}>
-                     {`${item?.nativeLanguage?.value} - ${item?.foreignLanguage?.value}`}
-                  </Typography>
-                  <Typography sx={{ color: 'lightgray', fontSize: '0.75em'}}>
-                     {(new Date(item?.createdDate)).toLocaleString()}
-                  </Typography>
-
+               <CardContent sx={{ flex: 1, color: 'dimgray', '> *' : { padding: '0.3rem' } }}>
+                  <Grid container>
+                     <Grid item xs={12}>
+                        <Typography 
+                           sx={{ fontSize: '1.2rem', fontWeight: 'medium', color:"Chocolate", '&:hover': { cursor: 'pointer', color: 'sandybrown' } }}
+                           onClick={() => navigate(`${navPrefix}${item?.id}`)}
+                        >
+                           {item?.text}
+                        </Typography>
+                     </Grid>
+                     <Grid item xs={12} container justifyContent="space-between">
+                        <Grid item xs={6}>
+                           <Typography sx={{ fontSize: '0.75em'}}>
+                              {`${item?.nativeLanguage?.value} - ${item?.foreignLanguage?.value}`}
+                           </Typography>
+                        </Grid>
+                        <Grid item xs={6} textAlign="end">
+                           <Typography sx={{ color: 'lightgray', fontSize: '0.75em'}}>
+                              {(new Date(item?.createdDate)).toLocaleString()}
+                           </Typography>
+                        </Grid>
+                     </Grid>
+                     <TagList tags={item.tags} onClick={({name}) => { setFilter && setFilter(name) }}/>
+                  </Grid>
                </CardContent>
 
                <CardActions sx={{ 

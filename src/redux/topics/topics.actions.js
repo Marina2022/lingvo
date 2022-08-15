@@ -189,7 +189,8 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
 export const editTopicAsync = (id, formParams, callback) => async (dispatch) => {
    dispatch(editTopicStart());
    try {
-      const response = await topicsApi.editTopic(id, {...formParams, author: undefined});
+      // FIXME: Error 500 while tags changed https://stackoverflow.com/questions/2302802/how-to-fix-the-hibernate-object-references-an-unsaved-transient-instance-save 
+      const response = await topicsApi.editTopic(id, {...formParams, author: undefined, samples: undefined});
 
       dispatch(editTopicSuccess(response.data));
       dispatch(getTopicsAsync());

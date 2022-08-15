@@ -5,7 +5,7 @@ const profileApi = {
    editAvatar: (params) => axios.post("avatars", { ...params }),
    updateUserData: (params) => axios.put("users", { ...params }),
    updateLink: (params) => {
-      console.log(params);
+      // console.log(params);
       return axios.put("users/link", null, { params: { ...params } });
    },
    subscribeLink: (params) => axios.get("subscribes/link", { ...params }),

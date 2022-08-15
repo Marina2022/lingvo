@@ -79,7 +79,9 @@ const CoursesBody = ({ dispatchGetCoursesAsync, dispatchDeleteCourseAsync }) => 
                         courseStatus={course.shared}
                         courseInfo={t("courses.summary")}
                         courseTrainings={t("trainings.number_of", {count: course.posts.length})}
+                        courseTags={course.tags}
                         coursePrice={t("courses.course.cost", {count: JSON.parse(course.cost)})}
+                        setFilter={({name}) => handleInputChange({target:{name:'search',value:name}})}
                         onOpen={() => navigate(`${course.id}`)}
                         onDelete={() => { window.confirm(t("messages.confirm.deleteItem")) && dispatchDeleteCourseAsync(course.id) }}
                      />
