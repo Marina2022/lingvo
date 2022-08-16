@@ -1,0 +1,29 @@
+//PAGES STYLES
+@import "auth/login/login.styles";
+@import "auth/register/register.styles";
+@import "auth/reset-password/reset-password.styles";
+@import "auth/set-new-password/set-new-password.styles";
+// @import "dashboard/topics/index";
+@import "dashboard/profile/index";
+
+//LAYOUTS' STYLES
+@import "dashboard/layout/index";
+
+@import "~bootstrap/scss/_mixins.scss";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+
+.dashboard-page {
+   height: inherit;
+   display: flex;
+   flex-direction: column;
+
+   > div {
+      flex: 1;
+      overflow-y: auto;
+
+      > * {
+         flex-shrink: 0;
+      }
+   }
+}

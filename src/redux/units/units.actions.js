@@ -1,7 +1,7 @@
 import { unitsActionTypes } from "./units.types";
 import unitsApi from "./units.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
-import { getSingleTopicAsync } from "redux/topics/topics.actions";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
+import { getSingleTopicAsync } from "../../redux/topics/topics.actions";
 
 // ACTION FOR SETTING SELECTED UNIT
 export const setSelectedUnit = (unit) => ({
@@ -97,76 +97,77 @@ export const getSingleUnitAsync = (unitID) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getSingleUnitFailure(message));
+      window.alert(message)
    }
 };
 
 // CREATE UNIT ASYNC
+/**
+ * 
+ * @param {Number} topicID 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Object} voiceParams 
+ * @param {Array<{id:Number}} prevVoices 
+ * @returns 
+ */
 export const createUnitAsync = (
    topicID,
    formParams,
-   history,
+   callback,
    voiceParams,
-   prevVoiceId
+   prevVoices
 ) => async (dispatch) => {
    dispatch(createUnitStart());
-   const tags = formParams.tags.map((item) => {
-      return { name: item };
-   });
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await unitsApi.createUnit(topicID, params);
+      const response = await unitsApi.createUnit(topicID, {...formParams, voices: undefined});
       dispatch(createUnitSuccess(response.data));
-      dispatch(
-         addVoiceAsync(
-            response?.data?.id,
-            topicID,
-            voiceParams,
-            history,
-            prevVoiceId
-         )
-      );
+      if (voiceParams) {
+         dispatch(addVoiceAsync(response?.data?.id, topicID, voiceParams, callback, prevVoices));
+      } else {
+         callback && callback(response?.data?.id)
+      }
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createUnitFailure(message));
+      window.alert(message)
    }
 };
 
 // EDIT UNIT ASYNC
+/**
+ * 
+ * @param {Number} unitID 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @param {Number} topicID 
+ * @param {Object} voiceParams 
+ * @param {Array<{id:Number}>} prevVoices 
+ * @returns 
+ */
 export const editUnitAsync = (
    unitID,
    formParams,
-   history,
+   callback,
    topicID,
-   isTagsUpdated,
    voiceParams,
-   prevVoiceId
+   prevVoices
 ) => async (dispatch) => {
    dispatch(editUnitStart());
 
-   const tags = isTagsUpdated
-      ? formParams.tags.map((item) => {
-           return { name: item };
-        })
-      : formParams.tags;
-
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await unitsApi.editUnit(unitID, params);
+      // FIXME: A random backend's error 500 can be occurred while formParams.tags were changed
+      const response = await unitsApi.editUnit(unitID, {...formParams, voices: undefined});
       dispatch(editUnitSuccess(response.data));
-      dispatch(
-         addVoiceAsync(unitID, topicID, voiceParams, history, prevVoiceId)
-      );
+      if (voiceParams) {
+         dispatch(addVoiceAsync(unitID, topicID, voiceParams, callback, prevVoices));
+      } else {
+         callback && callback(unitID)
+      }
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editUnitFailure(message));
+      window.alert(message)
    }
 };
 
@@ -181,40 +182,64 @@ export const deleteUnitAsync = (unitID, topicID) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(deleteUnitFailure(message));
+      window.alert(message)
    }
 };
 
 // ADD UNIT VOICE ASYINC
+/**
+ * 
+ * @param {Number} unitID 
+ * @param {Number} topicID 
+ * @param {Object} params 
+ * @param {Function} callback 
+ * @param {Array<{id:Number}>} prevVoices 
+ * @returns 
+ */
 export const addVoiceAsync = (
    unitID,
    topicID,
    params,
-   history,
-   prevVoiceID
+   callback,
+   prevVoices
 ) => async (dispatch) => {
    dispatch(addVoiceStart());
 
    try {
       const response = await unitsApi.addVoice(unitID, params);
       dispatch(addVoiceSuccess(response.data));
-      dispatch(deletePrevVoiceAsync(prevVoiceID, topicID));
-      history.push(`/topics/${topicID}/units`);
+      dispatch(deletePrevVoiceAsync(prevVoices, topicID));
+      callback && callback(unitID)
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(addVoiceFailure(message));
+      window.alert(message)
    }
 };
 
 // DELETE UNIT VOICE ASYINC
-export const deletePrevVoiceAsync = (voiceID, topicID) => async (dispatch) => {
+/**
+ * 
+ * @param {Array<{id:Number}>} voices 
+ * @param {*} topicID 
+ * @returns 
+ */
+export const deletePrevVoiceAsync = (voices = [], topicID) => async (dispatch) => {
    dispatch(deleteVoiceStart());
 
-   try {
-      const response = await unitsApi.deleteVoice(voiceID);
-      dispatch(deleteVoiceSuccess(response.data));
-      dispatch(getSingleTopicAsync(topicID));
-   } catch (error) {
-      const message = handleAJAXError(error);
-      dispatch(deleteVoiceFailure(message));
+   const response = { data: [] }
+
+   for (let idx = 0; idx < voices.length; idx++) {
+      try {
+         const voiceId = voices[idx].id;
+         const result = await unitsApi.deleteVoice(voiceId)
+         response.data.push(result.data)
+      } catch (error) {
+         const message = handleAJAXError(error);
+         dispatch(deleteVoiceFailure(message));
+         window.alert(message)
+      }
    }
+   dispatch(deleteVoiceSuccess(response.data));
+   dispatch(getSingleTopicAsync(topicID));
 };

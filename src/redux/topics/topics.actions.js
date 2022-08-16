@@ -1,12 +1,12 @@
 import { topicsActionTypes } from "./topics.types";
 import topicsApi from "./topics.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 //ACTION FOR SELECTING SPECIFIC TOPIC
-export const setSelectedTopic = (topic) => ({
-   type: topicsActionTypes.SET_SELECTED_TOPIC,
-   payload: topic,
-});
+// export const setSelectedTopic = (topic) => ({
+//    type: topicsActionTypes.SET_SELECTED_TOPIC,
+//    payload: topic,
+// });
 
 //ACTIONS FOR GETTING TOPICS
 const getTopicsStart = () => ({
@@ -117,31 +117,35 @@ export const getTopicsAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getTopicsFailure(message));
+      window.alert(message)
    }
 };
 
 //CREATE TOPIC ASYNC
-export const createTopicAsync = (formParams, history) => async (dispatch) => {
+/**
+ * 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const createTopicAsync = (formParams, callback) => async (dispatch) => {
    dispatch(createTopicStart());
-   const tags = formParams.tags.map((item) => {
-      return { name: item };
-   });
    const params = {
       ...formParams,
       createdDate: null,
       published: null,
-      samples: [],
-      tags,
+      samples: []
    };
 
    try {
       const resp = await topicsApi.createTopic(params);
       dispatch(createTopicSuccess({ ...resp.data }));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createTopicFailure(message));
+      window.alert(message)
    }
 };
 
@@ -156,12 +160,13 @@ export const deleteTopicAsync = (id) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(deleteTopicFailure(message));
+      window.alert(message)
    }
 };
 
 //GET SINGLE TOPIC ASYNC
 export const getSingleTopicAsync = (id) => async (dispatch) => {
-   dispatch(getSingleTopicStart());
+   await dispatch(getSingleTopicStart());
 
    try {
       const response = await topicsApi.getSingleTopics(id);
@@ -169,53 +174,52 @@ export const getSingleTopicAsync = (id) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getSingleTopicFailure(message));
+      window.alert(message)
    }
 };
 
 //EDIT TOPIC ASYNC
-export const editTopicAsync = (
-   id,
-   formParams,
-   history,
-   isTagsUpdated
-) => async (dispatch) => {
+/**
+ * 
+ * @param {Number} id 
+ * @param {Object} formParams 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const editTopicAsync = (id, formParams, callback) => async (dispatch) => {
    dispatch(editTopicStart());
-
-   delete formParams.author;
-   const tags = isTagsUpdated
-      ? formParams.tags.map((item) => {
-           return { name: item };
-        })
-      : formParams.tags;
-
-   const params = {
-      ...formParams,
-      tags,
-   };
-
    try {
-      const response = await topicsApi.editTopic(id, params);
+      // FIXME: Error 500 while tags changed https://stackoverflow.com/questions/2302802/how-to-fix-the-hibernate-object-references-an-unsaved-transient-instance-save 
+      const response = await topicsApi.editTopic(id, {...formParams, author: undefined, samples: undefined});
 
       dispatch(editTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(editTopicFailure(message));
+      window.alert(message)
    }
 };
 
 // PUBLISH TOPIC ASYNC
-export const publishTopicAsync = (topicID, history) => async (dispatch) => {
+/**
+ * 
+ * @param {Number} topicID 
+ * @param {Function} callback 
+ * @returns 
+ */
+export const publishTopicAsync = (topicID, callback) => async (dispatch) => {
    dispatch(publishTopicStart());
 
    try {
       const response = await topicsApi.publishTopic(topicID);
       dispatch(publishTopicSuccess(response.data));
       dispatch(getTopicsAsync());
-      history.push("/topics");
+      callback && callback()
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(publishTopicFailure(message));
+      window.alert(message)
    }
 };

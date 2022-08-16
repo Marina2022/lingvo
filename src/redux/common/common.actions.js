@@ -1,6 +1,6 @@
 import { commonActionTypes } from "./common.types";
 import commonApi from "./common.api";
-import handleAJAXError from "utilities/handleAJAXError.utility";
+import handleAJAXError from "../../utilities/handleAJAXError.utility";
 
 // ACTIONS FOR GETTING LANGUAGES LIST
 const getLanguagesListStart = () => ({
@@ -34,7 +34,8 @@ export const getLanguagesListAsync = () => async (dispatch) => {
 
    try {
       const response = await commonApi.getLanguagesList();
-      dispatch(getLanguagesListSuccess(response.data));
+      const response2 = await commonApi.getNativeLanguageList()
+      dispatch(getLanguagesListSuccess({ foreign: response.data, native: response2.data}));
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getLanguagesListFailure(message));

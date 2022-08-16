@@ -1,25 +1,30 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
-import googleIcon from "assets/images/auth/google-icon.png";
-import fbIcon from "assets/images/auth/fb-icon.png";
-import vkIcon from "assets/images/auth/vk-icon.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
+// import googleIcon from "../../../assets/images/auth/google-icon.png";
+// import fbIcon from "../../../assets/images/auth/fb-icon.png";
+// import vkIcon from "../../../assets/images/auth/vk-icon.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { loginAsync } from "redux/auth/auth.actions";
+import { loginAsync } from "../../../redux/auth/auth.actions";
+import { t } from "i18next";
+import { Grid } from "@mui/material";
 
-const LoginPage = (props) => {
-   const { loginAsync, isLoading } = props;
+/**
+ * 
+ * @param {{loginAsync:Function, isLoading:Boolean}} param0 
+ * @returns 
+ */
+const LoginPage = ({ loginAsync, isLoading }) => {
 
-   const history = useHistory();
+   const navigate = useNavigate();
    const {
       inputState,
       handleInput,
@@ -35,7 +40,7 @@ const LoginPage = (props) => {
       e.preventDefault();
       loginAsync(
          { email: inputState.email, password: inputState.password },
-         history
+         () => navigate("/topics")
       );
    };
    // const logout = () => {
@@ -49,17 +54,17 @@ const LoginPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="login-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
                <div className="login-page__auth-block-card">
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
                      lg={6}
                      className="fields__block">
-                     <div className="fields__block-text">Войти</div>
+                     <div className="fields__block-text">{t("actions.sign_in")}</div>
                      <form onSubmit={login}>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="email"
                               value={inputState.email}
@@ -68,80 +73,83 @@ const LoginPage = (props) => {
                               onInvalid={handleInvalidMessage}
                               autoComplete="on"
                               label="E-mail"
-                              type="text"
+                              type="email"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="password"
                               value={inputState.password}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Пароль"
+                              label={t("auth.login.password")}
                               type="password"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
-                           <Button isLoading={isLoading} type="submit">
-                              Войти
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
+                           <Button variant="contained" sx={{ backgroundColor:"chocolate" }} isLoading={isLoading} type="submit">
+                              {t("actions.sign_in")}
                            </Button>
-                        </GridItem>
+                        </Grid>
                      </form>
                      <div
-                        onClick={() => history.push("/reset-password")}
+                        onClick={() => navigate("/reset-password")}
                         className="forgot-creds__block">
-                        Забыли логин или пароль?
+                           {t("auth.login.forgotten_login_password")}
                      </div>
-                  </GridItem>
-                  <span className="separator" />
-                  <GridItem
+                  </Grid>
+                  {/* <span className="separator" />
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={6}
                      lg={6}
                      className="social-network__block">
-                     <GridItem
+                     <Grid item
                         xs={12}
                         sm={12}
                         md={6}
                         lg={6}
                         className="social-network__block-text">
-                        или через социальные сети
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                        {t("auth.login.with_social_media")}
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={googleIcon}>
-                           Google +
+                           Google+
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={vkIcon}>
-                           Вконтакте
+                           {t("social_media.VK.title")}
                         </Button>
-                     </GridItem>
-                     <GridItem xs={12} sm={12} md={9} lg={9}>
+                     </Grid>
+                     <Grid item xs={12} sm={12} md={9} lg={9}>
                         <Button
                            className="social-network__buttons"
                            src={fbIcon}>
                            Facebook
                         </Button>
-                     </GridItem>
-                  </GridItem>
+                     </Grid>
+                  </Grid> */}
                </div>
-            </GridItem>
+            </Grid>
          </div>
          <div className="login-page__footer">
-            <h3>У вас ещё нет аккаунта? </h3>
+            {/* eslint-disable-next-line no-irregular-whitespace */}
+            <h3>{t("auth.login.no_account")}</h3>
             <Button
-               onClick={() => history.push("/register")}
+               variant="contained"
+               onClick={() => navigate("/register")}
+               sx={{ backgroundColor:"sandybrown" }}
                className="register-link__button">
-               Регистрация
+               {t("actions.signing_up")}
             </Button>
          </div>
       </div>
@@ -157,7 +165,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   loginAsync: (email, password) => dispatch(loginAsync(email, password)),
+   loginAsync: ({email, password}, callback) => dispatch(loginAsync({email, password}, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

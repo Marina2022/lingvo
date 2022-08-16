@@ -1,14 +1,14 @@
-.u-relative {
-  position: relative;
-}
+// .u-relative {
+//   position: relative;
+// }
 
-.hidden {
-  display: none;
-}
+// .hidden {
+//   display: none;
+// }
 
-.visible {
-  display: flex;
-}
+// .visible {
+//   display: flex;
+// }
 
 .error-message {
   color: red;
@@ -20,26 +20,57 @@
   line-height: 20px;
 }
 
-.flex {
-  &-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+// .flex {
+//   &-center {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
 
-  &-horizontal-center {
-    display: flex;
-    justify-content: center;
-  }
+//   &-horizontal-center {
+//     display: flex;
+//     justify-content: center;
+//   }
 
-  &-vertical-center {
-    display: flex;
-    align-items: center;
-  }
-}
+//   &-vertical-center {
+//     display: flex;
+//     align-items: center;
+//   }
+// }
 
 .p-b {
   &__1 {
     padding-bottom: 1rem;
+    &__disabled {
+      div {
+        input {
+          background-color: lightgray;          
+        }
+      }
+    }
   }
+  &__2 {
+    div {
+      input {
+        background-color: lightgray;
+        &:hover {
+          color: whitesmoke;
+          background-color: dodgerblue;
+          cursor:pointer;
+        }
+      }
+    }
+  }
+  &__3 {
+    div {
+      input {
+        background-color: deeppink;
+        color: whitesmoke;
+      }
+    }
+  }
+}
+
+.copy-done {
+  color: crimson;
 }

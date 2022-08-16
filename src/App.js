@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 //ROUTES
-import AuthRoutes from "./pages/auth/AuthPages";
-import DashbaordRoutes from "./pages/dashboard/DashboardPages";
+import AuthRoutes from "./pages/auth";
+import DashboardRoutes from "./pages/dashboard";
 
 //ACTIONS
-import { getLanguagesListAsync } from "redux/common/common.actions";
+import { getLanguagesListAsync } from "./redux/common/common.actions";
 import "./App.scss";
+import { useTranslation } from "react-i18next";
 
 function App(props) {
-   const { token, getLanguagesListAsync } = props;
-   const View = token ? <DashbaordRoutes /> : <AuthRoutes />;
+   const { token, languagesList, getLanguagesListAsync } = props;
+   const View = token ? <DashboardRoutes /> : <AuthRoutes />;
+
+   // const { t, i18n } = useTranslation();
+   useTranslation();
 
    useEffect(() => {
-      getLanguagesListAsync();
-      //eslint-disable-next-line
-   }, []);
+      token && !languagesList && getLanguagesListAsync();
+   }, [getLanguagesListAsync, languagesList, token]);
 
    useEffect(() => {
       //remove btn class from bootstrap
@@ -29,9 +32,10 @@ function App(props) {
    return <div className="app">{View}</div>;
 }
 const mapStateToProps = (state) => {
-   const { auth } = state;
+   const { auth, common } = state;
    return {
       token: auth.token,
+      languagesList: common.languagesList,
    };
 };
 

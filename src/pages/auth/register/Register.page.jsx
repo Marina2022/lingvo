@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { authRegisterAsync } from "redux/auth/auth.actions";
+import { authRegisterAsync } from "../../../redux/auth/auth.actions";
+import { t } from 'i18next'
+import { Grid } from "@mui/material";
 
 const RegisterPage = (props) => {
    const { authRegisterAsync, isLoading } = props;
    const [errorMessage, setErrorMessage] = useState("");
 
-   const history = useHistory();
+   const navigate = useNavigate();
    const {
       inputState,
       handleInput,
@@ -35,10 +36,10 @@ const RegisterPage = (props) => {
       e.preventDefault();
       const params = { ...inputState, role: "AUTHOR" };
       if (inputState.password !== inputState.rePassword) {
-         setErrorMessage("Пароли не совпали!");
+         setErrorMessage(t("auth.register.not_match"));
       } else {
          delete params.rePassword;
-         authRegisterAsync(params, history);
+         authRegisterAsync(params, () => navigate("/topics"));
          setErrorMessage("");
       }
    };
@@ -49,20 +50,20 @@ const RegisterPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="register-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
                <div className="register-page__auth-block-card">
-                  <GridItem
+                  <Grid item
                      xs={12}
                      sm={12}
                      md={12}
                      lg={12}
                      className="fields__block">
-                     <div className="fields__block-text">Регистрация</div>
+                     <div className="fields__block-text">{t("actions.signing_up")}</div>
                      {errorMessage && (
                         <div className="error-message">{errorMessage}</div>
                      )}
                      <form onSubmit={register}>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="email"
                               value={inputState.email}
@@ -71,102 +72,107 @@ const RegisterPage = (props) => {
                               onInvalid={handleInvalidMessage}
                               autoComplete="on"
                               label="E-mail"
-                              type="text"
+                              type="email"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="name"
                               value={inputState.name}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Имя"
+                              label={t("auth.register.name")}
                               type="text"
                               required
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="password"
                               value={inputState.password}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Пароль"
-                              placeholder="Не менее 8 символов"
+                              label={t("auth.register.password")}
+                              placeholder={t("auth.register.password_placeholder")}
                               type="password"
                               required
                               minLength={8}
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
                               name="rePassword"
                               value={inputState.rePassword}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              label="Поворите пароль"
+                              label={t("auth.register.repeat")}
                               type="password"
                               required
                               minLength={8}
                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={9} lg={9}>
-                           <Button isLoading={isLoading} type="submit">
-                              Войти
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} lg={9}>
+                           <Button isLoading={isLoading} type="submit"
+                              variant="contained"
+                              sx={{backgroundColor:"Chocolate"}}
+                           >
+                              {t("actions.sign_up")}
                            </Button>
-                        </GridItem>
+                        </Grid>
                      </form>
-                  </GridItem>
+                  </Grid>
                   {/*<span className="separator" />*/}
-                  {/*<GridItem*/}
+                  {/*<Grid item*/}
                   {/*   xs={12}*/}
                   {/*   sm={12}*/}
                   {/*   md={6}*/}
                   {/*   lg={6}*/}
                   {/*   className="social-network__block">*/}
-                  {/*   <GridItem*/}
+                  {/*   <Grid item*/}
                   {/*      xs={12}*/}
                   {/*      sm={12}*/}
                   {/*      md={6}*/}
                   {/*      lg={6}*/}
                   {/*      className="social-network__block-text">*/}
-                  {/*      или через социальные сети*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*      t("auth.login.with_social_media")*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={googleIcon}>*/}
                   {/*         Google +*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={vkIcon}>*/}
-                  {/*         Вконтакте*/}
+                  {/*         t("pages.social_media.VK.title")*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*   <GridItem xs={12} sm={12} md={9} lg={9}>*/}
+                  {/*   </Grid>*/}
+                  {/*   <Grid item xs={12} sm={12} md={9} lg={9}>*/}
                   {/*      <Button*/}
                   {/*         className="social-network__buttons"*/}
                   {/*         src={fbIcon}>*/}
                   {/*         Facebook*/}
                   {/*      </Button>*/}
-                  {/*   </GridItem>*/}
-                  {/*</GridItem>*/}
+                  {/*   </Grid>*/}
+                  {/*</Grid>*/}
                </div>
-            </GridItem>
+            </Grid>
          </div>
          <div className="register-page__footer">
-            <h3>У вас уже есть аккаунт?</h3>
+            <h3>{t("auth.register.have_account")}</h3>
             <Button
-               onClick={() => history.push("/login")}
+               variant="contained"
+               sx={{backgroundColor:"sandybrown"}}
+               onClick={() => navigate("/login")}
                className="login-link__button">
-               Войти
+               {t("actions.sign_in")}
             </Button>
          </div>
       </div>
@@ -182,8 +188,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   authRegisterAsync: (params, history) =>
-      dispatch(authRegisterAsync(params, history)),
+   authRegisterAsync: (params, callback) =>
+      dispatch(authRegisterAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

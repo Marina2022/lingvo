@@ -13,7 +13,7 @@ const INITIAL_STATE = {
    isTopicCreatedLoading: false,
    topicCreatedMessage: "",
    //SELECTED TOPIC FOR DELETING OR EDITING
-   selectedTopic: null,
+   // selectedTopic: null,
    //SINGLE TOPIC PARAMS
    singleTopicData: null,
    isSingleTopicLoading: false,
@@ -64,11 +64,11 @@ const topicsReducer = (state = INITIAL_STATE, action) => {
             topicCreatedMessage: action.payload,
          };
       //SET SELECTED TOPIC
-      case topicsActionTypes.SET_SELECTED_TOPIC:
-         return {
-            ...state,
-            selectedTopic: action.payload,
-         };
+      // case topicsActionTypes.SET_SELECTED_TOPIC:
+      //    return {
+      //       ...state,
+      //       selectedTopic: action.payload,
+      //    };
       //! GET SINGLE TOPIC
       case topicsActionTypes.GET_SINGLE_TOPIC_START:
          return { ...state, isSingleTopicLoading: true };

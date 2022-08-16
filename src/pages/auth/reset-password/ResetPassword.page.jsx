@@ -1,23 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //BASE COMPONENTS
-import GridItem from "components/grid-item/GridItem.component";
-import Input from "components/input/Input.component";
-import Button from "components/button/Button.component";
-import Form from "components/form/Form.component";
+import Input from "../../../components/input/Input.component";
+import Button from "../../../components/button/Button.component";
+import Form from "../../../components/form/Form.component";
 //IMAGES
-import logoLingvoinsta from "assets/images/auth/logo-lingvoinsta.png";
+import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
 //EFFECTS
-import useInput from "effects/useInput.effect";
+import useInput from "../../../effects/useInput.effect";
 //ACTIONS
-import { resetPasswordAsync } from "redux/auth/auth.actions";
-import GridContainer from "../../../components/grid-container/GridContainer.component";
+import { resetPasswordAsync } from "../../../redux/auth/auth.actions";
+import { t } from "i18next";
+import { Grid } from "@mui/material";
 
 const ResetPasswordPage = (props) => {
    const { resetPasswordAsync, resetPasswordLoading } = props;
-   const history = useHistory();
+   const navigate = useNavigate();
 
    const {
       inputState,
@@ -32,7 +32,7 @@ const ResetPasswordPage = (props) => {
 
    const resetPassword = (e) => {
       e.preventDefault();
-      resetPasswordAsync({ email: inputState.email }, history);
+      resetPasswordAsync({ email: inputState.email }, () => navigate("/set-new-password"));
    };
 
    return (
@@ -41,16 +41,16 @@ const ResetPasswordPage = (props) => {
             <img src={logoLingvoinsta} alt="logo" />
          </div>
          <div className="reset-password-page__auth-block">
-            <GridItem xs={12} sm={12} md={6} lg={6}>
-               <GridItem
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+               <Grid item
                   xs={12}
                   sm={12}
                   md={12}
                   lg={12}
                   className="fields-block">
                   <Form onSubmit={resetPassword}>
-                     <div className="fields-block__text">Сброс пароля</div>
-                     <GridItem xs={12} sm={12} md={12} lg={12}>
+                     <div className="fields-block__text">{t("auth.reset.resetting")}</div>
+                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
                            name="email"
                            value={inputState.email}
@@ -59,27 +59,29 @@ const ResetPasswordPage = (props) => {
                            onInvalid={handleInvalidMessage}
                            autoComplete="on"
                            label="E-mail"
-                           type="text"
+                           type="email"
                            required
                         />
-                     </GridItem>
-                     <GridContainer>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
+                     </Grid>
+                     <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button
+                              variant="contained" color="warning"
                               isLoading={resetPasswordLoading}
-                              type="submit">
-                              Сбросить пароль
+                              type="submit"
+                           >
+                              {t("auth.reset.reset")}
                            </Button>
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={6} lg={6}>
-                           <Button onClick={() => history.push("/login")}>
-                              Отмена
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={6} lg={6}>
+                           <Button variant="outlined" color="warning" onClick={() => navigate("/login")}>
+                           {t("actions.cancel")}
                            </Button>
-                        </GridItem>
-                     </GridContainer>
+                        </Grid>
+                     </Grid>
                   </Form>
-               </GridItem>
-            </GridItem>
+               </Grid>
+            </Grid>
          </div>
       </div>
    );
@@ -94,8 +96,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-   resetPasswordAsync: (params, history) =>
-      dispatch(resetPasswordAsync(params, history)),
+   resetPasswordAsync: (params, callback) =>
+      dispatch(resetPasswordAsync(params, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage);

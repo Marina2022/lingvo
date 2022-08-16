@@ -2,13 +2,13 @@ import React from "react";
 import classNames from "classnames";
 
 // BOOTSTRAP COMPONENTS
-import BootstrapButton from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
+import { LoadingButton } from "@mui/lab";
 
 const Button = (props) => {
    const {
       children,
       className,
+      variant,
       isLoading,
       disabled,
       src,
@@ -22,18 +22,17 @@ const Button = (props) => {
    });
 
    return (
-      <BootstrapButton
+      <LoadingButton
+         loading={isLoading}
+         variant={variant}
          className={btn_styles}
          {...otherProps}
-         disabled={disabled || isLoading}>
-         {src && <img src={src} alt="icon" />}
+         disabled={disabled || isLoading}
+         startIcon={(typeof src === 'object') ? src : undefined}
+      >
+         {src && (typeof src === 'string') && <img src={src} alt="icon" />}         
          <span>{children}</span>
-         {isLoading && (
-            <div className="spinner">
-               <Spinner animation="grow" variant="light" />
-            </div>
-         )}
-      </BootstrapButton>
+      </LoadingButton>
    );
 };
 
