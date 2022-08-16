@@ -95,7 +95,7 @@ const TopicList = ({
                      <SettingsOutlinedIcon />
                   </Button>
                   <Button title={t("trainings.training_list.menu.trash")} disabled={!onDelete}
-                        onClick={() => onDelete && window.confirm(t("messages.confirm.deleteItem")) && onDelete(item)}
+                        onClick={() => onDelete && window.confirm(t("messages.confirm.deleteItem")) && onDelete(item.id)}
                   >
                      <DeleteOutlinedIcon />
                   </Button>

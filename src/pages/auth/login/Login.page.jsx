@@ -7,9 +7,9 @@ import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //IMAGES
 import logoLingvoinsta from "../../../assets/images/auth/logo-lingvoinsta.png";
-import googleIcon from "../../../assets/images/auth/google-icon.png";
-import fbIcon from "../../../assets/images/auth/fb-icon.png";
-import vkIcon from "../../../assets/images/auth/vk-icon.png";
+// import googleIcon from "../../../assets/images/auth/google-icon.png";
+// import fbIcon from "../../../assets/images/auth/fb-icon.png";
+// import vkIcon from "../../../assets/images/auth/vk-icon.png";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
 //ACTIONS
@@ -73,7 +73,7 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                               onInvalid={handleInvalidMessage}
                               autoComplete="on"
                               label="E-mail"
-                              type="text"
+                              type="email"
                               required
                            />
                         </Grid>
@@ -90,7 +90,7 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                            />
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
-                           <Button isLoading={isLoading} type="submit">
+                           <Button variant="contained" sx={{ backgroundColor:"chocolate" }} isLoading={isLoading} type="submit">
                               {t("actions.sign_in")}
                            </Button>
                         </Grid>
@@ -101,7 +101,7 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                            {t("auth.login.forgotten_login_password")}
                      </div>
                   </Grid>
-                  <span className="separator" />
+                  {/* <span className="separator" />
                   <Grid item
                      xs={12}
                      sm={12}
@@ -137,7 +137,7 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                            Facebook
                         </Button>
                      </Grid>
-                  </Grid>
+                  </Grid> */}
                </div>
             </Grid>
          </div>
@@ -145,7 +145,9 @@ const LoginPage = ({ loginAsync, isLoading }) => {
             {/* eslint-disable-next-line no-irregular-whitespace */}
             <h3>{t("auth.login.no_account")}</h3>
             <Button
+               variant="contained"
                onClick={() => navigate("/register")}
+               sx={{ backgroundColor:"sandybrown" }}
                className="register-link__button">
                {t("actions.signing_up")}
             </Button>

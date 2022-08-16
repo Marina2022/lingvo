@@ -161,15 +161,19 @@ const Topic = (props) => {
       dispatchGetSingleTopicAsync(topicId);
    };
 
-   // eslint-disable-next-line
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
-   const __addCrumbs = addCrumbs
+
+   const [prevCrumb, setPrevCrumb] = useState(crumbs[lastKey])
+
+   useEffect(() => {
+      !compareObjects(prevCrumb, crumbs[lastKey]) && setPrevCrumb(crumbs[lastKey])
+   }, [crumbs, lastKey, prevCrumb])
 
    useEffect(() => {
       topicId ?
-      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.edit"), path:"edit" })) :
-      setCrumbs(c => __addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.new"), path:"new" }))
-   }, [__addCrumbs, lastKey, setCrumbs, topicId])
+      setCrumbs(c => addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.edit"), path:"edit" })) :
+      setCrumbs(c => addCrumbs(c, { key: lastKey + 1, name:t("trainings.training.new"), path:"new" }))
+   }, [lastKey, setCrumbs, topicId, prevCrumb])
 
    return (
       <Form>

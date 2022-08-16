@@ -203,7 +203,8 @@ const Unit = (props) => {
 
    const [noChange, setNoChange] = useState( !unitChanged || !checkForEmptyProperties(inputState, ["description",]) ||  inputState?.voices?.length <= 0)
 
-   useEffect(() => { setNoChange( !unitChanged || !checkForEmptyProperties(inputState, ["description",]) || inputState?.voices?.length <= 0)
+   useEffect(() => { 
+      setNoChange( !unitChanged || !checkForEmptyProperties(inputState, ["description",]) || inputState?.voices?.length <= 0)
    }, [unitChanged, inputState])
 
    const navigate = useNavigate();
@@ -230,7 +231,7 @@ const Unit = (props) => {
             );            
          }
       } else {
-         dispatchCreateUnitAsync(topicId, inputState, id => navigate(`../${id}`), fileData);
+         dispatchCreateUnitAsync(topicId, inputState, id => navigate(`../units/${id}`), fileData);
       }
    };
 
@@ -239,17 +240,21 @@ const Unit = (props) => {
       dispatchGetSingleUnitAsync(unitId);
    };
 
-   // eslint-disable-next-line
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
-   const __addCrumbs = addCrumbs
+
+   const [prevCrumb, setPrevCrumb] = useState(crumbs[lastKey])
+
+   useEffect(() => {
+      !compareObjects(prevCrumb, crumbs[lastKey]) && setPrevCrumb(crumbs[lastKey])
+   }, [crumbs, lastKey, prevCrumb])
 
    useEffect(() => {
       // console.log('useEffect - setCrumbs');
-      setCrumbs(c => __addCrumbs(c, [ unitId 
+      setCrumbs(c => addCrumbs(c, [ unitId 
          ? { key: lastKey + 1, name:`${inputState?.value?.slice(0, 15)}${inputState?.value?.length>15?'...':''}`, path:`units/${unitId}` }
          : { key: lastKey + 1, name:t("tasks.task.new"), path:"units/new" }
       ])) 
-   }, [__addCrumbs, inputState?.value, lastKey, setCrumbs, unitId])
+   }, [inputState?.value, lastKey, setCrumbs, unitId, prevCrumb])
 
    return (
       <Form>

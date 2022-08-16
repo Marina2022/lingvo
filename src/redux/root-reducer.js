@@ -17,7 +17,8 @@ import unitsReducer from "./units/units.reducer";
 import coursesReducer from "./courses/courses.reducer";
 import draftReducer from "./drafts/drafts.reducer";
 import { authActionTypes } from "./auth/auth.types";
-import storage from "redux-persist/lib/storage";
+import localStorage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/lib/storage/session";
 
 const appReducer = combineReducers({
    auth: persistReducer(authPersistConfig, authReducer),
@@ -31,17 +32,19 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
    if (action.type === authActionTypes.USER_LOGOUT) {
-      ['persist:root', 'persist:auth'].forEach(item => {
-         storage.removeItem(item)
-         // window.localStorage.removeItem(item)
-      });
+      localStorage.removeItem('persist:root')
+      localStorage.removeItem('persist:auth')
+      
+      sessionStorage.removeItem('persist:topics')
+      sessionStorage.removeItem('persist:courses')
+      
+      state = undefined
 
-      // ['persist:topics', 'persist:courses'].forEach(item => {
-      //    // storage.removeItem(item)
-      //    window.sessionStorage.removeItem(item)
-      // });
-
-      return appReducer(undefined, action)
+      setTimeout(() => { try {
+         window.location.reload()
+      } catch (e) {
+         console.error(e)
+      }}, 100)
    }  
    return appReducer(state, action)   
 }

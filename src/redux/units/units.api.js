@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const unitsApi = {
+   // FIXME: Backend returns an error 500 "could not execute statement; SQL [n/a]; constraint [fk_repetition_statuses_sample_id];"
    deleteUnit: (id) => axios.delete(`samples/${id}`),
    getSingleUnit: (unitID) => axios.get(`samples/${unitID}`),
    createUnit: (topicID, params) =>

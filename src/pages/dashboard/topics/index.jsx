@@ -6,7 +6,7 @@ import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 import Input from "../../../components/input/Input.component";
 import Button from "../../../components/button/Button.component";
 //ACTIONS
-import { getTopicsAsync } from "../../../redux/topics/topics.actions";
+import { deleteTopicAsync, getTopicsAsync } from "../../../redux/topics/topics.actions";
 //EFFECTS
 import useInput from "../../../effects/useInput.effect";
 //IMAGES
@@ -16,6 +16,7 @@ import TopicList from "./topic-list";
 import { Box, Tabs, Tab, Grid } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import { compareObjects } from "../../../utilities/helper-functions";
+import useRelocation from "../../../effects/use-relocation";
 
 const TopicsBody = (props) => {
 
@@ -29,6 +30,7 @@ const TopicsBody = (props) => {
       stateTopicsIsTopicsLoading,
 
       dispatchGetTopicsAsync, 
+      dispatchDeleteTopicAsync,
    } = props
 
    useEffect(() => { dispatchGetTopicsAsync() }, [dispatchGetTopicsAsync]);   
@@ -64,7 +66,7 @@ const TopicsBody = (props) => {
    
    const handleChange = (event, newValue) => {
       setValue(newValue);
-    }
+   }
 
    return <>
          <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
@@ -122,6 +124,7 @@ const TopicsBody = (props) => {
                            setFilter={(newFilter) => handleInput({target:{name:'search',value: newFilter.toLowerCase()}})}
                            itemsList={item.itemsList} 
                            isLoading={stateTopicsIsTopicsLoading} 
+                           onDelete={dispatchDeleteTopicAsync}
                         />
                      </Grid>
                   )
@@ -139,14 +142,17 @@ const Topics = ({
 
    const outlet = useOutlet()
 
+   const [relocated, isRelocated] = useRelocation()
+
    useEffect(() => {
       const initCrumb = { key: 0, name: t("trainings.title"), path: "topics", icon: <Home fontSize="small" /> }
-      // console.log("check Topics => ", t("trainings.title"), outlet);
-      if (crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
+      // console.log("check Topics => ", t("trainings.title"), pathname);
+      if (isRelocated() || crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
          setCrumbs([initCrumb])
       }
    }
-   , [crumbs, setCrumbs])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   , [crumbs, setCrumbs, relocated])
 
    return (
       outlet ?
@@ -174,6 +180,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
    dispatchGetTopicsAsync: () => dispatch(getTopicsAsync()),
+   dispatchDeleteTopicAsync: (topicId) => dispatch(deleteTopicAsync(topicId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topics);

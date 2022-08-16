@@ -72,7 +72,7 @@ const RegisterPage = (props) => {
                               onInvalid={handleInvalidMessage}
                               autoComplete="on"
                               label="E-mail"
-                              type="text"
+                              type="email"
                               required
                            />
                         </Grid>
@@ -116,7 +116,10 @@ const RegisterPage = (props) => {
                            />
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
-                           <Button isLoading={isLoading} type="submit">
+                           <Button isLoading={isLoading} type="submit"
+                              variant="contained"
+                              sx={{backgroundColor:"Chocolate"}}
+                           >
                               {t("actions.sign_up")}
                            </Button>
                         </Grid>
@@ -165,6 +168,8 @@ const RegisterPage = (props) => {
          <div className="register-page__footer">
             <h3>{t("auth.register.have_account")}</h3>
             <Button
+               variant="contained"
+               sx={{backgroundColor:"sandybrown"}}
                onClick={() => navigate("/login")}
                className="login-link__button">
                {t("actions.sign_in")}

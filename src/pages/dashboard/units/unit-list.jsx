@@ -26,7 +26,7 @@ const UnitsListCard = (props) => {
   const navigate = useNavigate()
   const { topicId } = useParams()
 
-  const onConfirm = (topicId, unitId) => 
+  const onDelete = (unitId, topicId) => 
     window.confirm(t("messages.confirm.deleteItem")) && dispatchDeleteUnitAsync(unitId, topicId)
 
   const getVoiceMaxId = (voices) => {
@@ -65,7 +65,7 @@ const UnitsListCard = (props) => {
             </Grid>
             <Grid item xs={1}
               title={t("actions.delete")} 
-              onClick={() => onConfirm(item?.id, topicId)}
+              onClick={() => onDelete(item?.id, topicId)}
               container
               justifyContent="center"              
               sx={{

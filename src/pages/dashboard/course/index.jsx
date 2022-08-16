@@ -176,9 +176,13 @@ const CoursePage = ({
       dispatchGetCourseAsync(courseId);
    };
 
-   // eslint-disable-next-line
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
    const outlet = useOutlet()
+   const [prevCrumb, setPrevCrumb] = useState(crumbs[lastKey])
+
+   useEffect(() => {
+      !compareObjects(prevCrumb, crumbs[lastKey]) && setPrevCrumb(crumbs[lastKey])
+   }, [crumbs, lastKey, prevCrumb])
 
    useEffect(() => {
       // console.log('useEffect: setCrumbs', crumbs, courseId, outlet, inputState);      
@@ -188,7 +192,7 @@ const CoursePage = ({
       if (courseId && outlet) {
          setCrumbs(c => addCrumbs(c, { key: lastKey + 2, name:t("trainings.title"), path: 'topics', disabled: true }))
       }
-   }, [courseId, crumbs, inputState, lastKey, outlet, setCrumbs])
+   }, [courseId, crumbs, inputState, lastKey, outlet, setCrumbs, prevCrumb])
 
    const [noChange, setNoChange] = useState(compareObjects(initInput, inputState) || !checkForEmptyProperties(inputState))
 

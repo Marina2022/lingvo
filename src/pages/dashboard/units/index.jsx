@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Outlet, useLocation, useOutlet, useOutletContext, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { t } from "i18next";
 import { addCrumbs } from "../layout/breadcrumbs";
 import { Grid } from "@mui/material";
+import { compareObjects } from "../../../utilities/helper-functions";
 
 const Units = (props) => {
    const {
@@ -60,7 +61,14 @@ const Units = (props) => {
    const [crumbs, setCrumbs, lastKey] = useOutletContext();
    
    const outlet = useOutlet();
-   const __addCrumbs = addCrumbs
+
+   const [prevCrumb, setPrevCrumb] = useState(crumbs[lastKey])
+
+   useEffect(() => {
+      !compareObjects(prevCrumb, crumbs[lastKey]) && setPrevCrumb(crumbs[lastKey])
+   }, [crumbs, lastKey, prevCrumb])
+
+   const {pathname} = useLocation()
 
    useEffect(() => {
       // A new crumb to add to breadcrumbs
@@ -68,16 +76,17 @@ const Units = (props) => {
       // Verifies if new crumb is not in the breadcrumbs yet
       if (!crumbs.find(c => !Object.keys(newCrumb).find(key => c[key] !== newCrumb[key]))) {
          // Adds new crumb
-         setCrumbs(c => __addCrumbs(c, newCrumb))
+         setCrumbs(c => addCrumbs(c, newCrumb))
       }
-      if (outlet) {
-         setCrumbs(c => __addCrumbs(c, { key: lastKey + 2, name: t("tasks.title"), disable: true}))
+      if (outlet && !pathname.endsWith('/edit')) {
+         setCrumbs(c => addCrumbs(c, { key: lastKey + 2, name: t("tasks.title"), disable: true}))
       }
-   }, [__addCrumbs, crumbs, lastKey, outlet, setCrumbs, stateTopicsSingleTopicData?.id, stateTopicsSingleTopicData?.text])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [crumbs, lastKey, outlet, setCrumbs, stateTopicsSingleTopicData?.id, stateTopicsSingleTopicData?.text, prevCrumb])
 
    return (
       outlet 
-      ? <Outlet context={[crumbs, setCrumbs, lastKey + 2]} /> 
+      ? <Outlet context={[crumbs, setCrumbs, lastKey + (pathname.endsWith('/edit') ? 1 : 2) ]} /> 
       : <>
          <Grid container spacing={2} justifyContent="space-between">
             <Grid item xs={12} md={6}>
@@ -95,7 +104,7 @@ const Units = (props) => {
             <Grid item xs={6} md={3}>
                <Button 
                   variant="contained"
-                  onClick={ () => navigate(`new`) }
+                  onClick={ () => navigate('units/new') }
                   src={<AddOutlinedIcon/>}
                >
                   {t("actions.create")}

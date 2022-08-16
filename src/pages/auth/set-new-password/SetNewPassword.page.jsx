@@ -67,7 +67,7 @@ const SetNewPasswordPage = (props) => {
                            autoComplete="on"
                            label="E-mail"
                            placeholder="E-mail"
-                           type="text"
+                           type="email"
                            required
                         />
                      </Grid>
@@ -101,12 +101,12 @@ const SetNewPasswordPage = (props) => {
                      </Grid>
                      <Grid container spacing={2}>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                           <Button isLoading={setPasswordLoading} type="submit">
+                           <Button variant="contained" color="warning" isLoading={setPasswordLoading} type="submit">
                               {t("actions.send")}
                            </Button>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                           <Button onClick={() => navigate("/login")}>
+                           <Button variant="outlined" color="warning" onClick={() => navigate("/login")}>
                               {t("actions.cancel")}
                            </Button>
                         </Grid>

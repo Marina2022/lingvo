@@ -59,20 +59,22 @@ const ResetPasswordPage = (props) => {
                            onInvalid={handleInvalidMessage}
                            autoComplete="on"
                            label="E-mail"
-                           type="text"
+                           type="email"
                            required
                         />
                      </Grid>
                      <Grid container spacing={2}>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
                            <Button
+                              variant="contained" color="warning"
                               isLoading={resetPasswordLoading}
-                              type="submit">
+                              type="submit"
+                           >
                               {t("auth.reset.reset")}
                            </Button>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
-                           <Button onClick={() => navigate("/login")}>
+                           <Button variant="outlined" color="warning" onClick={() => navigate("/login")}>
                            {t("actions.cancel")}
                            </Button>
                         </Grid>

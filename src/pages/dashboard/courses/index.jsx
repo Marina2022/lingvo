@@ -15,6 +15,7 @@ import useInput from "../../../effects/useInput.effect";
 import { Grid } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import { compareObjects, toDigestString } from "../../../utilities/helper-functions";
+import useRelocation from "../../../effects/use-relocation";
 
 /**
  * 
@@ -100,15 +101,18 @@ const CoursesPage = ({
 }) => { 
       
    const outlet = useOutlet()
+
+   const [relocated, isRelocated] = useRelocation()
    
    useEffect(() => {
       const initCrumb = { key: 0, name: t("courses.title"), path: "courses", icon: <Home /> }
       // console.log("check Topics => ", t("trainings.title"), outlet);
-      if (crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
+      if (isRelocated() || crumbs.length === 0 || !compareObjects(crumbs[0], initCrumb)) {
          setCrumbs([initCrumb])
       }
    }
-   , [crumbs, setCrumbs])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   , [crumbs, setCrumbs, relocated])
    
    return (      
       outlet ?

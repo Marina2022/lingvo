@@ -53,12 +53,11 @@ export function compareObjects (o, c, ...excludes) {
          if (typeof c !== 'object') {
             return false
          } else {
-            // const result =
-            return Object.getOwnPropertyNames(o)
-               .filter(key => !excludes || !excludes.includes(key))
-               .findIndex(key => !Object.prototype.hasOwnProperty.call(c, key) || !compareObjects(o[key], c[key])) === -1
-            // console.log(result);
-            // return result
+            const oKeys = Object.getOwnPropertyNames(o).filter(key => !excludes || !excludes.includes(key))
+            const cKeys = Object.getOwnPropertyNames(c).filter(key => !excludes || !excludes.includes(key))
+
+            return compareObjects(oKeys, cKeys) && 
+               oKeys.findIndex(key => !Object.prototype.hasOwnProperty.call(c, key) || !compareObjects(o[key], c[key])) === -1
          }
       } else {
          return o === c

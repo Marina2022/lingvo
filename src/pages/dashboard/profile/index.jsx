@@ -90,10 +90,10 @@ const ProfilePage = (props) => {
 
    const handleFiles = (files) => {
       const file = files[0]
-      getBase64(file, reader => {
-         dispatchEditAvatarAsync({ data: reader.result, name: file?.name })
+      getBase64(file, ({ currentTarget: { result } } ) => {
+         dispatchEditAvatarAsync({ data: result, name: file?.name })
          setAvatarData({
-            data: reader.result,
+            data: result,
             name: file?.name,
          })
       });
@@ -168,6 +168,7 @@ const ProfilePage = (props) => {
             <Grid item  sm={11} md={8} justifyContent="center">
                <Grid item xs={12}>
                   <DropZone
+                     accept={{'image/jpeg':[], 'image/png':[]}}
                      title={(avatarData.data || avatarImg) ? t("profile.photo_change_prompt") : t("profile.photo_put_prompt")}
                      buttonText={t("actions.change")}
                      handleFiles={handleFiles}
@@ -243,6 +244,7 @@ const ProfilePage = (props) => {
                      placeholder={t("profile.phone")}
                      className="p-b__1"
                      required
+                     disabled={true}
                   />
                </Grid>
 
@@ -258,6 +260,7 @@ const ProfilePage = (props) => {
                      placeholder={t("profile.name")}
                      className="p-b__1"
                      required
+                     disabled={true}
                   />
                </Grid>
 
@@ -275,7 +278,7 @@ const ProfilePage = (props) => {
                      required
                   />
                </Grid>
-
+               {/* TODO: multilingual field profile.bio */}
                <Grid item xs={12}>
                   <TextArea
                      name="about_oneself"
