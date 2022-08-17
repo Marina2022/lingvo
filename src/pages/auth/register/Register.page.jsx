@@ -65,12 +65,13 @@ const RegisterPage = (props) => {
                      <form onSubmit={register}>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
+                              id="email"
+                              autoComplete="username"
                               name="email"
                               value={inputState.email}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              autoComplete="on"
                               label="E-mail"
                               type="email"
                               required
@@ -78,6 +79,8 @@ const RegisterPage = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
+                              id="new-password"
+                              autoComplete="new-password"
                               name="name"
                               value={inputState.name}
                               error={invalidMessages}
@@ -90,6 +93,8 @@ const RegisterPage = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
+                              id="new-password"
+                              autoComplete="new-password"
                               name="password"
                               value={inputState.password}
                               error={invalidMessages}

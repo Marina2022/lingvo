@@ -218,6 +218,8 @@ const ProfilePage = (props) => {
 
                <Grid item xs={12}>
                   <Input
+                     id="email"
+                     autoComplete="username"
                      name="email"
                      value={inputState.email || ""}
                      error={invalidMessages}

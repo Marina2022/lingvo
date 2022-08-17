@@ -66,12 +66,13 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                      <form onSubmit={login}>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
+                              id="email"
+                              autoComplete="username"
                               name="email"
                               value={inputState.email}
                               error={invalidMessages}
                               onChange={handleInputChange}
                               onInvalid={handleInvalidMessage}
-                              autoComplete="on"
                               label="E-mail"
                               type="email"
                               required
@@ -79,6 +80,8 @@ const LoginPage = ({ loginAsync, isLoading }) => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
+                              id="current-password"
+                              autoComplete="current-password"
                               name="password"
                               value={inputState.password}
                               error={invalidMessages}

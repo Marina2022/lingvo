@@ -52,12 +52,13 @@ const ResetPasswordPage = (props) => {
                      <div className="fields-block__text">{t("auth.reset.resetting")}</div>
                      <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
+                           id="email"
+                           autoComplete="username"
                            name="email"
                            value={inputState.email}
                            error={invalidMessages}
                            onChange={handleInputChange}
                            onInvalid={handleInvalidMessage}
-                           autoComplete="on"
                            label="E-mail"
                            type="email"
                            required

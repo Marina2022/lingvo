@@ -59,12 +59,13 @@ const SetNewPasswordPage = (props) => {
                      <div className="fields-block__text">{t("auth.reset.resetting")}</div>
                      <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
+                           id="email"
+                           autoComplete="username"
                            name="email"
                            value={inputState.email}
                            error={invalidMessages}
                            onChange={handleInputChange}
                            onInvalid={handleInvalidMessage}
-                           autoComplete="on"
                            label="E-mail"
                            placeholder="E-mail"
                            type="email"
@@ -78,15 +79,17 @@ const SetNewPasswordPage = (props) => {
                            error={invalidMessages}
                            onChange={handleInputChange}
                            onInvalid={handleInvalidMessage}
-                           autoComplete="on"
+                           autoComplete="off"
                            label={t("auth.reset.code")}
                            placeholder={t("auth.reset.code")}
-                           type="text"
+                           type="number"
                            required
                         />
                      </Grid>
                      <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Input
+                           id="new-password"
+                           autoComplete="new-password"
                            name="password"
                            value={inputState.password}
                            error={invalidMessages}
