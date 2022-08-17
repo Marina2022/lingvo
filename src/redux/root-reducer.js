@@ -40,11 +40,7 @@ const rootReducer = (state, action) => {
       
       state = undefined
 
-      setTimeout(() => { try {
-         window.location.reload()
-      } catch (e) {
-         console.error(e)
-      }}, 100)
+      setTimeout(() => { try { window.location.reload() } catch (e) { console.error(e) }}, 100)
    }  
    return appReducer(state, action)   
 }

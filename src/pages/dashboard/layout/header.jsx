@@ -78,9 +78,9 @@ const Header = (props) => {
             {/* <div>
                <NotificationsActiveOutlinedIcon />
             </div> */}
-            <div>
+            <a href={`mailto:babir@lingvonavi.com?subject=Request from ${currentUserInfo.name} (#${currentUserInfo.id} : ${currentUserInfo.email})&body=${t("messages.info.email_body")}`}>
                <EmailOutlinedIcon sx={{ cursor:'pointer', '&:hover': { color: 'dodgerblue', transform: 'scale(1.5)' }}}/>
-            </div>
+            </a>
             <GetMediaContent contentList={dropDownMediaList} />
          </div>
       </header>

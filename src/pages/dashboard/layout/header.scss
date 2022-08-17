@@ -55,12 +55,13 @@
       height: 100%;
       padding-right: 2rem;
 
-      > div {
+      > a, div {
          height: 100%;
+         width: auto;
          display: flex;
          align-items: center;
          justify-content: center;
-         padding-right: 0.75em;
+         //padding-right: 0.75em;
 
          img {
             cursor: pointer;

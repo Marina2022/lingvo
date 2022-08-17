@@ -21,7 +21,7 @@ import {
    subscribeLinkAsync,
 } from "../../../redux/profile/profile.actions";
 import { t } from "i18next";
-import { checkForEmptyProperties, compareObjects, titleCase } from "../../../utilities/helper-functions";
+import { checkForEmptyProperties, compareObjects, titleCase, validateUri } from "../../../utilities/helper-functions";
 import { getBase64 } from "../../../utilities/handleFile";
 import { userLogout } from "../../../redux/auth/auth.actions";
 import { Avatar, Divider, Grid, Link } from "@mui/material";
@@ -148,10 +148,10 @@ const ProfilePage = (props) => {
       })
    };
 
-   const [noChange, setNoChange] = useState(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState))
+   const [noChange, setNoChange] = useState(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState, socialNets.map(({name}) => name)))
 
    useEffect(() => {
-      setNoChange(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState))
+      setNoChange(compareObjects(inputState, initInput) || !checkForEmptyProperties(inputState, socialNets.map(({name}) => name)))
    }, [initInput, inputState])
 
    useEffect(() => {
@@ -300,8 +300,10 @@ const ProfilePage = (props) => {
                <h4>{t("social_media.title")}</h4>
 
                {
-                  socialNets.map(({name, tKey}, idx) =>
-                     <Grid container item xs={12} key={idx} alignItems={"center"}>
+                  socialNets.map(({name, tKey}, idx) => {
+                     const isValid = validateUri(inputState[name])
+
+                     return <Grid container item xs={12} key={idx} alignItems={"center"}>
                         <Grid item xs={10} key={idx}>
                            <Input
                               name={name}
@@ -318,12 +320,12 @@ const ProfilePage = (props) => {
                         </Grid>
                         <Grid item xs={2} container justifyContent="center">
                         {/* <Button fullWidth href={inputState[name]}>{'>>'}</Button> */}
-                        <Link target="_blank" href={inputState[name]}>
-                           <LaunchOutlinedIcon />
+                        <Link target="_blank" href={isValid ? inputState[name] : undefined} >
+                           <LaunchOutlinedIcon sx={{color: `${isValid ? undefined : 'lightgray'}`}}/>
                         </Link>
                         </Grid>
                      </Grid>
-                  )
+                  })
                }
 
                <Grid container spacing={2} justifyContent="center">
@@ -339,6 +341,14 @@ const ProfilePage = (props) => {
                   </Grid>
                   <Grid item xs={5} lg={3}>
                      <Button disabled={noChange} onClick={() => setInputState(initInput)} variant="outlined" color="primary">{t("actions.cancel")}</Button>
+                  </Grid>
+
+                  <Divider sx={{ my:'3rem'}}/>
+
+                  <Grid item xs={12} container justifyContent="center">
+                     <Link href={`mailto:babir@lingvonavi.com?subject=Request from ${stateProfileCurrentUserInfo.name} (#${stateProfileCurrentUserInfo.id} : ${stateProfileCurrentUserInfo.email})&body=${t("messages.info.email_body")}`}>
+                        {t("messages.info.send_email")}
+                     </Link>
                   </Grid>
 
                   <Divider sx={{ my:'3rem'}}/>

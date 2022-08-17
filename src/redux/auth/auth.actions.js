@@ -80,6 +80,7 @@ export const loginAsync = ({ email, password }, callback) => async (
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(loginFailure(message));
+      window.alert(message)
    }
 };
 
@@ -101,6 +102,7 @@ export const authRegisterAsync = (params, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(registerFailure());
+      window.alert(message)
       return { type: "error", message };
    }
 };
@@ -112,6 +114,7 @@ export const logOutAsync = () => async (dispatch) => {
       return { type: "success", message: response?.data?.success?.message };
    } catch (error) {
       const message = handleAJAXError(error);
+      window.alert(message)
       return { type: "error", message };
    }
 };
@@ -134,6 +137,7 @@ export const resetPasswordAsync = (params, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(resetPasswordFailure(message));
+      window.alert(message)
       return { type: "error", message };
    }
 };
@@ -156,6 +160,7 @@ export const setPasswordAsync = (params, callback) => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(setPasswordFailure(message));
+      window.alert(message)
       return { type: "error", message };
    }
 };

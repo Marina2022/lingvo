@@ -64,7 +64,9 @@
         "gadget":"To install this webapp on your desktop add it to home screen",
         "other_mobile":"To install this webapp on your mobile add it to home screen"
       },
-      "does_not_show": "Doesn't show"
+      "does_not_show": "Doesn't show",
+      "send_email":"Send email to developers",
+      "email_body":"Put here your question or bug report attaching relevant screenshots if applicable. \nPlease do not delete subject message above."
     }  
   },
   "genders":{

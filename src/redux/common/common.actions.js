@@ -39,6 +39,7 @@ export const getLanguagesListAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getLanguagesListFailure(message));
+      window.alert(message)
    }
 };
 
@@ -52,5 +53,6 @@ export const getLevelsListAsync = () => async (dispatch) => {
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(getLevelsListFailure(message));
+      window.alert(message)
    }
 };
