@@ -10,7 +10,9 @@ const profileApi = {
       // FIXME: Backend error 500 while param.url == undefined|''
       return axios.put("users/link", null, { params: { ...params } });
    },
-   subscribeLink: (params) => axios.get("subscribes/link", { ...params }),
+   getSubscribeLink: (params) => axios.get("subscribes/link", { ...params }),
+   // FIXME: Backend does not create an application subscribe link while new user creating
+   putSubscribeLink: () => axios.put("subscribes/link"),
 
    // removePrevAvatar: (params) => axios.delete("avatars", { ...params }),
 };

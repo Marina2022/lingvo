@@ -135,7 +135,11 @@ export const subscribeLinkAsync = (params) => async (dispatch) => {
    dispatch(subscribeLinkStart());
 
    try {
-      const resp = await profileApi.subscribeLink(params);
+      let resp = await profileApi.getSubscribeLink(params);
+
+      if (resp?.data?.link.endsWith('/subscribes/link/null')) {
+         resp = await profileApi.putSubscribeLink()
+      }
 
       dispatch(subscribeLinkSuccess(resp?.data?.link));
    } catch (error) {
