@@ -7,6 +7,7 @@ const profileApi = {
    updateUserData: (params) => axios.put("users", { ...params }),
    updateLink: (params) => {
       // console.log(params);
+      // FIXME: Backend error 500 while param.url == undefined|''
       return axios.put("users/link", null, { params: { ...params } });
    },
    subscribeLink: (params) => axios.get("subscribes/link", { ...params }),

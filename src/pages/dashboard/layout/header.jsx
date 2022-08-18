@@ -14,6 +14,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GetMediaContent from "../../../components/get-media-content";
 import { Logo as AppLogo } from "../../main/slides/header";
 import { t } from 'i18next'
+import { HrefTemplate } from "../../../utilities/href-template";
 
 const Header = (props) => {
    const {
@@ -78,7 +79,7 @@ const Header = (props) => {
             {/* <div>
                <NotificationsActiveOutlinedIcon />
             </div> */}
-            <a href={`mailto:babir@lingvonavi.com?subject=Request from ${currentUserInfo.name} (#${currentUserInfo.id} : ${currentUserInfo.email})&body=${t("messages.info.email_body")}`}>
+            <a href={HrefTemplate(currentUserInfo)}>
                <EmailOutlinedIcon sx={{ cursor:'pointer', '&:hover': { color: 'dodgerblue', transform: 'scale(1.5)' }}}/>
             </a>
             <GetMediaContent contentList={dropDownMediaList} />

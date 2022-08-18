@@ -27,6 +27,7 @@ import { userLogout } from "../../../redux/auth/auth.actions";
 import { Avatar, Divider, Grid, Link } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
+import { HrefTemplate } from "../../../utilities/href-template";
 
 const socialNets = [
    { name: titleCase("VKontakte"),   tKey:"social_media.VK.title"       }, 
@@ -55,7 +56,7 @@ const ProfilePage = (props) => {
    const [uploadedFiles, setUploadedFiles] = useState([]);
    const [isCopied, setIsCopied] = useState(false);
 
-   const [initInput] = useState((() => {
+   const [initInput, setInitInput] = useState((() => {
       // console.log(stateProfileCurrentUserInfo);
 
       const {links: _, ...profile} = stateProfileCurrentUserInfo
@@ -66,6 +67,18 @@ const ProfilePage = (props) => {
       })
       return profile
    })());
+
+   useEffect(() => {
+      // console.log(stateProfileCurrentUserInfo);
+
+      const {links: _, ...profile} = stateProfileCurrentUserInfo
+
+      stateProfileCurrentUserInfo.links.forEach(({socialNet, url}) => { 
+         socialNets.find(({name}) => name === socialNet.value) 
+            && (profile[socialNet.value] = url) 
+      })
+      setInitInput(profile)      
+   }, [stateProfileCurrentUserInfo])
 
    useEffect(() => {
       if (stateProfileCurrentUserInfo?.id) {
@@ -81,6 +94,9 @@ const ProfilePage = (props) => {
       setInputState
    } = useInput({ ...initInput });
    // useState(inputState.links);
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   useEffect(() => { setInputState(initInput) }, [initInput])
 
    const avatarImg = stateProfileCurrentUserInfo?.avatar;
 
@@ -135,11 +151,11 @@ const ProfilePage = (props) => {
       socialNets.forEach(({name}) => {
          const prevUrl = stateProfileCurrentUserInfo.links.find(({socialNet}) => socialNet.value === name)?.url
          const newUrl = inputState[name]
-         if (!(!prevUrl && !newUrl) && newUrl !== prevUrl) {
+         if (newUrl !== prevUrl) {
             const out = {
                userId: inputState.id,
                socialNetName: name,
-               url: newUrl
+               url: newUrl ? newUrl : ''
             }
             // console.log("prepare links => ", out);
             dispatchUpdateLinkAsync(out)
@@ -348,7 +364,7 @@ const ProfilePage = (props) => {
                   <Divider sx={{ my:'3rem'}}/>
 
                   <Grid item xs={12} container justifyContent="center">
-                     <Link href={`mailto:babir@lingvonavi.com?subject=Request from ${stateProfileCurrentUserInfo.name} (#${stateProfileCurrentUserInfo.id} : ${stateProfileCurrentUserInfo.email})&body=${t("messages.info.email_body")}`}>
+                     <Link href={HrefTemplate(stateProfileCurrentUserInfo)}>
                         {t("messages.info.send_email")}
                      </Link>
                   </Grid>

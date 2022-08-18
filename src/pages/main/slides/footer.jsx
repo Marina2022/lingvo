@@ -1,5 +1,6 @@
 import { t } from "i18next";
 import React from "react";
+import { HrefTemplate, supportEmail } from "../../../utilities/href-template";
 
 export default function Top () {
     return (
@@ -148,8 +149,8 @@ export default function Top () {
                     </li>
                 </ul>
                 <div className="landing-footer__links">
-                    <a href="mailto:hello@lingvoinsta.ru" className="btn">
-                        hello@lingvoinsta.ru
+                    <a href={HrefTemplate({})} className="btn">
+                        {supportEmail}
                     </a>
                     <a href="/#" className="btn">
                         <svg
