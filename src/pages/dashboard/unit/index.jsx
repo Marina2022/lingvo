@@ -332,6 +332,7 @@ const Unit = (props) => {
                   {
                      voiceOverProviderOptions.map((item, idx) => (
                         <Button key={idx}
+                           disabled={item.disabled}
                            variant={uploadMode === item.value ? "contained" : "outlined"} 
                            onClick={() => {
                               if (compareObjects(unitData.voices, initUnit.voices)) {

@@ -68,7 +68,7 @@ const TopicList = ({
                      <Grid item xs={12} container justifyContent="space-between">
                         <Grid item xs={6}>
                            <Typography sx={{ fontSize: '0.75em'}}>
-                              {`${item?.nativeLanguage?.value} - ${item?.foreignLanguage?.value}`}
+                              {`${item?.foreignLanguage?.value} - ${item?.nativeLanguage?.value}`}
                            </Typography>
                         </Grid>
                         <Grid item xs={6} textAlign="end">

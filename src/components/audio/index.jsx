@@ -24,7 +24,7 @@ import UploadAudio from "./uploader";
   { value: "recordedAudio" , getLabel: () => t("tasks.task.voice_sources.record.label")  , html: ({text, languageName, handleFiles}) => {
      return <RecordAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
   }},
-  { value: "generatedVoice", getLabel: () => t("tasks.task.voice_sources.generate.label"), html: ({text, languageName, handleFiles}) => {
+  { value: "generatedVoice", disabled: true, getLabel: () => t("tasks.task.voice_sources.generate.label"), html: ({text, languageName, handleFiles}) => {
      return <GenerateAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
   }},
 ]

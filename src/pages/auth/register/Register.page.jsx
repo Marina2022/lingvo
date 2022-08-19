@@ -14,6 +14,7 @@ import { authRegisterAsync } from "../../../redux/auth/auth.actions";
 import { t } from 'i18next'
 import { Grid } from "@mui/material";
 
+// TODO: Email verification sending a code while user register
 const RegisterPage = (props) => {
    const { authRegisterAsync, isLoading } = props;
    const [errorMessage, setErrorMessage] = useState("");
