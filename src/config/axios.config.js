@@ -26,9 +26,7 @@ axios.interceptors.response.use(
 
       const errorStatus = error?.response?.data?.status;
 
-      window.alert(`errorStatus: ${errorStatus}`);
-
-      if (errorStatus === "Token is Expired") {
+      if (parseInt(errorStatus) === 401) { // Unauthorized
          store.dispatch(userLogout("Token is Expired."));
          // setTimeout(() => {
          //    store.dispatch(refreshAuthTokenAsync());
