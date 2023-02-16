@@ -22,9 +22,12 @@ axios.interceptors.response.use(
       const errorMessage = handleAJAXError(error);
 
       console.log(errorMessage);
-      // if (error.message) store.dispatch(setGlobalErrorMessage(errorMessage));
+      // if (error.message) store.dispatch(setGlobalErrorMessage(errorMessage));      
 
       const errorStatus = error?.response?.data?.status;
+
+      window.alert(`errorStatus: ${errorStatus}`);
+
       if (errorStatus === "Token is Expired") {
          store.dispatch(userLogout("Token is Expired."));
          // setTimeout(() => {
