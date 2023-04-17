@@ -82,7 +82,7 @@ const SetNewPasswordPage = (props) => {
                            autoComplete="off"
                            label={t("auth.reset.code")}
                            placeholder={t("auth.reset.code")}
-                           type="number"
+                           type="text"
                            required
                         />
                      </Grid>
