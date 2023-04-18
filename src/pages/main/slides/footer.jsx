@@ -2,12 +2,15 @@ import { t } from "i18next";
 import React from "react";
 import { HrefTemplate, supportEmail } from "../../../utilities/href-template";
 import {ReactComponent as PostBox} from "../../../assets/images/main/post-box.svg";
+import { Grid } from "@mui/material";
 // import {ReactComponent as Logo} from "../../../assets/images/main/logo.svg";
 // import {ReactComponent as Instagram} from "../../../assets/images/main/instagram.svg";
 // import {ReactComponent as VKontakte} from "../../../assets/images/main/v-kontakte.svg";
 // import {ReactComponent as Facebook} from "../../../assets/images/main/facebook.svg";
 
 export default function Top () {
+    const personLink = "";
+    const offerLink = "";
     return (
         <footer className="landing-footer">
             <div className="landing-container">
@@ -57,9 +60,17 @@ export default function Top () {
                     <a href="/#" className="btn"><Facebook /></a>
                     <a href="tel:+7 123 456 78 90" className="btn">+7 123 456 78 90</a> */}
                 </div>
-                <div className="footer-coryright">
-                    Lingvoinsta &copy; All rights reserved
-                </div>
+                <Grid container padding="4rem 0 0 0">
+                    <Grid item xs={12} md={4} className="footer-copyright">
+                        Lingvoinsta &copy; All rights reserved
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <a href={offerLink} className="btn">{t('promo.footer.offer')}</a>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <a href={personLink} className="btn">{t('promo.footer.pesonal_data')}</a>
+                    </Grid>
+                </Grid>
             </div>
         </footer>
     );
