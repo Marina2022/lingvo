@@ -12,7 +12,7 @@ import { getUserInfoAsync } from "../../../redux/profile/profile.actions.js";
 // import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GetMediaContent from "../../../components/get-media-content";
-import { Logo as AppLogo } from "../../main/slides/header";
+import {ReactComponent as Logo} from "../../../assets/images/main/logo.svg"
 import { t } from 'i18next'
 import { HrefTemplate } from "../../../utilities/href-template";
 
@@ -70,7 +70,11 @@ const Header = (props) => {
    return (
       <header id="app-header" className="app-header">
          <div className="app-header__main-link">
-            <Link to="/main"><AppLogo /></Link>
+            <Link to="/main">
+               <div className="landing-header-logo">
+                  <Logo fill="#1E62E6" />
+               </div>
+            </Link>
          </div>
          <div className="app-header__links-block"> 
             <GetMediaContent contentList={mainMenuMediaList} />

@@ -101,6 +101,7 @@
       "does_not_show": "no muestra",
       "email_body": "Ponga aquí su pregunta o informe de error adjuntando capturas de pantalla relevantes si corresponde.\n\nPor favor, no elimine el asunto del mensaje anterior.",
       "install_app": {
+        "desktop": "Instale esta aplicación en su computadora, agréguela a su página de inicio",
         "gadget": "Para instalar esta aplicación web en su escritorio, agréguela a la pantalla de inicio",
         "ios1": "Instala esta aplicación web en tu {{dispositivo}}: toca",
         "ios2": "y luego Agregar a la pantalla de inicio",
@@ -127,13 +128,13 @@
   },
   "promo": {
     "can": {
-      "1": "eres capaz de",
+      "1": "Un maestro es capaz de",
       "2": "Crear nuevo tema",
       "3": "Agregar, traducir y expresar tareas",
       "4": "Publicar el tema en la aplicación del estudiante",
-      "5": "Sus estudiantes son capaces de",
-      "6": "Encuéntrelo y suscríbase a usted en la aplicación",
-      "7": "Use su contenido para entrenar habilidades de jerga tema por tema",
+      "5": "Un estudiante es capaz de",
+      "6": "Encuentra y suscríbete a un maestro en la aplicación",
+      "7": "Use contenido para entrenar habilidades de jerga",
       "8": "Formar varios temas unidos en un curso de formación"
     },
     "footer": {
@@ -214,7 +215,10 @@
     "top": {
       "1": "Lingvoinsta: el servicio en línea para blogueros y escuelas de idiomas",
       "2": "Soluciones informáticas listas para usar para escuelas de idiomas y blogueros. \nConvertimos las publicaciones en material educativo único. \nHacemos payback de publicaciones útiles",
-      "3": "Probar gratis"
+      "3": "Probar gratis",
+      "4": "Obtén la aplicación gratis",
+      "pupil": "Aplicación del estudiante",
+      "teacher": "aplicación del profesor"
     }
   },
   "social_media": {

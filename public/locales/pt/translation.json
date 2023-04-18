@@ -101,6 +101,7 @@
       "does_not_show": "não mostra",
       "email_body": "Coloque aqui sua pergunta ou relatório de bug anexando capturas de tela relevantes, se aplicável.\n\nPor favor, não exclua a mensagem de assunto acima.",
       "install_app": {
+        "desktop": "Instale este aplicativo em seu computador, adicione-o à sua página inicial",
         "gadget": "Para instalar este webapp em sua área de trabalho, adicione-o à tela inicial",
         "ios1": "Instale este webapp em seu {{device}}: toque em",
         "ios2": "e, em seguida, Adicionar à tela inicial",
@@ -127,13 +128,13 @@
   },
   "promo": {
     "can": {
-      "1": "você é capaz de",
+      "1": "Um professor é capaz de",
       "2": "Criar novo tema",
       "3": "Adicionar, traduzir e tarefas de voz",
       "4": "Publicar o tema no aplicativo do aluno",
-      "5": "Seus alunos são capazes de",
-      "6": "Encontre e assine Você no aplicativo",
-      "7": "Use seu conteúdo para treinar habilidades de linguagem tema por tema",
+      "5": "Um aluno é capaz de",
+      "6": "Encontre e assine um professor no aplicativo",
+      "7": "Use o conteúdo para treinar habilidades de linguagem",
       "8": "Treine vários temas unidos em um curso de treinamento"
     },
     "footer": {
@@ -214,7 +215,10 @@
     "top": {
       "1": "Lingvoinsta - o serviço online para blogueiros e escolas de idiomas",
       "2": "Soluções prontas para escolas de idiomas e blogueiros. \nTransformamos postagens em material educacional exclusivo. \nFazemos publicações úteis de retorno",
-      "3": "Experimente grátis"
+      "3": "Experimente grátis",
+      "4": "Obtenha o aplicativo gratuitamente",
+      "pupil": "Aplicativo do aluno",
+      "teacher": "aplicativo do professor"
     }
   },
   "social_media": {

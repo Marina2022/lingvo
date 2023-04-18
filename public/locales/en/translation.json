@@ -1,295 +1,302 @@
 {
-  "profile":{
-    "title":"Profile",
-    "email":"Email",
-    "phone":"Phone",
-    "photo_put_prompt":"Add avatar to subscribers recognize you better",
-    "photo_change_prompt":"To change avatar click it",
-    "app_link":"Application link",
-    "copy_link":"Copy link",
-    "person":"Person",
-    "name":"Name",
-    "nickname":"Nickname",
-    "about_oneself":"Bio",
-    "bio":"Tell subscribers a little about yourselves",
-    "click_to_copy":"Click the field to copy value to clipboard",
-    "copy_done":"Copied!"
+  "actions": {
+    "add": "Add",
+    "buy": "Buy",
+    "cancel": "Cancel",
+    "change": "Change",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit",
+    "filter": "Filter",
+    "play": "Play",
+    "publish": "Publish",
+    "record": "Record",
+    "save": "Save",
+    "search": "Search",
+    "send": "Send",
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "sign_up": "Sign Up",
+    "signing_up": "Signing Up",
+    "stop": "Stop"
   },
-  "social_media":{
-    "title":"Social media",
-    "VK":{"title":"VKontakte" },
-    "Instagram":{"title":"Instagram" },
-    "Facebook":{"title":"Facebook"},
-    "Telegram":{"title":"Telegram"}
-  },
-  "actions":{
-    "sign_in":"Sign In",
-    "sign_up":"Sign Up",
-    "signing_up":"Signing Up",
-    "sign_out":"Sign Out",
-
-    "create":"Create",
-    "add":"Add",
-    "change":"Change",
-    "edit":"Edit",
-    "save":"Save",
-    "publish":"Publish",
-    "cancel":"Cancel",  
-    "delete":"Delete",
-    "play":"Play",
-    "record":"Record",
-    "stop":"Stop",
-
-    "send":"Send",
-
-    "buy":"Buy",
-
-    "search":"Search",
-    "filter":"Filter"
-  },
-  "messages":{
-    "confirm":{
-      "is_sure":"Are you sure?",
-      "unsaved_data":"Unsaved voiceover will be lost\nPlease, confirm transition",
-      "deleteItem": "Please confirm item deleting"
+  "auth": {
+    "login": {
+      "VK": "VKontakte",
+      "forgotten_login_password": "Forgotten login and/or password?",
+      "no_account": "No account yet?",
+      "password": "Password",
+      "with_social_media": "with social media"
     },
-    "alerts": {
-      "needs_text_to_generate_audio":"To generate audio fill the text",
-      "somethings_wrong_try_again":"Something's wrong... Try again!"
+    "register": {
+      "have_account": "Have account yet?",
+      "name": "Name",
+      "not_match": "Passwords does not match",
+      "password": "Password",
+      "password_placeholder": "At least 8 characters",
+      "repeat": "Repeat password"
     },
-    "info":{
-      "install_app":{
-        "ios1":"Install this webapp on your {{device}}: tap ",
-        "ios2":" and then Add to home screen",
-        "gadget":"To install this webapp on your desktop add it to home screen",
-        "other_mobile":"To install this webapp on your mobile add it to home screen"
-      },
-      "does_not_show": "Doesn't show",
-      "send_email":"Send email to developers",
-      "email_body":"Put here your question or bug report attaching relevant screenshots if applicable. \nPlease do not delete subject message above."
-    }  
-  },
-  "genders":{
-    "male":"male",
-    "female":"female"
-  },
-  "auth":{
-    "login":{
-      "password":"Password",
-      "forgotten_login_password":"Forgotten login and/or password?",
-      "with_social_media":"with social media",
-      "VK":"VKontakte",
-      "no_account":"No account yet?"
-    },
-    "register":{
-      "not_match":"Passwords does not match",
-      "name":"Name",
-      "password":"Password",
-      "password_placeholder":"At least 8 characters",
-      "repeat":"Repeat password",
-      "have_account":"Have account yet?"
-    },
-    "reset":{
-      "resetting":"Password resetting",
-      "reset":"Reset password",
-      "code":"Letter code",
-      "new_password":"New password"
+    "reset": {
+      "code": "Letter code",
+      "new_password": "New password",
+      "reset": "Reset password",
+      "resetting": "Password resetting"
     }
   },
-  "courses":{
-    "title":"Courses",
-    "summary":"Training course review",
-    "course":{
-      "name":"Course title",
-      "new":"New course",
-      "tags":"Tags",
-      "cost_zero":"Free",
-      "cost_other":"Price: {{count}}",
-      "price":"Price",
-      "price_placeholder":"Input price",
-      "is_published":"Publish course?",
-      
-      "creation":"Course creation",
-      "trainings":{
-        "title":"Course contents",
-        "add_prompt":"Select and add trainings to the course",
-        "add_topics_filter_placeholder":"Begin type to filter the list below"
+  "courses": {
+    "course": {
+      "cost_other": "Price: {{count}}",
+      "cost_zero": "Free",
+      "creation": "Course creation",
+      "is_published": "Publish course?",
+      "name": "Course title",
+      "new": "New course",
+      "price": "Price",
+      "price_placeholder": "Input price",
+      "states": {
+        "published": "Published",
+        "unpublished": "Unpublished"
       },
-      "states":{
-        "published":"Published",
-        "unpublished":"Unpublished"
-      }    
-    }
-  },
-  "languages":{
-    "foreign":"Studied language",
-    "native":"Native language",
-    "placeholder":"Select language",
-    "no_language":"No language available"
-  },
-  "trainings":{
-    "title": "Trainings",
-    "training_list":{
-      "published_zero": "Published: Nothing",
-      "published": "Published: {{count}}",
-      "drafts_zero": "Drafts: Nothing",
-      "drafts": "Drafts: {{count}}",
-      "menu":{
-        "open":"Open training",
-        "info":"Edit training info",
-        "trash":"Delete training"
+      "tags": "Tags",
+      "trainings": {
+        "add_prompt": "Select and add trainings to the course",
+        "add_topics_filter_placeholder": "Begin type to filter the list below",
+        "title": "Course contents"
       }
     },
-    "list":"Course's trainings",
-    "nothing":"No training",
-    "number_of_zero":"No training",
-    "number_of_one":"{{count}} training",
-    "number_of_other":"{{count}} trainings",
-    "training":{
-      "new":"New",
-      "edit":"Edit",
-      "title":"Training theme",
-      "tags":"Tags"
+    "summary": "Training course review",
+    "title": "Courses"
+  },
+  "effects": {
+    "mandatory": "Mandatory",
+    "min_length": "At least {{minLength}} characters",
+    "number_needed": "Please, input number"
+  },
+  "genders": {
+    "female": "female",
+    "male": "male"
+  },
+  "languages": {
+    "foreign": "Studied language",
+    "native": "Native language",
+    "no_language": "No language available",
+    "placeholder": "Select language"
+  },
+  "menu": {
+    "classes": "My classes",
+    "dictionary": "Dictionary",
+    "title": "Menu"
+  },
+  "messages": {
+    "alerts": {
+      "needs_text_to_generate_audio": "To generate audio fill the text",
+      "somethings_wrong_try_again": "Something's wrong... Try again!"
+    },
+    "confirm": {
+      "deleteItem": "Please confirm item deleting",
+      "is_sure": "Are you sure?",
+      "unsaved_data": "Unsaved voiceover will be lost\nPlease, confirm transition"
+    },
+    "info": {
+      "does_not_show": "Doesn't show",
+      "email_body": "Put here your question or bug report attaching relevant screenshots if applicable. \nPlease do not delete subject message above.",
+      "install_app": {
+        "desktop": "Install this app on your computer, add it to your home page",
+        "gadget": "To install this webapp on your desktop add it to home screen",
+        "ios1": "Install this webapp on your {{device}}: tap ",
+        "ios2": " and then Add to home screen",
+        "other_mobile": "To install this webapp on your mobile add it to home screen"
+      },
+      "send_email": "Send email to developers"
     }
+  },
+  "profile": {
+    "about_oneself": "Bio",
+    "app_link": "Application link",
+    "bio": "Tell subscribers a little about yourselves",
+    "click_to_copy": "Click the field to copy value to clipboard",
+    "copy_done": "Copied!",
+    "copy_link": "Copy link",
+    "email": "Email",
+    "name": "Name",
+    "nickname": "Nickname",
+    "person": "Person",
+    "phone": "Phone",
+    "photo_change_prompt": "To change avatar click it",
+    "photo_put_prompt": "Add avatar to subscribers recognize you better",
+    "title": "Profile"
+  },
+  "promo": {
+    "can": {
+      "1": "A teacher is capable of",
+      "2": "Create new theme",
+      "3": "Add, translate and voice tasks",
+      "4": "Publish the theme to student application",
+      "5": "A student is capable of",
+      "6": "Find and subscribe to a teacher in the app",
+      "7": "Use content to train lingo skills",
+      "8": "Train several themes united in a training course"
+    },
+    "footer": {
+      "answers": "Answers",
+      "any_questions": "Still have any questions?",
+      "contacts": "Contacts",
+      "feedback_form": "Please, fill the form below to get extra information",
+      "name": "Name",
+      "phone": "Phone",
+      "price_list": "Price"
+    },
+    "offer": {
+      "1": "We offer",
+      "2": "Convert any your social media post to education material getting tangible benefits to your subscriber and profit to You",
+      "3": "Advantageable",
+      "4": "How long time do You spend to create a post? Every post can get profit!",
+      "5": "Quickly",
+      "6": "How long time needs to create a post? Now the efforts will be payed off immediately after publication! ",
+      "7": "Useful",
+      "8": "Language content is easily converted into an task to improve language skills"
+    },
+    "profit": {
+      "1": "The service use can provides",
+      "2": "Learning outcomes",
+      "3": "Improves students' learning outcomes due to training skills during extracurricular time",
+      "4": "Audience loyalty",
+      "5": "Increases subscribers and students lifetime value",
+      "6": "Extra incomes",
+      "7": "Provides new students among your subscribers"
+    },
+    "reviews": {
+      "1": {
+        "author": "Vlad, iOs App user",
+        "text": "Good app to lean foreign language. Add new excises"
+      },
+      "filter": {
+        "1": "All",
+        "2": "Teachers",
+        "3": "Students"
+      },
+      "title": "Reviews"
+    },
+    "tariff": {
+      "individual": "We can provide individual offer",
+      "is_not_suitable": "No suitable price?",
+      "optimum": {
+        "comment": "You get 50% of fees paid by your subscribers for your content",
+        "detail1": "₽1000",
+        "detail2": "per month",
+        "n_of_publications": "up to 10",
+        "n_of_subscribers": "Not limited",
+        "n_of_tasks": "up to 20",
+        "name": "Optimum"
+      },
+      "profi": {
+        "comment": "You get 70% of fees paid by your subscribers for your content",
+        "detail1": "₽5000",
+        "detail2": "per month",
+        "n_of_publications": "Not limited",
+        "n_of_subscribers": "Not limited",
+        "n_of_tasks": "up to 10",
+        "name": "Professional"
+      },
+      "publications": "Posts per month",
+      "starter": {
+        "comment": "You are not able to get a fee for your content. Your student training is free",
+        "detail1": "Free",
+        "detail2": "First 3 month",
+        "n_of_publications": "up to 4",
+        "n_of_subscribers": "Not limited",
+        "n_of_tasks": "up to 10",
+        "name": "Primary"
+      },
+      "subscribers": "Number of subscribers",
+      "tasks": "Tasks per post",
+      "title": "Prices"
+    },
+    "top": {
+      "1": "Lingvoinsta - the online service for bloggers and language schools",
+      "2": "Ready-made it-solutions for language schools and bloggers. We turn posts into unique educational material. We make useful publications payback",
+      "3": "Try free",
+      "4": "Get app for free",
+      "pupil": "Student's app",
+      "teacher": "Teacher's app"
+    }
+  },
+  "social_media": {
+    "Facebook": {
+      "title": "Facebook"
+    },
+    "Instagram": {
+      "title": "Instagram"
+    },
+    "Telegram": {
+      "title": "Telegram"
+    },
+    "VK": {
+      "title": "VKontakte"
+    },
+    "title": "Social media"
   },
   "tasks": {
-    "title":"Tasks",
-    "task":{
-      "new":"New",
+    "task": {
+      "extra": "Extra explanation",
+      "level": "Level",
+      "new": "New",
       "original": "Phrase to learn",
-      "translation":"Translate or Explain in original language",
-      "extra":"Extra explanation",
-      "level":"Level",
-      "tags":"Tags",
-      "placeholders":{
-        "foreign":"Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
-        "native":"If you are silent people don't understand what you feel",
-        "extra":"This sentences is very important to me"
+      "placeholders": {
+        "extra": "This sentences is very important to me",
+        "foreign": "Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
+        "native": "If you are silent people don't understand what you feel"
       },
-      "voice_sources":{
-        "select":"Audio source",
-        "undefined":{
-          "label":"Undefined"
+      "tags": "Tags",
+      "translation": "Translate or Explain in original language",
+      "voice_sources": {
+        "generate": {
+          "button": "Generate",
+          "gender": "Select gender",
+          "label": "Generate audio",
+          "language": "Select language",
+          "play": "Play"
         },
-        "upload":{
-          "label":"Upload a file",
-          "title":"Select this window or Drop audio here"
+        "record": {
+          "button": "Make record",
+          "file_name": "File name",
+          "label": "Record audio"
         },
-        "record":{
-          "label":"Record audio",
-          "button":"Make record",
-          "file_name":"File name"
+        "select": "Audio source",
+        "undefined": {
+          "label": "Undefined"
         },
-        "generate":{
-          "label":"Generate audio",
-          "button":"Generate",
-          "language":"Select language",
-          "gender":"Select gender",
-          "play":"Play"
+        "upload": {
+          "label": "Upload a file",
+          "title": "Select this window or Drop audio here"
         }
       }
-    }
+    },
+    "title": "Tasks"
   },
-  "menu":{
-    "title":"Menu",
-    "classes":"My classes",
-    "dictionary":"Dictionary"
-  },
- "effects":{
-    "number_needed":"Please, input number",
-    "mandatory":"Mandatory",
-    "min_length":"At least {{minLength}} characters"
-  },
-  "promo":{
-    "can": {
-      "1":"You are capable of",
-      "2":"Create new theme",
-      "3":"Add, translate and voice tasks",
-      "4":"Publish the theme to student application",
-      "5":"Your students are capable of",
-      "6":"Find and subscribe to You in the app",
-      "7":"Use your content to train lingo skills theme by theme",
-      "8":"Train several themes united in a training course"
+  "trainings": {
+    "list": "Course's trainings",
+    "nothing": "No training",
+    "number_of_one": "{{count}} training",
+    "number_of_other": "{{count}} trainings",
+    "number_of_zero": "No training",
+    "title": "Trainings",
+    "training": {
+      "edit": "Edit",
+      "new": "New",
+      "tags": "Tags",
+      "title": "Training theme"
     },
-    "offer":{
-      "1":"We offer",
-      "2":"Convert any your social media post to education material getting tangible benefits to your subscriber and profit to You",
-      "3":"Advantageable",
-      "4":"How long time do You spend to create a post? Every post can get profit!",
-      "5":"Quickly",
-      "6":"How long time needs to create a post? Now the efforts will be payed off immediately after publication! ",
-      "7":"Useful",
-      "8":"Language content is easily converted into an task to improve language skills"
-    },
-    "profit":{
-      "1":"The service use can provides",
-      "2":"Learning outcomes",
-      "3":"Improves students' learning outcomes due to training skills during extracurricular time",
-      "4":"Audience loyalty",
-      "5":"Increases subscribers and students lifetime value",
-      "6":"Extra incomes",
-      "7":"Provides new students among your subscribers"
-    },
-    "reviews":{
-      "title":"Reviews",
-      "filter":{
-        "1":"All",
-        "2":"Teachers",
-        "3":"Students"
+    "training_list": {
+      "drafts": "Drafts: {{count}}",
+      "drafts_zero": "Drafts: Nothing",
+      "menu": {
+        "info": "Edit training info",
+        "open": "Open training",
+        "trash": "Delete training"
       },
-      "1":{
-        "text":"Good app to lean foreign language. Add new excises",
-        "author":"Vlad, iOs App user"
-      }
-    },
-    "tariff":{
-      "title":"Prices",
-      "publications":"Posts per month",
-      "tasks":"Tasks per post",
-      "subscribers":"Number of subscribers",
-      "starter":{
-        "name":"Primary",
-        "detail1":"Free",
-        "detail2":"First 3 month",
-        "comment":"You are not able to get a fee for your content. Your student training is free",
-        "n_of_publications":"up to 4",
-        "n_of_tasks":"up to 10",
-        "n_of_subscribers":"Not limited"
-      },
-      "optimum":{
-        "name":"Optimum",
-        "detail1":"₽1000",
-        "detail2":"per month",
-        "comment":"You get 50% of fees paid by your subscribers for your content",
-        "n_of_publications":"up to 10",
-        "n_of_tasks":"up to 20",
-        "n_of_subscribers":"Not limited"
-      },
-      "profi":{
-        "name":"Professional",
-        "detail1":"₽5000",
-        "detail2":"per month",
-        "comment":"You get 70% of fees paid by your subscribers for your content",
-        "n_of_publications":"Not limited",
-        "n_of_tasks":"up to 10",
-        "n_of_subscribers":"Not limited"
-      },
-      "is_not_suitable":"No suitable price?",
-      "individual":"We can provide individual offer"
-    },
-    "top":{
-      "1":"Lingvoinsta - the online service for bloggers and language schools",
-      "2":"Ready-made it-solutions for language schools and bloggers. We turn posts into unique educational material. We make useful publications payback",
-      "3":"Try free"
-    },
-    "footer":{
-      "any_questions":"Still have any questions?",
-      "feedback_form":"Please, fill the form below to get extra information",
-      "name":"Name",
-      "phone":"Phone",
-      "answers":"Answers",
-      "price_list":"Price",
-      "contacts":"Contacts"
+      "published": "Published: {{count}}",
+      "published_zero": "Published: Nothing"
     }
   }
 }

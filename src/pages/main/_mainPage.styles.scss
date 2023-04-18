@@ -82,6 +82,13 @@ a {
     @extend .flex-start;
     align-items: center;
 
+    position: absolute;
+    right: 16px;
+    // @include media-max(992px) {
+    //   position: absolute;
+    //   right: 16px;
+    // }
+
     span {
       font-family: Montserrat;
       font-style: normal;
@@ -95,14 +102,6 @@ a {
       margin-bottom: 4px;
       margin-right: 13px;
     }
-  }
-
-  &-hamburger {
-    @include media-max(992px) {
-      position: absolute;
-      right: 16px;
-    }
-
   }
 
   @include media-max(992px) {

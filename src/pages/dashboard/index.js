@@ -38,7 +38,7 @@ const DashboardPages = () => {
   return (
     <>
       <Routes>
-        <Route exact path="/main" element={<MainPage />} />
+        <Route exact path="/" element={<MainPage />} />
 
         <Route exact path="*" element={
             
