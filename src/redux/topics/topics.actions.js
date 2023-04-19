@@ -141,7 +141,7 @@ export const createTopicAsync = (formParams, callback) => async (dispatch) => {
       const resp = await topicsApi.createTopic(params);
       dispatch(createTopicSuccess({ ...resp.data }));
       dispatch(getTopicsAsync());
-      callback && callback()
+      callback && callback(resp.data.id)
    } catch (error) {
       const message = handleAJAXError(error);
       dispatch(createTopicFailure(message));
