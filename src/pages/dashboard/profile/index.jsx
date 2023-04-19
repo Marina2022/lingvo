@@ -369,6 +369,22 @@ const ProfilePage = (props) => {
                      </Link>
                   </Grid>
 
+                  <Divider sx={{ my:'1rem'}}/>
+
+                  <Grid item xs={12} container justifyContent="center">
+                     <Link /* href="/offer" */ >
+                        {t("promo.footer.offer")}
+                     </Link>
+                  </Grid>
+
+                  <Divider sx={{ my:'1rem'}}/>
+
+                  <Grid item xs={12} container justifyContent="center">
+                     <Link /* href="/personal_data" */>
+                        {t("promo.footer.personal_data")}
+                     </Link>
+                  </Grid>
+
                   <Divider sx={{ my:'3rem'}}/>
 
                   <Grid item xs={10}>

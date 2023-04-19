@@ -120,18 +120,15 @@
     "email": "Email",
     "name": "Name",
     "nickname": "Nickname",
+    "offer_agreed": "I have read and agree with the offer",
     "person": "Person",
+    "personal_data_agreed": "I have read and agree with the rules of personal data processing",
     "phone": "Phone",
     "photo_change_prompt": "To change avatar click it",
     "photo_put_prompt": "Add avatar to subscribers recognize you better",
     "title": "Profile"
   },
   "promo": {
-    "header": {
-      "menu": {
-        "login": "Sign In for Tutors"
-      }
-    },
     "can": {
       "1": "A teacher is capable of",
       "2": "Create new theme",
@@ -148,10 +145,15 @@
       "contacts": "Contacts",
       "feedback_form": "Please, fill the form below to get extra information",
       "name": "Name",
-      "phone": "Phone",
-      "price_list": "Price",
       "offer": "Service's offer",
-      "personal_data": "Personal data"
+      "personal_data": "Personal data",
+      "phone": "Phone",
+      "price_list": "Price"
+    },
+    "header": {
+      "menu": {
+        "login": "Sign In for Tutors"
+      }
     },
     "offer": {
       "1": "We offer",

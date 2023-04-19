@@ -12,7 +12,7 @@ import useInput from "../../../effects/useInput.effect";
 //ACTIONS
 import { authRegisterAsync } from "../../../redux/auth/auth.actions";
 import { t } from 'i18next'
-import { Grid } from "@mui/material";
+import { Checkbox, Grid, Link } from "@mui/material";
 
 // TODO: Email verification sending a code while user register
 const RegisterPage = (props) => {
@@ -44,6 +44,11 @@ const RegisterPage = (props) => {
          setErrorMessage("");
       }
    };
+
+   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+   const [offer, setOffer] = useState(false);
+   const [personalData, setPersonalData] = useState(false);
 
    return (
       <div className="register-page">
@@ -121,10 +126,31 @@ const RegisterPage = (props) => {
                               minLength={8}
                            />
                         </Grid>
+                        <Grid item container xs={12} sm={12} md={9} lg={9} alignItems="center">
+                           <Grid item xs={1}>
+                              <Checkbox {...label} label="offer" onChange={(e, v) => setOffer(v)} />
+                           </Grid>
+                           <Grid item xs={10} paddingLeft={'1rem'}>
+                              <Link /* href="/offer" */ >
+                                 {t('profile.offer_agreed')}
+                              </Link>
+                           </Grid>
+                        </Grid>
+                        <Grid item container xs={12} sm={12} md={9} lg={9} alignItems="center">
+                           <Grid item xs={1}>
+                              <Checkbox {...label} label="personal_data" onChange={(e, v) => setPersonalData(v)} />
+                           </Grid>
+                           <Grid item xs={10} paddingLeft={'1rem'}>
+                              <Link /* href="/personal_data" */>
+                                 {t('profile.personal_data_agreed')}
+                              </Link>
+                           </Grid>
+                        </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Button isLoading={isLoading} type="submit"
                               variant="contained"
                               sx={{backgroundColor:"Chocolate"}}
+                              disabled={!offer || !personalData}
                            >
                               {t("actions.sign_up")}
                            </Button>

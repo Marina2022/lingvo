@@ -9,8 +9,6 @@ import { Grid } from "@mui/material";
 // import {ReactComponent as Facebook} from "../../../assets/images/main/facebook.svg";
 
 export default function Top () {
-    const personLink = "";
-    const offerLink = "";
     return (
         <footer className="landing-footer">
             <div className="landing-container">
@@ -65,10 +63,10 @@ export default function Top () {
                         Lingvoinsta &copy; All rights reserved
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <a href={offerLink} className="btn">{t('promo.footer.offer')}</a>
+                        <a /* href={"/offer"} */ className="btn">{t('promo.footer.offer')}</a>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <a href={personLink} className="btn">{t('promo.footer.personal_data')}</a>
+                        <a /* href={"/personal_data"} */ className="btn">{t('promo.footer.personal_data')}</a>
                     </Grid>
                 </Grid>
             </div>
