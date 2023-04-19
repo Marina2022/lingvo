@@ -148,6 +148,11 @@
       "phone": "Telefone",
       "price_list": "Preço"
     },
+    "header": {
+      "menu": {
+        "login": "Entrar para tutores"
+      }
+    },
     "offer": {
       "1": "Nós oferecemos",
       "2": "Converta qualquer postagem de mídia social em material educacional, obtendo benefícios tangíveis para seu assinante e lucro para você",

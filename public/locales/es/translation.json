@@ -148,6 +148,11 @@
       "phone": "Teléfono",
       "price_list": "Precio"
     },
+    "header": {
+      "menu": {
+        "login": "Iniciar sesión para tutores"
+      }
+    },
     "offer": {
       "1": "Ofrecemos",
       "2": "Convierta cualquier publicación de sus redes sociales en material educativo obteniendo beneficios tangibles para su suscriptor y ganancias para usted",

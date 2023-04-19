@@ -80,8 +80,8 @@ const RegisterPage = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
                            <Input
-                              id="new-password"
-                              autoComplete="new-password"
+                              id="name"
+                              autoComplete="name"
                               name="name"
                               value={inputState.name}
                               error={invalidMessages}

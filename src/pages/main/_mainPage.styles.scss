@@ -89,19 +89,19 @@ a {
     //   right: 16px;
     // }
 
-    span {
-      font-family: Montserrat;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 24px;
-      color: #11141B;
-    }
+    // span {
+    //   font-family: Montserrat;
+    //   font-style: normal;
+    //   font-weight: 600;
+    //   font-size: 15px;
+    //   line-height: 24px;
+    //   color: #11141B;
+    // }
 
-    svg:not(last-child) {
-      margin-bottom: 4px;
-      margin-right: 13px;
-    }
+    // svg:not(last-child) {
+    //   margin-bottom: 4px;
+    //   margin-right: 13px;
+    // }
   }
 
   @include media-max(992px) {
