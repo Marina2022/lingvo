@@ -12,7 +12,7 @@ const UploadAudio = ({ handleFiles, files }) =>
             title={t("tasks.task.voice_sources.upload.title")}
             handleFiles={handleFiles}
             files={files}
-            accept={{'audio/mpeg':['.mp3']}}
+            accept={{'audio/mpeg':['.mp3','.ogg']}}
          />
       </Grid>
       <Grid item xs={12} container justifyContent="center">

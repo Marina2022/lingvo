@@ -6,42 +6,32 @@ import Slider1 from "../../../assets/images/main/slider1.png.webp";
 import Student1 from "../../../assets/images/main/student1.png";
 import Student2 from "../../../assets/images/main/student2.png";
 import Student3 from "../../../assets/images/main/student3.png";
+import {ReactComponent as ArrowLeft} from "../../../assets/images/main/arrow-left.svg"
+import {ReactComponent  as ArrowRight} from "../../../assets/images/main/arrow-right.svg"
 
-function PrevArrow (props) {
-    // eslint-disable-next-line no-unused-vars
-    const { className, style, onClick } = props;
- 
-    return (
-       <svg
-          width="50"
-          height="20"
-          viewBox="0 0 50 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <g opacity="1">
-             <path d="M50 10L2 10" stroke="black" strokeWidth="2" />
-             <path d="M11 19L2 10L11 1" stroke="black" strokeWidth="2" />
-          </g>
-       </svg>
-    ); 
- }
- 
- function NextArrow (props) {
-    // eslint-disable-next-line no-unused-vars
-    const { className, style, onClick } = props;
- 
-    return (
-       <svg
-          width="50"
-          height="20"
-          viewBox="0 0 50 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 10L48 10" stroke="black" strokeWidth="2" />
-          <path d="M39 1L48 10L39 19" stroke="black" strokeWidth="2" />
-       </svg>
-    );
- }
+const PrevArrow = ({ currentSlide, slideCount, ...props }) =>
+   (<ArrowLeft 
+      {...props} 
+      className={
+         "slick-prev slick-arrow" +
+         (currentSlide === 0 ? " slick-disabled" : "")
+      }
+      aria-hidden="true"
+      aria-disabled={currentSlide === 0 ? true : false}
+      type="button"
+   />);
+
+const NextArrow = ({ currentSlide, slideCount, ...props }) =>
+   (<ArrowRight
+      {...props}
+      className={
+        "slick-next slick-arrow" +
+        (currentSlide === slideCount - 1 ? " slick-disabled" : "")
+      }
+      aria-hidden="true"
+      aria-disabled={currentSlide === slideCount - 1 ? true : false}
+      type="button"
+   />);
  
 export default function Top () {
     const settings = {

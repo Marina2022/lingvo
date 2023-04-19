@@ -1,0 +1,311 @@
+{
+  "actions": {
+    "add": "添加",
+    "buy": "买",
+    "cancel": "取消",
+    "change": "改变",
+    "create": "创造",
+    "delete": "删除",
+    "edit": "编辑",
+    "filter": "筛选",
+    "play": "玩",
+    "publish": "发布",
+    "record": "记录",
+    "save": "节省",
+    "search": "搜索",
+    "send": "发送",
+    "sign_in": "登入",
+    "sign_out": "登出",
+    "sign_up": "报名",
+    "signing_up": "报名",
+    "stop": "停止"
+  },
+  "auth": {
+    "login": {
+      "VK": "电话联络",
+      "forgotten_login_password": "忘记登录名和/或密码？",
+      "no_account": "还没有帐号？",
+      "password": "密码",
+      "with_social_media": "通过社交媒体"
+    },
+    "register": {
+      "have_account": "有帐号了吗？",
+      "name": "姓名",
+      "not_match": "密码不匹配",
+      "password": "密码",
+      "password_placeholder": "至少8个字符",
+      "repeat": "重复输入密码"
+    },
+    "reset": {
+      "code": "字母代码",
+      "new_password": "新密码",
+      "reset": "重设密码",
+      "resetting": "密码重置"
+    }
+  },
+  "courses": {
+    "course": {
+      "cost_other": "价格：{{count}}",
+      "cost_zero": "自由的",
+      "creation": "课程创建",
+      "is_published": "发布课程？",
+      "name": "课程名称",
+      "new": "新课程",
+      "price": "价格",
+      "price_placeholder": "输入价格",
+      "states": {
+        "published": "发表",
+        "unpublished": "未发表"
+      },
+      "tags": "标签",
+      "trainings": {
+        "add_prompt": "选择培训并将其添加到课程中",
+        "add_topics_filter_placeholder": "开始键入以过滤下面的列表",
+        "title": "课程内容"
+      }
+    },
+    "summary": "培训课程回顾",
+    "title": "培训班"
+  },
+  "effects": {
+    "mandatory": "强制的",
+    "min_length": "至少 {{minLength}} 个字符",
+    "number_needed": "请输入号码"
+  },
+  "genders": {
+    "female": "女性",
+    "male": "男性"
+  },
+  "languages": {
+    "foreign": "学习语言",
+    "native": "母语",
+    "no_language": "无可用语言",
+    "placeholder": "选择语言"
+  },
+  "menu": {
+    "classes": "我的课程",
+    "dictionary": "字典",
+    "title": "菜单"
+  },
+  "messages": {
+    "alerts": {
+      "needs_text_to_generate_audio": "生成音频填充文本",
+      "somethings_wrong_try_again": "出了点问题……再试一次！"
+    },
+    "confirm": {
+      "deleteItem": "请确认项目删除",
+      "is_sure": "你确定吗？",
+      "unsaved_data": "未保存的画外音将丢失\n\n请确认转换"
+    },
+    "info": {
+      "does_not_show": "不显示",
+      "email_body": "如果适用，请将您的问题或错误报告附在此处并附上相关屏幕截图。\n\n请不要删除上面的主题消息。",
+      "install_app": {
+        "desktop": "在您的计算机上安装此应用程序，将其添加到您的主页",
+        "gadget": "要在您的桌面上安装此 Web 应用程序，请将其添加到主屏幕",
+        "ios1": "在您的 {{device}} 上安装此网络应用程序：点击",
+        "ios2": "然后添加到主屏幕",
+        "other_mobile": "要在您的手机上安装此网络应用程序，请将其添加到主屏幕"
+      },
+      "send_email": "向开发人员发送电子邮件"
+    }
+  },
+  "profile": {
+    "about_oneself": "生物",
+    "app_link": "申请链接",
+    "bio": "向订阅者介绍一下您自己",
+    "click_to_copy": "单击该字段以将值复制到剪贴板",
+    "copy_done": "已复制！",
+    "copy_link": "复制链接",
+    "email": "电子邮件",
+    "name": "姓名",
+    "nickname": "昵称",
+    "offer_agreed": "我已阅读并同意该优惠",
+    "person": "人",
+    "personal_data_agreed": "我已阅读并同意个人资料处理规则",
+    "phone": "电话",
+    "photo_change_prompt": "要更改头像，请单击它",
+    "photo_put_prompt": "为订阅者添加头像更好地识别您",
+    "title": "轮廓"
+  },
+  "promo": {
+    "can": {
+      "1": "一个老师有能力",
+      "2": "创建新主题",
+      "3": "添加、翻译和语音任务",
+      "4": "将主题发布到学生应用程序",
+      "5": "一个学生有能力",
+      "6": "在应用程序中查找并订阅老师",
+      "7": "使用内容来训练行话技能",
+      "8": "在一个培训课程中培训多个主题"
+    },
+    "footer": {
+      "answers": "答案",
+      "any_questions": "还有问题吗？",
+      "contacts": "联系人",
+      "feedback_form": "请填写下表以获取更多信息",
+      "name": "姓名",
+      "offer": "服务报价",
+      "personal_data": "个人资料",
+      "phone": "电话",
+      "price_list": "价格"
+    },
+    "header": {
+      "menu": {
+        "login": "登录导师"
+      }
+    },
+    "offer": {
+      "1": "我们提供",
+      "2": "将您的任何社交媒体帖子转换为教育材料，为您的订阅者带来实实在在的利益并为您带来利润",
+      "3": "有利",
+      "4": "您花了多长时间创建一个帖子？\n每个帖子都有收益！",
+      "5": "迅速地",
+      "6": "创建帖子需要多长时间？\n现在的付出，一经发布，立马得到回报！",
+      "7": "有用",
+      "8": "语言内容很容易转化为提高语言能力的任务"
+    },
+    "profit": {
+      "1": "服务用途可以提供",
+      "2": "学习成果",
+      "3": "通过课外时间的技能培训提高学生的学习成果",
+      "4": "观众忠诚度",
+      "5": "增加订户和学生的终身价值",
+      "6": "额外收入",
+      "7": "在您的订阅者中提供新学生"
+    },
+    "reviews": {
+      "1": {
+        "author": "Vlad，iOs App 用户",
+        "text": "学习外语的好应用。\n添加新的消费税"
+      },
+      "filter": {
+        "1": "全部",
+        "2": "教师",
+        "3": "学生"
+      },
+      "title": "点评"
+    },
+    "tariff": {
+      "individual": "我们可以提供个别报价",
+      "is_not_suitable": "没有合适的价格？",
+      "optimum": {
+        "comment": "您将获得订阅者为您的内容支付的费用的 50%",
+        "detail1": "₽1000",
+        "detail2": "每月",
+        "n_of_publications": "高达10",
+        "n_of_subscribers": "不限",
+        "n_of_tasks": "最多 20",
+        "name": "最佳"
+      },
+      "profi": {
+        "comment": "您将获得订阅者为您的内容支付的费用的 70%",
+        "detail1": "₽5000",
+        "detail2": "每月",
+        "n_of_publications": "不限",
+        "n_of_subscribers": "不限",
+        "n_of_tasks": "高达10",
+        "name": "专业的"
+      },
+      "publications": "每月帖子",
+      "starter": {
+        "comment": "您无法为您的内容收取费用。\n您的学生培训是免费的",
+        "detail1": "自由的",
+        "detail2": "前3个月",
+        "n_of_publications": "最多 4 个",
+        "n_of_subscribers": "不限",
+        "n_of_tasks": "高达10",
+        "name": "基本的"
+      },
+      "subscribers": "订户数",
+      "tasks": "每个帖子的任务",
+      "title": "价格"
+    },
+    "top": {
+      "1": "Lingvoinsta - 博客和语言学校的在线服务",
+      "2": "适用于语言学校和博主的现成 it 解决方案。\n我们将帖子变成独特的教育材料。\n我们做出有用的出版物回报",
+      "3": "免费试用",
+      "4": "免费获取应用程序",
+      "pupil": "学生应用",
+      "teacher": "老师的应用程序"
+    }
+  },
+  "social_media": {
+    "Facebook": {
+      "title": "Facebook"
+    },
+    "Instagram": {
+      "title": "Instagram的"
+    },
+    "Telegram": {
+      "title": "电报"
+    },
+    "VK": {
+      "title": "电话联络"
+    },
+    "title": "社交媒体"
+  },
+  "tasks": {
+    "task": {
+      "extra": "额外说明",
+      "level": "等级",
+      "new": "新的",
+      "original": "要学习的短语",
+      "placeholders": {
+        "extra": "这句话对我很重要",
+        "foreign": "Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
+        "native": "如果你沉默，人们就不会理解你的感受"
+      },
+      "tags": "标签",
+      "translation": "用原始语言翻译或解释",
+      "voice_sources": {
+        "generate": {
+          "button": "产生",
+          "gender": "选择性别",
+          "label": "生成音频",
+          "language": "选择语言",
+          "play": "玩"
+        },
+        "record": {
+          "button": "做记录",
+          "file_name": "文件名",
+          "label": "录制音频"
+        },
+        "select": "音源",
+        "undefined": {
+          "label": "不明确的"
+        },
+        "upload": {
+          "label": "上传一个文件",
+          "title": "选择此窗口或将音频拖放到此处"
+        }
+      }
+    },
+    "title": "任务"
+  },
+  "trainings": {
+    "list": "课程训练",
+    "nothing": "没有培训",
+    "number_of_one": "{{count}} 次训练",
+    "number_of_other": "{{count}} 次培训",
+    "number_of_zero": "没有培训",
+    "title": "培训",
+    "training": {
+      "edit": "编辑",
+      "new": "新的",
+      "tags": "标签",
+      "title": "培训主题"
+    },
+    "training_list": {
+      "drafts": "草稿：{{count}}",
+      "drafts_zero": "草稿：无",
+      "menu": {
+        "info": "编辑培训信息",
+        "open": "公开培训",
+        "trash": "删除训练"
+      },
+      "published": "发布：{{count}}",
+      "published_zero": "发表：无"
+    }
+  }
+}

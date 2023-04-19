@@ -1,0 +1,311 @@
+{
+  "actions": {
+    "add": "Adicionar",
+    "buy": "Comprar",
+    "cancel": "Cancelar",
+    "change": "Mudar",
+    "create": "Criar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "filter": "Filtro",
+    "play": "Jogar",
+    "publish": "Publicar",
+    "record": "Registro",
+    "save": "Salvar",
+    "search": "Procurar",
+    "send": "Enviar",
+    "sign_in": "Entrar",
+    "sign_out": "Sair",
+    "sign_up": "Inscrever-se",
+    "signing_up": "Inscrever-se",
+    "stop": "Parar"
+  },
+  "auth": {
+    "login": {
+      "VK": "VKontakte",
+      "forgotten_login_password": "Esqueceu login e/ou senha?",
+      "no_account": "Ainda não tem conta?",
+      "password": "Senha",
+      "with_social_media": "com mídia social"
+    },
+    "register": {
+      "have_account": "Já tem conta?",
+      "name": "Nome",
+      "not_match": "As senhas não correspondem",
+      "password": "Senha",
+      "password_placeholder": "Pelo menos 8 caracteres",
+      "repeat": "Repita a senha"
+    },
+    "reset": {
+      "code": "Código da letra",
+      "new_password": "Nova Senha",
+      "reset": "Redefinir senha",
+      "resetting": "Redefinição de senha"
+    }
+  },
+  "courses": {
+    "course": {
+      "cost_other": "Preço: {{count}}",
+      "cost_zero": "Livre",
+      "creation": "criação de curso",
+      "is_published": "Publicar curso?",
+      "name": "Título do curso",
+      "new": "novo curso",
+      "price": "Preço",
+      "price_placeholder": "preço de entrada",
+      "states": {
+        "published": "Publicados",
+        "unpublished": "não publicado"
+      },
+      "tags": "Tag",
+      "trainings": {
+        "add_prompt": "Selecione e adicione treinamentos ao curso",
+        "add_topics_filter_placeholder": "Comece a digitar para filtrar a lista abaixo",
+        "title": "Conteúdos do curso"
+      }
+    },
+    "summary": "Revisão do curso de treinamento",
+    "title": "Cursos"
+  },
+  "effects": {
+    "mandatory": "Obrigatório",
+    "min_length": "Pelo menos {{minLength}} caracteres",
+    "number_needed": "Por favor, insira o número"
+  },
+  "genders": {
+    "female": "fêmea",
+    "male": "macho"
+  },
+  "languages": {
+    "foreign": "Língua estudada",
+    "native": "Língua materna",
+    "no_language": "Nenhum idioma disponível",
+    "placeholder": "Selecione o idioma"
+  },
+  "menu": {
+    "classes": "Minhas aulas",
+    "dictionary": "Dicionário",
+    "title": "Cardápio"
+  },
+  "messages": {
+    "alerts": {
+      "needs_text_to_generate_audio": "Para gerar áudio preencha o texto",
+      "somethings_wrong_try_again": "Algo está errado... Tente novamente!"
+    },
+    "confirm": {
+      "deleteItem": "Confirme a exclusão do item",
+      "is_sure": "Tem certeza?",
+      "unsaved_data": "A narração não salva será perdida\n\nPor favor, confirme a transição"
+    },
+    "info": {
+      "does_not_show": "não mostra",
+      "email_body": "Coloque aqui sua pergunta ou relatório de bug anexando capturas de tela relevantes, se aplicável.\n\nPor favor, não exclua a mensagem de assunto acima.",
+      "install_app": {
+        "desktop": "Instale este aplicativo em seu computador, adicione-o à sua página inicial",
+        "gadget": "Para instalar este webapp em sua área de trabalho, adicione-o à tela inicial",
+        "ios1": "Instale este webapp em seu {{device}}: toque em",
+        "ios2": "e, em seguida, Adicionar à tela inicial",
+        "other_mobile": "Para instalar este webapp no ​​seu celular, adicione-o à tela inicial"
+      },
+      "send_email": "Enviar e-mail para desenvolvedores"
+    }
+  },
+  "profile": {
+    "about_oneself": "biografia",
+    "app_link": "Link do aplicativo",
+    "bio": "Conte aos assinantes um pouco sobre você",
+    "click_to_copy": "Clique no campo para copiar o valor para a área de transferência",
+    "copy_done": "Copiado!",
+    "copy_link": "Link de cópia",
+    "email": "E-mail",
+    "name": "Nome",
+    "nickname": "Apelido",
+    "offer_agreed": "Li e concordo com a oferta",
+    "person": "Pessoa",
+    "personal_data_agreed": "Li e concordo com as regras de tratamento de dados pessoais",
+    "phone": "Telefone",
+    "photo_change_prompt": "Para mudar o avatar clique nele",
+    "photo_put_prompt": "Adicione avatar para que os assinantes o reconheçam melhor",
+    "title": "Perfil"
+  },
+  "promo": {
+    "can": {
+      "1": "Um professor é capaz de",
+      "2": "Criar novo tema",
+      "3": "Adicionar, traduzir e tarefas de voz",
+      "4": "Publicar o tema no aplicativo do aluno",
+      "5": "Um aluno é capaz de",
+      "6": "Encontre e assine um professor no aplicativo",
+      "7": "Use o conteúdo para treinar habilidades de linguagem",
+      "8": "Treine vários temas unidos em um curso de treinamento"
+    },
+    "footer": {
+      "answers": "Respostas",
+      "any_questions": "Ainda tem alguma dúvida?",
+      "contacts": "Contatos",
+      "feedback_form": "Por favor, preencha o formulário abaixo para obter informações extras",
+      "name": "Nome",
+      "offer": "Oferta de serviço",
+      "personal_data": "Dados pessoais",
+      "phone": "Telefone",
+      "price_list": "Preço"
+    },
+    "header": {
+      "menu": {
+        "login": "Entrar para tutores"
+      }
+    },
+    "offer": {
+      "1": "Nós oferecemos",
+      "2": "Converta qualquer postagem de mídia social em material educacional, obtendo benefícios tangíveis para seu assinante e lucro para você",
+      "3": "Vantajoso",
+      "4": "Quanto tempo você gasta para criar um post? \nCada post pode obter lucro!",
+      "5": "Rapidamente",
+      "6": "Quanto tempo precisa para criar um post? \nAgora os esforços serão recompensados ​​imediatamente após a publicação!",
+      "7": "Útil",
+      "8": "O conteúdo do idioma é facilmente convertido em uma tarefa para melhorar as habilidades do idioma"
+    },
+    "profit": {
+      "1": "O uso do serviço pode fornecer",
+      "2": "Resultados de aprendizagem",
+      "3": "Melhora os resultados de aprendizagem dos alunos devido às habilidades de treinamento durante o tempo extracurricular",
+      "4": "Lealdade do público",
+      "5": "Aumenta o valor vitalício de assinantes e alunos",
+      "6": "Rendas extras",
+      "7": "Fornece novos alunos entre seus assinantes"
+    },
+    "reviews": {
+      "1": {
+        "author": "Vlad, usuário do aplicativo iOs",
+        "text": "Bom app para aprender língua estrangeira. \nAdicionar novos impostos"
+      },
+      "filter": {
+        "1": "Todos",
+        "2": "Professores",
+        "3": "Alunos"
+      },
+      "title": "Avaliações"
+    },
+    "tariff": {
+      "individual": "Podemos fornecer uma oferta individual",
+      "is_not_suitable": "Nenhum preço adequado?",
+      "optimum": {
+        "comment": "Você recebe 50% das taxas pagas por seus assinantes pelo seu conteúdo",
+        "detail1": "₽1000",
+        "detail2": "por mês",
+        "n_of_publications": "até 10",
+        "n_of_subscribers": "Não limitado",
+        "n_of_tasks": "até 20",
+        "name": "ótimo"
+      },
+      "profi": {
+        "comment": "Você recebe 70% das taxas pagas por seus assinantes pelo seu conteúdo",
+        "detail1": "₽5000",
+        "detail2": "por mês",
+        "n_of_publications": "Não limitado",
+        "n_of_subscribers": "Não limitado",
+        "n_of_tasks": "até 10",
+        "name": "Profissional"
+      },
+      "publications": "postagens por mês",
+      "starter": {
+        "comment": "Você não é capaz de obter uma taxa para o seu conteúdo. \nSeu treinamento estudantil é gratuito",
+        "detail1": "Livre",
+        "detail2": "primeiros 3 meses",
+        "n_of_publications": "até 4",
+        "n_of_subscribers": "Não limitado",
+        "n_of_tasks": "até 10",
+        "name": "primário"
+      },
+      "subscribers": "Número de assinantes",
+      "tasks": "Tarefas por post",
+      "title": "Preços"
+    },
+    "top": {
+      "1": "Lingvoinsta - o serviço online para blogueiros e escolas de idiomas",
+      "2": "Soluções prontas para escolas de idiomas e blogueiros. \nTransformamos postagens em material educacional exclusivo. \nFazemos publicações úteis de retorno",
+      "3": "Experimente grátis",
+      "4": "Obtenha o aplicativo gratuitamente",
+      "pupil": "Aplicativo do aluno",
+      "teacher": "aplicativo do professor"
+    }
+  },
+  "social_media": {
+    "Facebook": {
+      "title": "Facebook"
+    },
+    "Instagram": {
+      "title": "Instagram"
+    },
+    "Telegram": {
+      "title": "Telegrama"
+    },
+    "VK": {
+      "title": "VKontakte"
+    },
+    "title": "Mídia social"
+  },
+  "tasks": {
+    "task": {
+      "extra": "Explicação extra",
+      "level": "Nível",
+      "new": "Novo",
+      "original": "frase para aprender",
+      "placeholders": {
+        "extra": "Essa frase é muito importante para mim",
+        "foreign": "Wenn du schweigst, verstehen die Leute nicht, was du fühlst",
+        "native": "Se você fica calado as pessoas não entendem o que você sente"
+      },
+      "tags": "Tag",
+      "translation": "Traduzir ou explicar no idioma original",
+      "voice_sources": {
+        "generate": {
+          "button": "Gerar",
+          "gender": "Selecione o sexo",
+          "label": "Gerar áudio",
+          "language": "Selecione o idioma",
+          "play": "Jogar"
+        },
+        "record": {
+          "button": "fazer registro",
+          "file_name": "Nome do arquivo",
+          "label": "Gravar audio"
+        },
+        "select": "Fonte de áudio",
+        "undefined": {
+          "label": "Indefinido"
+        },
+        "upload": {
+          "label": "Enviar um arquivo",
+          "title": "Selecione esta janela ou Solte o áudio aqui"
+        }
+      }
+    },
+    "title": "Tarefas"
+  },
+  "trainings": {
+    "list": "Treinamentos do curso",
+    "nothing": "Não esta chovendo",
+    "number_of_one": "{{count}} treinamento",
+    "number_of_other": "{{count}} treinamentos",
+    "number_of_zero": "Não esta chovendo",
+    "title": "Treinamentos",
+    "training": {
+      "edit": "Editar",
+      "new": "Novo",
+      "tags": "Tag",
+      "title": "Tema do treinamento"
+    },
+    "training_list": {
+      "drafts": "Rascunhos: {{count}}",
+      "drafts_zero": "Rascunhos: nada",
+      "menu": {
+        "info": "Editar informações de treinamento",
+        "open": "Treinamento aberto",
+        "trash": "Excluir treinamento"
+      },
+      "published": "Publicado: {{count}}",
+      "published_zero": "Publicado: nada"
+    }
+  }
+}

@@ -82,27 +82,26 @@ a {
     @extend .flex-start;
     align-items: center;
 
-    span {
-      font-family: Montserrat;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 24px;
-      color: #11141B;
-    }
+    position: absolute;
+    right: 16px;
+    // @include media-max(992px) {
+    //   position: absolute;
+    //   right: 16px;
+    // }
 
-    svg:not(last-child) {
-      margin-bottom: 4px;
-      margin-right: 13px;
-    }
-  }
+    // span {
+    //   font-family: Montserrat;
+    //   font-style: normal;
+    //   font-weight: 600;
+    //   font-size: 15px;
+    //   line-height: 24px;
+    //   color: #11141B;
+    // }
 
-  &-hamburger {
-    @include media-max(992px) {
-      position: absolute;
-      right: 16px;
-    }
-
+    // svg:not(last-child) {
+    //   margin-bottom: 4px;
+    //   margin-right: 13px;
+    // }
   }
 
   @include media-max(992px) {
@@ -823,7 +822,7 @@ a {
   }
 }
 
-.footer-coryright {
+.footer-copyright {
   font-family: Open Sans;
   font-style: normal;
   font-weight: normal;

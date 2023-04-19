@@ -5,7 +5,7 @@ import { /*refreshAuthTokenAsync*/ userLogout } from "../redux/auth/auth.actions
 import handleAJAXError from "../utilities/handleAJAXError.utility";
 
 // AXIOS GLOBAL CONFIG
-axios.defaults.baseURL = process.env.APP_BACKEND_URL || "https://dev.insta.lingvonavi.com/api/v1/";
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL // || "https://dev.insta.lingvonavi.com/api/v1/";
 axios.interceptors.request.use((request) => {
    const auth = store.getState().auth;
    const token = auth.token;
