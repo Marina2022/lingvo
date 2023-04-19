@@ -68,7 +68,7 @@ export default function Top () {
                         <a href={offerLink} className="btn">{t('promo.footer.offer')}</a>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <a href={personLink} className="btn">{t('promo.footer.pesonal_data')}</a>
+                        <a href={personLink} className="btn">{t('promo.footer.personal_data')}</a>
                     </Grid>
                 </Grid>
             </div>
