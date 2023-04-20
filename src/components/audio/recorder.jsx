@@ -13,6 +13,7 @@ import Button from "../button/Button.component";
 import { t } from "i18next";
 
 import { v4 as uuidv4 } from "uuid";
+import Bugsnag from "@bugsnag/js";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -38,11 +39,13 @@ const RecordAudio = ({ text,  handleFiles }) => {
             .catch(e => {
                toggleIsBlocked(true)
                console.log(`${e.name}: ${e.message}`, e)
+               Bugsnag.notify(e)
                alert(`${e.name}: ${e.message}`)
             })
       } catch (e) {
          toggleIsBlocked(true)
          console.error(e)
+         Bugsnag.notify(e)
          alert(`${e.name}: ${e.message}`)
       }
    }, []);
@@ -53,7 +56,10 @@ const RecordAudio = ({ text,  handleFiles }) => {
       } else {
          Mp3Recorder.start()
             .then(() => toggleIsRecording(true))
-            .catch(e => console.error(e));
+            .catch(e => {
+               console.error(e)
+               Bugsnag.notify(e)
+            });
       }
    };
 
@@ -74,7 +80,10 @@ const RecordAudio = ({ text,  handleFiles }) => {
 
             toggleIsRecording(false);
          })
-         .catch((e) => console.log(e));
+         .catch((e) => {
+            console.log(e)
+            Bugsnag.notify(e)
+         });
    };
 
    return (

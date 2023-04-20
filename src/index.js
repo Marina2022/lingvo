@@ -4,6 +4,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import Bugsnag from '@bugsnag/js'
+import BugsnagPluginReact from '@bugsnag/plugin-react'
 
 //APP COMPONENT
 import App from "./App";
@@ -18,6 +20,33 @@ import 'react-i18next';
 
 //STYLES
 import "./index.scss";
+
+Bugsnag.start({
+   apiKey: process.env.REACT_APP_BUGSNAG_API_KEY,
+   plugins: [new BugsnagPluginReact()],
+   releaseStage: process.env.NODE_ENV,
+   appType: 'browser',
+   appVersion: process.env.REACT_APP_VERSION
+});
+
+Bugsnag.addMetadata('app', {
+   releaseStage: process.env.NODE_ENV,
+   type: 'browser',
+   version: process.env.REACT_APP_VERSION
+ })
+
+function getAllProps (obj, props = []) {
+   if (Object.getPrototypeOf(obj) == null) { return props }
+   return getAllProps(Object.getPrototypeOf(obj), props.concat(Object.getOwnPropertyNames(obj)))
+}
+ 
+const obj = Object.fromEntries(getAllProps(navigator)
+   .filter(i => typeof navigator[i] !== 'function' && JSON.stringify(navigator[i]) !== '{}')
+   .map(i => [i, navigator[i]]))
+ 
+Bugsnag.addMetadata('device', obj)
+
+const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React)
 
 // https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
 const appHeight = () => {
@@ -55,17 +84,19 @@ const root = createRoot(
 );
 
 root.render(
-   <Provider store={store}>
-      <React.Suspense fallback={<div>Please wait...</div>}>
-         <BrowserRouter>
-            <PersistGate persistor={persistor}>
-               <ThemeProvider theme={theme}>
-                  <App />
-               </ThemeProvider>
-            </PersistGate>
-         </BrowserRouter>
-      </React.Suspense>      
-   </Provider>
+   <ErrorBoundary>
+      <Provider store={store}>
+         <React.Suspense fallback={<div>Please wait...</div>}>
+            <BrowserRouter>
+               <PersistGate persistor={persistor}>
+                  <ThemeProvider theme={theme}>
+                     <App />
+                  </ThemeProvider>
+               </PersistGate>
+            </BrowserRouter>
+         </React.Suspense>      
+      </Provider>
+   </ErrorBoundary>
 );
 
 // If you want your app to work offline and load faster, you can change

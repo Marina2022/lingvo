@@ -61,7 +61,6 @@ export const getCoursesAsync = () => async (dispatch) => {
          )
       );
    } catch (error) {
-      console.error('error:', error);
       const message = handleAJAXError(error);
       dispatch(getCoursesSuccess(message));
       window.alert(message)

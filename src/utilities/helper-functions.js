@@ -1,3 +1,5 @@
+import Bugsnag from "@bugsnag/js";
+
 export function checkForEmptyProperties(obj, exceptionsArray = []) {
    const objectKeysList = Object.keys(obj);
    const filteredKeysList = removeFromArray(objectKeysList, exceptionsArray);
@@ -64,6 +66,7 @@ export function compareObjects (o, c, ...excludes) {
       }
    } catch (e) {
       console.error(e);
+      Bugsnag.notify(e)
       return false
    }
 }

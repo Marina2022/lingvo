@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import keysConfig from "../../config/keys.config";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import { SpeechSynthesisOutputFormat } from "microsoft-cognitiveservices-speech-sdk";
+import Bugsnag from "@bugsnag/js";
 
 /**
  * Gets Azure supported language parameters
@@ -130,6 +131,7 @@ const genVoiceOver = ({text, voice, speechSynthesisOutputFormat = SpeechSynthesi
 
   const err_cb = function(err) {
       console.error("Error: ", err);
+      Bugsnag.notify(err)
       synthesizer.close();
   };
 

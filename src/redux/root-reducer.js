@@ -19,6 +19,7 @@ import draftReducer from "./drafts/drafts.reducer";
 import { authActionTypes } from "./auth/auth.types";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
+import Bugsnag from "@bugsnag/js";
 
 const appReducer = combineReducers({
    auth: persistReducer(authPersistConfig, authReducer),
@@ -40,7 +41,16 @@ const rootReducer = (state, action) => {
       
       state = undefined
 
-      setTimeout(() => { try { window.location.reload() } catch (e) { console.error(e) }}, 100)
+      setTimeout(
+         () => { 
+            try { 
+               window.location.reload() 
+            } catch (e) { 
+               console.error(e) 
+               Bugsnag.notify(e)
+            }
+         }, 100
+      )
    }  
    return appReducer(state, action)   
 }
