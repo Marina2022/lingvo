@@ -1,3 +1,5 @@
+import Bugsnag from "@bugsnag/js";
+
 /**
  * 
  * @param {Blob} file 
@@ -9,6 +11,7 @@ export function getBase64(file, onload, onerror) {
   reader.onload = onload;
   reader.onerror = onerror || function(error) {
     console.log("Error: ", error);
+    Bugsnag.notify(error)
   };
   reader.readAsDataURL(file);
 }

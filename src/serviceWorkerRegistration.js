@@ -1,6 +1,8 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+import Bugsnag from "@bugsnag/js";
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -93,6 +95,7 @@ function registerValidSW(swUrl, config) {
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
+      Bugsnag.notify(error)
     });
 }
 
@@ -119,8 +122,9 @@ function checkValidServiceWorker(swUrl, config) {
         registerValidSW(swUrl, config);
       }
     })
-    .catch(() => {
+    .catch((error) => {
       console.log('No internet connection found. App is running in offline mode.');
+      Bugsnag.notify(error)
     });
 }
 
@@ -132,6 +136,7 @@ export function unregister() {
       })
       .catch((error) => {
         console.error(error.message);
+        Bugsnag.notify(error)
       });
   }
 }

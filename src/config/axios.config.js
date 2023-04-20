@@ -3,15 +3,19 @@ import { store } from "../redux/store";
 import { /*refreshAuthTokenAsync*/ userLogout } from "../redux/auth/auth.actions";
 // import { setGlobalErrorMessage } from "redux/common/common.actions";
 import handleAJAXError from "../utilities/handleAJAXError.utility";
+import Bugsnag from "@bugsnag/js";
 
 // AXIOS GLOBAL CONFIG
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL // || "https://dev.insta.lingvonavi.com/api/v1/";
 axios.interceptors.request.use((request) => {
-   const auth = store.getState().auth;
+   const { auth, profile } = store.getState();
    const token = auth.token;
    if (auth?.token !== null) {
       request.headers["authorization"] = `Bearer ${token}`;
    }
+   const { id, name, email } = profile?.currentUserInfo ?? {}
+   Bugsnag.setUser(id, email, name)
+
    return request;
 });
 axios.interceptors.response.use(
@@ -22,7 +26,7 @@ axios.interceptors.response.use(
       const errorMessage = handleAJAXError(error);
 
       console.log(errorMessage);
-      // if (error.message) store.dispatch(setGlobalErrorMessage(errorMessage));      
+      // if (error.message) store.dispatch(setGlobalErrorMessage(errorMessage));
 
       const errorStatus = error?.response?.data?.status;
 
