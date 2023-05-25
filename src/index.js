@@ -24,6 +24,7 @@ import "./index.scss";
 Bugsnag.start({
    apiKey: process.env.REACT_APP_BUGSNAG_API_KEY,
    plugins: [new BugsnagPluginReact()],
+   enabledReleaseStages: ['production', 'staging'],
    releaseStage: process.env.NODE_ENV,
    appType: 'browser',
    appVersion: process.env.REACT_APP_VERSION
