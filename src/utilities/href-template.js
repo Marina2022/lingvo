@@ -1,6 +1,6 @@
 import { t } from "i18next"
 
-export const supportEmail = 'support@lingvonavi.com'
+export const supportEmail = 'support-group@lingvonavi.com'
 // export const helloEmail = 'hello@lingvoinsta.ru'
 
 /**
