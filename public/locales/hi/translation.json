@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "फ़ाइल अपलोड या बदलने के लिए कृपया नीचे फ़ाइल नाम वाली फ़ील्ड पर क्लिक करें",
       "needs_text_to_generate_audio": "ऑडियो उत्पन्न करने के लिए टेक्स्ट भरें",
       "somethings_wrong_try_again": "कुछ गलत है... पुन: प्रयास करें!"
     },

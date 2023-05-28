@@ -85,9 +85,11 @@ const Unit = (props) => {
 
    useEffect(() => {
       if (unitId && parseInt(unitId) === stateUnitsSingleUnit?.id) {
-         // console.log('useEffect - setUnitSaved - setUploadedFiles')
+         // console.log('1) useEffect - setUnitSaved - setUploadedFiles', { unitId } , { stateUnitsSingleUnit } )
          const voices = stateUnitsSingleUnit.voices?.sort((a, b) => a.id < b.id ? 1 : -1) ?? []
-         setUnitSaved({...stateUnitsSingleUnit, voices: [...voices]})
+         setUnitSaved({...stateUnitsSingleUnit, voices: voices.length === 0 ? [] : [voices[0]]})
+      // } else {
+      //    console.log('2) useEffect - setUnitSaved - setUploadedFiles', { unitId } , { stateUnitsSingleUnit } )
       }
    }, [stateUnitsSingleUnit, unitId])
 
@@ -337,6 +339,9 @@ const Unit = (props) => {
                            onClick={() => {
                               if (compareObjects(unitData.voices, initUnit.voices)) {
                                  setUploadMode(item.value)
+                                 if (idx === 0 && uploadMode === 'uploadedAudio') {
+                                    alert(t('messages.alerts.click_field_below_to_upload'))
+                                 }
                               } else if (window.confirm(t("messages.confirm.unsaved_data"))) {
                                  handleInput({target: {name:'voices', value: [...(unitData.voices ?? [])]}})
                                  setUploadMode(item.value)

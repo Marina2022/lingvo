@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "Para fazer upload ou alterar o arquivo, clique no campo com o nome do arquivo abaixo",
       "needs_text_to_generate_audio": "Para gerar áudio preencha o texto",
       "somethings_wrong_try_again": "Algo está errado... Tente novamente!"
     },

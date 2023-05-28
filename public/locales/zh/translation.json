@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "要上传或更改文件，请单击下面带有文件名的字段",
       "needs_text_to_generate_audio": "生成音频填充文本",
       "somethings_wrong_try_again": "出了点问题……再试一次！"
     },
