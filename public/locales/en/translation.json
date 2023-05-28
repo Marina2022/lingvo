@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "To upload or change file please click the field with file name below",
       "needs_text_to_generate_audio": "To generate audio fill the text",
       "somethings_wrong_try_again": "Something's wrong... Try again!"
     },
@@ -119,7 +120,7 @@
     "copy_link": "Copy link",
     "email": "Email",
     "name": "Name",
-    "nickname": "Nickname",
+    "nickname": "Channel name",
     "offer_agreed": "I have read and agree with the offer",
     "person": "Person",
     "personal_data_agreed": "I have read and agree with the rules of personal data processing",

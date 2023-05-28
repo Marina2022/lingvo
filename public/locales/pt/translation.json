@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "Para fazer upload ou alterar o arquivo, clique no campo com o nome do arquivo abaixo",
       "needs_text_to_generate_audio": "Para gerar áudio preencha o texto",
       "somethings_wrong_try_again": "Algo está errado... Tente novamente!"
     },
@@ -119,7 +120,7 @@
     "copy_link": "Link de cópia",
     "email": "E-mail",
     "name": "Nome",
-    "nickname": "Apelido",
+    "nickname": "Nome do canal",
     "offer_agreed": "Li e concordo com a oferta",
     "person": "Pessoa",
     "personal_data_agreed": "Li e concordo com as regras de tratamento de dados pessoais",

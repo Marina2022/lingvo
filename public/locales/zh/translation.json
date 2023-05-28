@@ -89,6 +89,7 @@
   },
   "messages": {
     "alerts": {
+      "click_field_below_to_upload": "要上传或更改文件，请单击下面带有文件名的字段",
       "needs_text_to_generate_audio": "生成音频填充文本",
       "somethings_wrong_try_again": "出了点问题……再试一次！"
     },
@@ -119,7 +120,7 @@
     "copy_link": "复制链接",
     "email": "电子邮件",
     "name": "姓名",
-    "nickname": "昵称",
+    "nickname": "频道名称",
     "offer_agreed": "我已阅读并同意该优惠",
     "person": "人",
     "personal_data_agreed": "我已阅读并同意个人资料处理规则",
