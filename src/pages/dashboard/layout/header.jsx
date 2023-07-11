@@ -44,7 +44,7 @@ const Header = (props) => {
       // { name: t("menu.classes"), target: "/ffffff" },
       // { name: t("menu.dictionary"), target: "/new" },
       { name: t("trainings.title"), target: "/topics" },
-      { name: t("courses.title"), target: "/courses" }
+      // { name: t("courses.title"), target: "/courses" }
    ];   
 
    mainMenuItems.forEach(item => item.action = () => navigate(item.target))
