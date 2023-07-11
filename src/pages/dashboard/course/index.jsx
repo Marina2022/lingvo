@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Outlet, useOutlet, useOutletContext, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useOutlet, useOutletContext, useParams } from "react-router-dom";
 
 import { createCourseAsync, editCourseAsync, getCourseAsync, getCoursesAsync } from "../../../redux/courses/courses.actions";
 
@@ -110,7 +110,7 @@ const CoursePage = ({
 
    const [initInput, setInitInput] = useState(isSameCourse
       ? { ...courseData, posts: [...courseData.posts] /* tags: courseData?.tags,*/ }
-      : { name: "", tags: [], shared: false, nativeLanguage, foreignLanguage, posts: []}
+      : { name: "", tags: [], shared: false, nativeLanguageId: nativeLanguage.id, foreignLanguageId: foreignLanguage.id, cost: 0, posts: []}
    );
 
    useEffect(() => {
@@ -157,12 +157,13 @@ const CoursePage = ({
       handleInput(selectState);
    };
    
+   const navigate = useNavigate();   
    const onSubmit = (event) => {
       event.preventDefault();
       if (courseId) {
          dispatchEditCourseAsync(courseId, inputState, () => { dispatchGetCoursesAsync(); dispatchGetCourseAsync(courseId); });
       } else {
-         dispatchCreateCourseAsync(inputState, () => { dispatchGetCourseAsync(courseId); });
+         dispatchCreateCourseAsync(inputState, /** @param {Number} id new course `id`  */ (id) => { dispatchGetCoursesAsync(); navigate(`../${id}`); });
       }
    };
 

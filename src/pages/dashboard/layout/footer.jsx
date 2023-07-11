@@ -25,7 +25,7 @@ const Footer = (props) => {
 
   const menuItems = [
     { name: t("trainings.title") , pattern: /\/topics/i , action: () => navigate("/topics") , icon: <AudioFileOutlinedIcon />     },
-    { name: t("courses.title")   , pattern: /\/courses/i, action: () => navigate("/courses"), icon: <LibraryMusicOutlinedIcon /> },
+    // { name: t("courses.title")   , pattern: /\/courses/i, action: () => navigate("/courses"), icon: <LibraryMusicOutlinedIcon /> },
     { name: t("profile.title")   , pattern: /\/profile/i, action: () => navigate("/profile"), icon: <PersonOutlinedIcon />         },
   ]   
 
