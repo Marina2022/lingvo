@@ -30,7 +30,7 @@
     },
     "register": {
       "have_account": "¿Ya tienes cuenta?",
-      "name": "Nombre",
+      "name": "Nombre del Canal",
       "not_match": "Las contraseñas no coinciden",
       "password": "Contraseña",
       "password_placeholder": "Al menos 8 carácteres",
@@ -112,7 +112,7 @@
     }
   },
   "profile": {
-    "about_oneself": "biografía",
+    "about_oneself": "Descripción",
     "app_link": "Enlace de aplicación",
     "bio": "Cuéntales a los suscriptores un poco sobre ti",
     "click_to_copy": "Haga clic en el campo para copiar el valor al portapapeles",

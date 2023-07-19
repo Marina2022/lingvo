@@ -30,7 +30,7 @@
     },
     "register": {
       "have_account": "有帐号了吗？",
-      "name": "姓名",
+      "name": "频道名称",
       "not_match": "密码不匹配",
       "password": "密码",
       "password_placeholder": "至少8个字符",
@@ -112,7 +112,7 @@
     }
   },
   "profile": {
-    "about_oneself": "生物",
+    "about_oneself": "描述",
     "app_link": "申请链接",
     "bio": "向订阅者介绍一下您自己",
     "click_to_copy": "单击该字段以将值复制到剪贴板",
