@@ -30,7 +30,7 @@
     },
     "register": {
       "have_account": "Have account yet?",
-      "name": "Name",
+      "name": "Channel name",
       "not_match": "Passwords does not match",
       "password": "Password",
       "password_placeholder": "At least 8 characters",
@@ -112,7 +112,7 @@
     }
   },
   "profile": {
-    "about_oneself": "Bio",
+    "about_oneself": "Description",
     "app_link": "Application link",
     "bio": "Tell subscribers a little about yourselves",
     "click_to_copy": "Click the field to copy value to clipboard",
