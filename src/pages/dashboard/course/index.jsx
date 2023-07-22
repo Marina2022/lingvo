@@ -248,6 +248,7 @@ const CoursePage = ({
                      label={t("courses.course.name")}
                      type="text"
                      placeholder={t("courses.course.name")}
+                     maxLength={255}
                      required
                   />
                </Grid>

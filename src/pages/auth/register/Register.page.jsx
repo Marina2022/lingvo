@@ -80,6 +80,7 @@ const RegisterPage = (props) => {
                               onInvalid={handleInvalidMessage}
                               label="E-mail"
                               type="email"
+                              maxLength={255}
                               required
                            />
                         </Grid>
@@ -94,6 +95,7 @@ const RegisterPage = (props) => {
                               onInvalid={handleInvalidMessage}
                               label={t("auth.register.name")}
                               type="text"
+                              maxLength={255}
                               required
                            />
                         </Grid>
@@ -111,6 +113,7 @@ const RegisterPage = (props) => {
                               type="password"
                               required
                               minLength={8}
+                              maxLength={255}
                            />
                         </Grid>
                         <Grid item xs={12} sm={12} md={9} lg={9}>
@@ -124,6 +127,7 @@ const RegisterPage = (props) => {
                               type="password"
                               required
                               minLength={8}
+                              maxLength={255}
                            />
                         </Grid>
                         <Grid item container xs={12} sm={12} md={9} lg={9} alignItems="center">
