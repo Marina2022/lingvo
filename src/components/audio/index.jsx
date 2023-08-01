@@ -17,16 +17,24 @@ import UploadAudio from "./uploader";
  * `html` function providing JSX.Element
  *
  */
- const voiceOverProviderOptions = [
-  { value: "uploadedAudio" , getLabel: () => t("tasks.task.voice_sources.upload.label")  , html: ({handleFiles, uploadedFiles}) => {
-     return <UploadAudio handleFiles={handleFiles} files={uploadedFiles} />
-  }},
-  { value: "recordedAudio" , getLabel: () => t("tasks.task.voice_sources.record.label")  , html: ({text, languageName, handleFiles}) => {
-     return <RecordAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
-  }},
-  { value: "generatedVoice", disabled: true, getLabel: () => t("tasks.task.voice_sources.generate.label"), html: ({text, languageName, handleFiles}) => {
-     return <GenerateAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
-  }},
+const voiceOverProviderOptions = [
+   {
+      value: "uploadedAudio",
+      getLabel: () => t("tasks.task.voice_sources.upload.label"),
+      html: ({handleFiles, uploadedFiles}) => <UploadAudio handleFiles={handleFiles} files={uploadedFiles} />
+   },
+   {
+      value: "recordedAudio",
+      getLabel: () => t("tasks.task.voice_sources.record.label"),
+      html: ({text, languageName, handleFiles}) => <RecordAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
+   },
+   {
+      value: "generatedVoice",
+      // TODO: provide access to the audio generator from admin/user account
+      // disabled: true,
+      getLabel: () => t("tasks.task.voice_sources.generate.label"),
+      html: ({text, languageName, handleFiles}) => <GenerateAudio text={text} handleFiles={handleFiles} language={{name: languageName}} />
+   },
 ]
 
 export default voiceOverProviderOptions
