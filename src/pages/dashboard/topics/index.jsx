@@ -79,6 +79,7 @@ const TopicsBody = (props) => {
                   onInvalid={handleInvalidMessage}
                   type="text"
                   placeholder={t("actions.search")}
+                  maxLength={255}
                   required
                />
             </Grid>

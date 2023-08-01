@@ -245,6 +245,7 @@ const ProfilePage = (props) => {
                      label="Email"
                      placeholder="Email"
                      className="p-b__1__disabled"
+                     maxLength={255}
                      required
                      disabled={true}
                   />
@@ -261,6 +262,7 @@ const ProfilePage = (props) => {
                      label={t("profile.phone")}
                      placeholder={t("profile.phone")}
                      className="p-b__1"
+                     maxLength={25}
                      required
                      disabled={true}
                   />
@@ -277,6 +279,7 @@ const ProfilePage = (props) => {
                      label={t("profile.name")}
                      placeholder={t("profile.name")}
                      className="p-b__1"
+                     maxLength={255}
                      required
                      disabled={true}
                   />
@@ -293,10 +296,12 @@ const ProfilePage = (props) => {
                      label={t("profile.nickname")}
                      placeholder={t("profile.nickname")}
                      className="p-b__1"
+                     maxLength={255}
                      required
                   />
                </Grid>
                {/* TODO: multilingual field profile.bio */}
+               {/*                
                <Grid item xs={12}>
                   <TextArea
                      name="about_oneself"
@@ -311,7 +316,7 @@ const ProfilePage = (props) => {
                      required
                   />
                </Grid>
-
+               */}
                <Divider sx={{ my:'1rem'}}/>
 
 
@@ -333,6 +338,7 @@ const ProfilePage = (props) => {
                               label={t(tKey)}
                               placeholder={t(tKey)}
                               className="p-b__1"
+                              maxLength={1023}
                               required
                            />
                         </Grid>

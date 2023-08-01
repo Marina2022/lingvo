@@ -188,6 +188,7 @@ const Topic = (props) => {
                   label={t("trainings.training.title")}
                   type="text"
                   placeholder="Daily routine and household chores"
+                  maxLength={255}
                   required
                />
             </Grid>

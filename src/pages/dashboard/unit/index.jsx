@@ -271,6 +271,7 @@ const Unit = (props) => {
                   label={t("tasks.task.original")}
                   placeholder={t("tasks.task.placeholders.foreign")}
                   minRows={2}
+                  maxLength={1023}
                   required
                />
             </Grid>
@@ -284,6 +285,7 @@ const Unit = (props) => {
                   label={t("tasks.task.translation")}
                   placeholder={t("tasks.task.placeholders.native")}
                   minRows={2}
+                  maxLength={1023}
                   required
                />
             </Grid>
@@ -297,6 +299,7 @@ const Unit = (props) => {
                   label={t("tasks.task.extra")}
                   placeholder={t("tasks.task.placeholders.extra")}
                   minRows={2}
+                  maxLength={1023}
                   required
                />
             </Grid>
