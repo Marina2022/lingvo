@@ -8,11 +8,11 @@ const TextArea = (props) => {
       onChange,
       value,
       name,
-      otherTextareaProps,
       minRows,
       maxRows,
       placeholder,
       label,
+      ...otherTextareaProps
    } = props;
 
    return (

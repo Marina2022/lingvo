@@ -1,6 +1,6 @@
 {
   "name": "lingvoinsta",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "dependencies": {
     "@bugsnag/js": "^7.20.0",
