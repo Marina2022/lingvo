@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+
 //ROUTES
 import dashboardRoutes from "./routes";
 //LAYOUTS
@@ -12,6 +13,7 @@ import PromptAddToHomeScreen from "../../components/prompt-add-to-home"
 import GetMediaContent from "../../components/get-media-content";
 import { Grid } from "@mui/material";
 import { BuildBreadcrumbs } from "./layout/breadcrumbs";
+import Admin from "../admin/Admin";
 
 /**
  * 
@@ -39,6 +41,7 @@ const DashboardPages = () => {
     <>
       <Routes>
         <Route exact path="/main" element={<MainPage />} />
+        <Route exact path="/admin" element={<Admin />} />
 
         <Route exact path="*" element={
             
