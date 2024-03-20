@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import DropDown from "../../../components/drop-down";
@@ -8,11 +8,10 @@ import DropDown from "../../../components/drop-down";
 import { userLogout, logOutAsync } from "../../../redux/auth/auth.actions";
 import { getUserInfoAsync } from "../../../redux/profile/profile.actions.js";
 
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GetMediaContent from "../../../components/get-media-content";
-import {ReactComponent as Logo} from "../../../assets/images/main/logo.svg"
+// import {ReactComponent as Logo} from "../../../assets/images/main/logo.svg"
 import { t } from 'i18next'
-import { HrefTemplate } from "../../../utilities/href-template";
+
 
 import s from './AdminHeader.module.scss'
 import arrow from '../../../assets/images/admin/arrow.svg'
@@ -49,14 +48,6 @@ const AdminHeader = (props) => {
 
   mainMenuItems.forEach(item => item.action = () => navigate(item.target))
 
-  const mainMenuMediaList = {
-    xSmall: <></>,
-    large: mainMenuItems.map((item, key) => (
-        <NavLink className="app-header__links-block_active" to={item.target} key={key}>
-          {item.name}
-        </NavLink>
-    ))
-  };
 
   const xSmallMediaMenuList = [dropdownMenuItems[0], { divider: true }]
       .concat(mainMenuItems)

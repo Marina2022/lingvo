@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AdminHeader from "./AdminHeader/AdminHeader";
 import Sidebar from "./Sidebar/Sidebar";
 import s from './Admin.module.scss'
 import AuthorsBlock from "./AuthorsBlock/AuthorsBlock";
-import Modal from "./modals/Modal/Modal";
 
 const Admin = () => {
     

@@ -16,5 +16,5 @@ export const useCloseModalHook = (modal, isOpen, setIsOpen)=> {
     return () => {
       window.document.removeEventListener('keydown', escHandler)
     }
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 }

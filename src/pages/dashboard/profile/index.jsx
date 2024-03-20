@@ -6,7 +6,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Form from "../../../components/form/Form.component";
 import DropZone from "../../../components/drop-zone/DropZone.component";
 import Input from "../../../components/input/Input.component";
-import TextArea from "../../../components/text-area/TextArea.component";
+// import TextArea from "../../../components/text-area/TextArea.component";
 import LoaderWrapper from "../../../components/loader-wrapper/LoaderWrapper.component";
 import Button from "../../../components/button/Button.component";
 import IsVisible from "../../../components/is-visible/IsVisible.component";

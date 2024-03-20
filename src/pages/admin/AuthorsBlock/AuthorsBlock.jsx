@@ -35,7 +35,7 @@ const AuthorsBlock = () => {
   ]
 
   const [page, setPage] = useState(1)
-  const [sort, setSort] = useState(false)
+  // const [sort, setSort] = useState(false)
 
   const sortClickHandler = () => {
     console.log(`Запрос с сортировкой `)
