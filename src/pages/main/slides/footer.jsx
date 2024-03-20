@@ -63,10 +63,10 @@ export default function Top () {
                         Lingvoinsta &copy; All rights reserved
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <a href="#" /* href={"/offer"} */ className="btn">{t('promo.footer.offer')}</a>
+                        <button  /* href={"/offer"} */ className="btn">{t('promo.footer.offer')}</button>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <a href="#" /* href={"/personal_data"} */ className="btn">{t('promo.footer.personal_data')}</a>
+                        <button href="#" /* href={"/personal_data"} */ className="btn">{t('promo.footer.personal_data')}</button>
                     </Grid>
                 </Grid>
             </div>
