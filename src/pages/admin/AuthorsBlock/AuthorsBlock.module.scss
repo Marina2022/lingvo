@@ -1,0 +1,55 @@
+.authorsBlock {
+  margin-top: 80px;
+  min-height: 500px;
+  background: #fff;
+  max-width: 100%;
+  margin-right: 10.7vw;
+  margin-left: calc(10.7vw + 233px);
+  padding: 0px 12px;
+  padding-bottom: 22px;
+  
+  @media (max-width: 1440px) {
+    margin-right: 5.7vw;
+    margin-left: calc(5.7vw + 233px);
+  }  
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: rgb(225, 230, 235) solid 2px;
+}
+
+.tableHeader {
+  padding-block: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  border-bottom: rgb(225, 230, 235) solid 2px;
+}
+
+.nick {
+  padding: 16px;
+  width: 33%;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  width: 19%;
+  font-weight: 600;
+  span  {
+    margin-right: 70px;
+  }
+}
+
+.onnOff {
+  padding: 16px;
+  width: 28%;
+}
+
+.actions {
+  padding: 16px;
+  width: 19%;
+}

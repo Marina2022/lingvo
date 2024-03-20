@@ -1,0 +1,43 @@
+.sidebar {
+  width: 233px;
+  height: 100vh;
+  position: absolute;
+  background: #FFF;
+  border-right: 1px solid rgb(221, 221, 221);
+  padding: 72px 25px;
+}
+
+.logo {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.menuLink {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.menuItem {
+  
+  padding: 8px 12px 8px 12px;
+  margin-bottom: 16px;
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:first-child {
+
+    img {
+      position: relative;
+      left: -1px;
+    }
+  }
+}
+
+.active {
+  border-radius: 8px;
+  background: rgb(247, 247, 249);
+}

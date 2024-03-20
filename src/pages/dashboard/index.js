@@ -9,11 +9,13 @@ import Header from "./layout/header";
 import Footer from './layout/footer'
 
 import MainPage from "../main/MainPage";
+import Admin from "../admin/Admin";
+
 import PromptAddToHomeScreen from "../../components/prompt-add-to-home"
 import GetMediaContent from "../../components/get-media-content";
 import { Grid } from "@mui/material";
 import { BuildBreadcrumbs } from "./layout/breadcrumbs";
-import Admin from "../admin/Admin";
+
 
 /**
  * 
@@ -54,13 +56,11 @@ const DashboardPages = () => {
                   <BuildBreadcrumbs crumbs={crumbs} />
               </Grid>
               <Grid item xs={12} sm={9}>
-
                 <Routes> { 
                   mapRoutes(dashboardRoutes, [crumbs, setCrumbs])
                 }
                   <Route exact path="/" element={<Navigate to="/topics" />}/>
-                </Routes>
-              
+                </Routes>              
               </Grid>
             </Grid>
 
