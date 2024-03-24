@@ -29,16 +29,7 @@ export default function Header () {
                <div className="landing-header-logo">
                   <Logo fill="#1E62E6" />
                </div>
-
-               {/* <a className="landing-header-hamburger" href="/#">
-                  <span className="flex-column">
-                     <HamburgerLine />
-                     <HamburgerLine />
-                     <HamburgerLine />
-                  </span>
-                  {/* <span className="mobile-hidden">{t("menu.title")}</span> * /}
-               </a> */}
-               <div className="landing-header-hamburger">
+                <div className="landing-header-hamburger">
                   <IconButton
                      aria-label="more"
                      id="long-button"
@@ -72,19 +63,7 @@ export default function Header () {
                      </Menu>
                </div>
             </div>
- 
-             {/* <div className="landing-header__auth">
-                <a
-                   href="/login"
-                   className="auth-btn auth-btn_login mobile-hidden">
-                   {t("actions.sign_in")}
-                </a>
-                <a
-                   href="/register"
-                   className="auth-btn auth-btn_register mobile-hidden">
-                   {t("actions.sign_up")}
-                </a>
-             </div> */}
+          
          </div>
       </header>
    );

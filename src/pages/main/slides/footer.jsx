@@ -63,10 +63,12 @@ export default function Top () {
                         Lingvoinsta &copy; All rights reserved
                     </Grid>
                     <Grid item xs={12} md={4}>
+                        
+                        {/*временно поменяла с <a> на <button> т.к. Netlify не дает деплоить, если у ссылки невалидный адрес (href="#" - тоже невалидным считается)*/}
                         <button  /* href={"/offer"} */ className="btn">{t('promo.footer.offer')}</button>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <button href="#" /* href={"/personal_data"} */ className="btn">{t('promo.footer.personal_data')}</button>
+                        <button /* href={"/personal_data"} */ className="btn">{t('promo.footer.personal_data')}</button>
                     </Grid>
                 </Grid>
             </div>

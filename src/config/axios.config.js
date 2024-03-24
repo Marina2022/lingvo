@@ -7,8 +7,6 @@ import Bugsnag from "@bugsnag/js";
 
 // AXIOS GLOBAL CONFIG
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL // || "https://dev.insta.lingvonavi.com/api/v1/";
-axios.defaults.baseURL = 'https://dev.insta.lingvonavi.com/api/v1/' // || "https://dev.insta.lingvonavi.com/api/v1/";
-
 axios.interceptors.request.use((request) => {
    const { auth, profile } = store.getState();
    const token = auth.token;
