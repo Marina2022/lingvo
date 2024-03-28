@@ -37,10 +37,18 @@ const AuthorsTableRow = ({user, show, id, index, getAuthors}) => {
       setRequestIsSending(false)
     }
   }
-  const yesDeleteClickHandler = async () => {
+  const yesDeleteClickHandler = async (userShow) => {
     setRequestIsSending(true)
+
+
     try {
       await axios.delete(`authors/${id}`)
+
+      if (userShow) {
+        await axios.put(`authors/${id}/show/toggle`)
+      }
+
+
       setToggleShowingIsOpen(false)
       setDeleteAuthorIsOpen(false)
       getAuthors()
@@ -71,6 +79,7 @@ const AuthorsTableRow = ({user, show, id, index, getAuthors}) => {
                            show={deleteAuthorIsOpen}
                            setShow={setDeleteAuthorIsOpen}
                            nickname={user.nickname}
+                           userShow={user.show}
                            yesClickHandler={yesDeleteClickHandler}/>
       </>
   );
