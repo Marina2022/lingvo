@@ -1,51 +1,77 @@
 import React, {useState} from 'react';
-import s from './AuthorsTableRow.module.scss'
-import arrowDown from '../../../../assets/images/admin/arrowDown.svg'
+import axios from '../../../../config/axios.config'
+import {toast} from "react-toastify";
+
 import ToggleShowingModal from "../../modals/Modal/ToggleShowingModal";
 import DeleteAuthorModal from "../../modals/Modal/DeleteAuthorModal";
 
-const AuthorsTableRow = ({name, language, show, id, index}) => {
+import s from './AuthorsTableRow.module.scss'
+import arrowDown from '../../../../assets/images/admin/arrowDown.svg'
+
+const AuthorsTableRow = ({user, show, id, index, getAuthors}) => {
 
   const [toggleShowingIsOpen, setToggleShowingIsOpen] = useState(false)
   const [deleteAuthorIsOpen, setDeleteAuthorIsOpen] = useState(false)
+  const [requestIsSending, setRequestIsSending] = useState(false)
 
   const even = index % 2 !== 0
 
   const showClickHandler = (id) => {
-    setToggleShowingIsOpen(true)    
+    setToggleShowingIsOpen(true)
   }
   const deleteClickHandler = (id) => {
-    setDeleteAuthorIsOpen(true)   
+    setDeleteAuthorIsOpen(true)
   }
-  
-  const yesToggleShowClickHandler = () => {
-    // Идет запрос, disable & spinner на кнопку.  
-    console.log('Запрос - Переключить показ автора с id ', id)
-    
-    //По окончании запроса закрыть окно
-    setToggleShowingIsOpen(false)    
+
+  const yesToggleShowClickHandler = async () => {
+
+    setRequestIsSending(true)
+    try {
+      await axios.put(`authors/${id}/show/toggle`)
+      setToggleShowingIsOpen(false)
+      getAuthors()
+    } catch (err) {
+      console.log('Ошибка: ', err)
+      toast(err.message)
+    } finally {
+      setRequestIsSending(false)
+    }
   }
-  
-  const yesDeleteClickHandler = () => {
-    // Идет запрос на удаление, disable & spinner на кнопку.  
-    console.log('Запрос - Удалить автора с id ', id)
-    //По окончании запроса закрыть окно
-    setDeleteAuthorIsOpen(false)
+  const yesDeleteClickHandler = async () => {
+    setRequestIsSending(true)
+    try {
+      await axios.delete(`authors/${id}`)
+      setToggleShowingIsOpen(false)
+      setDeleteAuthorIsOpen(false)
+      getAuthors()
+    } catch (err) {
+      console.log('Ошибка: ', err)
+      toast(err.message)
+    } finally {
+      setRequestIsSending(false)
+    }
   }
 
   return (
       <>
         <li className={`${s.tableRow}  ${even ? s.even : ''}`}>
-          <div className={s.nick}>{name}</div>
-          <div className={s.lang}>{language}</div>
+          <div className={s.nick}>{user.nickname}</div>
+          <div className={s.lang}>{user.foreignLanguages[0]?.value || ''}</div>
           <button onClick={() => showClickHandler(id)} className={s.onnOff}>
             <span>{show ? 'Выключить' : 'Включить'} </span> <img src={arrowDown} alt=""/>
           </button>
           <button onClick={() => deleteClickHandler(id)} className={s.actionsBtn}>Удалить</button>
         </li>
-        
-        <ToggleShowingModal show={toggleShowingIsOpen} setShow={setToggleShowingIsOpen} showIsOn={show} yesClickHandler={yesToggleShowClickHandler} />
-        <DeleteAuthorModal show={deleteAuthorIsOpen} setShow={setDeleteAuthorIsOpen} name={name} yesClickHandler={yesDeleteClickHandler}  />
+        <ToggleShowingModal requestIsSending={requestIsSending}
+                            show={toggleShowingIsOpen}
+                            setShow={setToggleShowingIsOpen}
+                            showIsOn={show}
+                            yesClickHandler={yesToggleShowClickHandler}/>
+        <DeleteAuthorModal requestIsSending={requestIsSending}
+                           show={deleteAuthorIsOpen}
+                           setShow={setDeleteAuthorIsOpen}
+                           nickname={user.nickname}
+                           yesClickHandler={yesDeleteClickHandler}/>
       </>
   );
 };

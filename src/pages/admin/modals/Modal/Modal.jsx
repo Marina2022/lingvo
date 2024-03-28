@@ -13,7 +13,7 @@ const Modal = ({show, setShow, children}) => {
         {
             show && (
                 <div className={s.modalWrapper}>
-                  <div onClick={()=>setShow(false)} className={s.overlay}></div>
+                  <div onClick={() => setShow(false)} className={s.overlay}></div>
                   <div ref={modalRef} className={s.modal}>
                     <button onClick={() => setShow(false)}><img className={s.closeBtn} src={closeBtn} alt="close button"/>
                     </button>
