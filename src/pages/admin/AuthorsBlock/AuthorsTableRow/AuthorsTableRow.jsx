@@ -63,7 +63,7 @@ const AuthorsTableRow = ({user, show, id, index, getAuthors}) => {
   return (
       <>
         <li className={`${s.tableRow}  ${even ? s.even : ''}`}>
-          <div className={s.nick}>{user.nickname}</div>
+          <div className={show ? s.nickInLenta : s.nick}>{user.nickname}</div>
           <div className={s.lang}>{user.foreignLanguages[0]?.value || ''}</div>
           <button onClick={() => showClickHandler(id)} className={s.onnOff}>
             <span>{show ? 'Выключить' : 'Включить'} </span> <img src={arrowDown} alt=""/>

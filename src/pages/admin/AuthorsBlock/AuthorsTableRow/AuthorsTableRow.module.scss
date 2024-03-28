@@ -55,4 +55,16 @@
   }
 }
 
+.nickInLenta {
+  padding: 16px;
+  width: 33%;
+  color: #1E62E5;
+  font-weight: bold;
+  &:after {
+    content: '  / Есть в ленте';
+    margin-left: 10px;
+    font-size: 12px;
+    
+  }
+}
 
